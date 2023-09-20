@@ -4,6 +4,9 @@
  */
 package application;
 
+import GUI.MainGUI;
+import GUI.SigninGUI;
+
 /**
  *
  * @author agond
@@ -14,7 +17,8 @@ public class Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        SigninGUI signinGUI = new SigninGUI();
+        signinGUI.showWindow();
     }
     
 }
