@@ -4,7 +4,6 @@
  */
 package application;
 
-import GUI.MainGUI;
 import GUI.SigninGUI;
 
 /**

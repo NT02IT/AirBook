@@ -1,0 +1,3 @@
+USE AIRBOOK
+
+-- Init Database

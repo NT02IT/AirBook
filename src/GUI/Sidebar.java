@@ -5,15 +5,7 @@
 package GUI;
 
 import java.awt.Color;
-import java.net.URL;
-import java.awt.Dimension;
-import java.awt.Image;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.SwingConstants;
-import javax.swing.WindowConstants;
 /**
  *
  * @author agond
