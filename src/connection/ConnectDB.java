@@ -30,7 +30,6 @@ public class ConnectDB{
         try {
             readConfig();
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            strConnect = "jdbc:sqlserver://"+server+":"+port+";databaseName="+database+";user="+username+";password="+password+";encrypt=true;trustServerCertificate=true";
             conn = DriverManager.getConnection(strConnect);
 //            System.out.print("Ket noi DB thanh cong");
         } catch (IOException ex) {
@@ -58,5 +57,6 @@ public class ConnectDB{
         username = properties.getProperty("DB_USERNAME");
         password = properties.getProperty("DB_PASSWORD");
         port = Integer.parseInt(properties.getProperty("DB_PORT"));
+        strConnect = "jdbc:sqlserver://"+server+":"+port+";databaseName="+database+";user="+username+";password="+password+";encrypt=true;trustServerCertificate=true";
     }
 }
