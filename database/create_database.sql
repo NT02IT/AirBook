@@ -44,7 +44,9 @@ CREATE TABLE more_luggage (
     More_luggage_ID nvarchar(20) NOT NULL,
     Luggage_weight int NOT NULL,
     Luggage_price int NOT NULL,
-    PRIMARY KEY (More_luggage_ID)
+    Airline_ID nvarchar(20) NOT NULL,
+    PRIMARY KEY (More_luggage_ID),
+    FOREIGN KEY (Airline_ID) REFERENCES airline (Airline_ID)
 );
 
 CREATE TABLE user_type(
@@ -64,7 +66,7 @@ CREATE TABLE users (
     User_address nvarchar(100),
     CCCD varchar(20) NOT NULL,
     Pwd varchar(20) NOT NULL,
-    PhoneNumber nvarchar(20) NOT NULL,
+    PhoneNumber int NOT NULL,
     Email nvarchar(50) NOT NULL,
     PRIMARY KEY (User_ID),
     FOREIGN KEY (User_type_ID) REFERENCES user_type (User_type_ID)
@@ -74,7 +76,7 @@ CREATE TABLE users (
 CREATE TABLE orders (
     Order_ID nvarchar(20) NOT NULL,
     User_ID nvarchar(20) NOT NULL,
-    Promotion_ID nvarchar(20) NOT NULL,
+    Promotion_ID nvarchar(20),
     Order_day datetime NOT NULL,
     Ticket_ID nvarchar(20) NOT NULL,
     Receiver_ID nvarchar(20) NOT NULL,
@@ -88,7 +90,7 @@ CREATE TABLE orders (
 -- Table structure for table order_details
 CREATE TABLE order_details (
     Order_detail_ID nvarchar(20) NOT NULL,
-    More_luggage_ID nvarchar(20) NOT NULL,
+    More_luggage_ID nvarchar(20),
     Order_ID nvarchar(20) NOT NULL,
     Ticket_class_ID nvarchar(20) NOT NULL,
     PRIMARY KEY (Order_detail_ID),
@@ -103,6 +105,7 @@ CREATE TABLE plane (
     Airline_ID nvarchar(20) NOT NULL,
     Aircraft_type nvarchar(30) NOT NULL,
     Plane_seats int NOT NULL,
+    Plane_desc nvarchar(100),
     PRIMARY KEY (Plane_ID),
     FOREIGN KEY (Airline_ID) REFERENCES airline (Airline_ID)
 );
@@ -113,8 +116,8 @@ CREATE TABLE promotion (
     Promotion_name nvarchar(100) NOT NULL,
     Promotion_type nvarchar(30) NOT NULL,
     Decreased int NOT NULL,
-    Date_start datetime NOT NULL,
-    Date_end datetime NOT NULL,
+    Date_start date NOT NULL,
+    Date_end date NOT NULL,
     Airline_ID nvarchar(20) NOT NULL,
     PRIMARY KEY (Promotion_ID),
     FOREIGN KEY (Airline_ID) REFERENCES airline(Airline_ID)
@@ -125,6 +128,7 @@ CREATE TABLE receiver (
     Receiver_ID nvarchar(20) NOT NULL,
     Receiver_name nvarchar(50) NOT NULL,
     Receiver_gender nvarchar(5) NOT NULL,
+    Receiver_nationality nvarchar(10) NOT NULL,
     Receiver_phone nvarchar(20) NOT NULL,
     Receiver_address nvarchar(100),
     Receiver_DoB datetime NOT NULL,
@@ -162,5 +166,9 @@ CREATE TABLE ticket_class (
     Ticket_class_ID nvarchar(20) NOT NULL,
     Ticket_class_name nvarchar(20) NOT NULL,
     Maximum_seats int NOT NULL,
-    PRIMARY KEY (Ticket_class_ID)
+    Plane_ID nvarchar(20) NOT NULL,
+    Airline_ID nvarchar(20) NOT NULL,
+    PRIMARY KEY (Ticket_class_ID),
+    FOREIGN KEY (Plane_ID) REFERENCES plane (Plane_ID),
+    FOREIGN KEY (Airline_ID) REFERENCES airline (Airline_ID)
 );
