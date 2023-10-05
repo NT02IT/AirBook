@@ -1,166 +1,210 @@
+USE master;
+GO
+DROP DATABASE AIRBOOK;
+
+GO
 CREATE DATABASE AIRBOOK;
 
 GO
-    USE AIRBOOK;
+USE AIRBOOK;
 
--- Table structure for table airline
-CREATE TABLE airline (
-    Airline_ID nvarchar(20) NOT NULL,
-    Airline_name nvarchar(50) NOT NULL,
-    PRIMARY KEY (Airline_ID)
+-- Table structure for table action
+GO
+CREATE TABLE actions (
+    Action_ID varchar(20) NOT NULL,
+    Action_name nvarchar(50) NOT NULL,
+	Info nvarchar(50),
+    PRIMARY KEY (Action_ID)
 );
 
--- Table structure for table airport
-CREATE TABLE airport (
-    Airport_ID nvarchar(20) NOT NULL,
-    Airport_name nvarchar(50) NOT NULL,
-    Province nvarchar(40) NOT NULL,
-    PRIMARY KEY (Airport_ID)
+-- Table structure for table role
+GO
+CREATE TABLE roles (
+    Role_ID varchar(20) NOT NULL,
+    Role_name nvarchar(50) NOT NULL,
+    PRIMARY KEY (Role_ID)
 );
 
--- Table structure for table airport_gates
-CREATE TABLE airport_gates (
-    Airport_gate_ID nvarchar(20) NOT NULL,
-    Airport_ID nvarchar(20) NOT NULL,
-    Gate nvarchar(4) NOT NULL,
-    PRIMARY KEY (Airport_gate_ID),
-    FOREIGN KEY (Airport_ID) REFERENCES airport (Airport_ID)
-);
-
--- Table structure for table flight
-CREATE TABLE flight (
-    Flight_ID nvarchar(20) NOT NULL,
-    Flight_from nvarchar(20) NOT NULL,
-    Flight_to nvarchar(20) NOT NULL,
-    Hours_fly int NOT NULL,
-    Datetime_begin datetime NOT NULL,
-    PRIMARY KEY (Flight_ID),
-    FOREIGN KEY (Flight_from) REFERENCES airport (Airport_ID),
-    FOREIGN KEY (Flight_to) REFERENCES airport (Airport_ID)
-);
-
--- Table structure for table more_luggage
-CREATE TABLE more_luggage (
-    More_luggage_ID nvarchar(20) NOT NULL,
-    Luggage_weight int NOT NULL,
-    Luggage_price int NOT NULL,
-    PRIMARY KEY (More_luggage_ID)
-);
-
-CREATE TABLE user_type(
-    User_type_ID nvarchar(20) NOT NULL,
-    User_type_name nvarchar(20) NOT NULL,
-    PRIMARY KEY (User_type_ID)
+-- Table structure for table permission
+GO
+CREATE TABLE permission (
+    Per_ID varchar(20) NOT NULL,
+    Role_ID varchar(20) NOT NULL,
+	Action_ID varchar(20) NOT NULL,
+	Allowed int NOT NULL,
+    PRIMARY KEY (Per_ID),
+	FOREIGN KEY(Role_ID) REFERENCES roles(Role_ID),
+	FOREIGN KEY(Action_ID) REFERENCES actions(Action_ID)
 );
 
 -- Table structure for table user
+GO
 CREATE TABLE users (
-    User_ID nvarchar(20) NOT NULL,
-    User_type_ID nvarchar(20) NOT NULL,
-    Username nvarchar(50) NOT NULL,
-    Real_name nvarchar(50) NOT NULL,
-    User_DoB datetime NOT NULL,
-    User_nationality nvarchar(40) NOT NULL,
-    User_address nvarchar(100),
-    CCCD varchar(20) NOT NULL,
-    Pwd varchar(20) NOT NULL,
-    PhoneNumber nvarchar(20) NOT NULL,
-    Email nvarchar(50) NOT NULL,
-    PRIMARY KEY (User_ID),
-    FOREIGN KEY (User_type_ID) REFERENCES user_type (User_type_ID)
+    User_ID varchar(20) NOT NULL,
+    Role_ID varchar(20) NOT NULL,
+	Username varchar(20) NOT NULL,
+	Pwd varchar(20) NOT NULL, 
+	Real_name nvarchar(50) NOT NULL,
+	DoB date NOT NULL, 
+	Gender nvarchar(10) NOT NULL,
+	Nation nvarchar(20) NOT NULL, 
+	User_address nvarchar(50) NOT NULL,
+	Phone_number varchar(11) NOT NULL,
+	CCCD varchar(12) NOT NULL,
+	Email varchar(50) NOT NULL,
+	Date_create datetime NOT NULL,
+	PRIMARY KEY (User_ID),
+	FOREIGN KEY(Role_ID) REFERENCES roles(Role_ID)
 );
 
--- Table structure for table order_table
-CREATE TABLE orders (
-    Order_ID nvarchar(20) NOT NULL,
-    User_ID nvarchar(20) NOT NULL,
-    Promotion_ID nvarchar(20) NOT NULL,
-    Order_day datetime NOT NULL,
-    Ticket_ID nvarchar(20) NOT NULL,
-    Receiver_ID nvarchar(20) NOT NULL,
-    PRIMARY KEY (Order_ID),
-    FOREIGN KEY (User_ID) REFERENCES users (User_ID),
-    FOREIGN KEY (Promotion_ID) REFERENCES promotion (Promotion_ID),
-    FOREIGN KEY (Ticket_ID) REFERENCES ticket (Ticket_ID),
-    FOREIGN KEY (Receiver_ID) REFERENCES receiver (Receiver_ID)
+-- Table structure for table receivers
+GO
+CREATE TABLE receivers (
+    Receiver_ID varchar(20) NOT NULL,
+	Receiver_name nvarchar(50) NOT NULL,
+	Gender nvarchar(10) NOT NULL,
+	DoB date NOT NULL, 
+	Receiver_address nvarchar(50) NOT NULL,
+	Nation nvarchar(20) NOT NULL, 
+	Phone_number varchar(11) NOT NULL,
+	CCCD varchar(12),
+	Email varchar(50) NOT NULL,
+	PRIMARY KEY (Receiver_ID),
 );
 
--- Table structure for table order_details
-CREATE TABLE order_details (
-    Order_detail_ID nvarchar(20) NOT NULL,
-    More_luggage_ID nvarchar(20) NOT NULL,
-    Order_ID nvarchar(20) NOT NULL,
-    Ticket_class_ID nvarchar(20) NOT NULL,
-    PRIMARY KEY (Order_detail_ID),
-    FOREIGN KEY (More_luggage_ID) REFERENCES more_luggage (More_luggage_ID),
-    FOREIGN KEY (Order_ID) REFERENCES orders (Order_ID),
-    FOREIGN KEY (Ticket_class_ID) REFERENCES ticket_class (Ticket_class_ID)
+-- Table structure for table more_luggage
+GO
+CREATE TABLE more_luggage (
+    More_luggage_ID varchar(20) NOT NULL,
+	Luggage_weight int NOT NULL,
+	Price int NOT NULL
+	PRIMARY KEY (More_luggage_ID),
+);
+
+-- Table structure for table airline
+GO
+CREATE TABLE airlines (
+    Airline_ID varchar(20) NOT NULL,
+	Airline_name nvarchar(50) NOT NULL,
+	PRIMARY KEY (Airline_ID),
 );
 
 -- Table structure for table plane
-CREATE TABLE plane (
-    Plane_ID nvarchar(20) NOT NULL,
-    Airline_ID nvarchar(20) NOT NULL,
-    Aircraft_type nvarchar(30) NOT NULL,
-    Plane_seats int NOT NULL,
-    PRIMARY KEY (Plane_ID),
-    FOREIGN KEY (Airline_ID) REFERENCES airline (Airline_ID)
+GO
+CREATE TABLE planes (
+    Plane_ID varchar(20) NOT NULL,
+	Airline_ID varchar(20) NOT NULL,
+	Plane_name nvarchar(50) NOT NULL,
+	Seats int NOT NULL,
+	PRIMARY KEY (Plane_ID),
+	FOREIGN KEY (Airline_ID) REFERENCES airlines(Airline_ID)
 );
 
--- Table structure for table promotion
-CREATE TABLE promotion (
-    Promotion_ID nvarchar(20) NOT NULL,
-    Promotion_name nvarchar(100) NOT NULL,
-    Promotion_type nvarchar(30) NOT NULL,
-    Decreased int NOT NULL,
-    Date_start datetime NOT NULL,
-    Date_end datetime NOT NULL,
-    Airline_ID nvarchar(20) NOT NULL,
-    PRIMARY KEY (Promotion_ID),
-    FOREIGN KEY (Airline_ID) REFERENCES airline(Airline_ID)
+-- Table structure for table ticket_class
+GO
+CREATE TABLE ticket_classes (
+    Ticket_class_ID varchar(20) NOT NULL,
+	Plane_ID varchar(20) NOT NULL,
+	Class_name nvarchar(50) NOT NULL,
+	Seats_quantity int NOT NULL,
+	PRIMARY KEY (Ticket_class_ID),
+	FOREIGN KEY (Plane_ID) REFERENCES planes(Plane_ID)
 );
 
--- Table structure for table receiver
-CREATE TABLE receiver (
-    Receiver_ID nvarchar(20) NOT NULL,
-    Receiver_name nvarchar(50) NOT NULL,
-    Receiver_gender nvarchar(5) NOT NULL,
-    Receiver_phone nvarchar(20) NOT NULL,
-    Receiver_address nvarchar(100),
-    Receiver_DoB datetime NOT NULL,
-    Receiver_CCCD nvarchar(20) NOT NULL,
-    Receiver_email nvarchar(30),
-    PRIMARY KEY (Receiver_ID)
+-- Table structure for table seats
+GO
+CREATE TABLE seats (
+    Seat_ID varchar(20) NOT NULL,
+	Ticket_class_ID varchar(20) NOT NULL,
+	Seat_name nvarchar(10) NOT NULL,
+	PRIMARY KEY (Seat_ID),
+	FOREIGN KEY (Ticket_class_ID) REFERENCES ticket_classes(Ticket_class_ID)
 );
 
-CREATE TABLE seats(
-    Seat_ID nvarchar(20) NOT NULL,
-    Plane_ID nvarchar(20) NOT NULL,
-    Ticket_class_ID nvarchar(20) NOT NULL,
-    PRIMARY KEY (Seat_ID),
-    FOREIGN KEY (Plane_ID) REFERENCES plane (Plane_ID),
-    FOREIGN KEY (Ticket_class_ID) REFERENCES ticket_class (Ticket_class_ID)
+-- Table structure for table airports
+GO
+CREATE TABLE airports (
+    Airport_ID varchar(20) NOT NULL,
+	Airport_name nvarchar(50) NOT NULL,
+	Provine nvarchar(50) NOT NULL,
+	PRIMARY KEY (Airport_ID),
 );
 
--- Table structure for table ticket
-CREATE TABLE ticket (
-    Ticket_ID nvarchar(20) NOT NULL,
-    Flight_ID nvarchar(20) NOT NULL,
-    Airport_gate_ID nvarchar(20) NOT NULL,
-    Ticket_price int NOT NULL,
-    Plane_ID nvarchar(20) NOT NULL,
-    Seat_ID nvarchar(20) NOT NULL,
-    Sold_out int NOT NULL,
-    PRIMARY KEY (Ticket_ID),
-    FOREIGN KEY (Flight_ID) REFERENCES flight (Flight_ID),
-    FOREIGN KEY (Plane_ID) REFERENCES plane (Plane_ID),
-    FOREIGN KEY (Seat_ID) REFERENCES seats(Seat_ID)
+-- Table structure for table airport_gates
+GO
+CREATE TABLE airport_gates (
+    Gate_ID varchar(20) NOT NULL,
+	Airport_ID varchar(20) NOT NULL,
+	Gate_name nvarchar(50) NOT NULL,
+	PRIMARY KEY (Gate_ID),
+	FOREIGN KEY (Airport_ID) REFERENCES airports(Airport_ID)
 );
 
--- Table structure for table ticket_details
-CREATE TABLE ticket_class (
-    Ticket_class_ID nvarchar(20) NOT NULL,
-    Ticket_class_name nvarchar(20) NOT NULL,
-    Maximum_seats int NOT NULL,
-    PRIMARY KEY (Ticket_class_ID)
+-- Table structure for table flights
+GO
+CREATE TABLE flights (
+    Flight_ID varchar(20) NOT NULL,
+	Flying_from varchar(20) NOT NULL,
+	Flying_to varchar(20) NOT NULL,
+	Hours_fly int NOT NULL, 
+	Departure_flight datetime NOT NULL,
+	PRIMARY KEY (Flight_ID),
+	FOREIGN KEY (Flying_from) REFERENCES airports(Airport_ID),
+	FOREIGN KEY (Flying_to) REFERENCES airports(Airport_ID),
+);
+
+-- Table structure for table tickets
+GO
+CREATE TABLE tickets (
+    Ticket_ID varchar(20) NOT NULL,
+	Flight_ID varchar(20) NOT NULL,
+	Gate_ID varchar(20) NOT NULL,
+	Seat_ID varchar(20) NOT NULL,
+	Price int NOT NULL,
+	Sold_out bit NOT NULL,
+	PRIMARY KEY (Ticket_ID),
+	FOREIGN KEY (Flight_ID) REFERENCES flights(Flight_ID),
+	FOREIGN KEY (Gate_ID) REFERENCES airport_gates(Gate_ID),
+	FOREIGN KEY (Seat_ID) REFERENCES seats(Seat_ID)
+);
+
+-- Table structure for table promotions
+GO
+CREATE TABLE promotions (
+    Promo_ID varchar(20) NOT NULL,
+	Airline_ID varchar(20) NOT NULL,
+	Promo_name nvarchar(200) NOT NULL,
+	Promo_type int NOT NULL,
+	Date_start datetime NOT NULL,
+	Date_end datetime NOT NULL,
+	Decreased int NOT NULL,
+	PRIMARY KEY (Promo_ID),
+	FOREIGN KEY (Airline_ID) REFERENCES airlines(Airline_ID)
+);
+
+-- Table structure for table orders
+GO
+CREATE TABLE orders (
+    Order_ID varchar(20) NOT NULL,
+	User_ID varchar(20) NOT NULL,	
+	Promo_ID varchar(20) NOT NULL,
+	Date_order datetime NOT NULL,
+	PRIMARY KEY (Order_ID),
+	FOREIGN KEY (Promo_ID) REFERENCES promotions(Promo_ID),
+	FOREIGN KEY (User_ID) REFERENCES users(User_ID),    
+);
+
+-- Table structure for table order_details
+GO
+CREATE TABLE order_details (
+    Order_detail_ID varchar(20) NOT NULL,
+	Order_ID varchar(20) NOT NULL,
+	More_luggage_ID varchar(20) NOT NULL,
+	Receiver_ID varchar(20) NOT NULL,
+	Ticket_ID varchar(20) NOT NULL,
+	PRIMARY KEY (Order_detail_ID),
+	FOREIGN KEY (Order_ID) REFERENCES orders(Order_ID),    
+	FOREIGN KEY (More_luggage_ID) REFERENCES more_luggage(More_luggage_ID),    
+    FOREIGN KEY (Ticket_ID) REFERENCES tickets(Ticket_ID),
+    FOREIGN KEY (Receiver_ID) REFERENCES receivers(Receiver_ID)
 );
