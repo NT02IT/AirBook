@@ -96,6 +96,7 @@ CREATE TABLE planes (
 	Airline_ID varchar(20) NOT NULL,
 	Plane_name nvarchar(50) NOT NULL,
 	Seats int NOT NULL,
+	Plane_desc nvarchar(100),
 	PRIMARY KEY (Plane_ID),
 	FOREIGN KEY (Airline_ID) REFERENCES airlines(Airline_ID)
 );
@@ -187,7 +188,7 @@ GO
 CREATE TABLE orders (
     Order_ID varchar(20) NOT NULL,
 	User_ID varchar(20) NOT NULL,	
-	Promo_ID varchar(20) NOT NULL,
+	Promo_ID varchar(20),
 	Date_order datetime NOT NULL,
 	PRIMARY KEY (Order_ID),
 	FOREIGN KEY (Promo_ID) REFERENCES promotions(Promo_ID),
@@ -199,8 +200,8 @@ GO
 CREATE TABLE order_details (
     Order_detail_ID varchar(20) NOT NULL,
 	Order_ID varchar(20) NOT NULL,
-	More_luggage_ID varchar(20) NOT NULL,
-	Receiver_ID varchar(20) NOT NULL,
+	More_luggage_ID varchar(20),
+	Receiver_ID varchar(20),
 	Ticket_ID varchar(20) NOT NULL,
 	PRIMARY KEY (Order_detail_ID),
 	FOREIGN KEY (Order_ID) REFERENCES orders(Order_ID),    
