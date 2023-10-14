@@ -30,28 +30,21 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="headerLogin" alignment="0" max="32767" attributes="0"/>
           <Component id="pnBody" alignment="1" max="32767" attributes="0"/>
+          <Component id="pnHeader" alignment="1" pref="360" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="headerLogin" min="-2" pref="62" max="-2" attributes="0"/>
+              <Component id="pnHeader" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-              <Component id="pnBody" pref="530" max="32767" attributes="0"/>
+              <Component id="pnBody" pref="551" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="headerLogin">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/assets/image/auth-header.png"/>
-        </Property>
-      </Properties>
-    </Component>
     <Container class="javax.swing.JPanel" name="pnBody">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -75,21 +68,22 @@
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="txtNoti" alignment="0" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="lbCCCD" max="32767" attributes="0"/>
                                       <Group type="102" attributes="0">
                                           <Component id="lbSubtitle2" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                          <EmptySpace min="0" pref="44" max="32767" attributes="0"/>
                                       </Group>
                                       <Component id="lbDoB" alignment="0" max="32767" attributes="0"/>
                                       <Component id="lbName" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="tfName" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
-                                      <Component id="tfDoB" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
-                                      <Component id="tfCCCD" alignment="1" min="-2" pref="160" max="-2" attributes="0"/>
+                                      <Component id="txtName" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
+                                      <Component id="txtDoB" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
+                                      <Component id="txtCCCD" alignment="1" min="-2" pref="160" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
@@ -101,9 +95,9 @@
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="tfNation" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
-                                      <Component id="tfAddress" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
-                                      <Component id="tfPhoneNum" alignment="1" min="-2" pref="160" max="-2" attributes="0"/>
+                                      <Component id="txtNation" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
+                                      <Component id="txtAddress" alignment="0" min="-2" pref="160" max="-2" attributes="0"/>
+                                      <Component id="txtPhoneNum" alignment="1" min="-2" pref="160" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Component id="btSignup" alignment="1" max="32767" attributes="0"/>
@@ -120,9 +114,9 @@
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="tfPwdConfirm" max="32767" attributes="0"/>
-                                      <Component id="tfEmail" pref="160" max="32767" attributes="0"/>
-                                      <Component id="tfPwd" max="32767" attributes="0"/>
+                                      <Component id="txtPwdConfirm" max="32767" attributes="0"/>
+                                      <Component id="txtEmail" pref="160" max="32767" attributes="0"/>
+                                      <Component id="txtPwd" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -142,17 +136,17 @@
                   <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lbEmail" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
-                      <Component id="tfEmail" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
+                      <Component id="txtEmail" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lbPwd" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="tfPwd" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtPwd" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lbPwdConfirm" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="tfPwdConfirm" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtPwdConfirm" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
@@ -160,35 +154,37 @@
                   <Component id="lbSubtitle2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="tfName" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
+                      <Component id="txtName" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
                       <Component id="lbName" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="tfDoB" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
+                      <Component id="txtDoB" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
                       <Component id="lbDoB" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="tfCCCD" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
+                      <Component id="txtCCCD" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
                       <Component id="lbCCCD" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="tfNation" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
+                      <Component id="txtNation" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
                       <Component id="lbNation" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="tfAddress" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
+                      <Component id="txtAddress" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
                       <Component id="lbAddress" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="tfPhoneNum" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
+                      <Component id="txtPhoneNum" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
                       <Component id="lbPhoneNum" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="29" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="txtNoti" pref="38" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="btSignup" min="-2" pref="40" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
               </Group>
@@ -230,15 +226,17 @@
             <Property name="text" type="java.lang.String" value="M&#x1ead;t kh&#x1ea9;u"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="tfEmail">
+        <Component class="javax.swing.JTextField" name="txtEmail">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f6" green="f6" red="f6" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="abc@gmail.com"/>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="txtPwd"/>
+            </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfEmailActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtEmailActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btSignup">
@@ -301,26 +299,31 @@
             <Property name="text" type="java.lang.String" value="H&#x1ecd; v&#xe0; t&#xea;n"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="tfName">
+        <Component class="javax.swing.JTextField" name="txtName">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f6" green="f6" red="f6" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Nguy&#x1ec5;n V&#x103;n A"/>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="txtDoB"/>
+            </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfNameActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNameActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="tfDoB">
+        <Component class="javax.swing.JTextField" name="txtDoB">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f6" green="f6" red="f6" type="rgb"/>
             </Property>
             <Property name="text" type="java.lang.String" value="dd/mm/yyyy"/>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="txtCCCD"/>
+            </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfDoBActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtDoBActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lbDoB">
@@ -345,15 +348,17 @@
             <Property name="text" type="java.lang.String" value="S&#x1ed1; CCCD"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="tfCCCD">
+        <Component class="javax.swing.JTextField" name="txtCCCD">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f6" green="f6" red="f6" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="xxx xxx xxx xxx"/>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="txtNation"/>
+            </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfCCCDActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCCCDActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lbPhoneNum">
@@ -367,26 +372,30 @@
             <Property name="text" type="java.lang.String" value="S&#x1ed1; &#x111;i&#x1ec7;n tho&#x1ea1;i"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="tfPhoneNum">
+        <Component class="javax.swing.JTextField" name="txtPhoneNum">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f6" green="f6" red="f6" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="0xx xxx xxx"/>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="btSignup"/>
+            </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfPhoneNumActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPhoneNumActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="tfAddress">
+        <Component class="javax.swing.JTextField" name="txtAddress">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f6" green="f6" red="f6" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="&#x110;&#x1ecb;a ch&#x1ec9;"/>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="txtPhoneNum"/>
+            </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfAddressActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtAddressActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lbAddress">
@@ -411,38 +420,118 @@
             <Property name="text" type="java.lang.String" value="Qu&#x1ed1;c gia"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="tfNation">
+        <Component class="javax.swing.JTextField" name="txtNation">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f6" green="f6" red="f6" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Vi&#x1ec7;t Nam"/>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="txtAddress"/>
+            </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfNationActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNationActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JPasswordField" name="tfPwd">
+        <Component class="javax.swing.JPasswordField" name="txtPwd">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f6" green="f6" red="f6" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jPasswordField1"/>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="txtPwdConfirm"/>
+            </Property>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[90, 27]"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPwdActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JPasswordField" name="txtPwdConfirm">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="f6" green="f6" red="f6" type="rgb"/>
+            </Property>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="txtName"/>
+            </Property>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[90, 27]"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPwdConfirmActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="txtNoti">
+          <Properties>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="null"/>
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JPasswordField" name="tfPwdConfirm">
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPanel" name="pnHeader">
+      <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="a5" green="8a" red="1" type="rgb"/>
+        </Property>
+        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+          <Dimension value="[100, 62]"/>
+        </Property>
+      </Properties>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <Component id="jButton1" min="-2" pref="63" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+                  <Component id="jLabel2" min="-2" pref="116" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Component id="jButton1" alignment="0" max="32767" attributes="0"/>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                  <Component id="jLabel2" min="-2" pref="27" max="-2" attributes="0"/>
+                  <EmptySpace pref="19" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="f6" green="f6" red="f6" type="rgb"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/assets/log-header-logo.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="jPasswordField1"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-              <Dimension value="[90, 27]"/>
+              <Dimension value="[116, 26]"/>
             </Property>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton1">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="a5" green="8a" red="1" type="rgb"/>
+            </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/assets/icon/png/action-arrow-back -signupfrm.png"/>
+            </Property>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="null"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

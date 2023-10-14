@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  * @author agond
  */
 public class ConnectDB{
-    protected static Connection conn = null;
+    public static Connection conn = null;
     private static String server;
     private static String database;
     private static String username;

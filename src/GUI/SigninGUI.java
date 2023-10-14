@@ -4,6 +4,15 @@
  */
 package GUI;
 
+import BUS.UserBUS;
+import DTO.entities.User;
+import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
 /**
@@ -14,7 +23,15 @@ public class SigninGUI extends javax.swing.JFrame {
     /**
      * Creates new form AuthGUI
      */
-    public SigninGUI() {
+    private UserBUS userBUS;
+    private User user;
+    private String username = "";
+    private String email = "";
+    private String pwd = "";
+    
+    public SigninGUI() throws SQLException, ClassNotFoundException, IOException {
+        this.userBUS = new UserBUS();
+        this.user = new User();
         initComponents();
         this.setTitle("Airbook - Đăng nhập");
     }
@@ -35,25 +52,24 @@ public class SigninGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        headerLogin = new javax.swing.JLabel();
         pnBody = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         lbEmail = new javax.swing.JLabel();
         lbPwd = new javax.swing.JLabel();
-        tfEmail = new javax.swing.JTextField();
+        txtUsername = new javax.swing.JTextField();
         btSignin = new javax.swing.JButton();
         btSignup = new javax.swing.JButton();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        txtPwd = new javax.swing.JPasswordField();
+        pnHeader = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
-        setSize(new java.awt.Dimension(360, 328));
-
-        headerLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/image/auth-header.png"))); // NOI18N
+        setSize(new java.awt.Dimension(360, 318));
 
         pnBody.setBackground(new java.awt.Color(255, 255, 255));
-        pnBody.setPreferredSize(new java.awt.Dimension(360, 266));
+        pnBody.setPreferredSize(new java.awt.Dimension(360, 274));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(1, 138, 165));
@@ -62,17 +78,16 @@ public class SigninGUI extends javax.swing.JFrame {
 
         lbEmail.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbEmail.setForeground(new java.awt.Color(84, 104, 129));
-        lbEmail.setText("Email");
+        lbEmail.setText("Username");
 
         lbPwd.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbPwd.setForeground(new java.awt.Color(84, 104, 129));
         lbPwd.setText("Mật khẩu");
 
-        tfEmail.setBackground(new java.awt.Color(246, 246, 246));
-        tfEmail.setText("abc@gmail.com");
-        tfEmail.addActionListener(new java.awt.event.ActionListener() {
+        txtUsername.setBackground(new java.awt.Color(246, 246, 246));
+        txtUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                tfEmailActionPerformed(evt);
+                txtUsernameActionPerformed(evt);
             }
         });
 
@@ -81,6 +96,7 @@ public class SigninGUI extends javax.swing.JFrame {
         btSignin.setForeground(new java.awt.Color(255, 255, 255));
         btSignin.setText("Đăng nhập");
         btSignin.setBorder(null);
+        btSignin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btSignin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSigninActionPerformed(evt);
@@ -92,15 +108,20 @@ public class SigninGUI extends javax.swing.JFrame {
         btSignup.setForeground(new java.awt.Color(84, 104, 129));
         btSignup.setText("Đăng ký");
         btSignup.setBorder(null);
+        btSignup.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btSignup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSignupActionPerformed(evt);
             }
         });
 
-        jPasswordField1.setBackground(new java.awt.Color(246, 246, 246));
-        jPasswordField1.setText("jPasswordField1");
-        jPasswordField1.setPreferredSize(new java.awt.Dimension(90, 27));
+        txtPwd.setBackground(new java.awt.Color(246, 246, 246));
+        txtPwd.setPreferredSize(new java.awt.Dimension(90, 27));
+        txtPwd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPwdActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnBodyLayout = new javax.swing.GroupLayout(pnBody);
         pnBody.setLayout(pnBodyLayout);
@@ -113,13 +134,13 @@ public class SigninGUI extends javax.swing.JFrame {
                     .addComponent(btSignup, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btSignin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnBodyLayout.createSequentialGroup()
-                        .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lbEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbPwd, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tfEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                            .addComponent(jPasswordField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(lbEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                            .addComponent(lbPwd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                        .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                            .addComponent(txtPwd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(24, 24, 24))
         );
         pnBodyLayout.setVerticalGroup(
@@ -130,41 +151,67 @@ public class SigninGUI extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tfEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbPwd)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtPwd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24)
                 .addComponent(btSignin, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(8, 8, 8)
                 .addComponent(btSignup, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24))
+                .addContainerGap(24, Short.MAX_VALUE))
+        );
+
+        pnHeader.setBackground(new java.awt.Color(1, 138, 165));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/log-header-logo.png"))); // NOI18N
+        jLabel2.setPreferredSize(new java.awt.Dimension(116, 26));
+
+        javax.swing.GroupLayout pnHeaderLayout = new javax.swing.GroupLayout(pnHeader);
+        pnHeader.setLayout(pnHeaderLayout);
+        pnHeaderLayout.setHorizontalGroup(
+            pnHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnHeaderLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pnHeaderLayout.setVerticalGroup(
+            pnHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnHeaderLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(headerLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(pnBody, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnBody, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(headerLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(pnBody, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE))
+                .addComponent(pnHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(pnBody, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void tfEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfEmailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tfEmailActionPerformed
+    private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
+        txtUsername.addActionListener((ActionEvent e) -> {
+            txtPwd.requestFocus();
+        });
+    }//GEN-LAST:event_txtUsernameActionPerformed
 
     private void btSignupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSignupActionPerformed
+        this.setVisible(false);
         SignupGUI signUpGUI = new SignupGUI();
         signUpGUI.showWindow();
     }//GEN-LAST:event_btSignupActionPerformed
@@ -174,11 +221,31 @@ public class SigninGUI extends javax.swing.JFrame {
         //Hiển thị dialog nếu sai mật khẩu/ email
         //Kiểm tra quyền 
         //Hiển thị form theo từng quyền người dùng
-        
         this.setVisible(false);
-        MainGUI gui = new MainGUI("Statistic","root");
-        gui.showWindow();
+//        MainGUI gui = new MainGUI("Statistic","root");
+//        gui.showWindow();
+        pwd = txtPwd.getText();
+        int checkEmail = txtUsername.getText().indexOf('@');
+        if(checkEmail == -1)
+            username = txtUsername.getText();
+        else
+            email = txtUsername.getText();
+        user.setEmail(email);
+        user.setUsername(username);
+        user.setPwd(pwd);
+        
+        //test
+        if(userBUS.signIn(user) != null){            
+            JOptionPane.showMessageDialog(null,"Đăng nhập thành công!!!", "Success",JOptionPane.INFORMATION_MESSAGE);
+        } else 
+            JOptionPane.showMessageDialog(null,"Sai thông tin đăng nhập!!!", "Error",JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btSigninActionPerformed
+
+    private void txtPwdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPwdActionPerformed
+        txtPwd.addActionListener((ActionEvent e) -> {
+            btSignin.requestFocus();
+        });
+    }//GEN-LAST:event_txtPwdActionPerformed
 
     /**
      * @param args the command line arguments
@@ -211,7 +278,15 @@ public class SigninGUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SigninGUI().setVisible(true);
+                try {
+                    new SigninGUI().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(SigninGUI.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(SigninGUI.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(SigninGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -219,12 +294,13 @@ public class SigninGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btSignin;
     private javax.swing.JButton btSignup;
-    private javax.swing.JLabel headerLogin;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPasswordField jPasswordField1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lbEmail;
     private javax.swing.JLabel lbPwd;
     private javax.swing.JPanel pnBody;
-    private javax.swing.JTextField tfEmail;
+    private javax.swing.JPanel pnHeader;
+    private javax.swing.JPasswordField txtPwd;
+    private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }

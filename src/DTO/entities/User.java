@@ -4,127 +4,113 @@
  */
 package DTO.entities;
 
+import assets.EnumCheck.PwdValidStatus;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.Date;
 
 /**
  *
  * @author agond
  */
-public abstract class User {
-    protected String userID;
-    protected UserType userType;
+public class User extends Person{
+    protected String roleID;    
     protected String username;
-    protected String realName;
-    protected Date userDoB;
-    protected String userNationality;
-    protected String userAddress;
-    protected String CCCD;
     protected String pwd;
-    protected String phoneNumber;
-    protected String email;
+    protected Date dateCreate;
 
     public User() {
     }
-    
-    public User(String userID, UserType userType, String username, String realName, Date userDoB, String userNationality, String userAddress, String CCCD, String pwd, String phoneNumber, String email) {
-        this.userID = userID;
-        this.userType = new UserType(userType);
+
+    public User(String username, String pwd) {
         this.username = username;
-        this.realName = realName;
-        this.userDoB = userDoB;
-        this.userNationality = userNationality;
-        this.userAddress = userAddress;
-        this.CCCD = CCCD;
         this.pwd = pwd;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
     }
 
-    public String getUserID() {
-        return userID;
+    public User(String roleID, String username, String pwd, Date dateCreate, String ID, String name, String gender, Date doB, String address, String nation, String phoneNumber, String CCCD, String email) {
+        super(ID, name, gender, doB, address, nation, phoneNumber, CCCD, email);
+        this.roleID = roleID;
+        this.username = username;
+        this.pwd = pwd;
+        this.dateCreate = dateCreate;
     }
 
-    public UserType getUserType() {
-        return userType;
+    public String getRoleID() {
+        return roleID;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public String getRealName() {
-        return realName;
-    }
-
-    public Date getUserDoB() {
-        return userDoB;
-    }
-
-    public String getUserNationality() {
-        return userNationality;
-    }
-
-    public String getUserAddress() {
-        return userAddress;
-    }
-
-    public String getCCCD() {
-        return CCCD;
-    }
-
     public String getPwd() {
         return pwd;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public Date getDateCreate() {
+        return dateCreate;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setUserID(String userID) {
-        this.userID = userID;
-    }
-
-    public void setUserType(UserType userType) {
-        this.userType = new UserType(userType);
+    public void setRoleID(String roleID) {
+        this.roleID = roleID;
     }
 
     public void setUsername(String username) {
         this.username = username;
     }
 
-    public void setRealName(String realName) {
-        this.realName = realName;
-    }
-
-    public void setUserDoB(Date userDoB) {
-        this.userDoB = userDoB;
-    }
-
-    public void setUserNationality(String userNationality) {
-        this.userNationality = userNationality;
-    }
-
-    public void setUserAddress(String userAddress) {
-        this.userAddress = userAddress;
-    }
-
-    public void setCCCD(String CCCD) {
-        this.CCCD = CCCD;
-    }
-
     public void setPwd(String pwd) {
         this.pwd = pwd;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setDateCreate(Date dateCreate) {
+        this.dateCreate = dateCreate;
     }
+    
+    public static String generateID(){
+        long millis = System.currentTimeMillis();
+        String time = String.valueOf(millis);
+        String id = "AC" + time.substring(time.length()-8);
+        return id;
+    }
+    
+    public static String hashPassword(String password) throws NoSuchAlgorithmException {
+        // Tạo một instance của MessageDigest với thuật toán SHA-256
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
 
-    public void setEmail(String email) {
-        this.email = email;
-    }    
+        // Tạo một byte array từ chuỗi mật khẩu
+        byte[] bytes = password.getBytes(StandardCharsets.UTF_8);
+
+        // Hash chuỗi mật khẩu
+        byte[] hash = digest.digest(bytes);
+
+        // Convert hash thành chuỗi thập lục phân
+        String hashedPassword = Base64.getEncoder().encodeToString(hash);
+        return hashedPassword;
+    }
+    
+    public static PwdValidStatus checkPwdValid(String pwd){
+        if(pwd.length()<8) return PwdValidStatus.VERYSHORT;
+        
+        boolean hasNumber = false;
+        for(char c : pwd.toCharArray()){
+            if(Character.isDigit(c)){
+                hasNumber = true;
+                break;
+            }                
+        }
+        if(!hasNumber) return PwdValidStatus.MISSINGNUMBER;
+        
+        boolean hasLetter = false;
+        for(char c: pwd.toCharArray()){
+            if(Character.isLetter(c)){
+                hasLetter = true;
+                break;
+            }
+        }
+        if(!hasLetter) return PwdValidStatus.MISSINGLETTER;
+        return PwdValidStatus.VALID;
+    }
 }

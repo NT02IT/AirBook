@@ -70,6 +70,10 @@ CREATE TABLE receivers (
 	PRIMARY KEY (Receiver_ID),
 );
 
+GO
+ALTER TABLE receivers 
+ADD User_ID varchar(20) REFERENCES users(User_ID);
+
 -- Table structure for table airline
 GO
 CREATE TABLE airlines (

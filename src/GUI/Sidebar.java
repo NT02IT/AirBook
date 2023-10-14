@@ -5,6 +5,10 @@
 package GUI;
 
 import java.awt.Color;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 /**
  *
@@ -309,7 +313,16 @@ public class Sidebar extends javax.swing.JPanel {
 
     private void btSignoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSignoutActionPerformed
         mainGUI.dispose();
-        SigninGUI signinGUI = new SigninGUI();
+        SigninGUI signinGUI = null;
+        try {
+            signinGUI = new SigninGUI();
+        } catch (SQLException ex) {
+            Logger.getLogger(Sidebar.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Sidebar.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Sidebar.class.getName()).log(Level.SEVERE, null, ex);
+        }
         signinGUI.showWindow();
     }//GEN-LAST:event_btSignoutActionPerformed
 

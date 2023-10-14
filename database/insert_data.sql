@@ -15,11 +15,11 @@ VALUES
 -- Insert into receivers
 GO
 INSERT INTO
-    receivers(Receiver_ID, Receiver_name, Gender, DoB, Receiver_address, Nation, Phone_number, CCCD, Email)
+    receivers(Receiver_ID, Receiver_name, Gender, DoB, Receiver_address, Nation, Phone_number, CCCD, Email, User_ID)
 VALUES
-	('REC0001', 'Hà Quốc Vĩ', 'Nam', '2002-01-17', 'Hiệp Bình Chánh, Thủ Đức', 'Việt Nam', '0320410607', '17524729102', 'quocvi1701@gmail.com'),
-	('REC0002', 'Nguyễn Anh Tuấn', 'Nam', '2002-11-19', 'Hiệp Bình Chánh, Thủ Đức', 'Việt Nam', '0320410607', '17524729102', 'lowtee@gmail.com'),
-	('REC0003', 'Lê Thái Vi', 'Nam', '2002-01-15', 'Quận 10', 'Việt Nam', '0320410607', '17524729102', 'maito@gmail.com');
+	('REC0001', 'Hà Quốc Vĩ', 'Nam', '2002-01-17', 'Hiệp Bình Chánh, Thủ Đức', 'Việt Nam', '0320410607', '17524729102', 'quocvi1701@gmail.com', 'AC0100'),
+	('REC0002', 'Nguyễn Anh Tuấn', 'Nam', '2002-11-19', 'Hiệp Bình Chánh, Thủ Đức', 'Việt Nam', '0320410607', '17524729102', 'lowtee@gmail.com', 'AC0101'),
+	('REC0003', 'Lê Thái Vi', 'Nam', '2002-01-15', 'Quận 10', 'Việt Nam', '0320410607', '17524729102', 'maito@gmail.com', 'AC0100');
 
 -- Insert into seats
 GO
