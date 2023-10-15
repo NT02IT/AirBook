@@ -212,7 +212,14 @@ public class SigninGUI extends javax.swing.JFrame {
 
     private void btSignupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSignupActionPerformed
         this.setVisible(false);
-        SignupGUI signUpGUI = new SignupGUI();
+        SignupGUI signUpGUI = null;
+        try {
+            signUpGUI = new SignupGUI();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SigninGUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(SigninGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         signUpGUI.showWindow();
     }//GEN-LAST:event_btSignupActionPerformed
 

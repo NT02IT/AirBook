@@ -54,6 +54,8 @@ CREATE TABLE users (
 	PRIMARY KEY (User_ID),
 	FOREIGN KEY(Role_ID) REFERENCES roles(Role_ID)
 );
+GO
+ALTER TABLE AIRBOOK.dbo.users ALTER COLUMN Pwd VARCHAR(MAX);
 
 -- Table structure for table receivers
 GO

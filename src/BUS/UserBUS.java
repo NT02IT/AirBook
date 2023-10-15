@@ -22,8 +22,8 @@ import java.util.regex.Pattern;
  * @author agond
  */
 public class UserBUS {
-    protected ArrayList<Person> list;
-    protected UserDAO userDAO;
+    protected static ArrayList<Person> list;
+    protected static UserDAO userDAO;
     private static int quantity = 0;
 
     public UserBUS() throws ClassNotFoundException, SQLException, IOException {
@@ -32,16 +32,17 @@ public class UserBUS {
         quantity = list.size();
     }
 
-    public ArrayList<Person> getList() {
+    public static ArrayList<Person> getList() {
         return list;
     }
     
-    public int getQuantity() {
+    public static int getQuantity() {
         quantity = list.size();
         return quantity;
     }
     
-    public User signIn(User user){
+    public static User signIn(User user) throws NoSuchAlgorithmException{
+        user.setPwd(User.hashPassword(user.getPwd()));
         User temp;
         for(Person _user : list){
             temp = (User)_user;
@@ -51,7 +52,7 @@ public class UserBUS {
         return null;
     }
     
-    public boolean checkUnique(User user){
+    public static boolean checkUnique(User user){
         User temp;
         for(Person _user : list){
             temp = (User)_user;
@@ -61,7 +62,8 @@ public class UserBUS {
         return true;
     }
     
-    public void create(User user){
+    public static void signUp(User user) throws NoSuchAlgorithmException{
+        user.setPwd(User.hashPassword(user.getPwd()));
         userDAO.create(user);
         list.add(user);  
         quantity = list.size();

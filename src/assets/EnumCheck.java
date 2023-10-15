@@ -14,10 +14,12 @@ public class EnumCheck {
         VERYSHORT,
         VERYLONG,
         HASLETTER,
+        ISNULL,
         VALID;
     }
     public enum ValidStatus{
         INVALID,
+        ISNULL,
         VALID;
     }
     public enum DiscountType{
@@ -26,9 +28,16 @@ public class EnumCheck {
     }
     public enum PwdValidStatus{
         VERYSHORT,
+        ISNULL,
         MISSINGNUMBER,
         MISSINGLETTER,
-        MATCH,
+        UNMATCH,
+        VALID;
+    }
+    public enum DateValidStatus{
+        UNCORRECTFORMAT,
+        ISNULL,
+        INVALID,
         VALID;
     }
 }

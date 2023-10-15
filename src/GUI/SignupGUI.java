@@ -4,15 +4,26 @@
  */
 package GUI;
 
+import BUS.UserBUS;
 import DTO.entities.User;
+import assets.DateTime;
+import assets.EnumCheck;
+import assets.EnumCheck.DateValidStatus;
 import assets.EnumCheck.NumbersValidStatus;
 import assets.EnumCheck.PwdValidStatus;
 import assets.EnumCheck.ValidStatus;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
 /**
@@ -24,15 +35,22 @@ public class SignupGUI extends javax.swing.JFrame {
     /**
      * Creates new form AuthGUI
      */
-    private String email, pwd, pwdConfirm, name, doB, CCCD, nation, address, phoneNum;
+    private String roleID = "ROLE4", username, pwd, pwdConfirm, ID, name, gender, doB, address, nation, phoneNumber, CCCD, email;
+    private DateTime date= new DateTime();
+    private User newAccount;
+    private UserBUS userBUS;
     
-    public SignupGUI() {
+    public SignupGUI() throws ClassNotFoundException, SQLException {
         initComponents();
         this.setTitle("Airbook - Đăng ký");
+        try {
+            userBUS = new UserBUS();
+        } catch (IOException ex) {
+            Logger.getLogger(SignupGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void showWindow() {
-        this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 //        this.setUndecorated(true);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -47,15 +65,15 @@ public class SignupGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        grpGender = new javax.swing.ButtonGroup();
         pnBody = new javax.swing.JPanel();
         lbTitle = new javax.swing.JLabel();
-        lbEmail = new javax.swing.JLabel();
+        lbUsername = new javax.swing.JLabel();
         lbPwd = new javax.swing.JLabel();
-        txtEmail = new javax.swing.JTextField();
+        txtUsername = new javax.swing.JTextField();
         btSignup = new javax.swing.JButton();
         lbSubtitle1 = new javax.swing.JLabel();
         lbPwdConfirm = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
         lbSubtitle2 = new javax.swing.JLabel();
         lbName = new javax.swing.JLabel();
         txtName = new javax.swing.JTextField();
@@ -71,7 +89,14 @@ public class SignupGUI extends javax.swing.JFrame {
         txtNation = new javax.swing.JTextField();
         txtPwd = new javax.swing.JPasswordField();
         txtPwdConfirm = new javax.swing.JPasswordField();
-        txtNoti = new javax.swing.JTextField();
+        txtEmail = new javax.swing.JTextField();
+        lbEmail = new javax.swing.JLabel();
+        lbName1 = new javax.swing.JLabel();
+        rdoMale = new javax.swing.JRadioButton();
+        rdoFemale = new javax.swing.JRadioButton();
+        rdoOrther = new javax.swing.JRadioButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtNoti = new javax.swing.JTextPane();
         pnHeader = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -87,21 +112,21 @@ public class SignupGUI extends javax.swing.JFrame {
         lbTitle.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         lbTitle.setForeground(new java.awt.Color(1, 138, 165));
         lbTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbTitle.setText("Đăng ký");
+        lbTitle.setText("Đăng ký tài khoản mới");
 
-        lbEmail.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lbEmail.setForeground(new java.awt.Color(84, 104, 129));
-        lbEmail.setText("Email");
+        lbUsername.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbUsername.setForeground(new java.awt.Color(84, 104, 129));
+        lbUsername.setText("Username");
 
         lbPwd.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbPwd.setForeground(new java.awt.Color(84, 104, 129));
         lbPwd.setText("Mật khẩu");
 
-        txtEmail.setBackground(new java.awt.Color(246, 246, 246));
-        txtEmail.setNextFocusableComponent(txtPwd);
-        txtEmail.addActionListener(new java.awt.event.ActionListener() {
+        txtUsername.setBackground(new java.awt.Color(246, 246, 246));
+        txtUsername.setNextFocusableComponent(txtPwd);
+        txtUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEmailActionPerformed(evt);
+                txtUsernameActionPerformed(evt);
             }
         });
 
@@ -139,7 +164,6 @@ public class SignupGUI extends javax.swing.JFrame {
         });
 
         txtDoB.setBackground(new java.awt.Color(246, 246, 246));
-        txtDoB.setText("dd/mm/yyyy");
         txtDoB.setNextFocusableComponent(txtCCCD);
         txtDoB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -168,7 +192,7 @@ public class SignupGUI extends javax.swing.JFrame {
         lbPhoneNum.setText("Số điện thoại");
 
         txtPhoneNum.setBackground(new java.awt.Color(246, 246, 246));
-        txtPhoneNum.setNextFocusableComponent(btSignup);
+        txtPhoneNum.setNextFocusableComponent(txtEmail);
         txtPhoneNum.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPhoneNumActionPerformed(evt);
@@ -209,7 +233,7 @@ public class SignupGUI extends javax.swing.JFrame {
         });
 
         txtPwdConfirm.setBackground(new java.awt.Color(246, 246, 246));
-        txtPwdConfirm.setNextFocusableComponent(txtName);
+        txtPwdConfirm.setNextFocusableComponent(btSignup);
         txtPwdConfirm.setPreferredSize(new java.awt.Dimension(90, 27));
         txtPwdConfirm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -217,7 +241,56 @@ public class SignupGUI extends javax.swing.JFrame {
             }
         });
 
+        txtEmail.setBackground(new java.awt.Color(246, 246, 246));
+        txtEmail.setNextFocusableComponent(txtUsername);
+        txtEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEmailActionPerformed(evt);
+            }
+        });
+
+        lbEmail.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbEmail.setForeground(new java.awt.Color(84, 104, 129));
+        lbEmail.setText("Email");
+
+        lbName1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbName1.setForeground(new java.awt.Color(84, 104, 129));
+        lbName1.setText("Giới tính");
+
+        rdoMale.setBackground(new java.awt.Color(255, 255, 255));
+        grpGender.add(rdoMale);
+        rdoMale.setText("Nam");
+        rdoMale.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdoMaleActionPerformed(evt);
+            }
+        });
+
+        rdoFemale.setBackground(new java.awt.Color(255, 255, 255));
+        grpGender.add(rdoFemale);
+        rdoFemale.setText("Nữ");
+        rdoFemale.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdoFemaleActionPerformed(evt);
+            }
+        });
+
+        rdoOrther.setBackground(new java.awt.Color(255, 255, 255));
+        grpGender.add(rdoOrther);
+        rdoOrther.setText("Khác");
+        rdoOrther.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdoOrtherActionPerformed(evt);
+            }
+        });
+
+        txtNoti.setBackground(new java.awt.Color(255, 255, 255));
         txtNoti.setBorder(null);
+        txtNoti.setForeground(new java.awt.Color(255, 102, 102));
+        txtNoti.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        txtNoti.setDisabledTextColor(new java.awt.Color(255, 102, 102));
+        txtNoti.setEnabled(false);
+        jScrollPane1.setViewportView(txtNoti);
 
         javax.swing.GroupLayout pnBodyLayout = new javax.swing.GroupLayout(pnBody);
         pnBody.setLayout(pnBodyLayout);
@@ -225,106 +298,135 @@ public class SignupGUI extends javax.swing.JFrame {
             pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lbTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(pnBodyLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(19, 19, 19)
                 .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbSubtitle2)
                     .addGroup(pnBodyLayout.createSequentialGroup()
-                        .addComponent(lbSubtitle1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnBodyLayout.createSequentialGroup()
-                        .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtNoti, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lbDoB, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbCCCD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbAddress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbPhoneNum, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbNation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbName1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbName, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(46, 46, 46)
+                        .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnBodyLayout.createSequentialGroup()
-                                .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbCCCD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(pnBodyLayout.createSequentialGroup()
-                                        .addComponent(lbSubtitle2)
-                                        .addGap(0, 44, Short.MAX_VALUE))
-                                    .addComponent(lbDoB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lbName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtDoB, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtCCCD, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnBodyLayout.createSequentialGroup()
-                                .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbPhoneNum, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lbAddress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lbNation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGap(1, 1, 1)
+                                .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtCCCD, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnBodyLayout.createSequentialGroup()
+                                    .addComponent(rdoMale)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(rdoFemale)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(rdoOrther))
+                                .addComponent(txtDoB, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtNation, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtPhoneNum, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(btSignup, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtPhoneNum, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addGap(50, 50, 50)
+                .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btSignup, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbSubtitle1)
                             .addGroup(pnBodyLayout.createSequentialGroup()
                                 .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(pnBodyLayout.createSequentialGroup()
-                                        .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(lbEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(lbPwd, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(lbPwdConfirm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(lbPwd, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(lbEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lbUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbPwdConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
                                 .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(txtPwdConfirm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                                    .addComponent(txtPwd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(24, 24, 24))))
+                                    .addComponent(txtUsername)
+                                    .addComponent(txtPwd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addGap(24, 24, 24))
         );
         pnBodyLayout.setVerticalGroup(
             pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnBodyLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(lbTitle)
-                .addGap(8, 8, 8)
-                .addComponent(lbSubtitle1)
-                .addGap(8, 8, 8)
-                .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
-                .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbPwd)
-                    .addComponent(txtPwd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
-                .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbPwdConfirm)
-                    .addComponent(txtPwdConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbSubtitle2)
-                .addGap(8, 8, 8)
-                .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbName, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
-                .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtDoB, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbDoB))
-                .addGap(8, 8, 8)
-                .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCCCD, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbCCCD))
-                .addGap(8, 8, 8)
-                .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNation, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbNation, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
-                .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbAddress))
-                .addGap(8, 8, 8)
-                .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtPhoneNum, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbPhoneNum))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtNoti, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(32, 32, 32)
+                .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnBodyLayout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(pnBodyLayout.createSequentialGroup()
+                                    .addGap(71, 71, 71)
+                                    .addComponent(lbDoB)
+                                    .addGap(15, 15, 15)
+                                    .addComponent(lbCCCD)
+                                    .addGap(13, 13, 13)
+                                    .addComponent(lbNation, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(11, 11, 11)
+                                    .addComponent(lbAddress)
+                                    .addGap(15, 15, 15)
+                                    .addComponent(lbPhoneNum))
+                                .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pnBodyLayout.createSequentialGroup()
+                                        .addGap(32, 32, 32)
+                                        .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(rdoMale)
+                                            .addComponent(rdoFemale)
+                                            .addComponent(rdoOrther))
+                                        .addGap(7, 7, 7)
+                                        .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(pnBodyLayout.createSequentialGroup()
+                                                .addGap(1, 1, 1)
+                                                .addComponent(txtDoB, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(pnBodyLayout.createSequentialGroup()
+                                                .addGap(35, 35, 35)
+                                                .addComponent(txtCCCD, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(8, 8, 8)
+                                                .addComponent(txtNation, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(8, 8, 8)
+                                                .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(8, 8, 8)
+                                                .addComponent(txtPhoneNum, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(pnBodyLayout.createSequentialGroup()
+                                .addGap(34, 34, 34)
+                                .addComponent(lbName1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(69, 69, 69))))
+                    .addGroup(pnBodyLayout.createSequentialGroup()
+                        .addComponent(lbSubtitle2)
+                        .addGap(9, 9, 9)
+                        .addComponent(lbName, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnBodyLayout.createSequentialGroup()
+                        .addComponent(lbSubtitle1)
+                        .addGap(8, 8, 8)
+                        .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnBodyLayout.createSequentialGroup()
+                                .addComponent(lbEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lbUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(11, 11, 11)
+                                .addComponent(lbPwd)
+                                .addGap(15, 15, 15)
+                                .addComponent(lbPwdConfirm))
+                            .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(pnBodyLayout.createSequentialGroup()
+                                .addGap(34, 34, 34)
+                                .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(7, 7, 7)
+                                .addComponent(txtPwd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(8, 8, 8)
+                                .addComponent(txtPwdConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
                 .addComponent(btSignup, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pnHeader.setBackground(new java.awt.Color(1, 138, 165));
@@ -348,7 +450,7 @@ public class SignupGUI extends javax.swing.JFrame {
             pnHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnHeaderLayout.createSequentialGroup()
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -365,25 +467,26 @@ public class SignupGUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnBody, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(pnHeader, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
+            .addComponent(pnHeader, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 729, Short.MAX_VALUE)
+            .addComponent(pnBody, javax.swing.GroupLayout.PREFERRED_SIZE, 729, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pnHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(pnBody, javax.swing.GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE))
+                .addComponent(pnBody, javax.swing.GroupLayout.PREFERRED_SIZE, 504, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
-        txtEmail.addActionListener((ActionEvent e) -> {
+    private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
+        txtUsername.addActionListener((ActionEvent e) -> {
             txtPwd.requestFocus();
         });
-    }//GEN-LAST:event_txtEmailActionPerformed
+    }//GEN-LAST:event_txtUsernameActionPerformed
 
     private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
         txtName.addActionListener((ActionEvent e) -> {
@@ -399,7 +502,7 @@ public class SignupGUI extends javax.swing.JFrame {
 
     private void txtPhoneNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPhoneNumActionPerformed
         txtPhoneNum.addActionListener((ActionEvent e) -> {
-            btSignup.requestFocus();
+            txtEmail.requestFocus();
         });
     }//GEN-LAST:event_txtPhoneNumActionPerformed
 
@@ -422,53 +525,170 @@ public class SignupGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCCCDActionPerformed
 
     private void btSignupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSignupActionPerformed
-        //Kiểm tra xem mật khẩu xác nhận có trùng với mật khẩu đã tạo không
-        //Kiểm tra định dạng mật khẩu có phù hợp không
-        //Kiểm tra định dạng CCCD, SĐT, Tên, Ngày Sinh
-        //Kiểm tra có bị trùng tài khoản hay chưa (Email, SĐT)
         ValidStatus chkNewAccount = ValidStatus.VALID;
         String strNoti = "";
         
         email = txtEmail.getText();
+        ValidStatus chkEmail;
+        username = txtUsername.getText();
+        ValidStatus chkUsername;
         pwd = txtPwd.getText();
+        PwdValidStatus chkPwd;
         pwdConfirm = txtPwdConfirm.getText();
+        PwdValidStatus chkPwdCofirm;
         name = txtName.getText();
+        ValidStatus chkName;
         doB = txtDoB.getText();
+        DateValidStatus chkDoB;
         CCCD = txtCCCD.getText();
+        NumbersValidStatus chkCCCD;
         nation = txtNation.getText();
+        ValidStatus chkNation;
         address = txtAddress.getText();
-        phoneNum = txtPhoneNum.getText();
+        ValidStatus chkAddress;
+        phoneNumber = txtPhoneNum.getText();
+        NumbersValidStatus chkPhone;
         
-        ValidStatus chkEmail = User.checkEmailValid(email);
-        if(chkEmail == ValidStatus.INVALID){
-            strNoti += "Không đúng định dạng email.";
-            txtNoti.setText(strNoti);
+        if(email.equals("")){
+            strNoti += "Email không được để trống.\n";
+            chkNewAccount = ValidStatus.INVALID;
+        } else{
+            chkEmail = User.checkEmailValid(email);
+            if(chkEmail == ValidStatus.INVALID){
+                strNoti += "Không đúng định dạng email.\n";
+                chkNewAccount = ValidStatus.INVALID;
+            }
+        }        
+        
+        if(username.equals("")){
+            strNoti += "Username không được để trống.\n";
+            chkNewAccount = ValidStatus.INVALID;
         }
         
+        if(pwd.equals("")){
+            strNoti += "Mật khẩu không được để trống.\n";
+            chkNewAccount = ValidStatus.INVALID;
+        } else if(!pwd.equals(pwdConfirm)){
+            chkPwd = PwdValidStatus.UNMATCH;
+            strNoti += "Mật khẩu không trùng khớp.\n";
+            chkNewAccount = ValidStatus.INVALID;
+        } 
+        else {
+            chkPwd = User.checkPwdValid(pwd);
+            if(chkPwd == PwdValidStatus.MISSINGLETTER){
+                strNoti += "Mật khẩu cần chứa ký tự.\n";
+                chkNewAccount = ValidStatus.INVALID;
+            }
+            if(chkPwd == PwdValidStatus.MISSINGNUMBER){
+                strNoti += "Mật khẩu cần chứa số.\n";
+                chkNewAccount = ValidStatus.INVALID;
+            }
+            if(chkPwd == PwdValidStatus.VERYSHORT){
+                strNoti += "Mật khẩu cần dài hơn 8 ký tự.\n";
+                chkNewAccount = ValidStatus.INVALID;
+            }
+        }  
         
-        NumbersValidStatus chkPhone = User.checkPhoneValid(phoneNum);
-        NumbersValidStatus chkCCCD = User.checkCCCDValid(CCCD);
-        
-        PwdValidStatus chkPwd = User.checkPwdValid(pwd);;
-        
-        
-        
-        
-        
-        
-        
-        
-//        this.setVisible(false);
-        try {
-            SigninGUI signinGUI = new SigninGUI();
-            signinGUI.showWindow();
-        } catch (SQLException ex) {
-            Logger.getLogger(SignupGUI.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(SignupGUI.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(SignupGUI.class.getName()).log(Level.SEVERE, null, ex);
+        if(name.equals("")){
+            strNoti += "Tên không được để trống.\n";
+            chkNewAccount = ValidStatus.INVALID;
         }
+        
+        if(grpGender.getSelection() == null){
+            strNoti += "Giới tính không được để trống.\n";
+            chkNewAccount = ValidStatus.INVALID;
+        }
+        
+        chkDoB = date.checkFormat(doB);
+        if (chkDoB == DateValidStatus.ISNULL) {
+            strNoti += "Ngày sinh không được để trống.\n";
+            chkNewAccount = ValidStatus.INVALID;
+        } else if (chkDoB == DateValidStatus.UNCORRECTFORMAT) {
+            strNoti += "Ngày sinh phải có dạng dd/mm/yyyy.\n";
+            chkNewAccount = ValidStatus.INVALID;
+        } else if (chkDoB == DateValidStatus.INVALID){
+            strNoti += "Ngày sinh không hợp lệ.\n";
+            chkNewAccount = ValidStatus.INVALID;
+        }
+        
+        if(CCCD.equals("")){
+            strNoti += "CCCD không được để trống.\n";
+            chkNewAccount = ValidStatus.INVALID;
+        } else{
+            chkCCCD = User.checkCCCDValid(CCCD);
+            if(chkCCCD == NumbersValidStatus.VERYLONG){
+                strNoti += "Số CCCD quá dài.\n";
+                chkNewAccount = ValidStatus.INVALID;
+            }
+            if(chkCCCD == NumbersValidStatus.VERYSHORT){
+                strNoti += "Số CCCD quá ngắn.\n";
+                chkNewAccount = ValidStatus.INVALID;
+            }
+            if(chkCCCD == NumbersValidStatus.HASLETTER){
+                strNoti += "Số CCCD sai định dạng.\n";
+                chkNewAccount = ValidStatus.INVALID;
+            }
+        }
+        
+        if(nation.equals("")){
+            strNoti += "Quốc gia không được để trống.\n";
+            chkNewAccount = ValidStatus.INVALID;
+        }
+        
+        if(address.equals("")){
+            strNoti += "Địa chỉ không được để trống.\n";
+            chkNewAccount = ValidStatus.INVALID;
+        }
+        
+        if(phoneNumber.equals("")){
+            strNoti += "Số điện thoại không được để trống.\n";
+            chkNewAccount = ValidStatus.INVALID;
+        } else{
+            chkPhone = User.checkPhoneValid(phoneNumber);
+            if(chkPhone == NumbersValidStatus.VERYLONG){
+                strNoti += "Số điện thoại quá dài.\n";
+                chkNewAccount = ValidStatus.INVALID;
+            }
+            if(chkPhone == NumbersValidStatus.VERYSHORT){
+                strNoti += "Số điện thoại quá ngắn.\n";
+                chkNewAccount = ValidStatus.INVALID;
+            }
+            if(chkPhone == NumbersValidStatus.HASLETTER){
+                strNoti += "Số điện thoại sai định dạng.\n";
+                chkNewAccount = ValidStatus.INVALID;
+            } 
+        }   
+
+        if(chkNewAccount == ValidStatus.VALID){
+            ID = User.generateID();
+            try {
+                newAccount = new User(roleID, username, pwd, date.now(), ID, name, gender, date.strtoDate(doB), address, nation, phoneNumber, CCCD, email);
+            } catch (ParseException ex) {
+                Logger.getLogger(SignupGUI.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+            if (userBUS.checkUnique(newAccount)) {
+                try {
+                    userBUS.signUp(newAccount);
+                } catch (NoSuchAlgorithmException ex) {
+                    Logger.getLogger(SignupGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                JOptionPane.showMessageDialog(this,"Đăng ký thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+                this.setVisible(false);
+                try {
+                    SigninGUI signinGUI = new SigninGUI();
+                    signinGUI.showWindow();
+                } catch (SQLException ex) {
+                    Logger.getLogger(SignupGUI.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(SignupGUI.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(SignupGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else{
+                txtNoti.setText("Tài khoản đã tồn tại.");
+            } 
+        }   
+        else txtNoti.setText(strNoti);
     }//GEN-LAST:event_btSignupActionPerformed
 
     private void txtPwdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPwdActionPerformed
@@ -479,7 +699,7 @@ public class SignupGUI extends javax.swing.JFrame {
 
     private void txtPwdConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPwdConfirmActionPerformed
         txtPwdConfirm.addActionListener((ActionEvent e) -> {
-            txtName.requestFocus();
+            btSignup.requestFocus();
         });
     }//GEN-LAST:event_txtPwdConfirmActionPerformed
 
@@ -497,6 +717,24 @@ public class SignupGUI extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
+        txtEmail.addActionListener((ActionEvent e) -> {
+            txtUsername.requestFocus();
+        });
+    }//GEN-LAST:event_txtEmailActionPerformed
+
+    private void rdoMaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoMaleActionPerformed
+        gender = "Nam";
+    }//GEN-LAST:event_rdoMaleActionPerformed
+
+    private void rdoFemaleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoFemaleActionPerformed
+        gender = "Nữ";
+    }//GEN-LAST:event_rdoFemaleActionPerformed
+
+    private void rdoOrtherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoOrtherActionPerformed
+        gender = "Khác";
+    }//GEN-LAST:event_rdoOrtherActionPerformed
 
     /**
      * @param args the command line arguments
@@ -531,21 +769,29 @@ public class SignupGUI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SignupGUI().setVisible(true);
+                try {
+                    new SignupGUI().setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(SignupGUI.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(SignupGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btSignup;
+    private javax.swing.ButtonGroup grpGender;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbAddress;
     private javax.swing.JLabel lbCCCD;
     private javax.swing.JLabel lbDoB;
     private javax.swing.JLabel lbEmail;
     private javax.swing.JLabel lbName;
+    private javax.swing.JLabel lbName1;
     private javax.swing.JLabel lbNation;
     private javax.swing.JLabel lbPhoneNum;
     private javax.swing.JLabel lbPwd;
@@ -553,17 +799,22 @@ public class SignupGUI extends javax.swing.JFrame {
     private javax.swing.JLabel lbSubtitle1;
     private javax.swing.JLabel lbSubtitle2;
     private javax.swing.JLabel lbTitle;
+    private javax.swing.JLabel lbUsername;
     private javax.swing.JPanel pnBody;
     private javax.swing.JPanel pnHeader;
+    private javax.swing.JRadioButton rdoFemale;
+    private javax.swing.JRadioButton rdoMale;
+    private javax.swing.JRadioButton rdoOrther;
     private javax.swing.JTextField txtAddress;
     private javax.swing.JTextField txtCCCD;
     private javax.swing.JTextField txtDoB;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtNation;
-    private javax.swing.JTextField txtNoti;
+    private javax.swing.JTextPane txtNoti;
     private javax.swing.JTextField txtPhoneNum;
     private javax.swing.JPasswordField txtPwd;
     private javax.swing.JPasswordField txtPwdConfirm;
+    private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 }
