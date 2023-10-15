@@ -5,11 +5,18 @@
 package GUI;
 
 import BUS.UserBUS;
+import assets.Styles;
 import DTO.entities.User;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -33,14 +40,37 @@ public class SigninGUI extends javax.swing.JFrame {
         this.userBUS = new UserBUS();
         this.user = new User();
         initComponents();
-        this.setTitle("Airbook - Đăng nhập");
-    }
-    
-    public void showWindow() {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 //        this.setUndecorated(true);
         this.setLocationRelativeTo(null);
-        this.setVisible(true);
+        style();
+    }
+    
+    public void style(){
+        this.setTitle("Airbook - Đăng nhập");
+        
+        lbTitle.setForeground(Styles.PRI_NORMAL);
+        lbTitle.setFont(Styles.H1);
+        
+        lbEmail.setForeground(Styles.GRAY_600);
+        lbEmail.setFont(Styles.Label);
+        
+        lbPwd.setForeground(Styles.GRAY_600);
+        lbPwd.setFont(Styles.Label);
+        
+        txtPwd.setForeground(Styles.GRAY_600);
+        txtPwd.setFont(Styles.Body);
+        
+        txtUsername.setForeground(Styles.GRAY_600);
+        txtUsername.setFont(Styles.Body);
+        
+        btSignin.setBackground(Styles.PRI_NORMAL);
+        btSignin.setForeground(Styles.WHITE);
+        btSignin.setFont(Styles.Body);
+        
+        btSignup.setBackground(Styles.PRI_LIGHTER);
+        btSignup.setForeground(Styles.PRI_NORMAL);
+        btSignup.setFont(Styles.Body);
     }
 
     /**
@@ -53,7 +83,7 @@ public class SigninGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         pnBody = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lbTitle = new javax.swing.JLabel();
         lbEmail = new javax.swing.JLabel();
         lbPwd = new javax.swing.JLabel();
         txtUsername = new javax.swing.JTextField();
@@ -71,10 +101,10 @@ public class SigninGUI extends javax.swing.JFrame {
         pnBody.setBackground(new java.awt.Color(255, 255, 255));
         pnBody.setPreferredSize(new java.awt.Dimension(360, 274));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(1, 138, 165));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Đăng nhập");
+        lbTitle.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        lbTitle.setForeground(new java.awt.Color(1, 138, 165));
+        lbTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbTitle.setText("Đăng nhập");
 
         lbEmail.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbEmail.setForeground(new java.awt.Color(84, 104, 129));
@@ -94,9 +124,11 @@ public class SigninGUI extends javax.swing.JFrame {
         btSignin.setBackground(new java.awt.Color(1, 138, 165));
         btSignin.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btSignin.setForeground(new java.awt.Color(255, 255, 255));
+        btSignin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-login-white18.png"))); // NOI18N
         btSignin.setText("Đăng nhập");
         btSignin.setBorder(null);
         btSignin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btSignin.setMargin(new java.awt.Insets(8, 14, 8, 14));
         btSignin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSigninActionPerformed(evt);
@@ -106,6 +138,7 @@ public class SigninGUI extends javax.swing.JFrame {
         btSignup.setBackground(new java.awt.Color(230, 243, 246));
         btSignup.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btSignup.setForeground(new java.awt.Color(84, 104, 129));
+        btSignup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-pri18.png"))); // NOI18N
         btSignup.setText("Đăng ký");
         btSignup.setBorder(null);
         btSignup.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -127,7 +160,7 @@ public class SigninGUI extends javax.swing.JFrame {
         pnBody.setLayout(pnBodyLayout);
         pnBodyLayout.setHorizontalGroup(
             pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lbTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(pnBodyLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,7 +180,7 @@ public class SigninGUI extends javax.swing.JFrame {
             pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnBodyLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(jLabel1)
+                .addComponent(lbTitle)
                 .addGap(20, 20, 20)
                 .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -165,7 +198,7 @@ public class SigninGUI extends javax.swing.JFrame {
 
         pnHeader.setBackground(new java.awt.Color(1, 138, 165));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/log-header-logo.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/image/log-header-logo.png"))); // NOI18N
         jLabel2.setPreferredSize(new java.awt.Dimension(116, 26));
 
         javax.swing.GroupLayout pnHeaderLayout = new javax.swing.GroupLayout(pnHeader);
@@ -212,39 +245,67 @@ public class SigninGUI extends javax.swing.JFrame {
 
     private void btSignupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSignupActionPerformed
         this.setVisible(false);
-        SignupGUI signUpGUI = null;
+        SignupEUC signUpGUI = null;
         try {
-            signUpGUI = new SignupGUI();
+            signUpGUI = new SignupEUC();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(SigninGUI.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(SigninGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        signUpGUI.showWindow();
+        signUpGUI.setVisible(true);
     }//GEN-LAST:event_btSignupActionPerformed
 
     private void btSigninActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSigninActionPerformed
-        //Kiểm tra tài khoản và mật khẩu
-        //Hiển thị dialog nếu sai mật khẩu/ email
         //Kiểm tra quyền 
         //Hiển thị form theo từng quyền người dùng
         this.setVisible(false);
 //        MainGUI gui = new MainGUI("Statistic","root");
 //        gui.showWindow();
         pwd = txtPwd.getText();
-        int checkEmail = txtUsername.getText().indexOf('@');
-        if(checkEmail == -1)
+        int chkEmail = txtUsername.getText().indexOf('@');
+        if(chkEmail == -1)
             username = txtUsername.getText();
         else
             email = txtUsername.getText();
         user.setEmail(email);
         user.setUsername(username);
-        user.setPwd(pwd);
-        
-        //test
-        if(userBUS.signIn(user) != null){            
-            JOptionPane.showMessageDialog(null,"Đăng nhập thành công!!!", "Success",JOptionPane.INFORMATION_MESSAGE);
-        } else 
+        user.setPwd(pwd);        
+        try {
+            user = userBUS.signIn(user);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(SigninGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if(user != null){
+            File authToken = new File("src\\DTO\\views\\authorization_token.properties");
+            if (!authToken.exists()) {
+                try {
+                    authToken.createNewFile();
+                } catch (IOException ex) {
+                    Logger.getLogger(SigninGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+            FileOutputStream outputStream = null;
+            try {
+                outputStream = new FileOutputStream(authToken, false);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(SigninGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                String tokenUsername = "USERNAME=" + user.getUsername() + "\n";
+                outputStream.write(tokenUsername.getBytes());
+                String tokenRole = "ROLE=" + user.getRoleID() + "\n";
+                outputStream.write(tokenRole.getBytes());
+                outputStream.close();                
+            } catch (IOException ex) {
+                Logger.getLogger(SigninGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            IndexEUC indexEUC = new IndexEUC();
+            indexEUC.setVisible(true);
+        } else
             JOptionPane.showMessageDialog(null,"Sai thông tin đăng nhập!!!", "Error",JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btSigninActionPerformed
 
@@ -301,10 +362,10 @@ public class SigninGUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btSignin;
     private javax.swing.JButton btSignup;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lbEmail;
     private javax.swing.JLabel lbPwd;
+    private javax.swing.JLabel lbTitle;
     private javax.swing.JPanel pnBody;
     private javax.swing.JPanel pnHeader;
     private javax.swing.JPasswordField txtPwd;

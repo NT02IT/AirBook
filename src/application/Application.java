@@ -19,7 +19,7 @@ public class Application {
      */
     public static void main(String[] args) throws SQLException, ClassNotFoundException, IOException {
         SigninGUI signinGUI = new SigninGUI();
-        signinGUI.showWindow();
+        signinGUI.setVisible(true);
     }
     
 }

@@ -23,6 +23,14 @@ public class User extends Person{
 
     public User() {
     }
+    
+    public User(User user){
+        super(user.getID(), user.getName(), user.getGender(), user.getDoB(), user.getAddress(), user.getNation(), user.getPhoneNumber(), user.getCCCD(), user.getEmail());
+        this.roleID = user.getRoleID();
+        this.username = user.getUsername();
+        this.pwd = user.getPwd();
+        this.dateCreate = user.getDateCreate();
+    }
 
     public User(String username, String pwd) {
         this.username = username;
@@ -68,6 +76,18 @@ public class User extends Person{
     public void setDateCreate(Date dateCreate) {
         this.dateCreate = dateCreate;
     }
+    
+    // @Override
+    // public String toString(){
+    //     java.sql.Timestamp doB = new java.sql.Timestamp(this.doB.getTime());
+    //     String sql ="INSERT INTO "
+    //     + "users(User_ID, Role_ID, Username, Pwd, Real_name, DoB, Gender, Nation, User_address, Phone_number, CCCD, Email, Date_create) "
+    //     + "VALUES "
+    //     + "("
+    //     + this.ID + this.roleID + this.username + this.pwd + this.name + doB + this.gender + this.nation + this.address + this.phoneNumber + this.CCCD + this.email + this.dateCreate
+    //     + ")";
+    //     return sql;
+    // }
     
     public static String generateID(){
         long millis = System.currentTimeMillis();
