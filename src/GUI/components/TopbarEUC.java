@@ -13,7 +13,7 @@ import javax.swing.JFrame;
  *
  * @author agond
  */
-public class TopbarEUC extends javax.swing.JPanel implements iTopbar{
+public class TopbarEUC extends javax.swing.JPanel implements ITopbar{
     Order siteOrder;
     JFrame frParrent;
     /**
@@ -84,6 +84,17 @@ public class TopbarEUC extends javax.swing.JPanel implements iTopbar{
         btCTA.setForeground(new java.awt.Color(255, 255, 255));
         btCTA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/info-my-ticket-white18.png"))); // NOI18N
         btCTA.setText("Vé của tôi");
+        btCTA.setBorder(null);
+        btCTA.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btCTA.setFocusPainted(false);
+        btCTA.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btCTAMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btCTAMouseExited(evt);
+            }
+        });
         btCTA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btCTAActionPerformed(evt);
@@ -117,6 +128,14 @@ public class TopbarEUC extends javax.swing.JPanel implements iTopbar{
         ((IndexEUC)frParrent).SiteOrder(siteOrder);    
         this.siteOrder(siteOrder);
     }//GEN-LAST:event_btCTAActionPerformed
+
+    private void btCTAMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btCTAMouseEntered
+        btCTA.setBackground(Styles.PRI_DARK);
+    }//GEN-LAST:event_btCTAMouseEntered
+
+    private void btCTAMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btCTAMouseExited
+        btCTA.setBackground(Styles.PRI_NORMAL);
+    }//GEN-LAST:event_btCTAMouseExited
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

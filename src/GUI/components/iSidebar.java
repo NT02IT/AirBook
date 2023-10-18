@@ -10,7 +10,7 @@ import assets.Site.Order;
  *
  * @author agond
  */
-public interface iSidebar {
+public interface ISidebar {
     void style();
     void siteOrder(Order siteOrder);
     void resetNavItemBG();

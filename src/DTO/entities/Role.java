@@ -4,13 +4,16 @@
  */
 package DTO.entities;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  *
  * @author agond
  */
 public class Role {
     protected String roleID;
-    protected String roleName;
+    protected String roleName;    
 
     public Role() {
     }

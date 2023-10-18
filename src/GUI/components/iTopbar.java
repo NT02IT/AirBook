@@ -10,7 +10,7 @@ import assets.Site.Order;
  *
  * @author agond
  */
-public interface iTopbar {
+public interface ITopbar {
     void style();
     void siteOrder(Order siteOrder);
 }

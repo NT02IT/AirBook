@@ -4,16 +4,19 @@
  */
 package GUI.body_panel;
 
+import DTO.entities.User;
+
 /**
  *
  * @author agond
  */
 public class PromoEUC extends javax.swing.JPanel {
-
+    private User user;
     /**
      * Creates new form PromoEUC
      */
-    public PromoEUC() {
+    public PromoEUC(User user) {
+        this.user = user;
         initComponents();
     }
 

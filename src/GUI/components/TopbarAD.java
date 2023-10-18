@@ -21,25 +21,30 @@ public class TopbarAD extends javax.swing.JPanel {
     public TopbarAD() {
         initComponents();
         style();
-        siteOrder(Order.BUY_TICKET);
+        siteOrder(Order.STATISTIC);
     }
     
     public TopbarAD(JFrame frParrent) {
         initComponents();
         style();
-        siteOrder(Order.BUY_TICKET);
+        siteOrder(Order.STATISTIC);
         this.frParrent = frParrent;
     }
     
     public void siteOrder(Order siteOrder){
         this.siteOrder = siteOrder;
-        if(siteOrder == Order.BUY_TICKET){
-            lbSitename.setText("Mua vé");
-        } else if (siteOrder == Order.MY_TICKET) {
-            lbSitename.setText("Vé của tôi");
-            btCTA.setVisible(false);
+        if(siteOrder == Order.STATISTIC){
+            lbSitename.setText("Thống kê");
+        } else if (siteOrder == Order.TICKET) {
+            lbSitename.setText("Vé máy bay");
         } else if (siteOrder == Order.PROMOTION) {
             lbSitename.setText("Khuyến mãi");
+        } else if (siteOrder == Order.FLIGHT) {
+            lbSitename.setText("Chuyến bay");
+        } else if (siteOrder == Order.AIRLINE) {
+            lbSitename.setText("Hãng bay");
+        } else if (siteOrder == Order.AIRPORT) {
+            lbSitename.setText("Sân bay");
         } else if (siteOrder == Order.ACCOUNT) {
             lbSitename.setText("Tài khoản");
         }
@@ -76,6 +81,17 @@ public class TopbarAD extends javax.swing.JPanel {
         btCTA.setForeground(new java.awt.Color(255, 255, 255));
         btCTA.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-import-white18.png"))); // NOI18N
         btCTA.setText("Import ticket");
+        btCTA.setBorder(null);
+        btCTA.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btCTA.setFocusPainted(false);
+        btCTA.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btCTAMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btCTAMouseExited(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -84,8 +100,8 @@ public class TopbarAD extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(lbSitename)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 476, Short.MAX_VALUE)
-                .addComponent(btCTA, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 454, Short.MAX_VALUE)
+                .addComponent(btCTA, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
         );
         layout.setVerticalGroup(
@@ -98,6 +114,14 @@ public class TopbarAD extends javax.swing.JPanel {
                 .addContainerGap(15, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btCTAMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btCTAMouseEntered
+        btCTA.setBackground(Styles.PRI_DARK);
+    }//GEN-LAST:event_btCTAMouseEntered
+
+    private void btCTAMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btCTAMouseExited
+        btCTA.setBackground(Styles.PRI_NORMAL);
+    }//GEN-LAST:event_btCTAMouseExited
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

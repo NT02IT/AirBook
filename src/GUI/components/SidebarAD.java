@@ -9,13 +9,15 @@ import assets.Site.Order ;
 import javax.swing.BorderFactory;
 
 import assets.Styles;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author agond
  */
-public class SidebarAD extends javax.swing.JPanel implements iSidebar{
+public class SidebarAD extends javax.swing.JPanel implements ISidebar{
     Order siteOrder;
     JFrame frParrent;
     /**
@@ -24,6 +26,8 @@ public class SidebarAD extends javax.swing.JPanel implements iSidebar{
     public SidebarAD() {
         initComponents();
         style();
+        siteOrder = Order.STATISTIC;
+        siteOrder(siteOrder);
     }
     
     public SidebarAD(JFrame frParrent) {
@@ -174,9 +178,23 @@ public class SidebarAD extends javax.swing.JPanel implements iSidebar{
         btStatistic.setBorder(null);
         grpNav.add(btStatistic);
         btStatistic.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btStatistic.setFocusPainted(false);
         btStatistic.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btStatistic.setIconTextGap(12);
         btStatistic.setMargin(new java.awt.Insets(2, 16, 2, 16));
+        btStatistic.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btStatisticMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btStatisticMouseExited(evt);
+            }
+        });
+        btStatistic.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btStatisticActionPerformed(evt);
+            }
+        });
 
         btTicket.setBackground(getBackground());
         btTicket.setForeground(new java.awt.Color(255, 255, 255));
@@ -185,9 +203,23 @@ public class SidebarAD extends javax.swing.JPanel implements iSidebar{
         btTicket.setBorder(null);
         grpNav.add(btTicket);
         btTicket.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btTicket.setFocusPainted(false);
         btTicket.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btTicket.setIconTextGap(12);
         btTicket.setMargin(new java.awt.Insets(2, 16, 2, 16));
+        btTicket.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btTicketMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btTicketMouseExited(evt);
+            }
+        });
+        btTicket.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btTicketActionPerformed(evt);
+            }
+        });
 
         btPromo.setBackground(getBackground());
         btPromo.setForeground(new java.awt.Color(255, 255, 255));
@@ -196,9 +228,23 @@ public class SidebarAD extends javax.swing.JPanel implements iSidebar{
         btPromo.setBorder(null);
         grpNav.add(btPromo);
         btPromo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btPromo.setFocusPainted(false);
         btPromo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btPromo.setIconTextGap(12);
         btPromo.setMargin(new java.awt.Insets(2, 16, 2, 16));
+        btPromo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btPromoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btPromoMouseExited(evt);
+            }
+        });
+        btPromo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btPromoActionPerformed(evt);
+            }
+        });
 
         btFlight.setBackground(getBackground());
         btFlight.setForeground(new java.awt.Color(255, 255, 255));
@@ -207,9 +253,23 @@ public class SidebarAD extends javax.swing.JPanel implements iSidebar{
         btFlight.setBorder(null);
         grpNav.add(btFlight);
         btFlight.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btFlight.setFocusPainted(false);
         btFlight.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btFlight.setIconTextGap(12);
         btFlight.setMargin(new java.awt.Insets(2, 16, 2, 16));
+        btFlight.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btFlightMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btFlightMouseExited(evt);
+            }
+        });
+        btFlight.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btFlightActionPerformed(evt);
+            }
+        });
 
         btLogout.setBackground(getBackground());
         btLogout.setForeground(new java.awt.Color(255, 255, 255));
@@ -218,9 +278,18 @@ public class SidebarAD extends javax.swing.JPanel implements iSidebar{
         btLogout.setBorder(null);
         grpNav.add(btLogout);
         btLogout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btLogout.setFocusPainted(false);
         btLogout.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btLogout.setIconTextGap(12);
         btLogout.setMargin(new java.awt.Insets(2, 16, 2, 16));
+        btLogout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btLogoutMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btLogoutMouseExited(evt);
+            }
+        });
         btLogout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btLogoutActionPerformed(evt);
@@ -234,9 +303,23 @@ public class SidebarAD extends javax.swing.JPanel implements iSidebar{
         btAirline.setBorder(null);
         grpNav.add(btAirline);
         btAirline.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btAirline.setFocusPainted(false);
         btAirline.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btAirline.setIconTextGap(12);
         btAirline.setMargin(new java.awt.Insets(2, 16, 2, 16));
+        btAirline.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btAirlineMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btAirlineMouseExited(evt);
+            }
+        });
+        btAirline.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAirlineActionPerformed(evt);
+            }
+        });
 
         btAirport.setBackground(getBackground());
         btAirport.setForeground(new java.awt.Color(255, 255, 255));
@@ -245,9 +328,23 @@ public class SidebarAD extends javax.swing.JPanel implements iSidebar{
         btAirport.setBorder(null);
         grpNav.add(btAirport);
         btAirport.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btAirport.setFocusPainted(false);
         btAirport.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btAirport.setIconTextGap(12);
         btAirport.setMargin(new java.awt.Insets(2, 16, 2, 16));
+        btAirport.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btAirportMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btAirportMouseExited(evt);
+            }
+        });
+        btAirport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAirportActionPerformed(evt);
+            }
+        });
 
         btAccount.setBackground(getBackground());
         btAccount.setForeground(new java.awt.Color(255, 255, 255));
@@ -256,9 +353,23 @@ public class SidebarAD extends javax.swing.JPanel implements iSidebar{
         btAccount.setBorder(null);
         grpNav.add(btAccount);
         btAccount.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btAccount.setFocusPainted(false);
         btAccount.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btAccount.setIconTextGap(12);
         btAccount.setMargin(new java.awt.Insets(2, 16, 2, 16));
+        btAccount.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btAccountMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btAccountMouseExited(evt);
+            }
+        });
+        btAccount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAccountActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -301,8 +412,140 @@ public class SidebarAD extends javax.swing.JPanel implements iSidebar{
     }// </editor-fold>//GEN-END:initComponents
 
     private void btLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLogoutActionPerformed
-        frParrent.setVisible(false);
+        JDialog dialog = new JDialog();
+        dialog.setLocationRelativeTo(this);
+        int result = JOptionPane.showConfirmDialog(dialog, "Bạn có muốn đăng xuất", "Đăng xuất", JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        } 
     }//GEN-LAST:event_btLogoutActionPerformed
+
+    private void btStatisticMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btStatisticMouseEntered
+        if (btStatistic.getBackground() == Styles.PRI_NORMAL) {
+            btStatistic.setBackground(Styles.PRI_DARKER);
+        }
+    }//GEN-LAST:event_btStatisticMouseEntered
+
+    private void btStatisticMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btStatisticMouseExited
+        if (btStatistic.getBackground() == Styles.PRI_DARKER) {
+            btStatistic.setBackground(Styles.PRI_NORMAL);
+        }
+    }//GEN-LAST:event_btStatisticMouseExited
+
+    private void btTicketMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btTicketMouseEntered
+        if (btTicket.getBackground() == Styles.PRI_NORMAL) {
+            btTicket.setBackground(Styles.PRI_DARKER);
+        }
+    }//GEN-LAST:event_btTicketMouseEntered
+
+    private void btTicketMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btTicketMouseExited
+        if (btTicket.getBackground() == Styles.PRI_DARKER) {
+            btTicket.setBackground(Styles.PRI_NORMAL);
+        }
+    }//GEN-LAST:event_btTicketMouseExited
+
+    private void btPromoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btPromoMouseEntered
+        if (btPromo.getBackground() == Styles.PRI_NORMAL) {
+            btPromo.setBackground(Styles.PRI_DARKER);
+        }
+    }//GEN-LAST:event_btPromoMouseEntered
+
+    private void btPromoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btPromoMouseExited
+        if (btPromo.getBackground() == Styles.PRI_DARKER) {
+            btPromo.setBackground(Styles.PRI_NORMAL);
+        }
+    }//GEN-LAST:event_btPromoMouseExited
+
+    private void btFlightMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btFlightMouseEntered
+        if (btFlight.getBackground() == Styles.PRI_NORMAL) {
+            btFlight.setBackground(Styles.PRI_DARKER);
+        }
+    }//GEN-LAST:event_btFlightMouseEntered
+
+    private void btFlightMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btFlightMouseExited
+        if (btFlight.getBackground() == Styles.PRI_DARKER) {
+            btFlight.setBackground(Styles.PRI_NORMAL);
+        }
+    }//GEN-LAST:event_btFlightMouseExited
+
+    private void btAirlineMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAirlineMouseEntered
+        if (btAirline.getBackground() == Styles.PRI_NORMAL) {
+            btAirline.setBackground(Styles.PRI_DARKER);
+        }
+    }//GEN-LAST:event_btAirlineMouseEntered
+
+    private void btAirlineMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAirlineMouseExited
+        if (btAirline.getBackground() == Styles.PRI_DARKER) {
+            btAirline.setBackground(Styles.PRI_NORMAL);
+        }
+    }//GEN-LAST:event_btAirlineMouseExited
+
+    private void btAirportMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAirportMouseEntered
+        if (btAirport.getBackground() == Styles.PRI_NORMAL) {
+            btAirport.setBackground(Styles.PRI_DARKER);
+        }
+    }//GEN-LAST:event_btAirportMouseEntered
+
+    private void btAirportMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAirportMouseExited
+        if (btAirport.getBackground() == Styles.PRI_DARKER) {
+            btAirport.setBackground(Styles.PRI_NORMAL);
+        }
+    }//GEN-LAST:event_btAirportMouseExited
+
+    private void btAccountMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAccountMouseEntered
+        if (btAccount.getBackground() == Styles.PRI_NORMAL) {
+            btAccount.setBackground(Styles.PRI_DARKER);
+        }
+    }//GEN-LAST:event_btAccountMouseEntered
+
+    private void btAccountMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAccountMouseExited
+        if (btAccount.getBackground() == Styles.PRI_DARKER) {
+            btAccount.setBackground(Styles.PRI_NORMAL);
+        }
+    }//GEN-LAST:event_btAccountMouseExited
+
+    private void btLogoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btLogoutMouseEntered
+        btLogout.setBackground(Styles.PRI_DARKER);
+    }//GEN-LAST:event_btLogoutMouseEntered
+
+    private void btLogoutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btLogoutMouseExited
+        btLogout.setBackground(Styles.PRI_NORMAL);
+    }//GEN-LAST:event_btLogoutMouseExited
+
+    private void btStatisticActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btStatisticActionPerformed
+        this.siteOrder = Order.STATISTIC;
+        navigateTo(siteOrder);
+    }//GEN-LAST:event_btStatisticActionPerformed
+
+    private void btTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btTicketActionPerformed
+        this.siteOrder = Order.TICKET;
+        navigateTo(siteOrder);
+    }//GEN-LAST:event_btTicketActionPerformed
+
+    private void btPromoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPromoActionPerformed
+        this.siteOrder = Order.PROMOTION;
+        navigateTo(siteOrder);
+    }//GEN-LAST:event_btPromoActionPerformed
+
+    private void btFlightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFlightActionPerformed
+        this.siteOrder = Order.FLIGHT;
+        navigateTo(siteOrder);
+    }//GEN-LAST:event_btFlightActionPerformed
+
+    private void btAirlineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAirlineActionPerformed
+        this.siteOrder = Order.AIRLINE;
+        navigateTo(siteOrder);
+    }//GEN-LAST:event_btAirlineActionPerformed
+
+    private void btAirportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAirportActionPerformed
+        this.siteOrder = Order.AIRPORT;
+        navigateTo(siteOrder);
+    }//GEN-LAST:event_btAirportActionPerformed
+
+    private void btAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAccountActionPerformed
+        this.siteOrder = Order.ACCOUNT;
+        navigateTo(siteOrder);
+    }//GEN-LAST:event_btAccountActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

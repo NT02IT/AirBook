@@ -10,6 +10,6 @@ import assets.Site.Order;
  *
  * @author agond
  */
-public interface iIndex {
+public interface IIndex {
     void SiteOrder(Order siteOrder);
 }

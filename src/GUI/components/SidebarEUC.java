@@ -4,13 +4,10 @@
  */
 package GUI.components;
 
-import DTO.entities.User;
 import GUI.IndexEUC;
 import assets.Site.Order;
 import javax.swing.BorderFactory;
 import assets.Styles;
-import java.awt.Color;
-import java.awt.Dialog;
 import java.awt.Insets;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -20,7 +17,7 @@ import javax.swing.JOptionPane;
  *
  * @author agond
  */
-public class SidebarEUC extends javax.swing.JPanel implements iSidebar{
+public class SidebarEUC extends javax.swing.JPanel implements ISidebar{
     Order siteOrder;
     JFrame frParrent;
     /**
@@ -154,9 +151,18 @@ public class SidebarEUC extends javax.swing.JPanel implements iSidebar{
         btBuyTicket.setBorder(null);
         grpNav.add(btBuyTicket);
         btBuyTicket.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btBuyTicket.setFocusPainted(false);
         btBuyTicket.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btBuyTicket.setIconTextGap(12);
         btBuyTicket.setMargin(new java.awt.Insets(2, 16, 2, 16));
+        btBuyTicket.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btBuyTicketMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btBuyTicketMouseExited(evt);
+            }
+        });
         btBuyTicket.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btBuyTicketActionPerformed(evt);
@@ -170,9 +176,18 @@ public class SidebarEUC extends javax.swing.JPanel implements iSidebar{
         btMyTicket.setBorder(null);
         grpNav.add(btMyTicket);
         btMyTicket.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btMyTicket.setFocusPainted(false);
         btMyTicket.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btMyTicket.setIconTextGap(12);
         btMyTicket.setMargin(new java.awt.Insets(2, 16, 2, 16));
+        btMyTicket.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btMyTicketMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btMyTicketMouseExited(evt);
+            }
+        });
         btMyTicket.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btMyTicketActionPerformed(evt);
@@ -186,9 +201,18 @@ public class SidebarEUC extends javax.swing.JPanel implements iSidebar{
         btPromo.setBorder(null);
         grpNav.add(btPromo);
         btPromo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btPromo.setFocusPainted(false);
         btPromo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btPromo.setIconTextGap(12);
         btPromo.setMargin(new java.awt.Insets(2, 16, 2, 16));
+        btPromo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btPromoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btPromoMouseExited(evt);
+            }
+        });
         btPromo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btPromoActionPerformed(evt);
@@ -202,9 +226,18 @@ public class SidebarEUC extends javax.swing.JPanel implements iSidebar{
         btAccount.setBorder(null);
         grpNav.add(btAccount);
         btAccount.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btAccount.setFocusPainted(false);
         btAccount.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btAccount.setIconTextGap(12);
         btAccount.setMargin(new java.awt.Insets(2, 16, 2, 16));
+        btAccount.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btAccountMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btAccountMouseExited(evt);
+            }
+        });
         btAccount.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btAccountActionPerformed(evt);
@@ -218,9 +251,18 @@ public class SidebarEUC extends javax.swing.JPanel implements iSidebar{
         btLogout.setBorder(null);
         grpNav.add(btLogout);
         btLogout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btLogout.setFocusPainted(false);
         btLogout.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btLogout.setIconTextGap(12);
         btLogout.setMargin(new java.awt.Insets(2, 16, 2, 16));
+        btLogout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btLogoutMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btLogoutMouseExited(evt);
+            }
+        });
         btLogout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btLogoutActionPerformed(evt);
@@ -286,6 +328,62 @@ public class SidebarEUC extends javax.swing.JPanel implements iSidebar{
             System.exit(0);
         }        
     }//GEN-LAST:event_btLogoutActionPerformed
+
+    private void btBuyTicketMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btBuyTicketMouseEntered
+        if (btBuyTicket.getBackground() == Styles.PRI_NORMAL) {
+            btBuyTicket.setBackground(Styles.PRI_DARKER);
+        }        
+    }//GEN-LAST:event_btBuyTicketMouseEntered
+
+    private void btBuyTicketMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btBuyTicketMouseExited
+        if (btBuyTicket.getBackground() == Styles.PRI_DARKER) {
+            btBuyTicket.setBackground(Styles.PRI_NORMAL);
+        }
+    }//GEN-LAST:event_btBuyTicketMouseExited
+
+    private void btMyTicketMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btMyTicketMouseEntered
+        if (btMyTicket.getBackground() == Styles.PRI_NORMAL) {
+            btMyTicket.setBackground(Styles.PRI_DARKER);
+        } 
+    }//GEN-LAST:event_btMyTicketMouseEntered
+
+    private void btMyTicketMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btMyTicketMouseExited
+        if (btMyTicket.getBackground() == Styles.PRI_DARKER) {
+            btMyTicket.setBackground(Styles.PRI_NORMAL);
+        }
+    }//GEN-LAST:event_btMyTicketMouseExited
+
+    private void btPromoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btPromoMouseEntered
+        if (btPromo.getBackground() == Styles.PRI_NORMAL) {
+            btPromo.setBackground(Styles.PRI_DARKER);
+        } 
+    }//GEN-LAST:event_btPromoMouseEntered
+
+    private void btPromoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btPromoMouseExited
+        if (btPromo.getBackground() == Styles.PRI_DARKER) {
+            btPromo.setBackground(Styles.PRI_NORMAL);
+        }
+    }//GEN-LAST:event_btPromoMouseExited
+
+    private void btAccountMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAccountMouseEntered
+        if (btAccount.getBackground() == Styles.PRI_NORMAL) {
+            btAccount.setBackground(Styles.PRI_DARKER);
+        } 
+    }//GEN-LAST:event_btAccountMouseEntered
+
+    private void btAccountMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAccountMouseExited
+        if (btAccount.getBackground() == Styles.PRI_DARKER) {
+            btAccount.setBackground(Styles.PRI_NORMAL);
+        }
+    }//GEN-LAST:event_btAccountMouseExited
+
+    private void btLogoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btLogoutMouseEntered
+        btLogout.setBackground(Styles.PRI_DARKER);
+    }//GEN-LAST:event_btLogoutMouseEntered
+
+    private void btLogoutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btLogoutMouseExited
+        btLogout.setBackground(Styles.PRI_NORMAL);
+    }//GEN-LAST:event_btLogoutMouseExited
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

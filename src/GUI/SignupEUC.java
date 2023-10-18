@@ -36,7 +36,7 @@ public class SignupEUC extends javax.swing.JFrame {
     /**
      * Creates new form AuthGUI
      */
-    private String roleID = "ROLE4", username, pwd, pwdConfirm, ID, name, gender, doB, address, nation, phoneNumber, CCCD, email;
+    private String roleID = "ROLE3", username, pwd, pwdConfirm, ID, name, gender, doB, address, nation, phoneNumber, CCCD, email;
     private DateTime date= new DateTime();
     private User newAccount;
     private UserBUS userBUS;
@@ -189,10 +189,12 @@ public class SignupEUC extends javax.swing.JFrame {
 
         lbUsername.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbUsername.setForeground(new java.awt.Color(84, 104, 129));
+        lbUsername.setLabelFor(txtUsername);
         lbUsername.setText("Username");
 
         lbPwd.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbPwd.setForeground(new java.awt.Color(84, 104, 129));
+        lbPwd.setLabelFor(txtPwd);
         lbPwd.setText("Mật khẩu");
 
         txtUsername.setBackground(new java.awt.Color(246, 246, 246));
@@ -209,6 +211,7 @@ public class SignupEUC extends javax.swing.JFrame {
         btSignup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-white18.png"))); // NOI18N
         btSignup.setText("Đăng ký");
         btSignup.setBorder(null);
+        btSignup.setFocusPainted(false);
         btSignup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSignupActionPerformed(evt);
@@ -220,6 +223,7 @@ public class SignupEUC extends javax.swing.JFrame {
 
         lbPwdConfirm.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbPwdConfirm.setForeground(new java.awt.Color(84, 104, 129));
+        lbPwdConfirm.setLabelFor(txtPwdConfirm);
         lbPwdConfirm.setText("Xác nhận mật khẩu");
 
         lbSubtitle2.setForeground(new java.awt.Color(84, 104, 129));
@@ -227,6 +231,7 @@ public class SignupEUC extends javax.swing.JFrame {
 
         lbName.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbName.setForeground(new java.awt.Color(84, 104, 129));
+        lbName.setLabelFor(txtName);
         lbName.setText("Họ và tên");
 
         txtName.setBackground(new java.awt.Color(246, 246, 246));
@@ -247,10 +252,12 @@ public class SignupEUC extends javax.swing.JFrame {
 
         lbDoB.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbDoB.setForeground(new java.awt.Color(84, 104, 129));
+        lbDoB.setLabelFor(txtDoB);
         lbDoB.setText("Ngày sinh");
 
         lbCCCD.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbCCCD.setForeground(new java.awt.Color(84, 104, 129));
+        lbCCCD.setLabelFor(txtCCCD);
         lbCCCD.setText("Số CCCD");
 
         txtCCCD.setBackground(new java.awt.Color(246, 246, 246));
@@ -263,6 +270,7 @@ public class SignupEUC extends javax.swing.JFrame {
 
         lbPhoneNum.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbPhoneNum.setForeground(new java.awt.Color(84, 104, 129));
+        lbPhoneNum.setLabelFor(txtPhoneNum);
         lbPhoneNum.setText("Số điện thoại");
 
         txtPhoneNum.setBackground(new java.awt.Color(246, 246, 246));
@@ -283,10 +291,12 @@ public class SignupEUC extends javax.swing.JFrame {
 
         lbAddress.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbAddress.setForeground(new java.awt.Color(84, 104, 129));
+        lbAddress.setLabelFor(txtAddress);
         lbAddress.setText("Địa chỉ");
 
         lbNation.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbNation.setForeground(new java.awt.Color(84, 104, 129));
+        lbNation.setLabelFor(txtNation);
         lbNation.setText("Quốc gia");
 
         txtNation.setBackground(new java.awt.Color(246, 246, 246));
@@ -325,10 +335,12 @@ public class SignupEUC extends javax.swing.JFrame {
 
         lbEmail.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbEmail.setForeground(new java.awt.Color(84, 104, 129));
+        lbEmail.setLabelFor(txtEmail);
         lbEmail.setText("Email");
 
         lbGender.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbGender.setForeground(new java.awt.Color(84, 104, 129));
+        lbGender.setLabelFor(rdoMale);
         lbGender.setText("Giới tính");
 
         rdoMale.setBackground(getBackground());
@@ -509,6 +521,7 @@ public class SignupEUC extends javax.swing.JFrame {
         btBack.setBackground(new java.awt.Color(1, 138, 165));
         btBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-arrow-back-white32.png"))); // NOI18N
         btBack.setBorder(null);
+        btBack.setFocusPainted(false);
         btBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btBackActionPerformed(evt);

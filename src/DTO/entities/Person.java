@@ -152,13 +152,11 @@ public abstract class Person {
     public static String formatName(String name){
         name = name.trim();
         name = name.replaceAll(" +", " ");
-        Pattern pattern = Pattern.compile("\\w+");
-        Matcher matcher = pattern.matcher(name);
         String output = "";
-        while(matcher.find()){
-            String word = matcher.group();
-            output += word.substring(0, 1).toUpperCase() + word.substring(1) + " ";
+        String[] words = name.split(" ");
+        for (String word : words) {
+            output += word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase() + " ";
         }
-        return output;
+        return output.trim();
     }
 }

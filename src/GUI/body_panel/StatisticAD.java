@@ -10,12 +10,12 @@ import DTO.entities.User;
  *
  * @author agond
  */
-public class BuyTicketEUC extends javax.swing.JPanel {
+public class StatisticAD extends javax.swing.JPanel {
     private User user;
     /**
-     * Creates new form BuyTicketEUC
+     * Creates new form StatisticAD
      */
-    public BuyTicketEUC(User user) {
+    public StatisticAD(User user) {
         this.user = user;
         initComponents();
     }
@@ -29,7 +29,7 @@ public class BuyTicketEUC extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setBackground(new java.awt.Color(153, 255, 153));
+        setBackground(new java.awt.Color(255, 153, 153));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

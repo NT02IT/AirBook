@@ -4,16 +4,19 @@
  */
 package GUI.body_panel;
 
+import DTO.entities.User;
+
 /**
  *
  * @author agond
  */
 public class MyTicketEUC extends javax.swing.JPanel {
-
+    private User user;
     /**
      * Creates new form MyTicketEUC
      */
-    public MyTicketEUC() {
+    public MyTicketEUC(User user) {
+        this.user = user;
         initComponents();
     }
 

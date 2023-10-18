@@ -225,72 +225,72 @@ GO
 INSERT INTO
     actions(Action_ID, Action_name, Info)
 VALUES
-    ('AT1', 'End user account', ' '),
-    ('AT2', 'Admin account', ' '),
-    ('AT3', 'Role', ' '),
-    ('AT4', 'More luggage', ' '),
-    ('AT5', 'Promotion program', ' '),
-	('AT6', 'Flight', ' '),
-	('AT7', 'Ticket', ' '),
-	('AT8', 'Plane', ' '),
-	('AT9', 'Airline', ' '),
-	('AT10', 'Airport', ' ');
+    ('EUC', 'End user account', ' '),
+    ('ADM', 'Admin account', ' '),
+    ('ROL', 'Role', ' '),
+    ('LUG', 'More luggage', ' '),
+    ('PRM', 'Promotion program', ' '),
+	('FLT', 'Flight', ' '),
+	('TIK', 'Ticket', ' '),
+	('PLN', 'Plane', ' '),
+	('ALN', 'Airline', ' '),
+	('APT', 'Airport', ' ');
 
 -- Insert into roles
 GO
 INSERT INTO
     roles(Role_ID, Role_name)
 VALUES
-    ('ROLE1', 'Root'),
-    ('ROLE2', 'Admin'),
-    ('ROLE3', 'Only read'),
-    ('ROLE4', 'End user');
+    ('ROLE0', 'Root'),
+    ('ROLE1', 'Admin'),
+    ('ROLE2', 'Only read'),
+    ('ROLE3', 'End user');
 
 -- Insert into permission
 GO
 INSERT INTO
     permission(Per_ID, Role_ID, Action_ID, Per_access, Per_create, Per_view, Per_edit, Per_delete)
 VALUES
-    ('ROLE1-AT1', 'ROLE1', 'AT1', '1', '1', '1', '1', '1'),
-    ('ROLE1-AT2', 'ROLE1', 'AT2', '1', '1', '1', '1', '1'),
-	('ROLE1-AT3', 'ROLE1', 'AT3', '1', '1', '1', '1', '1'),
-	('ROLE1-AT4', 'ROLE1', 'AT4', '1', '1', '1', '1', '1'),
-	('ROLE1-AT5', 'ROLE1', 'AT5', '1', '1', '1', '1', '1'),
-	('ROLE1-AT6', 'ROLE1', 'AT6', '1', '1', '1', '1', '1'),
-	('ROLE1-AT7', 'ROLE1', 'AT7', '1', '1', '1', '1', '1'),
-	('ROLE1-AT8', 'ROLE1', 'AT8', '1', '1', '1', '1', '1'),
-	('ROLE1-AT9', 'ROLE1', 'AT9', '1', '1', '1', '1', '1'),
-	('ROLE1-AT10', 'ROLE1', 'AT10', '1', '1', '1', '1', '1'),
-	('ROLE2-AT1', 'ROLE2', 'AT1', '1', '1', '1', '1', '1'),
-    ('ROLE2-AT2', 'ROLE2', 'AT2', '1', '0', '1', '0', '0'),
-	('ROLE2-AT3', 'ROLE2', 'AT3', '1', '0', '1', '0', '0'),
-	('ROLE2-AT4', 'ROLE2', 'AT4', '1', '1', '1', '1', '1'),
-	('ROLE2-AT5', 'ROLE2', 'AT5', '1', '1', '1', '1', '1'),
-	('ROLE2-AT6', 'ROLE2', 'AT6', '1', '1', '1', '1', '1'),
-	('ROLE2-AT7', 'ROLE2', 'AT7', '1', '1', '1', '1', '1'),
-	('ROLE2-AT8', 'ROLE2', 'AT8', '1', '1', '1', '1', '1'),
-	('ROLE2-AT9', 'ROLE2', 'AT9', '1', '1', '1', '1', '1'),
-	('ROLE2-AT10', 'ROLE2', 'AT10', '1', '1', '1', '1', '1'),
-    ('ROLE3-AT1', 'ROLE3', 'AT1', '1', '0', '1', '0', '0'),
-    ('ROLE3-AT2', 'ROLE3', 'AT2', '1', '0', '1', '0', '0'),
-	('ROLE3-AT3', 'ROLE3', 'AT3', '1', '0', '1', '0', '0'),
-	('ROLE3-AT4', 'ROLE3', 'AT4', '1', '0', '1', '0', '0'),
-	('ROLE3-AT5', 'ROLE3', 'AT5', '1', '0', '1', '0', '0'),
-	('ROLE3-AT6', 'ROLE3', 'AT6', '1', '0', '1', '0', '0'),
-	('ROLE3-AT7', 'ROLE3', 'AT7', '1', '0', '1', '0', '0'),
-	('ROLE3-AT8', 'ROLE3', 'AT8', '1', '0', '1', '0', '0'),
-	('ROLE3-AT9', 'ROLE3', 'AT9', '1', '0', '1', '0', '0'),
-	('ROLE3-AT10', 'ROLE3', 'AT10', '1', '0', '1', '0', '0'),
-    ('ROLE4-AT1', 'ROLE4', 'AT1', '1', '0', '0', '1', '1'),
-    ('ROLE4-AT2', 'ROLE4', 'AT2', '0', '0', '0', '0', '0'),
-	('ROLE4-AT3', 'ROLE4', 'AT3', '0', '0', '0', '0', '0'),
-	('ROLE4-AT4', 'ROLE4', 'AT4', '1', '0', '1', '0', '0'),
-	('ROLE4-AT5', 'ROLE4', 'AT5', '1', '0', '1', '0', '0'),
-	('ROLE4-AT6', 'ROLE4', 'AT6', '1', '0', '1', '0', '0'),
-	('ROLE4-AT7', 'ROLE4', 'AT7', '1', '0', '1', '0', '0'),
-	('ROLE4-AT8', 'ROLE4', 'AT8', '1', '0', '0', '0', '0'),
-	('ROLE4-AT9', 'ROLE4', 'AT9', '1', '0', '1', '0', '0'),
-	('ROLE4-AT10', 'ROLE4', 'AT10', '1', '0', '1', '0', '0');
+    ('ROLE0-EUC', 'ROLE0', 'EUC', '1', '1', '1', '1', '1'),
+    ('ROLE0-ADM', 'ROLE0', 'ADM', '1', '1', '1', '1', '1'),
+	('ROLE0-ROL', 'ROLE0', 'ROL', '1', '1', '1', '1', '1'),
+	('ROLE0-LUG', 'ROLE0', 'LUG', '1', '1', '1', '1', '1'),
+	('ROLE0-PRM', 'ROLE0', 'PRM', '1', '1', '1', '1', '1'),
+	('ROLE0-FLT', 'ROLE0', 'FLT', '1', '1', '1', '1', '1'),
+	('ROLE0-TIK', 'ROLE0', 'TIK', '1', '1', '1', '1', '1'),
+	('ROLE0-PLN', 'ROLE0', 'PLN', '1', '1', '1', '1', '1'),
+	('ROLE0-ALN', 'ROLE0', 'ALN', '1', '1', '1', '1', '1'),
+	('ROLE0-APT', 'ROLE0', 'APT', '1', '1', '1', '1', '1'),
+	('ROLE1-EUC', 'ROLE1', 'EUC', '1', '1', '1', '1', '1'),
+    ('ROLE1-ADM', 'ROLE1', 'ADM', '1', '0', '1', '0', '0'),
+	('ROLE1-ROL', 'ROLE1', 'ROL', '1', '0', '1', '0', '0'),
+	('ROLE1-LUG', 'ROLE1', 'LUG', '1', '1', '1', '1', '1'),
+	('ROLE1-PRM', 'ROLE1', 'PRM', '1', '1', '1', '1', '1'),
+	('ROLE1-FLT', 'ROLE1', 'FLT', '1', '1', '1', '1', '1'),
+	('ROLE1-TIK', 'ROLE1', 'TIK', '1', '1', '1', '1', '1'),
+	('ROLE1-PLN', 'ROLE1', 'PLN', '1', '1', '1', '1', '1'),
+	('ROLE1-ALN', 'ROLE1', 'ALN', '1', '1', '1', '1', '1'),
+	('ROLE1-APT', 'ROLE1', 'APT', '1', '1', '1', '1', '1'),
+    ('ROLE2-EUC', 'ROLE2', 'EUC', '1', '0', '1', '0', '0'),
+    ('ROLE2-ADM', 'ROLE2', 'ADM', '1', '0', '1', '0', '0'),
+	('ROLE2-ROL', 'ROLE2', 'ROL', '1', '0', '1', '0', '0'),
+	('ROLE2-LUG', 'ROLE2', 'LUG', '1', '0', '1', '0', '0'),
+	('ROLE2-PRM', 'ROLE2', 'PRM', '1', '0', '1', '0', '0'),
+	('ROLE2-FLT', 'ROLE2', 'FLT', '1', '0', '1', '0', '0'),
+	('ROLE2-TIK', 'ROLE2', 'TIK', '1', '0', '1', '0', '0'),
+	('ROLE2-PLN', 'ROLE2', 'PLN', '1', '0', '1', '0', '0'),
+	('ROLE2-ALN', 'ROLE2', 'ALN', '1', '0', '1', '0', '0'),
+	('ROLE2-APT', 'ROLE2', 'APT', '1', '0', '1', '0', '0'),
+    ('ROLE3-EUC', 'ROLE3', 'EUC', '1', '0', '0', '1', '1'),
+    ('ROLE3-ADM', 'ROLE3', 'ADM', '0', '0', '0', '0', '0'),
+	('ROLE3-ROL', 'ROLE3', 'ROL', '0', '0', '0', '0', '0'),
+	('ROLE3-LUG', 'ROLE3', 'LUG', '1', '0', '1', '0', '0'),
+	('ROLE3-PRM', 'ROLE3', 'PRM', '1', '0', '1', '0', '0'),
+	('ROLE3-FLT', 'ROLE3', 'FLT', '1', '0', '1', '0', '0'),
+	('ROLE3-TIK', 'ROLE3', 'TIK', '1', '0', '1', '0', '0'),
+	('ROLE3-PLN', 'ROLE3', 'PLN', '1', '0', '0', '0', '0'),
+	('ROLE3-ALN', 'ROLE3', 'ALN', '1', '0', '1', '0', '0'),
+	('ROLE3-APT', 'ROLE3', 'APT', '1', '0', '1', '0', '0');
 
 -- Insert into airlines
 GO

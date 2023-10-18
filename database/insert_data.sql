@@ -5,21 +5,21 @@ GO
 INSERT INTO
     users(User_ID, Role_ID, Username, Pwd, Real_name, DoB, Gender, Nation, User_address, Phone_number, CCCD, Email, Date_create)
 VALUES
-	('AC0000', 'ROLE1', 'root', 'root', 'Root', '2023-10-05', 'Nam', 'Việt Nam', 'Việt Nam', '0327531105', '000000000000', 'root@airbook.com', '2023-10-05 10:00:00'),
-	('AC0001', 'ROLE2', 'mysV', '1701', 'Hà Quốc Vĩ', '2002-01-17', 'Nam', 'Việt Nam', 'Việt Nam', '0320410607', '17524729102', 'quocvi1701@gmail.com', '2023-10-05 10:00:00'),
-	('AC0002', 'ROLE2', 'lowtee.vn', '123456', 'Nguyễn Anh Tuấn', '2002-11-19', 'Nam', 'Việt Nam', 'Việt Nam', '0327531105', '738291648291', 'lowtee.vn@gmail.vn', '2023-10-05 10:00:00'),
-	('AC0003', 'ROLE3', 'bossVN', 'bossVN', 'GĐ VN', '1985-09-12', 'Nam', 'Việt Nam', 'Việt Nam', '0327531105', '762846592016', 'bossVN@airbook.com', '2023-10-05 10:00:00'),
-	('AC0100', 'ROLE4', 'maito', 'maito', 'Lê Thái Vi', '2002-01-17', 'Nam', 'Việt Nam', 'Việt Nam', '0327531105', '762846592016', 'maito@gmail.com', '2023-10-05 10:00:00'),
-	('AC0101', 'ROLE4', 'khachhang', '123456', 'Khách hàng', '1985-09-12', 'Nam', 'Việt Nam', 'Việt Nam', '0327531105', '762846592016', 'bossVN@airbook.com', '2023-10-05 10:00:00');    
+	('AC00000000', 'ROLE0', 'root', 'z/mGwlDDBsqBfqeAA/IIOwVgDMGd8B0/oq8Vi/uEiuw=', 'Root', '2023-10-05', 'Nam', 'Việt Nam', 'Việt Nam', '0327531105', '000000000000', 'root@airbook.com', '2023-10-05 10:00:00'),
+	('AC00000001', 'ROLE1', 'mysV', 'z/mGwlDDBsqBfqeAA/IIOwVgDMGd8B0/oq8Vi/uEiuw=', 'Hà Quốc Vĩ', '2002-01-17', 'Nam', 'Việt Nam', 'Việt Nam', '0320410607', '17524729102', 'quocvi1701@gmail.com', '2023-10-05 10:00:00'),
+	('AC00000002', 'ROLE1', 'lowtee', 'z/mGwlDDBsqBfqeAA/IIOwVgDMGd8B0/oq8Vi/uEiuw=', 'Nguyễn Anh Tuấn', '2002-11-19', 'Nam', 'Việt Nam', 'Việt Nam', '0327531105', '738291648291', 'lowtee.vn@gmail.vn', '2023-10-05 10:00:00'),
+	('AC55351285', 'ROLE2', 'bossVN', 'z/mGwlDDBsqBfqeAA/IIOwVgDMGd8B0/oq8Vi/uEiuw=', 'GĐ VN', '1985-09-12', 'Nam', 'Việt Nam', 'Việt Nam', '0327531105', '762846592016', 'bossVN@airbook.com', '2023-10-05 10:00:00'),
+	('AC25716701', 'ROLE3', 'maito', 'z/mGwlDDBsqBfqeAA/IIOwVgDMGd8B0/oq8Vi/uEiuw=', 'Lê Thái Vi', '2002-01-17', 'Nam', 'Việt Nam', 'Việt Nam', '0327531105', '762846592016', 'maito@gmail.com', '2023-10-05 10:00:00'),
+	('AC26289183', 'ROLE3', 'khachhang', 'z/mGwlDDBsqBfqeAA/IIOwVgDMGd8B0/oq8Vi/uEiuw=', 'Khách hàng', '1985-09-12', 'Nam', 'Việt Nam', 'Việt Nam', '0327531105', '762846592016', 'bossVN@airbook.com', '2023-10-05 10:00:00');    
 
 -- Insert into receivers
 GO
 INSERT INTO
     receivers(Receiver_ID, Receiver_name, Gender, DoB, Receiver_address, Nation, Phone_number, CCCD, Email, User_ID)
 VALUES
-	('REC0001', 'Hà Quốc Vĩ', 'Nam', '2002-01-17', 'Hiệp Bình Chánh, Thủ Đức', 'Việt Nam', '0320410607', '17524729102', 'quocvi1701@gmail.com', 'AC0100'),
-	('REC0002', 'Nguyễn Anh Tuấn', 'Nam', '2002-11-19', 'Hiệp Bình Chánh, Thủ Đức', 'Việt Nam', '0320410607', '17524729102', 'lowtee@gmail.com', 'AC0101'),
-	('REC0003', 'Lê Thái Vi', 'Nam', '2002-01-15', 'Quận 10', 'Việt Nam', '0320410607', '17524729102', 'maito@gmail.com', 'AC0100');
+	('REC55351285', 'Hà Quốc Vĩ', 'Nam', '2002-01-17', 'Hiệp Bình Chánh, Thủ Đức', 'Việt Nam', '0320410607', '17524729102', 'quocvi1701@gmail.com', 'AC0100'),
+	('REC25716701', 'Nguyễn Anh Tuấn', 'Nam', '2002-11-19', 'Hiệp Bình Chánh, Thủ Đức', 'Việt Nam', '0320410607', '17524729102', 'lowtee@gmail.com', 'AC0101'),
+	('REC26289183', 'Lê Thái Vi', 'Nam', '2002-01-15', 'Quận 10', 'Việt Nam', '0320410607', '17524729102', 'maito@gmail.com', 'AC0100');
 
 -- Insert into seats
 GO
@@ -69,20 +69,20 @@ GO
 INSERT INTO
     orders(Order_ID, User_ID, Date_order)
 VALUES
-    ('OD0001', 'AC0101', '2032-9-29'),
-    ('OD0002', 'AC0100', '2032-9-29');
+    ('OD0001', 'AC25716701', '2032-9-29'),
+    ('OD0002', 'AC26289183', '2032-9-29');
 GO
 INSERT INTO
     orders(Order_ID, User_ID, Promo_ID, Date_order)
 VALUES
-    ('OD0003', 'AC0101', 'VN-PR01', '2032-9-30'),
-    ('OD0004', 'AC0100', 'VJ-PR02', '2032-9-30');
+    ('OD0003', 'AC26289183', 'VN-PR01', '2032-9-30'),
+    ('OD0004', 'AC25716701', 'VJ-PR02', '2032-9-30');
 
 -- Insert into order_details
 GO
 INSERT INTO
     order_details(Order_detail_ID, Order_ID, More_luggage_ID, Receiver_ID, Ticket_ID)
 VALUES
-    ('ODD0001', 'OD0001', 'MLG0001', 'REC0001', 'TK0001'),
-	('ODD0002', 'OD0001', 'MLG0001', 'REC0001', 'TK0003'),
-    ('ODD0003', 'OD0002', 'MLG0002', 'REC0002', 'TK0002');
+    ('ODD0001', 'OD0001', 'MLG0001', 'REC55351285', 'TK0001'),
+	('ODD0002', 'OD0001', 'MLG0001', 'REC55351285', 'TK0003'),
+    ('ODD0003', 'OD0002', 'MLG0002', 'REC25716701', 'TK0002');

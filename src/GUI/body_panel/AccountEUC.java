@@ -4,16 +4,19 @@
  */
 package GUI.body_panel;
 
+import DTO.entities.User;
+
 /**
  *
  * @author agond
  */
 public class AccountEUC extends javax.swing.JPanel {
-
+    private User user;
     /**
      * Creates new form AccountEUC
      */
-    public AccountEUC() {
+    public AccountEUC(User user) {
+        this.user = user;
         initComponents();
     }
 

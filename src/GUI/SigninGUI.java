@@ -108,10 +108,12 @@ public class SigninGUI extends javax.swing.JFrame {
 
         lbEmail.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbEmail.setForeground(new java.awt.Color(84, 104, 129));
+        lbEmail.setLabelFor(txtUsername);
         lbEmail.setText("Username");
 
         lbPwd.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbPwd.setForeground(new java.awt.Color(84, 104, 129));
+        lbPwd.setLabelFor(txtPwd);
         lbPwd.setText("Mật khẩu");
 
         txtUsername.setBackground(new java.awt.Color(246, 246, 246));
@@ -128,7 +130,16 @@ public class SigninGUI extends javax.swing.JFrame {
         btSignin.setText("Đăng nhập");
         btSignin.setBorder(null);
         btSignin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btSignin.setFocusPainted(false);
         btSignin.setMargin(new java.awt.Insets(8, 14, 8, 14));
+        btSignin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btSigninMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btSigninMouseExited(evt);
+            }
+        });
         btSignin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSigninActionPerformed(evt);
@@ -142,6 +153,15 @@ public class SigninGUI extends javax.swing.JFrame {
         btSignup.setText("Đăng ký");
         btSignup.setBorder(null);
         btSignup.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btSignup.setFocusPainted(false);
+        btSignup.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btSignupMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btSignupMouseExited(evt);
+            }
+        });
         btSignup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSignupActionPerformed(evt);
@@ -257,17 +277,13 @@ public class SigninGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btSignupActionPerformed
 
     private void btSigninActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSigninActionPerformed
-        //Kiểm tra quyền 
-        //Hiển thị form theo từng quyền người dùng
-        this.setVisible(false);
-//        MainGUI gui = new MainGUI("Statistic","root");
-//        gui.showWindow();
         pwd = txtPwd.getText();
         int chkEmail = txtUsername.getText().indexOf('@');
         if(chkEmail == -1)
             username = txtUsername.getText();
         else
             email = txtUsername.getText();
+        user = new User();
         user.setEmail(email);
         user.setUsername(username);
         user.setPwd(pwd);        
@@ -302,9 +318,16 @@ public class SigninGUI extends javax.swing.JFrame {
             } catch (IOException ex) {
                 Logger.getLogger(SigninGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-            IndexEUC indexEUC = new IndexEUC();
-            indexEUC.setVisible(true);
+            
+            if(user.getRoleID().equals("ROLE3")){
+                this.setVisible(false);
+                IndexEUC indexEUC = new IndexEUC(user);
+                indexEUC.setVisible(true);
+            } else {
+                this.setVisible(false);
+                IndexAD indexAD = new IndexAD(user);
+                indexAD.setVisible(true);
+            }            
         } else
             JOptionPane.showMessageDialog(null,"Sai thông tin đăng nhập!!!", "Error",JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btSigninActionPerformed
@@ -314,6 +337,26 @@ public class SigninGUI extends javax.swing.JFrame {
             btSignin.requestFocus();
         });
     }//GEN-LAST:event_txtPwdActionPerformed
+
+    private void btSigninMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btSigninMouseEntered
+        btSignin.setBackground(Styles.PRI_DARK);
+    }//GEN-LAST:event_btSigninMouseEntered
+
+    private void btSigninMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btSigninMouseExited
+        btSignin.setBackground(Styles.PRI_NORMAL);
+    }//GEN-LAST:event_btSigninMouseExited
+
+    private void btSignupMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btSignupMouseEntered
+        btSignup.setBackground(Styles.PRI_NORMAL);
+        btSignup.setForeground(Styles.WHITE);
+        btSignup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-white18.png")));
+    }//GEN-LAST:event_btSignupMouseEntered
+
+    private void btSignupMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btSignupMouseExited
+        btSignup.setBackground(Styles.PRI_LIGHTER);
+        btSignup.setForeground(Styles.PRI_NORMAL);
+        btSignup.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-pri18.png")));
+    }//GEN-LAST:event_btSignupMouseExited
 
     /**
      * @param args the command line arguments
