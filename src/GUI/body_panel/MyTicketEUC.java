@@ -15,6 +15,10 @@ public class MyTicketEUC extends javax.swing.JPanel {
     /**
      * Creates new form MyTicketEUC
      */
+    public MyTicketEUC() {
+        initComponents();
+    }
+    
     public MyTicketEUC(User user) {
         this.user = user;
         initComponents();

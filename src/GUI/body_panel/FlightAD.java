@@ -15,6 +15,10 @@ public class FlightAD extends javax.swing.JPanel {
     /**
      * Creates new form FlightAD
      */
+    public FlightAD() {
+        initComponents();
+    }
+    
     public FlightAD(User user) {
         this.user = user;
         initComponents();

@@ -15,6 +15,10 @@ public class StatisticAD extends javax.swing.JPanel {
     /**
      * Creates new form StatisticAD
      */
+    public StatisticAD() {
+        initComponents();
+    }
+    
     public StatisticAD(User user) {
         this.user = user;
         initComponents();

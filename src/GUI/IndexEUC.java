@@ -31,6 +31,7 @@ public class IndexEUC extends javax.swing.JFrame implements IIndex{
     public IndexEUC(User user) {
         this.user = user;
         init();
+//        initComponents();
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 //        this.setUndecorated(true);
         this.setLocationRelativeTo(null);
@@ -56,16 +57,16 @@ public class IndexEUC extends javax.swing.JFrame implements IIndex{
         sidebarEUC.siteOrder(siteOrder);
         topbarEUC.siteOrder(siteOrder);
 
-        javax.swing.GroupLayout pnBodyLayout = new javax.swing.GroupLayout(pnBody);
-        pnBody.setLayout(pnBodyLayout);
-        pnBodyLayout.setHorizontalGroup(
-            pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        pnBodyLayout.setVerticalGroup(
-            pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+//        javax.swing.GroupLayout pnBodyLayout = new javax.swing.GroupLayout(pnBody);
+//        pnBody.setLayout(pnBodyLayout);
+//        pnBodyLayout.setHorizontalGroup(
+//            pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//            .addGap(0, 0, Short.MAX_VALUE)
+//        );
+//        pnBodyLayout.setVerticalGroup(
+//            pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//            .addGap(0, 0, Short.MAX_VALUE)
+//        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -97,16 +98,16 @@ public class IndexEUC extends javax.swing.JFrame implements IIndex{
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(940, 600));
 
-        javax.swing.GroupLayout statisticAD1Layout = new javax.swing.GroupLayout(pnBody);
-        pnBody.setLayout(statisticAD1Layout);
-        statisticAD1Layout.setHorizontalGroup(
-            statisticAD1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        statisticAD1Layout.setVerticalGroup(
-            statisticAD1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+        // javax.swing.GroupLayout statisticAD1Layout = new javax.swing.GroupLayout(pnBody);
+        // pnBody.setLayout(statisticAD1Layout);
+        // statisticAD1Layout.setHorizontalGroup(
+        //     statisticAD1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        //     .addGap(0, 0, Short.MAX_VALUE)
+        // );
+        // statisticAD1Layout.setVerticalGroup(
+        //     statisticAD1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        //     .addGap(0, 0, Short.MAX_VALUE)
+        // );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -153,7 +154,6 @@ public class IndexEUC extends javax.swing.JFrame implements IIndex{
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(sidebarEUC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
                 .addComponent(topbarEUC, javax.swing.GroupLayout.DEFAULT_SIZE, 749, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(

@@ -17,6 +17,7 @@ public class Site {
         PROMOTION,
         FLIGHT,
         AIRLINE,
+        AIRLINEPLANE,
         AIRPORT,
         ACCOUNT;        
     }

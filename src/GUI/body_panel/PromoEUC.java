@@ -15,6 +15,10 @@ public class PromoEUC extends javax.swing.JPanel {
     /**
      * Creates new form PromoEUC
      */
+    public PromoEUC() {
+        initComponents();
+    }
+    
     public PromoEUC(User user) {
         this.user = user;
         initComponents();

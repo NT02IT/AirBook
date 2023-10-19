@@ -15,6 +15,10 @@ public class AccountEUC extends javax.swing.JPanel {
     /**
      * Creates new form AccountEUC
      */
+    public AccountEUC() {
+        initComponents();
+    }
+    
     public AccountEUC(User user) {
         this.user = user;
         initComponents();

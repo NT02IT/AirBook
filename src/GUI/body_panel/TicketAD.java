@@ -15,6 +15,10 @@ public class TicketAD extends javax.swing.JPanel {
     /**
      * Creates new form TicketAD
      */
+    public TicketAD() {
+        initComponents();
+    }
+    
     public TicketAD(User user) {
         this.user = user;
         initComponents();

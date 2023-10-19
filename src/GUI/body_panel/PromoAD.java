@@ -15,6 +15,10 @@ public class PromoAD extends javax.swing.JPanel {
     /**
      * Creates new form PromoAD
      */
+    public PromoAD() {
+        initComponents();
+    }
+    
     public PromoAD(User user) {
         this.user = user;
         initComponents();

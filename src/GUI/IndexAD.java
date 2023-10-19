@@ -64,16 +64,16 @@ public class IndexAD extends javax.swing.JFrame implements IIndex{
         sidebarAD.siteOrder(siteOrder);
         topbarAD.siteOrder(siteOrder);
 
-        javax.swing.GroupLayout pnBodyLayout = new javax.swing.GroupLayout(pnBody);
-        pnBody.setLayout(pnBodyLayout);
-        pnBodyLayout.setHorizontalGroup(
-            pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        pnBodyLayout.setVerticalGroup(
-            pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+//        javax.swing.GroupLayout pnBodyLayout = new javax.swing.GroupLayout(pnBody);
+//        pnBody.setLayout(pnBodyLayout);
+//        pnBodyLayout.setHorizontalGroup(
+//            pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//            .addGap(0, 0, Short.MAX_VALUE)
+//        );
+//        pnBodyLayout.setVerticalGroup(
+//            pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//            .addGap(0, 0, Short.MAX_VALUE)
+//        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -105,16 +105,16 @@ public class IndexAD extends javax.swing.JFrame implements IIndex{
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(940, 600));
 
-        javax.swing.GroupLayout statisticAD1Layout = new javax.swing.GroupLayout(pnBody);
-        pnBody.setLayout(statisticAD1Layout);
-        statisticAD1Layout.setHorizontalGroup(
-            statisticAD1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        statisticAD1Layout.setVerticalGroup(
-            statisticAD1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+//        javax.swing.GroupLayout statisticAD1Layout = new javax.swing.GroupLayout(pnBody);
+//        pnBody.setLayout(statisticAD1Layout);
+//        statisticAD1Layout.setHorizontalGroup(
+//            statisticAD1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//            .addGap(0, 0, Short.MAX_VALUE)
+//        );
+//        statisticAD1Layout.setVerticalGroup(
+//            statisticAD1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//            .addGap(0, 0, Short.MAX_VALUE)
+//        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

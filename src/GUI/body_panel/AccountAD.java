@@ -15,6 +15,10 @@ public class AccountAD extends javax.swing.JPanel {
     /**
      * Creates new form AccountAD
      */
+    public AccountAD() {
+        initComponents();
+    }
+    
     public AccountAD(User user) {
         this.user = user;
         initComponents();
