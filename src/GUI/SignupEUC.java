@@ -12,6 +12,7 @@ import assets.EnumCheck.NumbersValidStatus;
 import assets.EnumCheck.PwdValidStatus;
 import assets.EnumCheck.ValidStatus;
 import assets.Styles;
+import assets.TextBubbleBorder;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -20,6 +21,7 @@ import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.border.AbstractBorder;
 
 /**
  *
@@ -95,6 +97,8 @@ public class SignupEUC extends javax.swing.JFrame {
         
         txtNoti.setForeground(Styles.FUNC_DANGER);
         txtNoti.setFont(Styles.Body);
+        AbstractBorder border = new TextBubbleBorder(Styles.GRAY_200,1,6,0);
+        txtNoti.setBorder(border);
         
         Styles.ButtonPrimary(btSignup);
     }
@@ -348,6 +352,8 @@ public class SignupEUC extends javax.swing.JFrame {
                 rdoOrtherActionPerformed(evt);
             }
         });
+
+        jScrollPane1.setBorder(null);
 
         txtNoti.setBorder(null);
         txtNoti.setForeground(new java.awt.Color(255, 102, 102));

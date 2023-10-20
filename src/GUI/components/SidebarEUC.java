@@ -114,6 +114,9 @@ public class SidebarEUC extends javax.swing.JPanel implements ISidebar{
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/image/log-header-logo.png"))); // NOI18N
 
+        jSeparator1.setBackground(Styles.PRI_DARK);
+        jSeparator1.setForeground(Styles.PRI_DARK);
+
         javax.swing.GroupLayout pnHeaderLayout = new javax.swing.GroupLayout(pnHeader);
         pnHeader.setLayout(pnHeaderLayout);
         pnHeaderLayout.setHorizontalGroup(
@@ -258,6 +261,9 @@ public class SidebarEUC extends javax.swing.JPanel implements ISidebar{
                 btLogoutActionPerformed(evt);
             }
         });
+
+        jSeparator2.setBackground(Styles.PRI_DARK);
+        jSeparator2.setForeground(Styles.PRI_DARK);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

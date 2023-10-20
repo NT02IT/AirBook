@@ -133,6 +133,9 @@ public class SidebarAD extends javax.swing.JPanel implements ISidebar{
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/image/log-header-logo.png"))); // NOI18N
 
+        jSeparator1.setBackground(Styles.PRI_DARK);
+        jSeparator1.setForeground(Styles.PRI_DARK);
+
         javax.swing.GroupLayout pnHeaderLayout = new javax.swing.GroupLayout(pnHeader);
         pnHeader.setLayout(pnHeaderLayout);
         pnHeaderLayout.setHorizontalGroup(
@@ -277,6 +280,9 @@ public class SidebarAD extends javax.swing.JPanel implements ISidebar{
                 btLogoutActionPerformed(evt);
             }
         });
+
+        jSeparator2.setBackground(Styles.PRI_DARK);
+        jSeparator2.setForeground(Styles.PRI_DARK);
 
         btAirline.setBackground(getBackground());
         btAirline.setForeground(new java.awt.Color(255, 255, 255));

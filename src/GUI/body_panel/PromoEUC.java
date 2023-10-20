@@ -6,7 +6,9 @@ package GUI.body_panel;
 
 import DTO.entities.User;
 import assets.Styles;
+import assets.TextBubbleBorder;
 import java.awt.Dimension;
+import javax.swing.border.AbstractBorder;
 import javax.swing.table.JTableHeader;
 
 /**
@@ -34,7 +36,10 @@ public class PromoEUC extends javax.swing.JPanel {
         lbTitle.setFont(Styles.H2);
         
         Styles.ButtonSecondary(btSearch);
-        Styles.Table(tbPromoCode); 
+        Styles.Table(tbPromoCode);         
+        AbstractBorder border = new TextBubbleBorder(Styles.GRAY_200,1,12,0);
+        pnPromoCode.setBorder(border);
+        tbPromoCode.setBackground(Styles.WHITE);
         
         lbPromoCount.setFont(Styles.Micro);
         lbPromoCount.setForeground(Styles.GRAY_600);
@@ -51,7 +56,7 @@ public class PromoEUC extends javax.swing.JPanel {
 
         lbTitle = new javax.swing.JLabel();
         btSearch = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        pnPromoCode = new javax.swing.JScrollPane();
         tbPromoCode = new javax.swing.JTable();
         lbPromoCount = new javax.swing.JLabel();
 
@@ -67,12 +72,51 @@ public class PromoEUC extends javax.swing.JPanel {
         btSearch.setText("Tìm kiếm");
         btSearch.setBorderPainted(false);
         btSearch.setFocusPainted(false);
+        btSearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btSearchMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btSearchMouseExited(evt);
+            }
+        });
 
-        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
-        jScrollPane1.setBorder(null);
+        pnPromoCode.setBackground(new java.awt.Color(255, 255, 255));
+        pnPromoCode.setBorder(null);
 
         tbPromoCode.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
                 {null, null, null, null, null},
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -95,8 +139,9 @@ public class PromoEUC extends javax.swing.JPanel {
         tbPromoCode.setRowHeight(36);
         tbPromoCode.setSelectionBackground(Styles.PRI_LIGHTER);
         tbPromoCode.setSelectionForeground(Styles.PRI_NORMAL);
+        tbPromoCode.setShowGrid(true);
         tbPromoCode.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(tbPromoCode);
+        pnPromoCode.setViewportView(tbPromoCode);
         if (tbPromoCode.getColumnModel().getColumnCount() > 0) {
             tbPromoCode.getColumnModel().getColumn(0).setMinWidth(46);
             tbPromoCode.getColumnModel().getColumn(0).setMaxWidth(46);
@@ -120,7 +165,7 @@ public class PromoEUC extends javax.swing.JPanel {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
+                            .addComponent(pnPromoCode, javax.swing.GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lbTitle)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -135,19 +180,31 @@ public class PromoEUC extends javax.swing.JPanel {
                     .addComponent(lbTitle)
                     .addComponent(btSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
-                .addComponent(jScrollPane1)
+                .addComponent(pnPromoCode)
                 .addGap(8, 8, 8)
                 .addComponent(lbPromoCount)
                 .addGap(24, 24, 24))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btSearchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btSearchMouseEntered
+        btSearch.setBackground(Styles.PRI_NORMAL);
+        btSearch.setForeground(Styles.WHITE);
+        btSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-search-white18.png")));
+    }//GEN-LAST:event_btSearchMouseEntered
+
+    private void btSearchMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btSearchMouseExited
+        btSearch.setBackground(Styles.PRI_LIGHTER);
+        btSearch.setForeground(Styles.PRI_NORMAL);
+        btSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-search-pri18.png")));
+    }//GEN-LAST:event_btSearchMouseExited
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btSearch;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbPromoCount;
     private javax.swing.JLabel lbTitle;
+    private javax.swing.JScrollPane pnPromoCode;
     private javax.swing.JTable tbPromoCode;
     // End of variables declaration//GEN-END:variables
 }

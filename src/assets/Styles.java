@@ -10,29 +10,18 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Insets;
-import java.awt.Paint;
-import java.awt.PaintContext;
-import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Shape;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Rectangle2D;
+import java.awt.geom.Path2D;
 import java.awt.geom.RoundRectangle2D;
-import java.awt.image.ColorModel;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
 import javax.swing.border.AbstractBorder;
-import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.table.JTableHeader;
 
 /**
@@ -87,60 +76,74 @@ public class Styles {
     public static void ButtonPrimary(JButton button){
         button.setBackground(PRI_NORMAL);
         button.setForeground(WHITE);
-        button.setFont(Body);
-        button.setBorderPainted(false);
+        button.setFont(Body);        
         button.setFocusPainted(false);
         button.setIconTextGap(6);
         button.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        button.setMargin(new java.awt.Insets(2, 16, 2, 16));
+        button.setMargin(new java.awt.Insets(2, 16, 2, 16));      
+        button.setBorderPainted(true);
+        AbstractBorder border = new TextBubbleBorder(button.getBackground(),0,12,0);
+        button.setBorder(border);
     }
     
     public static void ButtonSecondary(JButton button){
         button.setBackground(PRI_LIGHTER);
         button.setForeground(PRI_NORMAL);
-        button.setFont(Body);
-        button.setBorderPainted(false);
+        button.setFont(Body);        
         button.setFocusPainted(false);
         button.setIconTextGap(6);
         button.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         button.setMargin(new java.awt.Insets(2, 16, 2, 16));
+        button.setBorderPainted(true);
+        AbstractBorder border = new TextBubbleBorder(button.getBackground(),0,12,0);
+        button.setBorder(border);
     }
     
     public static void ButtonNeutral(JButton button){
         button.setBackground(GRAY_100);
         button.setForeground(GRAY_600);
-        button.setFont(Body);
-        button.setBorderPainted(false);
+        button.setFont(Body);        
         button.setFocusPainted(false);
         button.setIconTextGap(6);
         button.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         button.setMargin(new java.awt.Insets(2, 16, 2, 16));
+        button.setBorderPainted(true);
+        AbstractBorder border = new TextBubbleBorder(button.getBackground(),0,12,0);
+        button.setBorder(border);
     }
     
     public static void ButtonDanger(JButton button){
         button.setBackground(FUNC_DANGER_LIGHT);
         button.setForeground(FUNC_DANGER);
-        button.setFont(Body);
-        button.setBorderPainted(false);
+        button.setFont(Body);        
         button.setFocusPainted(false);
         button.setIconTextGap(6);
         button.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         button.setMargin(new java.awt.Insets(2, 16, 2, 16));
+        button.setBorderPainted(true);
+        AbstractBorder border = new TextBubbleBorder(button.getBackground(),0,12,0);
+        button.setBorder(border);
     }
     
     public static void Table(JTable table){
-        table.setGridColor(PRI_NORMAL);
-        table.setRowHeight(36);
-        table.setSelectionBackground(PRI_LIGHTER);
-        table.setSelectionForeground(PRI_NORMAL);
-        table.setFont(Styles.Body);
+//        AbstractBorder border = new TextBubbleBorder(GRAY_200,1,6,0);
         
         JTableHeader tableHeader = table.getTableHeader();
         tableHeader.setReorderingAllowed(false);
         tableHeader.setPreferredSize(new Dimension(64, 36));
         tableHeader.setOpaque(false);
         tableHeader.setBackground(PRI_LIGHTER);
+        tableHeader.setBorder(new TextBubbleBorder(GRAY_100, 1, 0, 0));
+//        tableHeader.setBorder(border);
         tableHeader.setFont(Label);
+        
+        table.setGridColor(GRAY_100);
+        table.setRowHeight(36);
+        table.setSelectionBackground(PRI_LIGHTER);
+        table.setSelectionForeground(PRI_NORMAL);
+        table.setFont(Styles.Body);        
+
+//        table.setBorder(border);
     }
     
     public static void TopbarHeader(JLabel text){
@@ -157,13 +160,17 @@ public class Styles {
     public static void FormTextFeild(JTextField text){
         text.setBackground(WHITE);
         text.setFont(Body);
-        text.setMargin(new java.awt.Insets(0, 8, 0, 8));
+        AbstractBorder border = new TextBubbleBorder(GRAY_200,1,6,0);
+        text.setBorder(border);
+        text.setMargin(new java.awt.Insets(0, 8, 0, 8));        
     }
     
     public static void FormDateFeild(JTextField text){
         text.setBackground(WHITE);
         text.setFont(Body);
-        text.setMargin(new java.awt.Insets(0, 8, 0, 8));         
+        AbstractBorder border = new TextBubbleBorder(GRAY_200,1,6,0);
+        text.setBorder(border);
+        text.setMargin(new java.awt.Insets(0, 8, 0, 8));           
     }
     
     public static void FormRadio(JRadioButton radio, ButtonGroup group){
@@ -175,5 +182,51 @@ public class Styles {
         radio.setFocusPainted(false);
     }
     
+//    private static class RoundedBorder implements Border {
+//        private int radius;
+//        RoundedBorder(int radius) {
+//            this.radius = radius;
+//        }
+//        public Insets getBorderInsets(Component c) {
+//            return new Insets(this.radius+1, this.radius+1, this.radius+2, this.radius);
+//        }
+//        public boolean isBorderOpaque() {
+//            return true;
+//        }
+//        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+//            g.drawRoundRect(x, y, width-1, height-1, radius, radius);
+//        }
+//    }
     
+    public static class RoundedBorder extends LineBorder {
+        private int radius;
+        public RoundedBorder(Color c, int thickness, int radius) {
+            super(c, thickness, true);
+            this.radius = radius;
+        }
+        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+            // adapted code of LineBorder class
+            if ((this.thickness > 0) && (g instanceof Graphics2D)) {
+                Graphics2D g2d = (Graphics2D) g;
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+                g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+                Color oldColor = g2d.getColor();
+                g2d.setColor(this.lineColor);
+
+                Shape outer;
+                Shape inner;
+
+                int offs = this.thickness;
+                int size = offs + offs;
+                outer = new RoundRectangle2D.Float(x, y, width, height, 0, 0);
+                inner = new RoundRectangle2D.Float(x + offs, y + offs, width - size, height - size, radius, radius);
+                Path2D path = new Path2D.Float(Path2D.WIND_EVEN_ODD);
+                path.append(outer, false);
+                path.append(inner, false);
+                g2d.fill(path);
+                g2d.setColor(oldColor);
+            }
+        }
+    }
 }
