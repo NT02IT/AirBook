@@ -5,10 +5,16 @@
 package GUI.components;
 
 import GUI.IndexEUC;
+import GUI.SigninGUI;
+import GUI.SignupEUC;
 import assets.Site.Order;
 import javax.swing.BorderFactory;
 import assets.Styles;
 import java.awt.Insets;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -40,28 +46,12 @@ public class SidebarEUC extends javax.swing.JPanel implements ISidebar{
     
     @Override
     public void style(){
-        this.setBackground(Styles.PRI_NORMAL);
-
-        btBuyTicket.setBorder(BorderFactory.createEmptyBorder());
-        btBuyTicket.setFont(Styles.Label);
-        btBuyTicket.setForeground(Styles.WHITE);
-        btBuyTicket.setMargin(new Insets(12, 16, 12, 16));
-
-        btMyTicket.setBorder(BorderFactory.createEmptyBorder());
-        btMyTicket.setFont(Styles.Label);
-        btMyTicket.setForeground(Styles.WHITE);
-
-        btPromo.setBorder(BorderFactory.createEmptyBorder());
-        btPromo.setFont(Styles.Label);
-        btPromo.setForeground(Styles.WHITE);
-
-        btAccount.setBorder(BorderFactory.createEmptyBorder());
-        btAccount.setFont(Styles.Label);
-        btAccount.setForeground(Styles.WHITE);
-
-        btLogout.setBorder(BorderFactory.createEmptyBorder());
-        btLogout.setFont(Styles.Label);
-        btLogout.setForeground(Styles.WHITE);
+        this.setBackground(Styles.PRI_NORMAL);        
+        Styles.SidebarNavItem(btBuyTicket);
+        Styles.SidebarNavItem(btMyTicket);
+        Styles.SidebarNavItem(btPromo);
+        Styles.SidebarNavItem(btAccount);
+        Styles.SidebarNavItem(btLogout);
     }
     
     @Override
@@ -325,7 +315,17 @@ public class SidebarEUC extends javax.swing.JPanel implements ISidebar{
         dialog.setLocationRelativeTo(this);
         int result = JOptionPane.showConfirmDialog(dialog, "Bạn có muốn đăng xuất", "Đăng xuất", JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION) {
-            System.exit(0);
+            frParrent.setVisible(false);
+            try {
+                SigninGUI signinGUI = new SigninGUI();
+                signinGUI.setVisible(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(SignupEUC.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(SignupEUC.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(SignupEUC.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }        
     }//GEN-LAST:event_btLogoutActionPerformed
 

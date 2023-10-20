@@ -150,6 +150,8 @@ public abstract class Person {
     }
     
     public static String formatName(String name){
+        if(name.equals("")) return "";
+        
         name = name.trim();
         name = name.replaceAll(" +", " ");
         String output = "";

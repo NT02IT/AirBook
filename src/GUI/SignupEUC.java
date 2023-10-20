@@ -7,7 +7,6 @@ package GUI;
 import BUS.UserBUS;
 import DTO.entities.User;
 import assets.DateTime;
-import assets.EnumCheck;
 import assets.EnumCheck.DateValidStatus;
 import assets.EnumCheck.NumbersValidStatus;
 import assets.EnumCheck.PwdValidStatus;
@@ -18,14 +17,9 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.WindowConstants;
 
 /**
  *
@@ -64,68 +58,45 @@ public class SignupEUC extends javax.swing.JFrame {
         lbSubtitle2.setForeground(Styles.GRAY_400);
         lbSubtitle2.setFont(Styles.Micro);
         
-        lbName.setForeground(Styles.GRAY_600);
-        lbName.setFont(Styles.Label);        
-        txtName.setForeground(Styles.GRAY_600);
-        txtName.setFont(Styles.Body);
-
-        lbGender.setForeground(Styles.GRAY_600);
-        lbGender.setFont(Styles.Label);        
-        rdoMale.setFont(Styles.Body);
-        rdoFemale.setFont(Styles.Body);
-        rdoOrther.setFont(Styles.Body);
+        Styles.FormLabel(lbName);
+        Styles.FormTextFeild(txtName);
         
-        lbDoB.setForeground(Styles.GRAY_600);
-        lbDoB.setFont(Styles.Label);        
-        txtDoB.setForeground(Styles.GRAY_600);
-        txtDoB.setFont(Styles.Body);
+        Styles.FormLabel(lbGender);
+        Styles.FormRadio(rdoMale, grpGender);
+        Styles.FormRadio(rdoFemale, grpGender);
+        Styles.FormRadio(rdoOrther, grpGender);
+        
+        Styles.FormLabel(lbDoB);
+        Styles.FormDateFeild(txtDoB);
 
-        lbCCCD.setForeground(Styles.GRAY_600);
-        lbCCCD.setFont(Styles.Label);        
-        txtCCCD.setForeground(Styles.GRAY_600);
-        txtCCCD.setFont(Styles.Body);
+        Styles.FormLabel(lbCCCD);
+        Styles.FormTextFeild(txtCCCD);
+        
+        Styles.FormLabel(lbNation);
+        Styles.FormTextFeild(txtNation);
+        
+        Styles.FormLabel(lbAddress);
+        Styles.FormTextFeild(txtAddress);
 
-        lbNation.setForeground(Styles.GRAY_600);
-        lbNation.setFont(Styles.Label);        
-        txtNation.setForeground(Styles.GRAY_600);
-        txtNation.setFont(Styles.Body);
-
-        lbAddress.setForeground(Styles.GRAY_600);
-        lbAddress.setFont(Styles.Label);        
-        txtAddress.setForeground(Styles.GRAY_600);
-        txtAddress.setFont(Styles.Body);
-
-        lbPhoneNum.setForeground(Styles.GRAY_600);
-        lbPhoneNum.setFont(Styles.Label);        
-        txtPhoneNum.setForeground(Styles.GRAY_600);
-        txtPhoneNum.setFont(Styles.Body);
-
-        lbEmail.setForeground(Styles.GRAY_600);
-        lbEmail.setFont(Styles.Label);        
-        txtEmail.setForeground(Styles.GRAY_600);
-        txtEmail.setFont(Styles.Body);
-
-        lbUsername.setForeground(Styles.GRAY_600);
-        lbUsername.setFont(Styles.Label);        
-        txtUsername.setForeground(Styles.GRAY_600);
-        txtUsername.setFont(Styles.Body);
-
-        lbPwd.setForeground(Styles.GRAY_600);
-        lbPwd.setFont(Styles.Label);        
-        txtPwd.setForeground(Styles.GRAY_600);
-        txtPwd.setFont(Styles.Body);
-
-        lbPwdConfirm.setForeground(Styles.GRAY_600);
-        lbPwdConfirm.setFont(Styles.Label);        
-        txtPwdConfirm.setForeground(Styles.GRAY_600);
-        txtPwdConfirm.setFont(Styles.Body);
+        Styles.FormLabel(lbPhoneNum);
+        Styles.FormTextFeild(txtPhoneNum);
+        
+        Styles.FormLabel(lbEmail);
+        Styles.FormTextFeild(txtEmail);
+        
+        Styles.FormLabel(lbUsername);
+        Styles.FormTextFeild(txtUsername);
+        
+        Styles.FormLabel(lbPwd);
+        Styles.FormTextFeild(txtPwd);
+        
+        Styles.FormLabel(lbPwdConfirm);
+        Styles.FormTextFeild(txtPwdConfirm);
         
         txtNoti.setForeground(Styles.FUNC_DANGER);
         txtNoti.setFont(Styles.Body);
         
-        btSignup.setBackground(Styles.PRI_NORMAL);
-        btSignup.setForeground(Styles.WHITE);
-        btSignup.setFont(Styles.Body);
+        Styles.ButtonPrimary(btSignup);
     }
 
     /**
@@ -212,6 +183,14 @@ public class SignupEUC extends javax.swing.JFrame {
         btSignup.setText("Đăng ký");
         btSignup.setBorder(null);
         btSignup.setFocusPainted(false);
+        btSignup.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btSignupMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btSignupMouseExited(evt);
+            }
+        });
         btSignup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSignupActionPerformed(evt);
@@ -522,6 +501,14 @@ public class SignupEUC extends javax.swing.JFrame {
         btBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-arrow-back-white32.png"))); // NOI18N
         btBack.setBorder(null);
         btBack.setFocusPainted(false);
+        btBack.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btBackMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btBackMouseExited(evt);
+            }
+        });
         btBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btBackActionPerformed(evt);
@@ -787,6 +774,10 @@ public class SignupEUC extends javax.swing.JFrame {
                     userBUS.signUp(newAccount);
                 } catch (NoSuchAlgorithmException ex) {
                     Logger.getLogger(SignupEUC.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(SignupEUC.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(SignupEUC.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 JOptionPane.showMessageDialog(this,"Đăng ký thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
                 this.setVisible(false);
@@ -851,6 +842,22 @@ public class SignupEUC extends javax.swing.JFrame {
     private void rdoOrtherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoOrtherActionPerformed
         gender = "Khác";
     }//GEN-LAST:event_rdoOrtherActionPerformed
+
+    private void btBackMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btBackMouseEntered
+        btBack.setBackground(Styles.PRI_DARK);
+    }//GEN-LAST:event_btBackMouseEntered
+
+    private void btSignupMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btSignupMouseEntered
+        btSignup.setBackground(Styles.PRI_DARK);
+    }//GEN-LAST:event_btSignupMouseEntered
+
+    private void btSignupMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btSignupMouseExited
+        btSignup.setBackground(Styles.PRI_NORMAL);
+    }//GEN-LAST:event_btSignupMouseExited
+
+    private void btBackMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btBackMouseExited
+        btBack.setBackground(Styles.PRI_NORMAL);
+    }//GEN-LAST:event_btBackMouseExited
 
     /**
      * @param args the command line arguments

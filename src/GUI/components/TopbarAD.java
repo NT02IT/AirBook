@@ -51,12 +51,8 @@ public class TopbarAD extends javax.swing.JPanel {
     }
     
     public void style(){
-        lbSitename.setForeground(Styles.PRI_DARK);
-        lbSitename.setFont(Styles.H1);
-        
-        btCTA.setBackground(Styles.PRI_NORMAL);
-        btCTA.setForeground(Styles.WHITE);
-        btCTA.setFont(Styles.Body);
+        Styles.TopbarHeader(lbSitename);
+        Styles.ButtonPrimary(btCTA);
     }
 
     /**
@@ -71,7 +67,7 @@ public class TopbarAD extends javax.swing.JPanel {
         lbSitename = new javax.swing.JLabel();
         btCTA = new javax.swing.JButton();
 
-        setBackground(Styles.WHITE);
+        setBackground(Styles.GRAY_100);
         setPreferredSize(new java.awt.Dimension(740, 62));
 
         lbSitename.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
@@ -84,6 +80,7 @@ public class TopbarAD extends javax.swing.JPanel {
         btCTA.setBorder(null);
         btCTA.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btCTA.setFocusPainted(false);
+        btCTA.setIconTextGap(6);
         btCTA.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btCTAMouseEntered(evt);

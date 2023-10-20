@@ -23,9 +23,10 @@ import java.util.logging.Logger;
 public class UserDAO {
     protected ArrayList<Person> list = new ArrayList<>();
     protected Person user = new User();
+    private ConnectDB connectDB;
 
     public UserDAO() throws ClassNotFoundException, SQLException, IOException {
-        ConnectDB connectDB = new ConnectDB();
+        connectDB = new ConnectDB();
         read();
     }
 
@@ -37,10 +38,12 @@ public class UserDAO {
         return (User)user;
     }
 
-    public ArrayList<Person> read() throws IOException, ClassNotFoundException{
+    public ArrayList<Person> read() throws IOException, ClassNotFoundException, SQLException{
+        String context = this.getClass().getName();
+        connectDB.connect(context);
         try {
             String sql = "Select * from users";
-            Statement stmt = ConnectDB.conn.createStatement();
+            Statement stmt = connectDB.conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while(rs.next()){
                 User user = new User();
@@ -62,13 +65,17 @@ public class UserDAO {
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        connectDB.disconnect(context);
         return list;
     }
     
-    public boolean create(User user) {
+    public boolean create(User user) throws ClassNotFoundException, SQLException {
+        String context = this.getClass().getName();
+        connectDB.connect(context);
         try {
-            String sql = "INSERT INTO users(User_ID, Role_ID, Username, Pwd, Real_name, DoB, Gender, Nation, User_address, Phone_number, CCCD, Email, Date_create) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement pstmt = ConnectDB.conn.prepareStatement(sql);
+            String sql = "INSERT INTO users(User_ID, Role_ID, Username, Pwd, Real_name, DoB, Gender, Nation, User_address, Phone_number, CCCD, Email, Date_create) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement pstmt = connectDB.conn.prepareStatement(sql);
             pstmt.setString(1, user.getID());
             pstmt.setString(2, user.getRoleID());
             pstmt.setString(3, user.getUsername());
@@ -90,6 +97,7 @@ public class UserDAO {
         } catch (SQLException ex) {
             Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        connectDB.disconnect(context);
         return false;
     }
 }

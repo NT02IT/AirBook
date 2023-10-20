@@ -23,9 +23,10 @@ import java.util.logging.Logger;
 public class RoleDAO {
     public static Map<String, String> list = new HashMap<>();
     protected Role role;
+    private ConnectDB connectDB;
     
     public RoleDAO() throws ClassNotFoundException, SQLException, IOException {
-        ConnectDB connectDB = new ConnectDB();
+        connectDB = new ConnectDB();
         read();
     }
     
@@ -33,7 +34,9 @@ public class RoleDAO {
         return list;
     }
     
-    public Map<String, String> read() throws IOException, ClassNotFoundException{
+    public Map<String, String> read() throws IOException, ClassNotFoundException, SQLException{
+        String context = this.getClass().getName();
+        connectDB.connect(context);
         try {
             String sql = "Select * from roles";
             Statement stmt = ConnectDB.conn.createStatement();
@@ -47,12 +50,16 @@ public class RoleDAO {
         } catch (SQLException ex) {
             Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        connectDB.disconnect(context);
         return list;
     }
     
-    public boolean create(Role role) {
+    public boolean create(Role role) throws SQLException {
+        String context = this.getClass().getName();
+        connectDB.connect(context);
         try {
-            String sql = "INSERT INTO roles(Role_ID, Role_name) VALUES (?, ?)";
+            String sql = "INSERT INTO roles(Role_ID, Role_name) "
+                    + "VALUES (?, ?)";
             PreparedStatement pstmt = ConnectDB.conn.prepareStatement(sql);
             pstmt.setString(1, role.getRoleID());
             pstmt.setString(2, role.getRoleName());
@@ -62,6 +69,7 @@ public class RoleDAO {
         } catch (SQLException ex) {
             Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        connectDB.disconnect(context);
         return false;
     }
 }

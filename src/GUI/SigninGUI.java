@@ -52,25 +52,14 @@ public class SigninGUI extends javax.swing.JFrame {
         lbTitle.setForeground(Styles.PRI_NORMAL);
         lbTitle.setFont(Styles.H1);
         
-        lbEmail.setForeground(Styles.GRAY_600);
-        lbEmail.setFont(Styles.Label);
+        Styles.FormLabel(lbUsername);
+        Styles.FormLabel(lbPwd);  
         
-        lbPwd.setForeground(Styles.GRAY_600);
-        lbPwd.setFont(Styles.Label);
+        Styles.FormTextFeild(txtUsername);        
+        Styles.FormTextFeild(txtPwd);        
         
-        txtPwd.setForeground(Styles.GRAY_600);
-        txtPwd.setFont(Styles.Body);
-        
-        txtUsername.setForeground(Styles.GRAY_600);
-        txtUsername.setFont(Styles.Body);
-        
-        btSignin.setBackground(Styles.PRI_NORMAL);
-        btSignin.setForeground(Styles.WHITE);
-        btSignin.setFont(Styles.Body);
-        
-        btSignup.setBackground(Styles.PRI_LIGHTER);
-        btSignup.setForeground(Styles.PRI_NORMAL);
-        btSignup.setFont(Styles.Body);
+        Styles.ButtonPrimary(btSignin);
+        Styles.ButtonSecondary(btSignup);
     }
 
     /**
@@ -84,7 +73,7 @@ public class SigninGUI extends javax.swing.JFrame {
 
         pnBody = new javax.swing.JPanel();
         lbTitle = new javax.swing.JLabel();
-        lbEmail = new javax.swing.JLabel();
+        lbUsername = new javax.swing.JLabel();
         lbPwd = new javax.swing.JLabel();
         txtUsername = new javax.swing.JTextField();
         btSignin = new javax.swing.JButton();
@@ -106,10 +95,10 @@ public class SigninGUI extends javax.swing.JFrame {
         lbTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbTitle.setText("Đăng nhập");
 
-        lbEmail.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lbEmail.setForeground(new java.awt.Color(84, 104, 129));
-        lbEmail.setLabelFor(txtUsername);
-        lbEmail.setText("Username");
+        lbUsername.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbUsername.setForeground(new java.awt.Color(84, 104, 129));
+        lbUsername.setLabelFor(txtUsername);
+        lbUsername.setText("Username");
 
         lbPwd.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbPwd.setForeground(new java.awt.Color(84, 104, 129));
@@ -188,7 +177,7 @@ public class SigninGUI extends javax.swing.JFrame {
                     .addComponent(btSignin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnBodyLayout.createSequentialGroup()
                         .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lbEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
+                            .addComponent(lbUsername, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
                             .addComponent(lbPwd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
                         .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -203,7 +192,7 @@ public class SigninGUI extends javax.swing.JFrame {
                 .addComponent(lbTitle)
                 .addGap(20, 20, 20)
                 .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -406,9 +395,9 @@ public class SigninGUI extends javax.swing.JFrame {
     private javax.swing.JButton btSignin;
     private javax.swing.JButton btSignup;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel lbEmail;
     private javax.swing.JLabel lbPwd;
     private javax.swing.JLabel lbTitle;
+    private javax.swing.JLabel lbUsername;
     private javax.swing.JPanel pnBody;
     private javax.swing.JPanel pnHeader;
     private javax.swing.JPasswordField txtPwd;

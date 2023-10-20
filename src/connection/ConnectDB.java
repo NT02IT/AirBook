@@ -26,26 +26,35 @@ public class ConnectDB{
     private static int port;
     private static String strConnect;
     
-    public ConnectDB() throws ClassNotFoundException, SQLException{
-        try {
-            readConfig();
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            conn = DriverManager.getConnection(strConnect);
-//            System.out.print("Ket noi DB thanh cong");
-        } catch (IOException ex) {
-            Logger.getLogger(ConnectDB.class.getName()).log(Level.SEVERE, null, ex);
-//            System.out.print("Ket noi DB that bai");
-        }
+    public ConnectDB() throws ClassNotFoundException, SQLException, IOException{
+        readConfig();
+        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
     }
     
     public void connect() throws SQLException {
         conn = DriverManager.getConnection(strConnect);
-//        System.out.print("Ket noi DB thanh cong");
+        System.out.print("Database is connected\n");
     }
 
     public void disconnect() throws SQLException {
         conn.close();
-//        System.out.println("Ngat ket noi DB thanh cong");
+        System.out.println("Disconnected Database\n");
+    }
+    
+    public void connect(String context) throws SQLException {
+        conn = DriverManager.getConnection(strConnect);
+        try {
+            System.out.print("Database is connected by " + context + "\n");
+        } catch (java.lang.NullPointerException e) {
+        }        
+    }
+
+    public void disconnect(String context) throws SQLException {
+        conn.close();
+        try {
+            System.out.println("Disconnected Database by " + context + "\n");
+        } catch (java.lang.NullPointerException e) {
+        }        
     }
     
     private static void readConfig() throws IOException {

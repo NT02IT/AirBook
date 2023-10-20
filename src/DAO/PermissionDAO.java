@@ -22,6 +22,7 @@ import java.util.logging.Logger;
 public class PermissionDAO {
     protected ArrayList<Permission> list = new ArrayList<>();
     protected Permission per = new Permission();
+    private ConnectDB connectDB;
     
     public PermissionDAO() throws ClassNotFoundException, SQLException, IOException {
         ConnectDB connectDB = new ConnectDB();
@@ -32,7 +33,9 @@ public class PermissionDAO {
         return list;
     }
     
-    public ArrayList<Permission> read() throws IOException, ClassNotFoundException{
+    public ArrayList<Permission> read() throws IOException, ClassNotFoundException, SQLException{
+        String context = this.getClass().getName();
+        connectDB.connect(context);
         try {
             String sql = "Select * from permission";
             Statement stmt = ConnectDB.conn.createStatement();
@@ -52,12 +55,16 @@ public class PermissionDAO {
         } catch (SQLException ex) {
             Logger.getLogger(PermissionDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        connectDB.disconnect(context);
         return list;
     }
     
-    public boolean create(Permission per) {
+    public boolean create(Permission per) throws SQLException {
+        String context = this.getClass().getName();
+        connectDB.connect(context);
         try {
-            String sql = "INSERT INTO permission(Per_ID, Role_ID, Action_ID, Per_access, Per_create, Per_view, Per_edit, Per_delete) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO permission(Per_ID, Role_ID, Action_ID, Per_access, Per_create, Per_view, Per_edit, Per_delete) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement pstmt = ConnectDB.conn.prepareStatement(sql);
             pstmt.setString(1, per.getPerID());
             pstmt.setString(2, per.getRoleID());
@@ -73,6 +80,7 @@ public class PermissionDAO {
         } catch (SQLException ex) {
             Logger.getLogger(PermissionDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        connectDB.disconnect(context);
         return false;
     }
 }

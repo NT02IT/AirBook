@@ -36,12 +36,8 @@ public class TopbarEUC extends javax.swing.JPanel implements ITopbar{
         
     @Override
     public void style(){
-        lbSitename.setForeground(Styles.PRI_DARK);
-        lbSitename.setFont(Styles.H1);
-        
-        btCTA.setBackground(Styles.PRI_NORMAL);
-        btCTA.setForeground(Styles.WHITE);
-        btCTA.setFont(Styles.Body);
+        Styles.TopbarHeader(lbSitename);
+        Styles.ButtonPrimary(btCTA);
     }
     
     @Override
@@ -74,7 +70,7 @@ public class TopbarEUC extends javax.swing.JPanel implements ITopbar{
         lbSitename = new javax.swing.JLabel();
         btCTA = new javax.swing.JButton();
 
-        setBackground(Styles.WHITE);
+        setBackground(Styles.GRAY_100);
         setPreferredSize(new java.awt.Dimension(740, 62));
 
         lbSitename.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N

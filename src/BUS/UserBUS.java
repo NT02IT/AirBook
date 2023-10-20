@@ -62,7 +62,7 @@ public class UserBUS {
         return true;
     }
     
-    public static void signUp(User user) throws NoSuchAlgorithmException{
+    public static void signUp(User user) throws NoSuchAlgorithmException, ClassNotFoundException, SQLException{
         user.setPwd(User.hashPassword(user.getPwd()));
         userDAO.create(user);
         list.add(user);  

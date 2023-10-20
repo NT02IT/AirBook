@@ -5,6 +5,9 @@
 package GUI.body_panel;
 
 import DTO.entities.User;
+import assets.Styles;
+import java.awt.Dimension;
+import javax.swing.table.JTableHeader;
 
 /**
  *
@@ -17,11 +20,24 @@ public class PromoEUC extends javax.swing.JPanel {
      */
     public PromoEUC() {
         initComponents();
+        style();
     }
     
     public PromoEUC(User user) {
         this.user = user;
         initComponents();
+        style();
+    }
+    
+    public void style(){
+        lbTitle.setForeground(Styles.GRAY_600);
+        lbTitle.setFont(Styles.H2);
+        
+        Styles.ButtonSecondary(btSearch);
+        Styles.Table(tbPromoCode); 
+        
+        lbPromoCount.setFont(Styles.Micro);
+        lbPromoCount.setForeground(Styles.GRAY_600);
     }
 
     /**
@@ -33,21 +49,105 @@ public class PromoEUC extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setBackground(new java.awt.Color(153, 153, 255));
+        lbTitle = new javax.swing.JLabel();
+        btSearch = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbPromoCode = new javax.swing.JTable();
+        lbPromoCount = new javax.swing.JLabel();
+
+        setBackground(Styles.WHITE);
+
+        lbTitle.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lbTitle.setText("Danh sách mã khuyến mãi");
+
+        btSearch.setBackground(new java.awt.Color(230, 243, 246));
+        btSearch.setFont(Styles.Body);
+        btSearch.setForeground(new java.awt.Color(1, 138, 165));
+        btSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-search-pri18.png"))); // NOI18N
+        btSearch.setText("Tìm kiếm");
+        btSearch.setBorderPainted(false);
+        btSearch.setFocusPainted(false);
+
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setBorder(null);
+
+        tbPromoCode.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "STT", "Mã khuyến mãi", "Hãng bay", "Ngày kết thúc", "Khuyến mãi"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        tbPromoCode.setGridColor(Styles.PRI_NORMAL);
+        tbPromoCode.setRowHeight(36);
+        tbPromoCode.setSelectionBackground(Styles.PRI_LIGHTER);
+        tbPromoCode.setSelectionForeground(Styles.PRI_NORMAL);
+        tbPromoCode.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tbPromoCode);
+        if (tbPromoCode.getColumnModel().getColumnCount() > 0) {
+            tbPromoCode.getColumnModel().getColumn(0).setMinWidth(46);
+            tbPromoCode.getColumnModel().getColumn(0).setMaxWidth(46);
+            tbPromoCode.getColumnModel().getColumn(3).setMinWidth(112);
+            tbPromoCode.getColumnModel().getColumn(3).setMaxWidth(112);
+            tbPromoCode.getColumnModel().getColumn(4).setResizable(false);
+        }
+
+        lbPromoCount.setFont(Styles.Micro);
+        lbPromoCount.setText("Có tất cả 230 mã khuyến mãi");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lbPromoCount)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lbTitle)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btSearch)))
+                        .addGap(24, 24, 24))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbTitle)
+                    .addComponent(btSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addComponent(jScrollPane1)
+                .addGap(8, 8, 8)
+                .addComponent(lbPromoCount)
+                .addGap(24, 24, 24))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btSearch;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbPromoCount;
+    private javax.swing.JLabel lbTitle;
+    private javax.swing.JTable tbPromoCode;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,7 +5,35 @@
 package assets;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Insets;
+import java.awt.Paint;
+import java.awt.PaintContext;
+import java.awt.Rectangle;
+import java.awt.RenderingHints;
+import java.awt.Shape;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
+import java.awt.image.ColorModel;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
+import javax.swing.JLabel;
+import javax.swing.JRadioButton;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.UIManager;
+import javax.swing.border.AbstractBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.JTableHeader;
 
 /**
  *
@@ -41,5 +69,111 @@ public class Styles {
     public static final Font H2 = new java.awt.Font("Segoe UI", 1, 16);
     public static final Font Body = new java.awt.Font("Segoe UI", 0, 14);
     public static final Font Label = new java.awt.Font("Segoe UI", 1, 14);
-    public static final Font Micro = new java.awt.Font("Segoe UI", 0, 12);    
+    public static final Font Micro = new java.awt.Font("Segoe UI", 0, 12);  
+    
+    public static void SidebarNavItem(JButton button){
+        button.setBackground(PRI_NORMAL);
+        button.setForeground(WHITE);
+        button.setFont(Styles.Label);
+        button.setBorderPainted(false);
+        button.setFocusPainted(false);
+        button.setIconTextGap(6);
+        button.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        button.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        button.setIconTextGap(12);
+        button.setMargin(new java.awt.Insets(2, 16, 2, 16));
+    }
+    
+    public static void ButtonPrimary(JButton button){
+        button.setBackground(PRI_NORMAL);
+        button.setForeground(WHITE);
+        button.setFont(Body);
+        button.setBorderPainted(false);
+        button.setFocusPainted(false);
+        button.setIconTextGap(6);
+        button.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        button.setMargin(new java.awt.Insets(2, 16, 2, 16));
+    }
+    
+    public static void ButtonSecondary(JButton button){
+        button.setBackground(PRI_LIGHTER);
+        button.setForeground(PRI_NORMAL);
+        button.setFont(Body);
+        button.setBorderPainted(false);
+        button.setFocusPainted(false);
+        button.setIconTextGap(6);
+        button.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        button.setMargin(new java.awt.Insets(2, 16, 2, 16));
+    }
+    
+    public static void ButtonNeutral(JButton button){
+        button.setBackground(GRAY_100);
+        button.setForeground(GRAY_600);
+        button.setFont(Body);
+        button.setBorderPainted(false);
+        button.setFocusPainted(false);
+        button.setIconTextGap(6);
+        button.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        button.setMargin(new java.awt.Insets(2, 16, 2, 16));
+    }
+    
+    public static void ButtonDanger(JButton button){
+        button.setBackground(FUNC_DANGER_LIGHT);
+        button.setForeground(FUNC_DANGER);
+        button.setFont(Body);
+        button.setBorderPainted(false);
+        button.setFocusPainted(false);
+        button.setIconTextGap(6);
+        button.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        button.setMargin(new java.awt.Insets(2, 16, 2, 16));
+    }
+    
+    public static void Table(JTable table){
+        table.setGridColor(PRI_NORMAL);
+        table.setRowHeight(36);
+        table.setSelectionBackground(PRI_LIGHTER);
+        table.setSelectionForeground(PRI_NORMAL);
+        table.setFont(Styles.Body);
+        
+        JTableHeader tableHeader = table.getTableHeader();
+        tableHeader.setReorderingAllowed(false);
+        tableHeader.setPreferredSize(new Dimension(64, 36));
+        tableHeader.setOpaque(false);
+        tableHeader.setBackground(PRI_LIGHTER);
+        tableHeader.setFont(Label);
+    }
+    
+    public static void TopbarHeader(JLabel text){
+        text.setFont(H1);
+        text.setForeground(PRI_NORMAL);
+    }
+    
+    public static void FormLabel(JLabel text){
+        text.setForeground(GRAY_600);
+        text.setFont(Styles.Label);
+        text.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    }
+    
+    public static void FormTextFeild(JTextField text){
+        text.setBackground(WHITE);
+        text.setFont(Body);
+        text.setMargin(new java.awt.Insets(0, 8, 0, 8));
+    }
+    
+    public static void FormDateFeild(JTextField text){
+        text.setBackground(WHITE);
+        text.setFont(Body);
+        text.setMargin(new java.awt.Insets(0, 8, 0, 8));         
+    }
+    
+    public static void FormRadio(JRadioButton radio, ButtonGroup group){
+        radio.setFont(Body);
+        radio.setForeground(GRAY_600);
+        radio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        group.add(radio);
+        radio.setBorderPainted(false);
+        radio.setFocusPainted(false);
+    }
+    
+    
 }
