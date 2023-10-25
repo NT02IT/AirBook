@@ -4,6 +4,7 @@
  */
 package application;
 
+import GUI.IndexAD;
 import GUI.SigninGUI;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -18,8 +19,10 @@ public class Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws SQLException, ClassNotFoundException, IOException {
-        SigninGUI signinGUI = new SigninGUI();
-        signinGUI.setVisible(true);
+//        SigninGUI signinGUI = new SigninGUI();
+//        signinGUI.setVisible(true);
+            IndexAD indexAD = new IndexAD();
+            indexAD.setVisible(true);
     }
     
 }

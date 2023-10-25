@@ -27,6 +27,13 @@ public class IndexAD extends javax.swing.JFrame implements IIndex{
     /**
      * Creates new form IndexAD
      */
+    public IndexAD() {
+        init();
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+//        this.setUndecorated(true);
+        this.setLocationRelativeTo(null);
+        this.setTitle("Airbook - Thống kê");
+    }
     public IndexAD(User user) {
         this.user = user;
         init();
