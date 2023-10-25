@@ -31,17 +31,19 @@ public class TextBubbleBorder extends AbstractBorder {
     private int strokePad;
     private int pointerPad = 4;
     private boolean left = true;
+    private boolean hasInner;
     RenderingHints hints;
 
 //        TextBubbleBorder(Color color) {
 //            new TextBubbleBorder(color, 4, 8, 7);
 //        }
 
-    public TextBubbleBorder(Color color, int thickness, int radius, int pointerSize) {
+    public TextBubbleBorder(Color color, int thickness, int radius, int pointerSize, boolean hasInner) {
         this.thickness = thickness;
         this.radius = radius;
         this.pointerSize = pointerSize;
         this.color = color;
+        this.hasInner = hasInner;
 
         stroke = new BasicStroke(thickness);
         strokePad = thickness / 2;
@@ -50,12 +52,14 @@ public class TextBubbleBorder extends AbstractBorder {
 
         int pad = radius + strokePad;
         int bottomPad = pad + pointerSize + strokePad;
-        insets = new Insets(pad, pad, bottomPad, pad);
-//        insets = new Insets(0, 0, 0, 0);
+        if (hasInner) {
+            insets = new Insets(pad, pad, bottomPad, pad);
+        } else        
+            insets = new Insets(0, 0, 0, 0);
     }
     
-    public TextBubbleBorder(Color color, int thickness, int radius, int pointerSize, boolean left) {
-        this(color, thickness, radius, pointerSize);
+    public TextBubbleBorder(Color color, int thickness, int radius, int pointerSize, boolean hasInner, boolean left) {
+        this(color, thickness, radius, pointerSize, hasInner);
         this.left = left;
     }
 

@@ -36,10 +36,7 @@ public class PromoEUC extends javax.swing.JPanel {
         lbTitle.setFont(Styles.H2);
         
         Styles.ButtonSecondary(btSearch);
-        Styles.Table(tbPromoCode);         
-        AbstractBorder border = new TextBubbleBorder(Styles.GRAY_200,1,12,0);
-        pnPromoCode.setBorder(border);
-        tbPromoCode.setBackground(Styles.WHITE);
+        Styles.Table(tbPromoCode, pnPromoCode);         
         
         lbPromoCount.setFont(Styles.Micro);
         lbPromoCount.setForeground(Styles.GRAY_600);

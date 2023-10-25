@@ -97,7 +97,7 @@ public class SignupEUC extends javax.swing.JFrame {
         
         txtNoti.setForeground(Styles.FUNC_DANGER);
         txtNoti.setFont(Styles.Body);
-        AbstractBorder border = new TextBubbleBorder(Styles.GRAY_200,1,6,0);
+        AbstractBorder border = new TextBubbleBorder(Styles.GRAY_200,1,6,0, true);
         txtNoti.setBorder(border);
         
         Styles.ButtonPrimary(btSignup);
