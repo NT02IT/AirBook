@@ -13,6 +13,7 @@ import assets.EnumCheck.PwdValidStatus;
 import assets.EnumCheck.ValidStatus;
 import assets.Styles;
 import assets.TextBubbleBorder;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -40,6 +41,7 @@ public class SignupEUC extends javax.swing.JFrame {
     public SignupEUC() throws ClassNotFoundException, SQLException {
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/assets/image/app-favicon.png")));
         try {
             userBUS = new UserBUS();
         } catch (IOException ex) {

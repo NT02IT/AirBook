@@ -7,6 +7,7 @@ package GUI;
 import BUS.UserBUS;
 import assets.Styles;
 import DTO.entities.User;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileInputStream;
@@ -40,6 +41,7 @@ public class SigninGUI extends javax.swing.JFrame {
         this.userBUS = new UserBUS();
         this.user = new User();
         initComponents();
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/assets/image/app-favicon.png")));
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 //        this.setUndecorated(true);
         this.setLocationRelativeTo(null);

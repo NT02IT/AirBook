@@ -55,6 +55,11 @@ public class StatisticAD extends javax.swing.JPanel {
         lbRevenueValue.setFont(Styles.H1);
         lbRevenueValue.setForeground(Styles.FUNC_SUCCESS);
         
+        lbProfit.setFont(Styles.Label);
+        lbProfit.setForeground(Styles.FUNC_DANGER);
+        lbProfitValue.setFont(Styles.H1);
+        lbProfitValue.setForeground(Styles.FUNC_DANGER);
+        
         AbstractBorder border = new TextBubbleBorder(Styles.WHITE,0,20,0, false);
         pnNewEUC.setBorder(border);
         pnRevenue.setBorder(border);
@@ -92,6 +97,10 @@ public class StatisticAD extends javax.swing.JPanel {
         btCreateTicket = new javax.swing.JButton();
         btCreatePromo = new javax.swing.JButton();
         btCreateFlight = new javax.swing.JButton();
+        pnProfit = new javax.swing.JPanel();
+        lbProfit = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        lbProfitValue = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -237,6 +246,46 @@ public class StatisticAD extends javax.swing.JPanel {
         btCreateFlight.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/info-flight-pri18.png"))); // NOI18N
         btCreateFlight.setText("Thêm chuyến bay mới");
 
+        pnProfit.setBackground(new java.awt.Color(255, 229, 211));
+
+        lbProfit.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbProfit.setForeground(new java.awt.Color(255, 58, 40));
+        lbProfit.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbProfit.setText("Lợi nhuận");
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/image/profit.png"))); // NOI18N
+
+        lbProfitValue.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        lbProfitValue.setForeground(new java.awt.Color(255, 58, 40));
+        lbProfitValue.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lbProfitValue.setText("20.000.000");
+        lbProfitValue.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+
+        javax.swing.GroupLayout pnProfitLayout = new javax.swing.GroupLayout(pnProfit);
+        pnProfit.setLayout(pnProfitLayout);
+        pnProfitLayout.setHorizontalGroup(
+            pnProfitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnProfitLayout.createSequentialGroup()
+                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(pnProfitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lbProfitValue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbProfit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(12, 12, 12))
+        );
+        pnProfitLayout.setVerticalGroup(
+            pnProfitLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnProfitLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(lbProfit)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addComponent(lbProfitValue)
+                .addGap(12, 12, 12))
+            .addGroup(pnProfitLayout.createSequentialGroup()
+                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -254,7 +303,8 @@ public class StatisticAD extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(pnNewEUC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btCreateTicket, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btCreateTicket, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pnProfit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btCreatePromo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -279,6 +329,8 @@ public class StatisticAD extends javax.swing.JPanel {
                     .addComponent(pnNewEUC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(pnTicketCount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(pnRevenue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addComponent(pnProfit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addComponent(lbShortcut)
                 .addGap(16, 16, 16)
@@ -286,7 +338,7 @@ public class StatisticAD extends javax.swing.JPanel {
                     .addComponent(btCreateTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btCreatePromo, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btCreateFlight, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(250, Short.MAX_VALUE))
+                .addContainerGap(112, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -296,11 +348,14 @@ public class StatisticAD extends javax.swing.JPanel {
     private javax.swing.JButton btCreatePromo;
     private javax.swing.JButton btCreateTicket;
     private javax.swing.JComboBox<String> cbStatisticWith;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel lbNewEUC;
     private javax.swing.JLabel lbNewEUCValue;
+    private javax.swing.JLabel lbProfit;
+    private javax.swing.JLabel lbProfitValue;
     private javax.swing.JLabel lbRevenue;
     private javax.swing.JLabel lbRevenueValue;
     private javax.swing.JLabel lbShortcut;
@@ -309,6 +364,7 @@ public class StatisticAD extends javax.swing.JPanel {
     private javax.swing.JLabel lbTicketCount;
     private javax.swing.JLabel lbTicketCountValue;
     private javax.swing.JPanel pnNewEUC;
+    private javax.swing.JPanel pnProfit;
     private javax.swing.JPanel pnRevenue;
     private javax.swing.JPanel pnTicketCount;
     // End of variables declaration//GEN-END:variables

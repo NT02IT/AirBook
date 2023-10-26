@@ -4,6 +4,7 @@
  */
 package GUI.components;
 
+import GUI.popup.TicketImportAD;
 import assets.Site.Order;
 import assets.Styles;
 import javax.swing.JFrame;
@@ -89,6 +90,11 @@ public class TopbarAD extends javax.swing.JPanel {
                 btCTAMouseExited(evt);
             }
         });
+        btCTA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCTAActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -119,6 +125,11 @@ public class TopbarAD extends javax.swing.JPanel {
     private void btCTAMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btCTAMouseExited
         btCTA.setBackground(Styles.PRI_NORMAL);
     }//GEN-LAST:event_btCTAMouseExited
+
+    private void btCTAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCTAActionPerformed
+        TicketImportAD ticketImportAD = new TicketImportAD();
+        ticketImportAD.setVisible(true);
+    }//GEN-LAST:event_btCTAActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
