@@ -3,13 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Workspace/Develop/Java/AirBook/src/GUI/SignupEUC.java</file>
-            <file>file:/D:/Workspace/Develop/Java/AirBook/src/GUI/components/SidebarEUC.java</file>
-            <file>file:/D:/Workspace/Develop/Java/AirBook/src/GUI/body_panel/PromoEUC.java</file>
-            <file>file:/D:/Workspace/Develop/Java/AirBook/src/assets/TextBubbleBorder.java</file>
-            <file>file:/D:/Workspace/Develop/Java/AirBook/src/GUI/components/SidebarAD.java</file>
-            <file>file:/D:/Workspace/Develop/Java/AirBook/src/GUI/body_panel/StatisticAD.java</file>
-            <file>file:/D:/Workspace/Develop/Java/AirBook/src/assets/Styles.java</file>
+            <file>file:/D:/Learning/ProgramingLanguage/Java/JavaSwing/AirBook/src/assets/TextBubbleBorder.java</file>
+            <file>file:/D:/Learning/ProgramingLanguage/Java/JavaSwing/AirBook/src/GUI/SignupEUC.java</file>
+            <file>file:/D:/Learning/ProgramingLanguage/Java/JavaSwing/AirBook/src/GUI/body_panel/AccountAD.java</file>
+            <file>file:/D:/Learning/ProgramingLanguage/Java/JavaSwing/AirBook/src/GUI/body_panel/AirlineAD.java</file>
+            <file>file:/D:/Learning/ProgramingLanguage/Java/JavaSwing/AirBook/src/GUI/body_panel/AccountEUC.java</file>
+            <file>file:/D:/Learning/ProgramingLanguage/Java/JavaSwing/AirBook/src/GUI/body_panel/AirportAD.java</file>
+            <file>file:/D:/Learning/ProgramingLanguage/Java/JavaSwing/AirBook/src/GUI/body_panel/TicketAD.java</file>
+            <file>file:/D:/Learning/ProgramingLanguage/Java/JavaSwing/AirBook/src/GUI/body_panel/AirlinePlaneAD.java</file>
+            <file>file:/D:/Learning/ProgramingLanguage/Java/JavaSwing/AirBook/src/assets/Styles.java</file>
         </group>
     </open-files>
 </project-private>
