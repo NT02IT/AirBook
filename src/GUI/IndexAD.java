@@ -7,6 +7,7 @@ package GUI;
 import DTO.entities.User;
 import GUI.body_panel.AccountAD;
 import GUI.body_panel.AirlineAD;
+import GUI.body_panel.AirlinePlaneAD;
 import GUI.body_panel.AirportAD;
 import GUI.body_panel.FlightAD;
 import GUI.body_panel.PromoAD;
@@ -61,7 +62,7 @@ public class IndexAD extends javax.swing.JFrame implements IIndex{
             pnBody = new FlightAD(user);
         } else if (siteOrder == Order.AIRLINE) {
             remove(pnBody);
-            pnBody = new AirlineAD(user);
+            pnBody = new AirlinePlaneAD(user);
         } else if (siteOrder == Order.AIRPORT) {
             remove(pnBody);
             pnBody = new AirportAD(user);
@@ -162,6 +163,7 @@ public class IndexAD extends javax.swing.JFrame implements IIndex{
         topbarAD = new GUI.components.TopbarAD();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(928, 600));
         setPreferredSize(new java.awt.Dimension(940, 600));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

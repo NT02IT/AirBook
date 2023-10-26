@@ -149,6 +149,7 @@ public class Styles {
         table.setFont(Styles.Body);      
         table.setBackground(WHITE);
         scrollPane.setBorder(new TextBubbleBorder(Styles.GRAY_200,1,12,0, true));
+        scrollPane.setBackground(WHITE);
     }
     
     public static void TopbarHeader(JLabel text){

@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package GUI.body_panel;
-
+import assets.Styles;
 import DTO.entities.User;
 
 /**
@@ -17,13 +17,21 @@ public class PromoAD extends javax.swing.JPanel {
      */
     public PromoAD() {
         initComponents();
+        styles();
     }
     
     public PromoAD(User user) {
         this.user = user;
         initComponents();
+        styles();
     }
-
+    public void styles(){
+        Styles.ButtonNeutral(addPromo);        
+        Styles.ButtonNeutral(exportPromo);
+        Styles.ButtonNeutral(importPromo);
+        Styles.ButtonSecondary(searchPromo);
+        Styles.Table(tableAllPromo, jScrollPane1);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,21 +41,134 @@ public class PromoAD extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setBackground(new java.awt.Color(204, 204, 255));
+        jLabel1 = new javax.swing.JLabel();
+        searchPromo = new javax.swing.JButton();
+        addPromo = new javax.swing.JButton();
+        importPromo = new javax.swing.JButton();
+        exportPromo = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableAllPromo = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+
+        setBackground(new java.awt.Color(255, 255, 255));
+        setMinimumSize(new java.awt.Dimension(740, 490));
+
+        jLabel1.setFont(Styles.H2);
+        jLabel1.setText("Danh sách mã khuyến mãi");
+
+        searchPromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-search-pri18.png"))); // NOI18N
+        searchPromo.setText("Tìm kiếm");
+
+        addPromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-black18.png"))); // NOI18N
+
+        importPromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-export-black18.png"))); // NOI18N
+
+        exportPromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-import-black18.png"))); // NOI18N
+
+        tableAllPromo.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "STT", "Mã khuyến mãi", "Hãng bay", "Ngày kết thúc", "Khuyến mãi"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tableAllPromo);
+        if (tableAllPromo.getColumnModel().getColumnCount() > 0) {
+            tableAllPromo.getColumnModel().getColumn(0).setMinWidth(40);
+            tableAllPromo.getColumnModel().getColumn(0).setMaxWidth(50);
+        }
+
+        jLabel2.setFont(Styles.Micro);
+        jLabel2.setText("Có tất cả");
+
+        jLabel3.setFont(Styles.Label);
+        jLabel3.setText("?");
+
+        jLabel4.setFont(Styles.Micro);
+        jLabel4.setText("mã khuyến mãi");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(exportPromo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(importPromo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(addPromo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(searchPromo)))
+                        .addGap(24, 24, 24))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(searchPromo)
+                    .addComponent(addPromo)
+                    .addComponent(importPromo)
+                    .addComponent(exportPromo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE)
+                .addGap(15, 15, 15)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addPromo;
+    private javax.swing.JButton exportPromo;
+    private javax.swing.JButton importPromo;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton searchPromo;
+    private javax.swing.JTable tableAllPromo;
     // End of variables declaration//GEN-END:variables
 }

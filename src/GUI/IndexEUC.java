@@ -148,6 +148,7 @@ public class IndexEUC extends javax.swing.JFrame implements IIndex{
         topbarEUC = new GUI.components.TopbarEUC();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(928, 600));
         setPreferredSize(new java.awt.Dimension(940, 600));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
