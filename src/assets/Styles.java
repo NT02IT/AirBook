@@ -156,6 +156,12 @@ public class Styles {
         text.setForeground(PRI_NORMAL);
     }
     
+    public static void PopupHeader(JLabel text){
+        text.setFont(H1);
+        text.setForeground(WHITE);
+        text.setIconTextGap(8);
+    }
+    
     public static void FormLabel(JLabel text){
         text.setForeground(GRAY_600);
         text.setFont(Styles.Label);

@@ -13,6 +13,7 @@ import GUI.body_panel.PromoAD;
 import GUI.body_panel.StatisticAD;
 import GUI.body_panel.TicketAD;
 import assets.Site.Order;
+import java.awt.Toolkit;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
@@ -30,6 +31,7 @@ public class IndexAD extends javax.swing.JFrame implements IIndex{
     public IndexAD(User user) {
         this.user = user;
         init();
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/assets/image/app-favicon.png")));
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 //        this.setUndecorated(true);
         this.setLocationRelativeTo(null);

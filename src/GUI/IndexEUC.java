@@ -12,6 +12,7 @@ import GUI.body_panel.PromoEUC;
 import assets.Site.Order;
 import assets.Styles;
 import java.awt.Color;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -32,6 +33,7 @@ public class IndexEUC extends javax.swing.JFrame implements IIndex{
         this.user = user;
         init();
 //        initComponents();
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/assets/image/app-favicon.png")));
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 //        this.setUndecorated(true);
         this.setLocationRelativeTo(null);
