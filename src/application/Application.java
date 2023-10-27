@@ -6,6 +6,7 @@ package application;
 
 import DTO.entities.User;
 import GUI.IndexEUC;
+import GUI.IndexAD;
 import GUI.SigninGUI;
 import GUI.body_panel.BuyTicketEUC;
 import java.io.IOException;
@@ -26,6 +27,8 @@ public class Application {
 
         IndexEUC indexEUC = new IndexEUC(new User());
         indexEUC.setVisible(true);
+        // IndexAD indexAD = new IndexAD();
+        // indexAD.setVisible(true);
     }
     
 }

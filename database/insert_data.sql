@@ -1,9 +1,21 @@
-﻿USE AIRBOOK
-
--- Insert into users
+USE AIRBOOK -- Insert into users
 GO
 INSERT INTO
-    users(User_ID, Role_ID, Username, Pwd, Real_name, DoB, Gender, Nation, User_address, Phone_number, CCCD, Email, Date_create)
+    users(
+        User_ID,
+        Role_ID,
+        Username,
+        Pwd,
+        Real_name,
+        DoB,
+        Gender,
+        Nation,
+        User_address,
+        Phone_number,
+        CCCD,
+        Email,
+        Date_create
+    )
 VALUES
 	('AC00000000', 'ROLE0', 'root', 'z/mGwlDDBsqBfqeAA/IIOwVgDMGd8B0/oq8Vi/uEiuw=', N'Root', '2023-10-05', N'Nam', N'Việt Nam', N'Việt Nam', '0327531105', '000000000000', 'root@airbook.com', '2023-10-05 10:00:00'),
 	('AC00000001', 'ROLE1', 'mysV', 'z/mGwlDDBsqBfqeAA/IIOwVgDMGd8B0/oq8Vi/uEiuw=', N'Hà Quốc Vĩ', '2002-01-17', N'Nam', N'Việt Nam', N'Việt Nam', '0320410607', '17524729102', 'quocvi1701@gmail.com', '2023-10-05 10:00:00'),
@@ -15,7 +27,18 @@ VALUES
 -- Insert into receivers
 GO
 INSERT INTO
-    receivers(Receiver_ID, Receiver_name, Gender, DoB, Receiver_address, Nation, Phone_number, CCCD, Email, User_ID)
+    receivers(
+        Receiver_ID,
+        Receiver_name,
+        Gender,
+        DoB,
+        Receiver_address,
+        Nation,
+        Phone_number,
+        CCCD,
+        Email,
+        User_ID
+    )
 VALUES
 	('REC55351285', N'Hà Quốc Vĩ', N'Nam', '2002-01-17', N'Hiệp Bình Chánh, Thủ Đức', N'Việt Nam', '0320410607', '17524729102', 'quocvi1701@gmail.com', 'AC25716701'),
 	('REC25716701', N'Nguyễn Anh Tuấn', N'Nam', '2002-11-19', N'Hiệp Bình Chánh, Thủ Đức', N'Việt Nam', '0320410607', '17524729102', 'lowtee@gmail.com', 'AC25716701'),
@@ -37,32 +60,134 @@ VALUES
 -- Insert into flights
 GO
 INSERT INTO
-    flights(Flight_ID, Flying_from, Flying_to, Hours_fly, Departure_flight)
+    flights(
+        Flight_ID,
+        Flying_from,
+        Flying_to,
+        Hours_fly,
+        Departure_flight
+    )
 VALUES
-    ('VN1001', 'SGN', 'HAN', 2.15, '2023-9-30 09:00:00'),
-    ('VN1002', 'SGN', 'DAD', 1.20, '2023-9-30 10:30:00'),
-    ('VN1003', 'HAN', 'SGN', 2.15, '2023-9-30 09:30:00'),
-    ('BL6001', 'HAN', 'SGN', 2.15, '2023-9-30 15:30:00'),
-    ('VJ1001', 'HAN', 'SGN', 2.15, '2023-9-30 22:00:00'),
-    ('QH1001', 'HAN', 'SGN', 2.15, '2023-9-30 23:00:00');
+    (
+        'VN1001',
+        'SGN',
+        'HAN',
+        2.15,
+        '2023-9-30 09:00:00'
+    ),
+    (
+        'VN1002',
+        'SGN',
+        'DAD',
+        1.20,
+        '2023-9-30 10:30:00'
+    ),
+    (
+        'VN1003',
+        'HAN',
+        'SGN',
+        2.15,
+        '2023-9-30 09:30:00'
+    ),
+    (
+        'BL6001',
+        'HAN',
+        'SGN',
+        2.15,
+        '2023-9-30 15:30:00'
+    ),
+    (
+        'VJ1001',
+        'HAN',
+        'SGN',
+        2.15,
+        '2023-9-30 22:00:00'
+    ),
+    (
+        'QH1001',
+        'HAN',
+        'SGN',
+        2.15,
+        '2023-9-30 23:00:00'
+    );
 
 -- Insert into tickets
 GO
 INSERT INTO
-    tickets(Ticket_ID, Flight_ID, Gate_ID, Price, Seat_ID, Sold_out)
+    tickets(
+        Ticket_ID,
+        Flight_ID,
+        Gate_ID,
+        Price,
+        Seat_ID,
+        Sold_out
+    )
 VALUES
-    ('TK0001', 'VN1001', 'SGN-D03', 1200000, 'VN-01-A1', 0),
-    ('TK0002', 'VN1001', 'SGN-D03', 1200000, 'VN-01-A2', 0),
-    ('TK0003', 'VJ1001', 'HAN-D03', 900000, 'VJ-03-A1', 0);
+    (
+        'TK0001',
+        'VN1001',
+        'SGN-D03',
+        1200000,
+        'VN-01-A1',
+        0
+    ),
+    (
+        'TK0002',
+        'VN1001',
+        'SGN-D03',
+        1200000,
+        'VN-01-A2',
+        0
+    ),
+    (
+        'TK0003',
+        'VJ1001',
+        'HAN-D03',
+        900000,
+        'VJ-03-A1',
+        0
+    );
 
 -- Insert into promotions
 GO
 INSERT INTO
-    promotions(Promo_ID, Promo_name, Promo_type, Decreased, Date_start, Date_end, Airline_ID)
+    promotions(
+        Promo_ID,
+        Promo_name,
+        Promo_type,
+        Decreased,
+        Date_start,
+        Date_end,
+        Airline_ID
+    )
 VALUES
-    ('VN-PR01', 'Summer Sale', 1, 10, '2023-06-01', '2023-08-31', 'VN'),
-    ('VJ-PR02', 'Summer Sale', 2, 200000, '2023-06-01', '2023-08-31', 'VJ'),
-    ('QH-PR03', 'Summer Sale', 1, 10, '2023-06-01', '2023-08-31', 'QH');
+    (
+        'VN-PR01',
+        'Summer Sale',
+        1,
+        10,
+        '2023-06-01',
+        '2023-08-31',
+        'VN'
+    ),
+    (
+        'VJ-PR02',
+        'Summer Sale',
+        2,
+        200000,
+        '2023-06-01',
+        '2023-08-31',
+        'VJ'
+    ),
+    (
+        'QH-PR03',
+        'Summer Sale',
+        1,
+        10,
+        '2023-06-01',
+        '2023-08-31',
+        'QH'
+    );
 
 -- Insert into orders
 GO
@@ -71,6 +196,7 @@ INSERT INTO
 VALUES
     ('OD0001', 'AC25716701', '2032-9-29'),
     ('OD0002', 'AC26289183', '2032-9-29');
+
 GO
 INSERT INTO
     orders(Order_ID, User_ID, Promo_ID, Date_order)
@@ -81,8 +207,32 @@ VALUES
 -- Insert into order_details
 GO
 INSERT INTO
-    order_details(Order_detail_ID, Order_ID, More_luggage_ID, Receiver_ID, Ticket_ID)
+    order_details(
+        Order_detail_ID,
+        Order_ID,
+        More_luggage_ID,
+        Receiver_ID,
+        Ticket_ID
+    )
 VALUES
-    ('ODD0001', 'OD0001', 'MLG0001', 'REC55351285', 'TK0001'),
-	('ODD0002', 'OD0001', 'MLG0001', 'REC55351285', 'TK0003'),
-    ('ODD0003', 'OD0002', 'MLG0002', 'REC25716701', 'TK0002');
+    (
+        'ODD0001',
+        'OD0001',
+        'MLG0001',
+        'REC55351285',
+        'TK0001'
+    ),
+    (
+        'ODD0002',
+        'OD0001',
+        'MLG0001',
+        'REC55351285',
+        'TK0003'
+    ),
+    (
+        'ODD0003',
+        'OD0002',
+        'MLG0002',
+        'REC25716701',
+        'TK0002'
+    );

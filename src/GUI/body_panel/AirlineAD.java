@@ -4,6 +4,7 @@
  */
 package GUI.body_panel;
 
+import assets.Styles;
 import DTO.entities.User;
 
 /**
@@ -17,13 +18,18 @@ public class AirlineAD extends javax.swing.JPanel {
      */
     public AirlineAD() {
         initComponents();
+        styles();
     }
     
     public AirlineAD(User user) {
         this.user = user;
         initComponents();
+        styles();
     }
-
+    public void styles(){
+        Styles.Table(tableAllAirline, jScrollPane1);
+        Styles.ButtonSecondary(addAirline);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,21 +39,113 @@ public class AirlineAD extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setBackground(new java.awt.Color(255, 204, 255));
+        jLabel1 = new javax.swing.JLabel();
+        addAirline = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableAllAirline = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        displayTotalAirline = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+
+        setBackground(new java.awt.Color(255, 255, 255));
+        setFocusable(false);
+        setMinimumSize(new java.awt.Dimension(740, 490));
+
+        jLabel1.setFont(Styles.H2);
+        jLabel1.setText("Danh sách các hãng bay");
+
+        addAirline.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-pri18.png"))); // NOI18N
+        addAirline.setText("Thêm hãng bay");
+
+        tableAllAirline.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "STT", "Mã hãng bay", "Tên máy bay", "Số máy bay", "Doanh thu"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, true, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tableAllAirline);
+        if (tableAllAirline.getColumnModel().getColumnCount() > 0) {
+            tableAllAirline.getColumnModel().getColumn(0).setMinWidth(40);
+            tableAllAirline.getColumnModel().getColumn(0).setMaxWidth(50);
+        }
+
+        jLabel2.setFont(Styles.Micro);
+        jLabel2.setText("Có tất cả");
+
+        displayTotalAirline.setText("230");
+
+        jLabel4.setFont(Styles.Micro);
+        jLabel4.setText("chuyến bay");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(displayTotalAirline)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(addAirline)))
+                        .addGap(24, 24, 24))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(addAirline))
+                .addGap(12, 12, 12)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 381, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(displayTotalAirline)
+                    .addComponent(jLabel4))
+                .addGap(18, 18, 18))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addAirline;
+    private javax.swing.JLabel displayTotalAirline;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tableAllAirline;
     // End of variables declaration//GEN-END:variables
 }
