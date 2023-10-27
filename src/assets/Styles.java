@@ -12,6 +12,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.Shape;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Path2D;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.ButtonGroup;
@@ -140,6 +142,20 @@ public class Styles {
         
         table.setGridColor(GRAY_100);
         table.setRowHeight(36);
+        
+//        Dimension dim = new Dimension(36,1);
+//        table.setIntercellSpacing(new Dimension(dim));
+//        table.setRowMargin(12);
+
+        table.setAutoCreateRowSorter(true);
+        tableHeader.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e){
+                for(int i = 0; i < table.getRowCount(); i++)
+                    table.setValueAt(i+1, i, 0);
+            }
+        });
+        table.setDragEnabled(false);
         table.setSelectionBackground(PRI_LIGHTER);
         table.setSelectionForeground(PRI_NORMAL);
         table.setFont(Styles.Body);      

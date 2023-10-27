@@ -48,7 +48,7 @@ public class BuyTicketEUC extends javax.swing.JPanel {
         initComponents();
         style();
         initTickets();
-        initProvine();
+        initProvine();        
     }
     
     public void style(){
@@ -61,8 +61,8 @@ public class BuyTicketEUC extends javax.swing.JPanel {
         Styles.FormLabel(lbDepartureFlight);
         Styles.FormTextFeild(txtDepartureFlight);
         Styles.ButtonSecondary(btSearch);
-        Styles.FormRadio(rdoAllTicket, null);
-        Styles.Table(tbTikets, pnTickets);
+        Styles.FormRadio(rdoAllTicket, null);        
+        Styles.Table(tbTikets, pnTickets);        
         
         lbTitle.setFont(Styles.H2);
         lbTitle.setForeground(Styles.GRAY_600);
@@ -79,7 +79,7 @@ public class BuyTicketEUC extends javax.swing.JPanel {
         jScrollPane.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
             protected void configureScrollBarColors() {
                 this.thumbColor = Styles.GRAY_200;
-                this.scrollBarWidth = 6;
+                this.scrollBarWidth = 12;
                 this.trackColor = Styles.GRAY_100;
             }
         });
@@ -117,9 +117,11 @@ public class BuyTicketEUC extends javax.swing.JPanel {
     
     public void initProvine() throws ClassNotFoundException, SQLException, IOException{
         AirportBUS airportBUS = new AirportBUS();
+        String str = "";
         for(Airport airport : airportBUS.getList()){
-            cbFlyingFrom.addItem(airport.getProvince());
-            cbFlyingTo.addItem(airport.getProvince());
+            str = airport.getProvince() + " (" + airport.getAirportID() + ")";
+            cbFlyingFrom.addItem(str);
+            cbFlyingTo.addItem(str);
         }
     }    
 
@@ -187,6 +189,11 @@ public class BuyTicketEUC extends javax.swing.JPanel {
 
         btSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-search-pri18.png"))); // NOI18N
         btSearch.setText("Tìm kiếm");
+        btSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSearchActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnSearchLayout = new javax.swing.GroupLayout(pnSearch);
         pnSearch.setLayout(pnSearchLayout);
@@ -340,6 +347,10 @@ public class BuyTicketEUC extends javax.swing.JPanel {
             .addComponent(jScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btSearchActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
