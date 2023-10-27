@@ -10,15 +10,12 @@ import GUI.body_panel.BuyTicketEUC;
 import GUI.body_panel.MyTicketEUC;
 import GUI.body_panel.PromoEUC;
 import assets.Site.Order;
-import assets.Styles;
-import java.awt.Color;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
@@ -37,6 +34,7 @@ public class IndexEUC extends javax.swing.JFrame implements IIndex{
         this.user = user;
         init();
 //        initComponents();
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/assets/image/app-favicon.png")));
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 //        this.setUndecorated(true);

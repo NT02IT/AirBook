@@ -12,6 +12,7 @@ public class Action {
     protected String actionID;
     protected String actionName;
     protected String info;
+    protected int isDelete = 0;
 
     public Action() {
     }
@@ -20,11 +21,6 @@ public class Action {
         this.actionID = actionID;
         this.actionName = actionName;
         this.info = info;
-    }
-
-    public Action(String actionID, String actionName) {
-        this.actionID = actionID;
-        this.actionName = actionName;
     }
 
     public String getActionID() {
@@ -39,6 +35,10 @@ public class Action {
         return info;
     }
 
+    public int getIsDelete() {
+        return isDelete;
+    }
+
     public void setActionID(String actionID) {
         this.actionID = actionID;
     }
@@ -50,4 +50,9 @@ public class Action {
     public void setInfo(String info) {
         this.info = info;
     }
+
+    public void setIsDelete(int isDelete) {
+        this.isDelete = isDelete;
+    }
+    
 }

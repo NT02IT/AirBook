@@ -17,6 +17,7 @@ public abstract class Promotion {
     protected LocalDateTime dateStart;
     protected LocalDateTime dateEnd;
     protected int decreased;
+    protected int isDelete = 0;
     
     public abstract int reduce(int billValue);
 
@@ -56,6 +57,10 @@ public abstract class Promotion {
         return decreased;
     }
 
+    public int getIsDelete() {
+        return isDelete;
+    }
+
     public void setPromoID(String promoID) {
         this.promoID = promoID;
     }
@@ -78,6 +83,10 @@ public abstract class Promotion {
 
     public void setDecreased(int decreased) {
         this.decreased = decreased;
+    }
+
+    public void setIsDelete(int isDelete) {
+        this.isDelete = isDelete;
     }
     
 }

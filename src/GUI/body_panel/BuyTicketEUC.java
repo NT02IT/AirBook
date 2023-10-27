@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import javax.swing.JCheckBox;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -66,11 +66,23 @@ public class BuyTicketEUC extends javax.swing.JPanel {
         
         lbTitle.setFont(Styles.H2);
         lbTitle.setForeground(Styles.GRAY_600);
-        lbTicketCount.setFont(Styles.Body);
-        lbTicketCount.setForeground(Styles.GRAY_600);
+        lbToltalTicketHead.setFont(Styles.Body);
+        lbToltalTicketHead.setForeground(Styles.GRAY_600);
+        lbToltalTicket.setFont(Styles.Label);
+        lbToltalTicket.setForeground(Styles.GRAY_600);
+        lbToltalTicketTail.setFont(Styles.Body);
+        lbToltalTicketTail.setForeground(Styles.GRAY_600);
         lbFlyingFrom.setForeground(Styles.WHITE);
         lbFlyingTo.setForeground(Styles.WHITE);
         lbDepartureFlight.setForeground(Styles.WHITE);
+        
+        jScrollPane.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+            protected void configureScrollBarColors() {
+                this.thumbColor = Styles.GRAY_200;
+                this.scrollBarWidth = 6;
+                this.trackColor = Styles.GRAY_100;
+            }
+        });
     }
     
     public void initTickets() throws ClassNotFoundException, SQLException, IOException{
@@ -100,7 +112,7 @@ public class BuyTicketEUC extends javax.swing.JPanel {
         for(TicketView item : listTicketView){
             ticketCount += item.getQuantity();
         }
-        lbTicketCount.setText("Có tất cả " + ticketCount + " vé");
+        lbToltalTicket.setText(ticketCount + "");
     }
     
     public void initProvine() throws ClassNotFoundException, SQLException, IOException{
@@ -135,7 +147,9 @@ public class BuyTicketEUC extends javax.swing.JPanel {
         lbTitle = new javax.swing.JLabel();
         pnTickets = new javax.swing.JScrollPane();
         tbTikets = new javax.swing.JTable();
-        lbTicketCount = new javax.swing.JLabel();
+        lbToltalTicketHead = new javax.swing.JLabel();
+        lbToltalTicketTail = new javax.swing.JLabel();
+        lbToltalTicket = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(153, 255, 153));
 
@@ -186,15 +200,15 @@ public class BuyTicketEUC extends javax.swing.JPanel {
                     .addGroup(pnSearchLayout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addGroup(pnSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbFlyingFrom, 0, 127, Short.MAX_VALUE)
+                            .addComponent(cbFlyingFrom, 0, 117, Short.MAX_VALUE)
                             .addComponent(lbFlyingFrom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(12, 12, 12)
                         .addGroup(pnSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbFlyingTo, 0, 127, Short.MAX_VALUE)
-                            .addComponent(lbFlyingTo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(cbFlyingTo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbFlyingTo, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(pnSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbDepartureFlight, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbDepartureFlight, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
                             .addComponent(txtDepartureFlight))))
                 .addGap(24, 24, 24))
         );
@@ -207,10 +221,10 @@ public class BuyTicketEUC extends javax.swing.JPanel {
                     .addComponent(lbDepartureFlight, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lbFlyingFrom))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(cbFlyingFrom, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
-                    .addComponent(cbFlyingTo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
-                    .addComponent(txtDepartureFlight, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGroup(pnSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cbFlyingFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbFlyingTo, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDepartureFlight, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
@@ -254,10 +268,16 @@ public class BuyTicketEUC extends javax.swing.JPanel {
             tbTikets.getColumnModel().getColumn(5).setMaxWidth(106);
             tbTikets.getColumnModel().getColumn(6).setMinWidth(72);
             tbTikets.getColumnModel().getColumn(6).setMaxWidth(72);
-            tbTikets.getColumnModel().getColumn(6).setCellRenderer(null);
         }
 
-        lbTicketCount.setText("Có tất cả 20 vé");
+        lbToltalTicketHead.setFont(Styles.Micro);
+        lbToltalTicketHead.setText("Có tất cả");
+
+        lbToltalTicketTail.setFont(Styles.Micro);
+        lbToltalTicketTail.setText("mã khuyến mãi");
+
+        lbToltalTicket.setFont(Styles.Label);
+        lbToltalTicket.setText("?");
 
         javax.swing.GroupLayout pnMainBody2Layout = new javax.swing.GroupLayout(pnMainBody2);
         pnMainBody2.setLayout(pnMainBody2Layout);
@@ -267,18 +287,22 @@ public class BuyTicketEUC extends javax.swing.JPanel {
                 .addGap(24, 24, 24)
                 .addGroup(pnMainBody2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnMainBody2Layout.createSequentialGroup()
-                        .addComponent(lbTicketCount)
+                        .addComponent(lbToltalTicketHead)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbToltalTicket)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbToltalTicketTail)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(pnMainBody2Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnMainBody2Layout.createSequentialGroup()
                         .addGroup(pnMainBody2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(pnTickets)
+                            .addComponent(pnTickets, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnMainBody2Layout.createSequentialGroup()
                                 .addComponent(lbTitle)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(rdoAllTicket))
                             .addGroup(pnMainBody2Layout.createSequentialGroup()
                                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(20, 20, 20)
+                                .addGap(22, 22, 22)
                                 .addComponent(pnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(24, 24, 24))))
         );
@@ -296,8 +320,11 @@ public class BuyTicketEUC extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pnTickets, javax.swing.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
                 .addGap(8, 8, 8)
-                .addComponent(lbTicketCount)
-                .addGap(24, 24, 24))
+                .addGroup(pnMainBody2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbToltalTicketHead)
+                    .addComponent(lbToltalTicket)
+                    .addComponent(lbToltalTicketTail))
+                .addGap(26, 26, 26))
         );
 
         jScrollPane.setViewportView(pnMainBody2);
@@ -306,7 +333,7 @@ public class BuyTicketEUC extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane)
+            .addComponent(jScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 740, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -324,8 +351,10 @@ public class BuyTicketEUC extends javax.swing.JPanel {
     private javax.swing.JLabel lbDepartureFlight;
     private javax.swing.JLabel lbFlyingFrom;
     private javax.swing.JLabel lbFlyingTo;
-    private javax.swing.JLabel lbTicketCount;
     private javax.swing.JLabel lbTitle;
+    private javax.swing.JLabel lbToltalTicket;
+    private javax.swing.JLabel lbToltalTicketHead;
+    private javax.swing.JLabel lbToltalTicketTail;
     private javax.swing.JPanel pnMainBody2;
     private javax.swing.JPanel pnSearch;
     private javax.swing.JScrollPane pnTickets;

@@ -12,7 +12,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -53,6 +52,7 @@ public class FlightDAO {
 //                LocalDateTime departure = LocalDateTime.parse(rs.getString(5), formatter);
 //                flight.setDepartureFlight(departure);
                 flight.setDepartureFlight(rs.getTimestamp(5).toLocalDateTime());
+                flight.setIsDelete(rs.getInt(6));
                 list.add(flight);
             }
         } catch (SQLException ex) {
@@ -66,14 +66,15 @@ public class FlightDAO {
         String context = this.getClass().getName();
         connectDB.connect(context);
         try {
-            String sql = "INSERT INTO flights(Flight_ID, Flying_from, Flying_to, Hours_fly, Departure_flight) "
-                    + "VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO flights(Flight_ID, Flying_from, Flying_to, Hours_fly, Departure_flight, IsDelete) "
+                    + "VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement pstmt = connectDB.conn.prepareStatement(sql);
             pstmt.setString(1, flight.getFlightID());
             pstmt.setString(2, flight.getFlyingFrom());
             pstmt.setString(3, flight.getFlyingTo());
             pstmt.setInt(4, flight.getHoursFly());
             pstmt.setTimestamp(5, Timestamp.valueOf(flight.getDepartureFlight()));
+            pstmt.setInt(6, flight.getIsDelete());
             pstmt.executeUpdate();
             list.add(flight);
             return true;

@@ -57,5 +57,5 @@ public class Order {
     public void setDateOrder(LocalDateTime dateOrder) {
         this.dateOrder = dateOrder;
     }
-    
+
 }

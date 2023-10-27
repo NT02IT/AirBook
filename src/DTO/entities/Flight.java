@@ -16,6 +16,7 @@ public class Flight {
     protected String flyingTo;
     protected int hoursFly;
     protected LocalDateTime departureFlight;
+    protected int isDelete = 0;
 
     public Flight() {
     }
@@ -48,6 +49,10 @@ public class Flight {
         return departureFlight;
     }
 
+    public int getIsDelete() {
+        return isDelete;
+    }
+
     public void setFlightID(String flightID) {
         this.flightID = flightID;
     }
@@ -66,6 +71,10 @@ public class Flight {
 
     public void setDepartureFlight(LocalDateTime departureFlight) {
         this.departureFlight = departureFlight;
+    }
+
+    public void setIsDelete(int isDelete) {
+        this.isDelete = isDelete;
     }
     
 }

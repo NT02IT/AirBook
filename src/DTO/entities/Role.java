@@ -13,7 +13,8 @@ import java.util.Map;
  */
 public class Role {
     protected String roleID;
-    protected String roleName;    
+    protected String roleName;  
+    protected int isDelete = 0;
 
     public Role() {
     }
@@ -31,12 +32,20 @@ public class Role {
         return roleName;
     }
 
+    public int getIsDelete() {
+        return isDelete;
+    }
+
     public void setRoleID(String roleID) {
         this.roleID = roleID;
     }
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
+    }
+
+    public void setIsDelete(int isDelete) {
+        this.isDelete = isDelete;
     }
     
 }

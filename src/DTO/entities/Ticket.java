@@ -15,6 +15,7 @@ public class Ticket {
     protected String seatID;
     protected int price;
     protected int soldout;
+    protected int isDelete = 0;
 
     public Ticket() {
     }
@@ -52,6 +53,10 @@ public class Ticket {
         return soldout;
     }
 
+    public int getIsDelete() {
+        return isDelete;
+    }
+
     public void setTicketID(String ticketID) {
         this.ticketID = ticketID;
     }
@@ -74,6 +79,10 @@ public class Ticket {
 
     public void setSoldout(int soldout) {
         this.soldout = soldout;
+    }
+
+    public void setIsDelete(int isDelete) {
+        this.isDelete = isDelete;
     }
     
 }

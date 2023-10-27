@@ -11,6 +11,7 @@ package DTO.entities;
 public class Airline {
     protected String airlineID;
     protected String airlineName;
+    protected int isDelete = 0;
 
     public Airline() {
     }
@@ -28,12 +29,20 @@ public class Airline {
         return airlineName;
     }
 
+    public int getIsDelete() {
+        return isDelete;
+    }
+
     public void setAirlineID(String airlineID) {
         this.airlineID = airlineID;
     }
 
     public void setAirlineName(String airlineName) {
         this.airlineName = airlineName;
+    }
+
+    public void setIsDelete(int isDelete) {
+        this.isDelete = isDelete;
     }
     
 }

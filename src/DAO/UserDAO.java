@@ -60,6 +60,7 @@ public class UserDAO {
                 user.setCCCD(rs.getString(11));
                 user.setEmail(rs.getString(12));
                 user.setDateCreate(rs.getDate(13));
+                user.setIsDelete(rs.getInt(14));
                 list.add(user);
             }
         } catch (SQLException ex) {
@@ -73,8 +74,8 @@ public class UserDAO {
         String context = this.getClass().getName();
         connectDB.connect(context);
         try {
-            String sql = "INSERT INTO users(User_ID, Role_ID, Username, Pwd, Real_name, DoB, Gender, Nation, User_address, Phone_number, CCCD, Email, Date_create) "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO users(User_ID, Role_ID, Username, Pwd, Real_name, DoB, Gender, Nation, User_address, Phone_number, CCCD, Email, Date_create, IsDelete) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement pstmt = connectDB.conn.prepareStatement(sql);
             pstmt.setString(1, user.getID());
             pstmt.setString(2, user.getRoleID());
@@ -91,6 +92,7 @@ public class UserDAO {
             pstmt.setString(12, user.getEmail());
             java.sql.Timestamp dateCreate = new java.sql.Timestamp(user.getDateCreate().getTime());
             pstmt.setTimestamp(13, dateCreate);
+            pstmt.setInt(14, user.getIsDelete());
             pstmt.executeUpdate();
             list.add(user);
             return true;

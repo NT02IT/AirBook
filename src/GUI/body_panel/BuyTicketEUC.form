@@ -21,7 +21,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jScrollPane" alignment="0" max="32767" attributes="0"/>
+          <Component id="jScrollPane" alignment="0" pref="740" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -58,12 +58,16 @@
                       <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="lbTicketCount" min="-2" max="-2" attributes="0"/>
+                              <Component id="lbToltalTicketHead" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="lbToltalTicket" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="lbToltalTicketTail" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="pnTickets" max="32767" attributes="0"/>
+                                  <Component id="pnTickets" alignment="0" max="32767" attributes="0"/>
                                   <Group type="102" attributes="0">
                                       <Component id="lbTitle" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="32767" attributes="0"/>
@@ -71,7 +75,7 @@
                                   </Group>
                                   <Group type="102" attributes="0">
                                       <Component id="jLabel9" min="-2" pref="217" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                                       <Component id="pnSearch" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
@@ -97,8 +101,12 @@
                       <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                       <Component id="pnTickets" pref="396" max="32767" attributes="0"/>
                       <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                      <Component id="lbTicketCount" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lbToltalTicketHead" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbToltalTicket" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbToltalTicketTail" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -133,17 +141,17 @@
                               <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="cbFlyingFrom" alignment="0" pref="127" max="32767" attributes="0"/>
+                                      <Component id="cbFlyingFrom" alignment="0" pref="117" max="32767" attributes="0"/>
                                       <Component id="lbFlyingFrom" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="cbFlyingTo" alignment="0" pref="127" max="32767" attributes="0"/>
-                                      <Component id="lbFlyingTo" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="cbFlyingTo" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="lbFlyingTo" alignment="0" pref="118" max="32767" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="lbDepartureFlight" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="lbDepartureFlight" alignment="0" pref="136" max="32767" attributes="0"/>
                                       <Component id="txtDepartureFlight" alignment="0" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
@@ -162,10 +170,10 @@
                               <Component id="lbFlyingFrom" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="cbFlyingFrom" pref="28" max="32767" attributes="0"/>
-                              <Component id="cbFlyingTo" alignment="0" pref="28" max="32767" attributes="0"/>
-                              <Component id="txtDepartureFlight" alignment="0" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="cbFlyingFrom" alignment="0" min="-2" pref="34" max="-2" attributes="0"/>
+                              <Component id="cbFlyingTo" alignment="0" min="-2" pref="34" max="-2" attributes="0"/>
+                              <Component id="txtDepartureFlight" alignment="0" min="-2" pref="34" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="btSearch" min="-2" pref="34" max="-2" attributes="0"/>
@@ -328,9 +336,7 @@
                         <Column maxWidth="72" minWidth="72" prefWidth="-1" resizable="true">
                           <Title/>
                           <Editor/>
-                          <Renderer editor="org.netbeans.modules.form.ComponentChooserEditor">
-                            <ComponentRef name="null"/>
-                          </Renderer>
+                          <Renderer/>
                         </Column>
                       </TableColumnModel>
                     </Property>
@@ -341,9 +347,28 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JLabel" name="lbTicketCount">
+            <Component class="javax.swing.JLabel" name="lbToltalTicketHead">
               <Properties>
-                <Property name="text" type="java.lang.String" value="C&#xf3; t&#x1ea5;t c&#x1ea3; 20 v&#xe9;"/>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Styles.Micro" type="code"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="C&#xf3; t&#x1ea5;t c&#x1ea3;"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lbToltalTicketTail">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Styles.Micro" type="code"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="m&#xe3; khuy&#x1ebf;n m&#xe3;i"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lbToltalTicket">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                  <Connection code="Styles.Label" type="code"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="?"/>
               </Properties>
             </Component>
           </SubComponents>

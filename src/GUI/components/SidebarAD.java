@@ -55,6 +55,7 @@ public class SidebarAD extends javax.swing.JPanel implements ISidebar{
         Styles.SidebarNavItem(btAirport);
         Styles.SidebarNavItem(btAccount);
         Styles.SidebarNavItem(btLogout);
+        Styles.SidebarNavItem(btFeatures);
     }
     
     @Override
@@ -93,6 +94,9 @@ public class SidebarAD extends javax.swing.JPanel implements ISidebar{
         } else if (siteOrder == Order.ACCOUNT) {
             resetNavItemBG();
             btAccount.setBackground(Styles.PRI_DARK);
+        } else if (siteOrder == Order.FEATURES) {
+            resetNavItemBG();
+            btFeatures.setBackground(Styles.PRI_DARK);
         }
     }
     
@@ -125,6 +129,7 @@ public class SidebarAD extends javax.swing.JPanel implements ISidebar{
         btAirline = new javax.swing.JButton();
         btAirport = new javax.swing.JButton();
         btAccount = new javax.swing.JButton();
+        btFeatures = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(1, 138, 165));
         setPreferredSize(new java.awt.Dimension(200, 600));
@@ -359,6 +364,31 @@ public class SidebarAD extends javax.swing.JPanel implements ISidebar{
             }
         });
 
+        btFeatures.setBackground(getBackground());
+        btFeatures.setForeground(new java.awt.Color(255, 255, 255));
+        btFeatures.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/nav-features-white20.png"))); // NOI18N
+        btFeatures.setText("Chức năng");
+        btFeatures.setBorder(null);
+        grpNav.add(btFeatures);
+        btFeatures.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btFeatures.setFocusPainted(false);
+        btFeatures.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btFeatures.setIconTextGap(12);
+        btFeatures.setMargin(new java.awt.Insets(2, 16, 2, 16));
+        btFeatures.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btFeaturesMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btFeaturesMouseExited(evt);
+            }
+        });
+        btFeatures.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btFeaturesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -373,6 +403,7 @@ public class SidebarAD extends javax.swing.JPanel implements ISidebar{
             .addComponent(btAirline, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btAirport, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btAccount, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btFeatures, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -392,7 +423,9 @@ public class SidebarAD extends javax.swing.JPanel implements ISidebar{
                 .addComponent(btAirport, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(btAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 196, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
+                .addComponent(btFeatures, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(btLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -601,11 +634,35 @@ public class SidebarAD extends javax.swing.JPanel implements ISidebar{
         }
     }//GEN-LAST:event_btAccountActionPerformed
 
+    private void btFeaturesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btFeaturesMouseEntered
+        if (btFeatures.getBackground() == Styles.PRI_NORMAL) {
+            btFeatures.setBackground(Styles.PRI_DARKER);
+        }
+    }//GEN-LAST:event_btFeaturesMouseEntered
+
+    private void btFeaturesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btFeaturesMouseExited
+        btFeatures.setBackground(Styles.PRI_NORMAL);
+    }//GEN-LAST:event_btFeaturesMouseExited
+
+    private void btFeaturesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFeaturesActionPerformed
+        this.siteOrder = Order.FEATURES;
+        try {
+            navigateTo(siteOrder);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SidebarAD.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(SidebarAD.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(SidebarAD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btFeaturesActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAccount;
     private javax.swing.JButton btAirline;
     private javax.swing.JButton btAirport;
+    private javax.swing.JButton btFeatures;
     private javax.swing.JButton btFlight;
     private javax.swing.JButton btLogout;
     private javax.swing.JButton btPromo;

@@ -19,6 +19,7 @@ public class Site {
         AIRLINE,
         AIRLINEPLANE,
         AIRPORT,
-        ACCOUNT;        
+        ACCOUNT,
+        FEATURES;        
     }
 }

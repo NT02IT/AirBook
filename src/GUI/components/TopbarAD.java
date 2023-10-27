@@ -48,6 +48,8 @@ public class TopbarAD extends javax.swing.JPanel {
             lbSitename.setText("Sân bay");
         } else if (siteOrder == Order.ACCOUNT) {
             lbSitename.setText("Tài khoản");
+        } else if (siteOrder == Order.FEATURES) {
+            lbSitename.setText("Chức năng");
         }
     }
     

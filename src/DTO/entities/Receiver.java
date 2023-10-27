@@ -12,6 +12,7 @@ import java.util.Date;
  */
 public class Receiver extends Person{
     protected String userCreateID;
+    protected int isDelete = 0;
 
     public Receiver() {
     }
@@ -31,13 +32,21 @@ public class Receiver extends Person{
         this.userCreateID = user.getID();
     }
 
-    public String getUserID() {
+    public String getUserCreateID() {
         return userCreateID;
     }
-    
-    public void setUserID(String userCreateID) {
+
+    public int getIsDelete() {
+        return isDelete;
+    }
+
+    public void setUserCreateID(String userCreateID) {
         this.userCreateID = userCreateID;
-    }  
+    }
+
+    public void setIsDelete(int isDelete) {
+        this.isDelete = isDelete;
+    }
     
     public static String generateID(){
         long millis = System.currentTimeMillis();

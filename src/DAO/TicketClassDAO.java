@@ -4,7 +4,6 @@
  */
 package DAO;
 
-import DTO.entities.Ticket;
 import DTO.entities.TicketClass;
 import connection.ConnectDB;
 import java.io.IOException;
@@ -47,6 +46,7 @@ public class TicketClassDAO {
                 ticketClass.setPlaneID(rs.getString(2));
                 ticketClass.setClassName(rs.getString(3));
                 ticketClass.setSeatsQuantity(rs.getInt(4));
+                ticketClass.setIsDelete(rs.getInt(5));
                 list.add(ticketClass);
             }
         } catch (SQLException ex) {
@@ -60,13 +60,14 @@ public class TicketClassDAO {
         String context = this.getClass().getName();
         connectDB.connect(context);
         try {
-            String sql = "INSERT INTO ticket_classes(Ticket_class_ID, Plane_ID, Class_name, Seats_quantity) "
-                    + "VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO ticket_classes(Ticket_class_ID, Plane_ID, Class_name, Seats_quantity, IsDelete) "
+                    + "VALUES (?, ?, ?, ?, ?)";
             PreparedStatement pstmt = connectDB.conn.prepareStatement(sql);
             pstmt.setString(1, ticketClass.getTicketClassID());
             pstmt.setString(2, ticketClass.getPlaneID());
             pstmt.setString(3, ticketClass.getClassName());
             pstmt.setInt(4, ticketClass.getSeatsQuantity());
+            pstmt.setInt(5, ticketClass.getIsDelete());
             pstmt.executeUpdate();
             list.add(ticketClass);
             return true;

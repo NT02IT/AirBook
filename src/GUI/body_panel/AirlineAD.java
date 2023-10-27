@@ -27,8 +27,17 @@ public class AirlineAD extends javax.swing.JPanel {
         styles();
     }
     public void styles(){
-        Styles.Table(tableAllAirline, jScrollPane1);
-        Styles.ButtonSecondary(addAirline);
+        Styles.Table(tbAllAirline, pnAllAirline);
+        Styles.ButtonSecondary(btAddAirline);
+        
+        lbTitle.setFont(Styles.H2);
+        lbTitle.setForeground(Styles.GRAY_600);
+        lbTotalAirlineHead.setFont(Styles.Body);
+        lbTotalAirlineHead.setForeground(Styles.GRAY_600);
+        lbTotalAirline.setFont(Styles.Body);
+        lbTotalAirline.setForeground(Styles.GRAY_600);
+        lbTotalAirlineTail.setFont(Styles.Body);
+        lbTotalAirlineTail.setForeground(Styles.GRAY_600);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -39,25 +48,25 @@ public class AirlineAD extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        addAirline = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tableAllAirline = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
-        displayTotalAirline = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        lbTitle = new javax.swing.JLabel();
+        btAddAirline = new javax.swing.JButton();
+        pnAllAirline = new javax.swing.JScrollPane();
+        tbAllAirline = new javax.swing.JTable();
+        lbTotalAirlineHead = new javax.swing.JLabel();
+        lbTotalAirline = new javax.swing.JLabel();
+        lbTotalAirlineTail = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setFocusable(false);
         setMinimumSize(new java.awt.Dimension(740, 490));
 
-        jLabel1.setFont(Styles.H2);
-        jLabel1.setText("Danh sách các hãng bay");
+        lbTitle.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lbTitle.setText("Danh sách các hãng bay");
 
-        addAirline.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-pri18.png"))); // NOI18N
-        addAirline.setText("Thêm hãng bay");
+        btAddAirline.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-pri18.png"))); // NOI18N
+        btAddAirline.setText("Thêm hãng bay");
 
-        tableAllAirline.setModel(new javax.swing.table.DefaultTableModel(
+        tbAllAirline.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -83,19 +92,19 @@ public class AirlineAD extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tableAllAirline);
-        if (tableAllAirline.getColumnModel().getColumnCount() > 0) {
-            tableAllAirline.getColumnModel().getColumn(0).setMinWidth(40);
-            tableAllAirline.getColumnModel().getColumn(0).setMaxWidth(50);
+        pnAllAirline.setViewportView(tbAllAirline);
+        if (tbAllAirline.getColumnModel().getColumnCount() > 0) {
+            tbAllAirline.getColumnModel().getColumn(0).setMinWidth(40);
+            tbAllAirline.getColumnModel().getColumn(0).setMaxWidth(50);
         }
 
-        jLabel2.setFont(Styles.Micro);
-        jLabel2.setText("Có tất cả");
+        lbTotalAirlineHead.setFont(Styles.Micro);
+        lbTotalAirlineHead.setText("Có tất cả");
 
-        displayTotalAirline.setText("230");
+        lbTotalAirline.setText("230");
 
-        jLabel4.setFont(Styles.Micro);
-        jLabel4.setText("chuyến bay");
+        lbTotalAirlineTail.setFont(Styles.Micro);
+        lbTotalAirlineTail.setText("chuyến bay");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -105,47 +114,47 @@ public class AirlineAD extends javax.swing.JPanel {
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addComponent(lbTotalAirlineHead)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(displayTotalAirline)
+                        .addComponent(lbTotalAirline)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4)
+                        .addComponent(lbTotalAirlineTail)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
+                            .addComponent(pnAllAirline, javax.swing.GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
+                                .addComponent(lbTitle)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(addAirline)))
+                                .addComponent(btAddAirline)))
                         .addGap(24, 24, 24))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(addAirline))
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbTitle)
+                    .addComponent(btAddAirline, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 381, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(pnAllAirline, javax.swing.GroupLayout.DEFAULT_SIZE, 381, Short.MAX_VALUE)
+                .addGap(8, 8, 8)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(displayTotalAirline)
-                    .addComponent(jLabel4))
-                .addGap(18, 18, 18))
+                    .addComponent(lbTotalAirlineHead)
+                    .addComponent(lbTotalAirline)
+                    .addComponent(lbTotalAirlineTail))
+                .addGap(24, 24, 24))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addAirline;
-    private javax.swing.JLabel displayTotalAirline;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tableAllAirline;
+    private javax.swing.JButton btAddAirline;
+    private javax.swing.JLabel lbTitle;
+    private javax.swing.JLabel lbTotalAirline;
+    private javax.swing.JLabel lbTotalAirlineHead;
+    private javax.swing.JLabel lbTotalAirlineTail;
+    private javax.swing.JScrollPane pnAllAirline;
+    private javax.swing.JTable tbAllAirline;
     // End of variables declaration//GEN-END:variables
 }

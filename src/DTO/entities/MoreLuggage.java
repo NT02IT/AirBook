@@ -13,6 +13,7 @@ public class MoreLuggage {
     protected String airlineID;
     protected int luggageWeight;
     protected int price;
+    protected int isDelete = 0;
 
     public MoreLuggage() {
     }
@@ -40,6 +41,10 @@ public class MoreLuggage {
         return price;
     }
 
+    public int getIsDelete() {
+        return isDelete;
+    }
+
     public void setMoreLuggageID(String moreLuggageID) {
         this.moreLuggageID = moreLuggageID;
     }
@@ -54,6 +59,10 @@ public class MoreLuggage {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public void setIsDelete(int isDelete) {
+        this.isDelete = isDelete;
     }
     
 }

@@ -44,6 +44,7 @@ public class AirlineDAO {
                 Airline airline = new Airline();
                 airline.setAirlineID(rs.getString(1));
                 airline.setAirlineName(rs.getString(2));
+                airline.setIsDelete(rs.getInt(3));
                 list.add(airline);
             }
         } catch (SQLException ex) {
@@ -57,11 +58,12 @@ public class AirlineDAO {
         String context = this.getClass().getName();
         connectDB.connect(context);
         try {
-            String sql = "INSERT INTO airlines(Airline_ID, Airline_name) "
-                    + "VALUES (?, ?)";
+            String sql = "INSERT INTO airlines(Airline_ID, Airline_name, IsDelete) "
+                    + "VALUES (?, ?, ?)";
             PreparedStatement pstmt = connectDB.conn.prepareStatement(sql);
             pstmt.setString(1, airline.getAirlineID());
             pstmt.setString(2, airline.getAirlineName());
+            pstmt.setInt(3, airline.getIsDelete());
             pstmt.executeUpdate();
             list.add(airline);
             return true;

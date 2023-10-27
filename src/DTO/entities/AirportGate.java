@@ -12,6 +12,7 @@ public class AirportGate {
     protected String gateID;
     protected String airportID;
     protected String gateName;
+    protected int isDelete = 0;
 
     public AirportGate() {
     }
@@ -34,6 +35,10 @@ public class AirportGate {
         return gateName;
     }
 
+    public int getIsDelete() {
+        return isDelete;
+    }
+
     public void setGateID(String gateID) {
         this.gateID = gateID;
     }
@@ -44,6 +49,10 @@ public class AirportGate {
 
     public void setGateName(String gateName) {
         this.gateName = gateName;
+    }
+
+    public void setIsDelete(int isDelete) {
+        this.isDelete = isDelete;
     }
     
 }

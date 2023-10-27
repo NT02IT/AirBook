@@ -13,6 +13,7 @@ public class TicketClass {
     protected String planeID;
     protected String className;
     protected int seatsQuantity;
+    protected int isDelete = 0;
 
     public TicketClass() {
     }
@@ -40,6 +41,10 @@ public class TicketClass {
         return seatsQuantity;
     }
 
+    public int getIsDelete() {
+        return isDelete;
+    }
+
     public void setTicketClassID(String ticketClassID) {
         this.ticketClassID = ticketClassID;
     }
@@ -54,6 +59,10 @@ public class TicketClass {
 
     public void setSeatsQuantity(int seatsQuantity) {
         this.seatsQuantity = seatsQuantity;
+    }
+
+    public void setIsDelete(int isDelete) {
+        this.isDelete = isDelete;
     }
     
 }

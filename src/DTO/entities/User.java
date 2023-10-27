@@ -20,6 +20,7 @@ public class User extends Person{
     protected String username;
     protected String pwd;
     protected Date dateCreate;
+    protected int isDelete = 0;
 
     public User() {
     }
@@ -61,6 +62,10 @@ public class User extends Person{
         return dateCreate;
     }
 
+    public int getIsDelete() {
+        return isDelete;
+    }
+
     public void setRoleID(String roleID) {
         this.roleID = roleID;
     }
@@ -75,6 +80,10 @@ public class User extends Person{
 
     public void setDateCreate(Date dateCreate) {
         this.dateCreate = dateCreate;
+    }
+
+    public void setIsDelete(int isDelete) {
+        this.isDelete = isDelete;
     }
     
     // @Override

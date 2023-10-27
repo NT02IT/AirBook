@@ -14,6 +14,7 @@ public class Plane {
     protected String planeName;
     protected int seats;
     protected String planeDesc;
+    protected int isDelete;
 
     public Plane() {
     }
@@ -53,6 +54,10 @@ public class Plane {
         return planeDesc;
     }
 
+    public int getIsDelete() {
+        return isDelete;
+    }
+
     public void setPlaneID(String planeID) {
         this.planeID = planeID;
     }
@@ -71,6 +76,10 @@ public class Plane {
 
     public void setPlaneDesc(String planeDesc) {
         this.planeDesc = planeDesc;
+    }
+
+    public void setIsDelete(int isDelete) {
+        this.isDelete = isDelete;
     }
     
 }

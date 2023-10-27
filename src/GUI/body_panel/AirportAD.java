@@ -5,6 +5,7 @@
 package GUI.body_panel;
 import assets.Styles;
 import DTO.entities.User;
+import assets.TextBubbleBorder;
 
 /**
  *
@@ -26,10 +27,28 @@ public class AirportAD extends javax.swing.JPanel {
         styles();
     }
     public  void  styles(){
-    Styles.Table(tableAllAirport, jScrollPane1);
-    Styles.ButtonDanger(deleteAirport);
-    Styles.ButtonPrimary(updateGate);
-    Styles.ButtonSecondary(addAirport);
+        Styles.Table(tbAllAirport, pnAllAirport);
+        Styles.ButtonDanger(btDeleteAirport);
+        Styles.ButtonPrimary(btUpdateGate);
+        Styles.ButtonSecondary(btAddAirport);
+        
+        lbTitle.setFont(Styles.H2);
+        lbTitle.setForeground(Styles.GRAY_600);
+        lbTotalAirportHead.setFont(Styles.Body);
+        lbTotalAirportHead.setForeground(Styles.GRAY_600);
+        lbTotalAirport.setFont(Styles.Label);
+        lbTotalAirport.setForeground(Styles.GRAY_600);
+        lbTotalAirportTail.setFont(Styles.Body);
+        lbTotalAirportTail.setForeground(Styles.GRAY_600);
+        
+        TextBubbleBorder border = new TextBubbleBorder(Styles.PRI_LIGHTER, 0, 12, 0, true);
+        pnAirportDetail.setBorder(border);
+        
+        txtAllGate.setBorder(border);
+        txtAllGate.setFont(Styles.Label);
+        txtAllGate.setForeground(Styles.PRI_NORMAL);
+        txtAllGate.setBackground(Styles.WHITE);
+        
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -41,21 +60,21 @@ public class AirportAD extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        addAirport = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tableAllAirport = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        lbTitle = new javax.swing.JLabel();
+        btAddAirport = new javax.swing.JButton();
+        pnAllAirport = new javax.swing.JScrollPane();
+        tbAllAirport = new javax.swing.JTable();
+        lbTotalAirportHead = new javax.swing.JLabel();
+        lbTotalAirport = new javax.swing.JLabel();
+        lbTotalAirportTail = new javax.swing.JLabel();
+        pnAirportDetail = new javax.swing.JPanel();
+        lbAirportID = new javax.swing.JLabel();
+        lbAirportName = new javax.swing.JLabel();
+        lbGate = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        displayAllGate = new javax.swing.JTextArea();
-        deleteAirport = new javax.swing.JButton();
-        updateGate = new javax.swing.JButton();
+        txtAllGate = new javax.swing.JTextArea();
+        btDeleteAirport = new javax.swing.JButton();
+        btUpdateGate = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -63,13 +82,13 @@ public class AirportAD extends javax.swing.JPanel {
         jPanel1.setMinimumSize(new java.awt.Dimension(100, 450));
         jPanel1.setPreferredSize(new java.awt.Dimension(560, 450));
 
-        jLabel1.setFont(Styles.H2);
-        jLabel1.setText("Danh sách các sân bay");
+        lbTitle.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lbTitle.setText("Danh sách các sân bay");
 
-        addAirport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-pri18.png"))); // NOI18N
-        addAirport.setText("Thêm sân bay");
+        btAddAirport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-pri18.png"))); // NOI18N
+        btAddAirport.setText("Thêm sân bay");
 
-        tableAllAirport.setModel(new javax.swing.table.DefaultTableModel(
+        tbAllAirport.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -95,19 +114,19 @@ public class AirportAD extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tableAllAirport);
-        if (tableAllAirport.getColumnModel().getColumnCount() > 0) {
-            tableAllAirport.getColumnModel().getColumn(0).setMinWidth(40);
-            tableAllAirport.getColumnModel().getColumn(0).setMaxWidth(50);
+        pnAllAirport.setViewportView(tbAllAirport);
+        if (tbAllAirport.getColumnModel().getColumnCount() > 0) {
+            tbAllAirport.getColumnModel().getColumn(0).setMinWidth(40);
+            tbAllAirport.getColumnModel().getColumn(0).setMaxWidth(50);
         }
 
-        jLabel2.setFont(Styles.Micro);
-        jLabel2.setText("Có tất cả");
+        lbTotalAirportHead.setFont(Styles.Micro);
+        lbTotalAirportHead.setText("Có tất cả");
 
-        jLabel3.setText("64");
+        lbTotalAirport.setText("64");
 
-        jLabel4.setFont(Styles.Micro);
-        jLabel4.setText("sân bay");
+        lbTotalAirportTail.setFont(Styles.Micro);
+        lbTotalAirportTail.setText("sân bay");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -117,94 +136,91 @@ public class AirportAD extends javax.swing.JPanel {
                 .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addComponent(lbTotalAirportHead)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3)
+                        .addComponent(lbTotalAirport)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4)
+                        .addComponent(lbTotalAirportTail)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
+                    .addComponent(pnAllAirport, javax.swing.GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(lbTitle)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(addAirport))))
+                        .addComponent(btAddAirport))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(addAirport))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addGap(16, 16, 16))
-        );
-
-        jPanel2.setBackground(Styles.PRI_LIGHTER);
-
-        jLabel5.setFont(Styles.H1);
-        jLabel5.setForeground(Styles.GRAY_600);
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("HCM");
-
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("Tân Sơn Nhất");
-
-        jLabel7.setFont(Styles.Label);
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-login-black20.png"))); // NOI18N
-        jLabel7.setText("Cổng");
-
-        displayAllGate.setColumns(20);
-        displayAllGate.setFont(Styles.Label);
-        displayAllGate.setForeground(Styles.PRI_NORMAL);
-        displayAllGate.setLineWrap(true);
-        displayAllGate.setRows(5);
-        displayAllGate.setText("A1, A2, A3");
-        jScrollPane2.setViewportView(displayAllGate);
-
-        deleteAirport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-delete-red18.png"))); // NOI18N
-        deleteAirport.setText("Xóa sân bay");
-
-        updateGate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-refresh-white18.png"))); // NOI18N
-        updateGate.setText("Cập nhật cổng");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(deleteAirport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(updateGate, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(jLabel5)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbTitle)
+                    .addComponent(btAddAirport, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addComponent(pnAllAirport, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                .addGap(8, 8, 8)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbTotalAirportHead)
+                    .addComponent(lbTotalAirport)
+                    .addComponent(lbTotalAirportTail))
+                .addGap(24, 24, 24))
+        );
+
+        pnAirportDetail.setBackground(Styles.PRI_LIGHTER);
+
+        lbAirportID.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lbAirportID.setForeground(Styles.GRAY_600);
+        lbAirportID.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbAirportID.setText("HCM");
+
+        lbAirportName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbAirportName.setText("Tân Sơn Nhất");
+        lbAirportName.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        lbGate.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbGate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-login-black20.png"))); // NOI18N
+        lbGate.setText("Cổng");
+
+        txtAllGate.setColumns(20);
+        txtAllGate.setFont(Styles.Label);
+        txtAllGate.setForeground(Styles.PRI_NORMAL);
+        txtAllGate.setLineWrap(true);
+        txtAllGate.setRows(5);
+        txtAllGate.setText("A1, A2, A3");
+        jScrollPane2.setViewportView(txtAllGate);
+
+        btDeleteAirport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-delete-red18.png"))); // NOI18N
+        btDeleteAirport.setText("Xóa sân bay");
+
+        btUpdateGate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-refresh-white18.png"))); // NOI18N
+        btUpdateGate.setText("Cập nhật cổng");
+
+        javax.swing.GroupLayout pnAirportDetailLayout = new javax.swing.GroupLayout(pnAirportDetail);
+        pnAirportDetail.setLayout(pnAirportDetailLayout);
+        pnAirportDetailLayout.setHorizontalGroup(
+            pnAirportDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lbAirportID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lbAirportName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lbGate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(btDeleteAirport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btUpdateGate, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
+        );
+        pnAirportDetailLayout.setVerticalGroup(
+            pnAirportDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnAirportDetailLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(lbAirportID)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel7)
+                .addComponent(lbAirportName, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(deleteAirport)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(updateGate)
-                .addGap(15, 15, 15))
+                .addComponent(lbGate)
+                .addGap(8, 8, 8)
+                .addComponent(jScrollPane2)
+                .addGap(12, 12, 12)
+                .addComponent(btDeleteAirport, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(btUpdateGate, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -212,38 +228,38 @@ public class AirportAD extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
+                .addGap(20, 20, 20)
+                .addComponent(pnAirportDetail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(58, 58, 58)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(40, 40, 40))
+                .addGap(70, 70, 70)
+                .addComponent(pnAirportDetail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(49, 49, 49))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addAirport;
-    private javax.swing.JButton deleteAirport;
-    private javax.swing.JTextArea displayAllGate;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JButton btAddAirport;
+    private javax.swing.JButton btDeleteAirport;
+    private javax.swing.JButton btUpdateGate;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable tableAllAirport;
-    private javax.swing.JButton updateGate;
+    private javax.swing.JLabel lbAirportID;
+    private javax.swing.JLabel lbAirportName;
+    private javax.swing.JLabel lbGate;
+    private javax.swing.JLabel lbTitle;
+    private javax.swing.JLabel lbTotalAirport;
+    private javax.swing.JLabel lbTotalAirportHead;
+    private javax.swing.JLabel lbTotalAirportTail;
+    private javax.swing.JPanel pnAirportDetail;
+    private javax.swing.JScrollPane pnAllAirport;
+    private javax.swing.JTable tbAllAirport;
+    private javax.swing.JTextArea txtAllGate;
     // End of variables declaration//GEN-END:variables
 }

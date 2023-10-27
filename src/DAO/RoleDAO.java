@@ -44,7 +44,8 @@ public class RoleDAO {
             while(rs.next()){
                 Role role = new Role();
                 role.setRoleID(rs.getString(1));
-                role.setRoleName(rs.getString(2));          
+                role.setRoleName(rs.getString(2));     
+                role.setIsDelete(rs.getInt(3));     
                 list.put(role.getRoleID(), role.getRoleName());
             }
         } catch (SQLException ex) {
@@ -58,11 +59,12 @@ public class RoleDAO {
         String context = this.getClass().getName();
         connectDB.connect(context);
         try {
-            String sql = "INSERT INTO roles(Role_ID, Role_name) "
-                    + "VALUES (?, ?)";
+            String sql = "INSERT INTO roles(Role_ID, Role_name, IsDelete) "
+                    + "VALUES (?, ?, ?)";
             PreparedStatement pstmt = ConnectDB.conn.prepareStatement(sql);
             pstmt.setString(1, role.getRoleID());
             pstmt.setString(2, role.getRoleName());
+            pstmt.setInt(3, role.getIsDelete());
             pstmt.executeUpdate();
             list.put(role.getRoleID(), role.getRoleName());
             return true;

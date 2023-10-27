@@ -17,6 +17,7 @@ public class Permission {
     protected int perView;
     protected int perEdit;
     protected int perDelete;
+    protected int isDelete = 0;
 
     public Permission() {
     }
@@ -64,6 +65,10 @@ public class Permission {
         return perDelete;
     }
 
+    public int getIsDelete() {
+        return isDelete;
+    }
+
     public void setPerID(String perID) {
         this.perID = perID;
     }
@@ -94,6 +99,10 @@ public class Permission {
 
     public void setPerDelete(int perDelete) {
         this.perDelete = perDelete;
+    }
+
+    public void setIsDelete(int isDelete) {
+        this.isDelete = isDelete;
     }
     
 }

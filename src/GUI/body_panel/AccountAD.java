@@ -26,16 +26,30 @@ public class AccountAD extends javax.swing.JPanel {
         styles();
     }
     public void styles(){
-        Styles.ButtonNeutral(addAccount);
-        Styles.ButtonSecondary(searchAccount);
-        Styles.Table(tableAllAccount, jScrollPane1);
-        Styles.Table(tableAllPermission, jScrollPane2);        
-        Styles.Table(tableAllRole, jScrollPane3);
+        Styles.ButtonNeutral(btAddAccount);
+        Styles.ButtonSecondary(btSearchAccount);
+        Styles.Table(tableAllAccounts, pnAllAccounts);
+        Styles.Table(tbRolePermission, pnAllRole);        
+        Styles.Table(tbAllRole, pnRolePermission);
 
-        Styles.FormTextFeild(displayRoleSecleted);
-        Styles.ButtonDanger(deletePermission);
-        Styles.ButtonSecondary(updatePermission);
-        Styles.ButtonPrimary(addRole);
+        Styles.FormTextFeild(txtRoleName);
+        Styles.ButtonDanger(btDeletePermission);
+        Styles.ButtonSecondary(btUpdatePermission);
+        Styles.ButtonPrimary(btAddRole);
+        
+        lbTitleAccounts.setFont(Styles.H2);
+        lbTitleAccounts.setForeground(Styles.GRAY_600);
+        lbTitleAllAccount.setFont(Styles.H2);
+        lbTitleAllAccount.setForeground(Styles.GRAY_600);
+        lbTitleAuth.setFont(Styles.H2);
+        lbTitleAuth.setForeground(Styles.GRAY_600);
+        
+        lbTotalAccHead.setFont(Styles.Body);
+        lbTotalAccHead.setForeground(Styles.GRAY_600);
+        lbTotalAccount.setFont(Styles.Label);
+        lbTotalAccount.setForeground(Styles.GRAY_600);
+        lbTotalAccTail.setFont(Styles.Body);
+        lbTotalAccTail.setForeground(Styles.GRAY_600);        
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -47,53 +61,51 @@ public class AccountAD extends javax.swing.JPanel {
     private void initComponents() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
-        addAccount = new javax.swing.JButton();
-        searchAccount = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tableAllAccount = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
-        displayTotalAccount = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tableAllRole = new javax.swing.JTable();
-        addRole = new javax.swing.JButton();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        displayRoleSecleted = new javax.swing.JTextField();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tableAllPermission = new javax.swing.JTable();
-        deletePermission = new javax.swing.JButton();
-        updatePermission = new javax.swing.JButton();
+        tabAccount = new javax.swing.JPanel();
+        btAddAccount = new javax.swing.JButton();
+        btSearchAccount = new javax.swing.JButton();
+        lbTitleAccounts = new javax.swing.JLabel();
+        pnAllAccounts = new javax.swing.JScrollPane();
+        tableAllAccounts = new javax.swing.JTable();
+        lbTotalAccHead = new javax.swing.JLabel();
+        lbTotalAccount = new javax.swing.JLabel();
+        lbTotalAccTail = new javax.swing.JLabel();
+        tabAuth = new javax.swing.JPanel();
+        pnAllAccount = new javax.swing.JPanel();
+        lbTitleAllAccount = new javax.swing.JLabel();
+        pnAllRole = new javax.swing.JScrollPane();
+        tbAllRole = new javax.swing.JTable();
+        btAddRole = new javax.swing.JButton();
+        pnAuth = new javax.swing.JPanel();
+        lbTitleAuth = new javax.swing.JLabel();
+        txtRoleName = new javax.swing.JTextField();
+        pnRolePermission = new javax.swing.JScrollPane();
+        tbRolePermission = new javax.swing.JTable();
+        btDeletePermission = new javax.swing.JButton();
+        btUpdatePermission = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(246, 246, 246));
         setMinimumSize(new java.awt.Dimension(740, 490));
 
-        jTabbedPane1.setBackground(Styles.PRI_LIGHTER
-        );
+        jTabbedPane1.setBackground(new java.awt.Color(246, 246, 246));
         jTabbedPane1.setForeground(Styles.PRI_NORMAL);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        tabAccount.setBackground(new java.awt.Color(255, 255, 255));
 
-        addAccount.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-black18.png"))); // NOI18N
+        btAddAccount.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-black18.png"))); // NOI18N
 
-        searchAccount.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-search-pri18.png"))); // NOI18N
-        searchAccount.setText("Tìm kiếm");
-        searchAccount.addActionListener(new java.awt.event.ActionListener() {
+        btSearchAccount.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-search-pri18.png"))); // NOI18N
+        btSearchAccount.setText("Tìm kiếm");
+        btSearchAccount.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchAccountActionPerformed(evt);
+                btSearchAccountActionPerformed(evt);
             }
         });
 
-        jLabel1.setFont(Styles.H2);
-        jLabel1.setForeground(Styles.GRAY_600);
-        jLabel1.setText("Danh sách tài khoản");
+        lbTitleAccounts.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lbTitleAccounts.setText("Danh sách tài khoản");
 
-        tableAllAccount.setModel(new javax.swing.table.DefaultTableModel(
+        tableAllAccounts.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -119,76 +131,75 @@ public class AccountAD extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tableAllAccount);
-        if (tableAllAccount.getColumnModel().getColumnCount() > 0) {
-            tableAllAccount.getColumnModel().getColumn(0).setMinWidth(40);
-            tableAllAccount.getColumnModel().getColumn(0).setMaxWidth(50);
+        pnAllAccounts.setViewportView(tableAllAccounts);
+        if (tableAllAccounts.getColumnModel().getColumnCount() > 0) {
+            tableAllAccounts.getColumnModel().getColumn(0).setMinWidth(40);
+            tableAllAccounts.getColumnModel().getColumn(0).setMaxWidth(50);
         }
 
-        jLabel2.setFont(Styles.Micro);
-        jLabel2.setText("Có tất cả");
+        lbTotalAccHead.setFont(Styles.Micro);
+        lbTotalAccHead.setText("Có tất cả");
 
-        displayTotalAccount.setText("?");
+        lbTotalAccount.setText("?");
 
-        jLabel4.setFont(Styles.Micro);
-        jLabel4.setText("tài khoản");
+        lbTotalAccTail.setFont(Styles.Micro);
+        lbTotalAccTail.setText("tài khoản");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout tabAccountLayout = new javax.swing.GroupLayout(tabAccount);
+        tabAccount.setLayout(tabAccountLayout);
+        tabAccountLayout.setHorizontalGroup(
+            tabAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tabAccountLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                .addGroup(tabAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(tabAccountLayout.createSequentialGroup()
+                        .addComponent(lbTotalAccHead)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(displayTotalAccount)
+                        .addComponent(lbTotalAccount)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4)
+                        .addComponent(lbTotalAccTail)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
+                    .addGroup(tabAccountLayout.createSequentialGroup()
+                        .addGroup(tabAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(pnAllAccounts, javax.swing.GroupLayout.DEFAULT_SIZE, 693, Short.MAX_VALUE)
+                            .addGroup(tabAccountLayout.createSequentialGroup()
+                                .addComponent(lbTitleAccounts)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(addAccount)
-                                .addGap(10, 10, 10)
-                                .addComponent(searchAccount)))
+                                .addComponent(btAddAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btSearchAccount)))
                         .addGap(24, 24, 24))))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        tabAccountLayout.setVerticalGroup(
+            tabAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tabAccountLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(searchAccount))
-                    .addComponent(addAccount))
-                .addGap(10, 10, 10)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
-                .addGap(10, 10, 10)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel4)
-                    .addComponent(displayTotalAccount))
-                .addGap(23, 23, 23))
+                .addGroup(tabAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btSearchAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btAddAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbTitleAccounts))
+                .addGap(12, 12, 12)
+                .addComponent(pnAllAccounts, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
+                .addGap(8, 8, 8)
+                .addGroup(tabAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbTotalAccHead)
+                    .addComponent(lbTotalAccTail)
+                    .addComponent(lbTotalAccount))
+                .addGap(24, 24, 24))
         );
 
-        jTabbedPane1.addTab("Tài khoản", new javax.swing.ImageIcon(getClass().getResource("/assets/icon/nav-account-white20.png")), jPanel1); // NOI18N
-        jPanel1.getAccessibleContext().setAccessibleName("");
+        jTabbedPane1.addTab("Tài khoản", new javax.swing.ImageIcon(getClass().getResource("/assets/icon/info-account-pri20.png")), tabAccount); // NOI18N
+        tabAccount.getAccessibleContext().setAccessibleName("");
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        tabAuth.setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setPreferredSize(new java.awt.Dimension(217, 368));
+        pnAllAccount.setBackground(new java.awt.Color(255, 255, 255));
+        pnAllAccount.setPreferredSize(new java.awt.Dimension(217, 368));
 
-        jLabel3.setFont(Styles.H2);
-        jLabel3.setText("Tất cả các loại tài khoản");
+        lbTitleAllAccount.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lbTitleAllAccount.setText("Tất cả các loại tài khoản");
 
-        tableAllRole.setModel(new javax.swing.table.DefaultTableModel(
+        tbAllRole.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -214,49 +225,50 @@ public class AccountAD extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        tableAllRole.setMinimumSize(new java.awt.Dimension(60, 100));
-        tableAllRole.setPreferredSize(new java.awt.Dimension(300, 100));
-        jScrollPane2.setViewportView(tableAllRole);
-        if (tableAllRole.getColumnModel().getColumnCount() > 0) {
-            tableAllRole.getColumnModel().getColumn(0).setMinWidth(40);
-            tableAllRole.getColumnModel().getColumn(0).setMaxWidth(50);
-            tableAllRole.getColumnModel().getColumn(2).setMinWidth(40);
-            tableAllRole.getColumnModel().getColumn(2).setMaxWidth(50);
+        tbAllRole.setMinimumSize(new java.awt.Dimension(60, 100));
+        tbAllRole.setPreferredSize(new java.awt.Dimension(300, 100));
+        pnAllRole.setViewportView(tbAllRole);
+        if (tbAllRole.getColumnModel().getColumnCount() > 0) {
+            tbAllRole.getColumnModel().getColumn(0).setMinWidth(40);
+            tbAllRole.getColumnModel().getColumn(0).setMaxWidth(50);
+            tbAllRole.getColumnModel().getColumn(2).setMinWidth(40);
+            tbAllRole.getColumnModel().getColumn(2).setMaxWidth(50);
         }
 
-        addRole.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-white18.png"))); // NOI18N
-        addRole.setText("Thêm mới");
+        btAddRole.setBackground(new java.awt.Color(27, 124, 148));
+        btAddRole.setForeground(new java.awt.Color(255, 255, 255));
+        btAddRole.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-white18.png"))); // NOI18N
+        btAddRole.setText("Thêm mới");
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jLabel3)
-                .addGap(0, 89, Short.MAX_VALUE))
-            .addComponent(addRole, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+        javax.swing.GroupLayout pnAllAccountLayout = new javax.swing.GroupLayout(pnAllAccount);
+        pnAllAccount.setLayout(pnAllAccountLayout);
+        pnAllAccountLayout.setHorizontalGroup(
+            pnAllAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnAllAccountLayout.createSequentialGroup()
+                .addComponent(lbTitleAllAccount)
+                .addGap(0, 84, Short.MAX_VALUE))
+            .addComponent(btAddRole, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnAllRole, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jLabel3)
-                .addGap(20, 20, 20)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)
-                .addGap(9, 9, 9)
-                .addComponent(addRole)
-                .addGap(29, 29, 29))
+        pnAllAccountLayout.setVerticalGroup(
+            pnAllAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnAllAccountLayout.createSequentialGroup()
+                .addComponent(lbTitleAllAccount)
+                .addGap(24, 24, 24)
+                .addComponent(pnAllRole, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGap(12, 12, 12)
+                .addComponent(btAddRole, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel4.setPreferredSize(new java.awt.Dimension(455, 452));
+        pnAuth.setBackground(new java.awt.Color(255, 255, 255));
+        pnAuth.setPreferredSize(new java.awt.Dimension(455, 452));
 
-        jLabel5.setFont(Styles.H2);
-        jLabel5.setText("Quyền tài khoản");
+        lbTitleAuth.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lbTitleAuth.setText("Quyền tài khoản");
 
-        displayRoleSecleted.setText("Người dùng");
+        txtRoleName.setText("Người dùng");
 
-        tableAllPermission.setModel(new javax.swing.table.DefaultTableModel(
+        tbRolePermission.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -266,87 +278,102 @@ public class AccountAD extends javax.swing.JPanel {
             new String [] {
                 "STT", "Chức năng", "A", "C", "R", "U", "D"
             }
-        ));
-        tableAllPermission.setMinimumSize(new java.awt.Dimension(60, 100));
-        jScrollPane3.setViewportView(tableAllPermission);
-        if (tableAllPermission.getColumnModel().getColumnCount() > 0) {
-            tableAllPermission.getColumnModel().getColumn(0).setMinWidth(40);
-            tableAllPermission.getColumnModel().getColumn(0).setMaxWidth(50);
-            tableAllPermission.getColumnModel().getColumn(2).setMinWidth(40);
-            tableAllPermission.getColumnModel().getColumn(2).setMaxWidth(50);
-            tableAllPermission.getColumnModel().getColumn(3).setMinWidth(40);
-            tableAllPermission.getColumnModel().getColumn(3).setMaxWidth(50);
-            tableAllPermission.getColumnModel().getColumn(4).setMinWidth(40);
-            tableAllPermission.getColumnModel().getColumn(4).setMaxWidth(50);
-            tableAllPermission.getColumnModel().getColumn(5).setMinWidth(40);
-            tableAllPermission.getColumnModel().getColumn(5).setMaxWidth(50);
-            tableAllPermission.getColumnModel().getColumn(6).setMinWidth(40);
-            tableAllPermission.getColumnModel().getColumn(6).setMaxWidth(50);
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, true, true, true, true, true
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tbRolePermission.setMinimumSize(new java.awt.Dimension(60, 100));
+        tbRolePermission.getTableHeader().setReorderingAllowed(false);
+        pnRolePermission.setViewportView(tbRolePermission);
+        if (tbRolePermission.getColumnModel().getColumnCount() > 0) {
+            tbRolePermission.getColumnModel().getColumn(0).setMinWidth(40);
+            tbRolePermission.getColumnModel().getColumn(0).setMaxWidth(50);
+            tbRolePermission.getColumnModel().getColumn(2).setMinWidth(40);
+            tbRolePermission.getColumnModel().getColumn(2).setMaxWidth(50);
+            tbRolePermission.getColumnModel().getColumn(3).setMinWidth(40);
+            tbRolePermission.getColumnModel().getColumn(3).setMaxWidth(50);
+            tbRolePermission.getColumnModel().getColumn(4).setMinWidth(40);
+            tbRolePermission.getColumnModel().getColumn(4).setMaxWidth(50);
+            tbRolePermission.getColumnModel().getColumn(5).setMinWidth(40);
+            tbRolePermission.getColumnModel().getColumn(5).setMaxWidth(50);
+            tbRolePermission.getColumnModel().getColumn(6).setMinWidth(40);
+            tbRolePermission.getColumnModel().getColumn(6).setMaxWidth(50);
         }
 
-        deletePermission.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-delete-red18.png"))); // NOI18N
-        deletePermission.setText("Xóa");
-        deletePermission.addActionListener(new java.awt.event.ActionListener() {
+        btDeletePermission.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-delete-red18.png"))); // NOI18N
+        btDeletePermission.setText("Xóa");
+        btDeletePermission.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deletePermissionActionPerformed(evt);
+                btDeletePermissionActionPerformed(evt);
             }
         });
 
-        updatePermission.setText("Cập nhật");
+        btUpdatePermission.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-refresh-pri18.png"))); // NOI18N
+        btUpdatePermission.setText("Cập nhật");
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(displayRoleSecleted, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(292, Short.MAX_VALUE)
-                .addComponent(deletePermission)
+        javax.swing.GroupLayout pnAuthLayout = new javax.swing.GroupLayout(pnAuth);
+        pnAuth.setLayout(pnAuthLayout);
+        pnAuthLayout.setHorizontalGroup(
+            pnAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnAuthLayout.createSequentialGroup()
+                .addComponent(lbTitleAuth)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 139, Short.MAX_VALUE)
+                .addComponent(txtRoleName, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnAuthLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btDeletePermission)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(updatePermission)
-                .addContainerGap())
-            .addComponent(jScrollPane3)
+                .addComponent(btUpdatePermission))
+            .addComponent(pnRolePermission, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(displayRoleSecleted, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        pnAuthLayout.setVerticalGroup(
+            pnAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnAuthLayout.createSequentialGroup()
+                .addGroup(pnAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbTitleAuth)
+                    .addComponent(txtRoleName, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addComponent(pnRolePermission, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(deletePermission)
-                    .addComponent(updatePermission))
-                .addGap(32, 32, 32))
+                .addGroup(pnAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btUpdatePermission, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btDeletePermission, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout tabAuthLayout = new javax.swing.GroupLayout(tabAuth);
+        tabAuth.setLayout(tabAuthLayout);
+        tabAuthLayout.setHorizontalGroup(
+            tabAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tabAuthLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(21, 21, 21)
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(23, 23, 23))
+                .addComponent(pnAllAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(pnAuth, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE)
+                .addGap(24, 24, 24))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+        tabAuthLayout.setVerticalGroup(
+            tabAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabAuthLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE))
-                .addGap(46, 46, 46))
+                .addGroup(tabAuthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(pnAuth, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
+                    .addComponent(pnAllAccount, javax.swing.GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE))
+                .addGap(24, 24, 24))
         );
 
-        jTabbedPane1.addTab("Phân quyền", new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-pri18.png")), jPanel2); // NOI18N
+        jTabbedPane1.addTab("Phân quyền", new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-pri18.png")), tabAuth); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -362,38 +389,38 @@ public class AccountAD extends javax.swing.JPanel {
         jTabbedPane1.getAccessibleContext().setAccessibleName("");
     }// </editor-fold>//GEN-END:initComponents
 
-    private void searchAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchAccountActionPerformed
+    private void btSearchAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSearchAccountActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_searchAccountActionPerformed
+    }//GEN-LAST:event_btSearchAccountActionPerformed
 
-    private void deletePermissionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletePermissionActionPerformed
+    private void btDeletePermissionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeletePermissionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_deletePermissionActionPerformed
+    }//GEN-LAST:event_btDeletePermissionActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addAccount;
-    private javax.swing.JButton addRole;
-    private javax.swing.JButton deletePermission;
-    private javax.swing.JTextField displayRoleSecleted;
-    private javax.swing.JLabel displayTotalAccount;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JButton btAddAccount;
+    private javax.swing.JButton btAddRole;
+    private javax.swing.JButton btDeletePermission;
+    private javax.swing.JButton btSearchAccount;
+    private javax.swing.JButton btUpdatePermission;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JButton searchAccount;
-    private javax.swing.JTable tableAllAccount;
-    private javax.swing.JTable tableAllPermission;
-    private javax.swing.JTable tableAllRole;
-    private javax.swing.JButton updatePermission;
+    private javax.swing.JLabel lbTitleAccounts;
+    private javax.swing.JLabel lbTitleAllAccount;
+    private javax.swing.JLabel lbTitleAuth;
+    private javax.swing.JLabel lbTotalAccHead;
+    private javax.swing.JLabel lbTotalAccTail;
+    private javax.swing.JLabel lbTotalAccount;
+    private javax.swing.JPanel pnAllAccount;
+    private javax.swing.JScrollPane pnAllAccounts;
+    private javax.swing.JScrollPane pnAllRole;
+    private javax.swing.JPanel pnAuth;
+    private javax.swing.JScrollPane pnRolePermission;
+    private javax.swing.JPanel tabAccount;
+    private javax.swing.JPanel tabAuth;
+    private javax.swing.JTable tableAllAccounts;
+    private javax.swing.JTable tbAllRole;
+    private javax.swing.JTable tbRolePermission;
+    private javax.swing.JTextField txtRoleName;
     // End of variables declaration//GEN-END:variables
 }

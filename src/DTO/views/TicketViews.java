@@ -197,7 +197,7 @@ public class TicketViews {
                 String airlineID_otherTK = planeBUS.getObjectbyID(planeID_otherTK).getAirlineID();
                 String flightID_otherTK = otherTicket.getFlightID();
                 if(flightID_otherTK.equals(flightID_currentTK) && airlineID_otherTK.equals(airlineID_currentTK)){
-//                    if(otherTicket.getIsDelete() == 0)
+                    if(otherTicket.getIsDelete() == 0)
                         quantity++;
                     if(otherTicket.getSoldout() == 0)
                         remain++;

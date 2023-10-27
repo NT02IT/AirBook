@@ -45,6 +45,7 @@ public class SeatDAO {
                 seat.setSeatID(rs.getString(1));
                 seat.setTicketClassID(rs.getString(2));
                 seat.setSeatName(rs.getString(3));
+                seat.setIsDelete(rs.getInt(4));
                 list.add(seat);
             }
         } catch (SQLException ex) {
@@ -58,12 +59,13 @@ public class SeatDAO {
         String context = this.getClass().getName();
         connectDB.connect(context);
         try {
-            String sql = "INSERT INTO seats(Seat_ID, Ticket_class_ID, Seat_name) "
-                    + "VALUES (?, ?, ?)";
+            String sql = "INSERT INTO seats(Seat_ID, Ticket_class_ID, Seat_name, IsDelete) "
+                    + "VALUES (?, ?, ?, ?)";
             PreparedStatement pstmt = connectDB.conn.prepareStatement(sql);
             pstmt.setString(1, seat.getSeatID());
             pstmt.setString(2, seat.getTicketClassID());
             pstmt.setString(3, seat.getSeatName());
+            pstmt.setInt(4, seat.getIsDelete());
             pstmt.executeUpdate();
             list.add(seat);
             return true;

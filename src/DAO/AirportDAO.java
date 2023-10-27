@@ -5,8 +5,6 @@
 package DAO;
 
 import DTO.entities.Airport;
-import DTO.entities.Person;
-import DTO.entities.User;
 import connection.ConnectDB;
 import java.io.IOException;
 import java.sql.PreparedStatement;
@@ -46,7 +44,8 @@ public class AirportDAO {
                 Airport airport = new Airport();
                 airport.setAirportID(rs.getString(1));
                 airport.setAirportName(rs.getString(2));
-                airport.setProvince(rs.getString(3));                
+                airport.setProvince(rs.getString(3)); 
+                airport.setIsDelete(rs.getInt(4));
                 list.add(airport);
             }
         } catch (SQLException ex) {
@@ -60,12 +59,13 @@ public class AirportDAO {
         String context = this.getClass().getName();
         connectDB.connect(context);
         try {
-            String sql = "INSERT INTO airports(Airport_ID, Airport_name, Province) "
-                    + "VALUES (?, ?, ?)";
+            String sql = "INSERT INTO airports(Airport_ID, Airport_name, Province, IsDelete) "
+                    + "VALUES (?, ?, ?, ?)";
             PreparedStatement pstmt = connectDB.conn.prepareStatement(sql);
             pstmt.setString(1, airport.getAirportID());
             pstmt.setString(2, airport.getAirportName());
             pstmt.setString(3, airport.getProvince());
+            pstmt.setInt(4, airport.getIsDelete());
             pstmt.executeUpdate();
             list.add(airport);
             return true;

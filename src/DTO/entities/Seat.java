@@ -12,6 +12,7 @@ public class Seat {
     protected String seatID;
     protected String ticketClassID;
     protected String seatName;
+    protected int isDelete = 0;
 
     public Seat() {
     }
@@ -34,6 +35,10 @@ public class Seat {
         return seatName;
     }
 
+    public int getIsDelete() {
+        return isDelete;
+    }
+
     public void setSeatID(String seatID) {
         this.seatID = seatID;
     }
@@ -44,6 +49,10 @@ public class Seat {
 
     public void setSeatName(String seatName) {
         this.seatName = seatName;
+    }
+
+    public void setIsDelete(int isDelete) {
+        this.isDelete = isDelete;
     }
     
 }

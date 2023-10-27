@@ -12,6 +12,7 @@ public class Airport {
     protected String airportID;
     protected String airportName;
     protected String province;
+    protected int isDelete = 0;
 
     public Airport() {
     }
@@ -34,6 +35,10 @@ public class Airport {
         return province;
     }
 
+    public int getIsDelete() {
+        return isDelete;
+    }
+
     public void setAirportID(String airportID) {
         this.airportID = airportID;
     }
@@ -44,6 +49,10 @@ public class Airport {
 
     public void setProvince(String province) {
         this.province = province;
+    }
+
+    public void setIsDelete(int isDelete) {
+        this.isDelete = isDelete;
     }
     
 }

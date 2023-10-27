@@ -9,6 +9,7 @@ import GUI.body_panel.AccountAD;
 import GUI.body_panel.AirlineAD;
 import GUI.body_panel.AirlinePlaneAD;
 import GUI.body_panel.AirportAD;
+import GUI.body_panel.FeaturesAD;
 import GUI.body_panel.FlightAD;
 import GUI.body_panel.PromoAD;
 import GUI.body_panel.StatisticAD;
@@ -17,6 +18,7 @@ import assets.Site.Order;
 import java.awt.Toolkit;
 import java.io.IOException;
 import java.sql.SQLException;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
@@ -33,6 +35,7 @@ public class IndexAD extends javax.swing.JFrame implements IIndex{
      */
     public IndexAD() {
         init();
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 //        this.setUndecorated(true);
         this.setLocationRelativeTo(null);
@@ -41,6 +44,7 @@ public class IndexAD extends javax.swing.JFrame implements IIndex{
     public IndexAD(User user) {
         this.user = user;
         init();
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/assets/image/app-favicon.png")));
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 //        this.setUndecorated(true);
@@ -71,6 +75,9 @@ public class IndexAD extends javax.swing.JFrame implements IIndex{
         } else if (siteOrder == Order.ACCOUNT) {
             remove(pnBody);
             pnBody = new AccountAD(user);
+        } else if (siteOrder == Order.FEATURES) {
+            remove(pnBody);
+            pnBody = new FeaturesAD(user);
         }
         
         sidebarAD.siteOrder(siteOrder);

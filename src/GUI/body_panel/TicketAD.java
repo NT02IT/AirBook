@@ -26,12 +26,20 @@ public class TicketAD extends javax.swing.JPanel {
         styles();
     }
     public void styles(){
-        Styles.ButtonNeutral(addTicket);        
-        Styles.ButtonNeutral(exportTicket);
-        Styles.ButtonNeutral(importTicket);
-        Styles.ButtonSecondary(searchTicket);
-        Styles.Table(tableAllTicket, jScrollPane1);
-    
+        Styles.ButtonNeutral(btAddTicket);        
+        Styles.ButtonNeutral(btExportTicket);
+        Styles.ButtonNeutral(btImportTicket);
+        Styles.ButtonSecondary(btSearchTicket);
+        Styles.Table(tbAllTicket, pnAllTicket);
+        
+        lbTitle.setFont(Styles.H2);
+        lbTitle.setForeground(Styles.GRAY_600);
+        lbTotalTicketHead.setFont(Styles.Body);
+        lbTotalTicketHead.setForeground(Styles.GRAY_600);
+        lbTotalTicket.setFont(Styles.Label);
+        lbTotalTicket.setForeground(Styles.GRAY_600);
+        lbTotalTicketTail.setFont(Styles.Body);
+        lbTotalTicketTail.setForeground(Styles.GRAY_600);
     }    /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -41,34 +49,34 @@ public class TicketAD extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        searchTicket = new javax.swing.JButton();
-        importTicket = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        addTicket = new javax.swing.JButton();
-        exportTicket = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tableAllTicket = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
-        displayTotalTicket = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        btSearchTicket = new javax.swing.JButton();
+        btImportTicket = new javax.swing.JButton();
+        lbTitle = new javax.swing.JLabel();
+        btAddTicket = new javax.swing.JButton();
+        btExportTicket = new javax.swing.JButton();
+        pnAllTicket = new javax.swing.JScrollPane();
+        tbAllTicket = new javax.swing.JTable();
+        lbTotalTicketHead = new javax.swing.JLabel();
+        lbTotalTicket = new javax.swing.JLabel();
+        lbTotalTicketTail = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(740, 490));
+        setPreferredSize(new java.awt.Dimension(740, 540));
 
-        searchTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-search-pri18.png"))); // NOI18N
-        searchTicket.setText("Tìm kiếm");
+        btSearchTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-search-pri18.png"))); // NOI18N
+        btSearchTicket.setText("Tìm kiếm");
 
-        importTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-export-black18.png"))); // NOI18N
+        btImportTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-import-black18.png"))); // NOI18N
 
-        jLabel1.setFont(Styles.H2);
-        jLabel1.setForeground(Styles.GRAY_600);
-        jLabel1.setText("Quản lý chuyến bay");
+        lbTitle.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lbTitle.setText("Quản lý chuyến bay");
 
-        addTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-black18.png"))); // NOI18N
+        btAddTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-black18.png"))); // NOI18N
 
-        exportTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-import-black18.png"))); // NOI18N
+        btExportTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-export-black18.png"))); // NOI18N
 
-        tableAllTicket.setModel(new javax.swing.table.DefaultTableModel(
+        tbAllTicket.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -94,20 +102,20 @@ public class TicketAD extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tableAllTicket);
-        if (tableAllTicket.getColumnModel().getColumnCount() > 0) {
-            tableAllTicket.getColumnModel().getColumn(0).setMinWidth(40);
-            tableAllTicket.getColumnModel().getColumn(0).setMaxWidth(50);
+        pnAllTicket.setViewportView(tbAllTicket);
+        if (tbAllTicket.getColumnModel().getColumnCount() > 0) {
+            tbAllTicket.getColumnModel().getColumn(0).setMinWidth(40);
+            tbAllTicket.getColumnModel().getColumn(0).setMaxWidth(50);
         }
 
-        jLabel2.setFont(Styles.Micro);
-        jLabel2.setText("Có tất cả");
+        lbTotalTicketHead.setFont(Styles.Micro);
+        lbTotalTicketHead.setText("Có tất cả");
 
-        displayTotalTicket.setFont(Styles.Label);
-        displayTotalTicket.setText("?");
+        lbTotalTicket.setFont(Styles.Label);
+        lbTotalTicket.setText("?");
 
-        jLabel4.setFont(Styles.Micro);
-        jLabel4.setText("mã khuyến mãi");
+        lbTotalTicketTail.setFont(Styles.Micro);
+        lbTotalTicketTail.setText("mã khuyến mãi");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -117,59 +125,64 @@ public class TicketAD extends javax.swing.JPanel {
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addComponent(lbTotalTicketHead)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(displayTotalTicket)
+                        .addComponent(lbTotalTicket)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4)
+                        .addComponent(lbTotalTicketTail)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(pnAllTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
+                                .addComponent(lbTitle)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(exportTicket)
+                                .addComponent(btExportTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(importTicket)
+                                .addComponent(btImportTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(addTicket)
+                                .addComponent(btAddTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(searchTicket)))
+                                .addComponent(btSearchTicket)))
                         .addGap(24, 24, 24))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(searchTicket)
-                    .addComponent(addTicket)
-                    .addComponent(importTicket)
-                    .addComponent(exportTicket))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE)
-                .addGap(15, 15, 15)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(displayTotalTicket)
-                    .addComponent(jLabel4))
-                .addContainerGap())
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbTitle)
+                            .addComponent(btExportTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(12, 12, 12)
+                        .addComponent(pnAllTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addGap(8, 8, 8)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbTotalTicketHead)
+                            .addComponent(lbTotalTicket)
+                            .addComponent(lbTotalTicketTail))
+                        .addGap(24, 24, 24))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btImportTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btAddTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btSearchTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(482, 482, 482))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addTicket;
-    private javax.swing.JLabel displayTotalTicket;
-    private javax.swing.JButton exportTicket;
-    private javax.swing.JButton importTicket;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton searchTicket;
-    private javax.swing.JTable tableAllTicket;
+    private javax.swing.JButton btAddTicket;
+    private javax.swing.JButton btExportTicket;
+    private javax.swing.JButton btImportTicket;
+    private javax.swing.JButton btSearchTicket;
+    private javax.swing.JLabel lbTitle;
+    private javax.swing.JLabel lbTotalTicket;
+    private javax.swing.JLabel lbTotalTicketHead;
+    private javax.swing.JLabel lbTotalTicketTail;
+    private javax.swing.JScrollPane pnAllTicket;
+    private javax.swing.JTable tbAllTicket;
     // End of variables declaration//GEN-END:variables
 }

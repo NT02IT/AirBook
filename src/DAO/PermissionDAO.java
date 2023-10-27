@@ -49,7 +49,8 @@ public class PermissionDAO {
                 per.setPerCreate(rs.getInt(5));
                 per.setPerView(rs.getInt(6));
                 per.setPerEdit(rs.getInt(7));
-                per.setPerDelete(rs.getInt(8));                
+                per.setPerDelete(rs.getInt(8));  
+                per.setIsDelete(rs.getInt(9));       
                 list.add(per);
             }
         } catch (SQLException ex) {
@@ -63,8 +64,8 @@ public class PermissionDAO {
         String context = this.getClass().getName();
         connectDB.connect(context);
         try {
-            String sql = "INSERT INTO permission(Per_ID, Role_ID, Action_ID, Per_access, Per_create, Per_view, Per_edit, Per_delete) "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO permission(Per_ID, Role_ID, Action_ID, Per_access, Per_create, Per_view, Per_edit, Per_delete, IsDelete) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement pstmt = ConnectDB.conn.prepareStatement(sql);
             pstmt.setString(1, per.getPerID());
             pstmt.setString(2, per.getRoleID());
@@ -74,6 +75,7 @@ public class PermissionDAO {
             pstmt.setInt(6, per.getPerView());            
             pstmt.setInt(7, per.getPerEdit());
             pstmt.setInt(8, per.getPerDelete());
+            pstmt.setInt(9, per.getIsDelete());
             pstmt.executeUpdate();
             list.add(per);
             return true;

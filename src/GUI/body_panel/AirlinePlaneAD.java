@@ -5,6 +5,10 @@
 package GUI.body_panel;
 import  assets.Styles;
 import DTO.entities.User;
+import static assets.Styles.GRAY_100;
+import static assets.Styles.GRAY_200;
+import assets.TextBubbleBorder;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 
 /**
  *
@@ -28,15 +32,56 @@ public class AirlinePlaneAD extends javax.swing.JPanel {
     public  void styles(){
         Styles.FormTextFeild(txtAirlineID);
         Styles.FormTextFeild(txtAirlineName);
-        Styles.ButtonNeutral(deleteAirline);        
-        Styles.ButtonNeutral(updateAirline );
-        Styles.ButtonSecondary(addPlane);
-        Styles.Table(tableAllPlane, jScrollPane3);
-        Styles.ButtonSecondary(updateLanguage);
-        Styles.ButtonDanger(deletePlane);
-        Styles.ButtonPrimary(updatePlane);
-        Styles.ButtonSecondary(updateLanguage);
-        Styles.Table(tableAllLanguage, jScrollPane4);
+        Styles.ButtonNeutral(btDeleteAirline);        
+        Styles.ButtonNeutral(btUpdateAirline );
+        Styles.ButtonSecondary(btAddPlane);
+        Styles.Table(tbAllPlane, pnAllPlane);
+        Styles.ButtonSecondary(btUpdateLuggage);
+        Styles.ButtonDanger(btDeletePlane);
+        Styles.ButtonPrimary(btUpdatePlane);
+        Styles.ButtonSecondary(btUpdateLuggage);
+        Styles.Table(tbAllLugage, pnAllLugage);
+        
+        pnMainBody.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+            protected void configureScrollBarColors() {
+                this.thumbColor = Styles.WHITE;
+                this.scrollBarWidth = 0;
+                this.trackColor = Styles.WHITE;
+            }
+        });
+        TextBubbleBorder border = new TextBubbleBorder(GRAY_100, 0, 12, 0, true);
+        pnPlaneDetail.setBorder(border);
+        
+        Styles.ComboBox(cbTicketClass);
+        txtAllSeat.setBorder(border);
+        txtAllSeat.setFont(Styles.Label);
+        txtAllSeat.setForeground(Styles.PRI_NORMAL);
+        txtAllSeat.setBackground(Styles.WHITE);
+        
+        lbAirlineName.setFont(Styles.Label);
+        lbAirlineName.setForeground(Styles.WHITE);
+        lbAirlineID.setFont(Styles.Label);
+        lbAirlineID.setForeground(Styles.WHITE);
+        
+        lbTitlePlane.setFont(Styles.H2);
+        lbTitlePlane.setForeground(Styles.GRAY_600);
+        lbTitleMoreLuggage.setFont(Styles.H2);
+        lbTitleMoreLuggage.setForeground(Styles.GRAY_600);
+        
+        lbTotalPlaneHead.setFont(Styles.Body);
+        lbTotalPlaneHead.setForeground(Styles.GRAY_600);
+        lbTotalPlane.setFont(Styles.Label);
+        lbTotalPlane.setForeground(Styles.GRAY_600);
+        lbTotalPlaneTail.setFont(Styles.Body);
+        lbTotalPlaneTail.setForeground(Styles.GRAY_600);
+        
+        lbTotalOptionLugageHead.setFont(Styles.Body);
+        lbTotalOptionLugageHead.setForeground(Styles.GRAY_600);
+        lbTotalOptionLugage.setFont(Styles.Label);
+        lbTotalOptionLugage.setForeground(Styles.GRAY_600);
+        lbTotalOptionLugageTail.setFont(Styles.Body);
+        lbTotalOptionLugageTail.setForeground(Styles.GRAY_600);
+        
 
     }
     /**
@@ -48,195 +93,227 @@ public class AirlinePlaneAD extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        pnAirlineInfo = new javax.swing.JPanel();
+        lbAirlineName = new javax.swing.JLabel();
         txtAirlineName = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
+        lbAirlineID = new javax.swing.JLabel();
         txtAirlineID = new javax.swing.JTextField();
-        deleteAirline = new javax.swing.JButton();
-        updateAirline = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        displayPlaneName = new javax.swing.JLabel();
-        displayPlaneID = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        displayAllSeat = new javax.swing.JTextArea();
-        deletePlane = new javax.swing.JButton();
-        updatePlane = new javax.swing.JButton();
-        comboBoxTicketClass = new javax.swing.JComboBox<>();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jPanel3 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        addPlane = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tableAllPlane = new javax.swing.JTable();
-        jLabel4 = new javax.swing.JLabel();
-        displayTotalPlane = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
-        updateLanguage = new javax.swing.JButton();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        tableAllLanguage = new javax.swing.JTable();
-        jLabel11 = new javax.swing.JLabel();
-        displayTotalOptionLanguage = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
+        btDeleteAirline = new javax.swing.JButton();
+        btUpdateAirline = new javax.swing.JButton();
+        pnPlaneDetail = new javax.swing.JPanel();
+        lbPlaneName = new javax.swing.JLabel();
+        lbPlaneID = new javax.swing.JLabel();
+        lbTicketClass = new javax.swing.JLabel();
+        pnAllSeat = new javax.swing.JScrollPane();
+        txtAllSeat = new javax.swing.JTextArea();
+        btDeletePlane = new javax.swing.JButton();
+        btUpdatePlane = new javax.swing.JButton();
+        cbTicketClass = new javax.swing.JComboBox<>();
+        pnMainBody = new javax.swing.JScrollPane();
+        pnMain = new javax.swing.JPanel();
+        pnPlanes = new javax.swing.JPanel();
+        lbTitlePlane = new javax.swing.JLabel();
+        btAddPlane = new javax.swing.JButton();
+        pnAllPlane = new javax.swing.JScrollPane();
+        tbAllPlane = new javax.swing.JTable();
+        lbTotalPlaneHead = new javax.swing.JLabel();
+        lbTotalPlane = new javax.swing.JLabel();
+        lbTotalPlaneTail = new javax.swing.JLabel();
+        pnMoreLugage = new javax.swing.JPanel();
+        lbTitleMoreLuggage = new javax.swing.JLabel();
+        btUpdateLuggage = new javax.swing.JButton();
+        pnAllLugage = new javax.swing.JScrollPane();
+        tbAllLugage = new javax.swing.JTable();
+        lbTotalOptionLugageHead = new javax.swing.JLabel();
+        lbTotalOptionLugage = new javax.swing.JLabel();
+        lbTotalOptionLugageTail = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setMinimumSize(new java.awt.Dimension(740, 490));
 
-        jPanel1.setBackground(Styles.PRI_DARK);
-        jPanel1.setForeground(Styles.WHITE);
-        jPanel1.setMinimumSize(new java.awt.Dimension(100, 79));
+        pnAirlineInfo.setBackground(new java.awt.Color(1, 104, 124));
+        pnAirlineInfo.setForeground(Styles.WHITE);
+        pnAirlineInfo.setMinimumSize(new java.awt.Dimension(100, 79));
 
-        jLabel1.setText("Tên hãng bay");
+        lbAirlineName.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbAirlineName.setForeground(new java.awt.Color(255, 255, 255));
+        lbAirlineName.setText("Tên hãng bay");
 
-        txtAirlineName.setText("Vietnam Airlines");
+        lbAirlineID.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbAirlineID.setForeground(new java.awt.Color(255, 255, 255));
+        lbAirlineID.setText("Mã hãng bay");
 
-        jLabel2.setForeground(Styles.WHITE);
-        jLabel2.setText("Mã hãng bay");
+        btDeleteAirline.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-delete-black18.png"))); // NOI18N
+        btDeleteAirline.setText("Xóa");
 
-        txtAirlineID.setText("jTextField2");
+        btUpdateAirline.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-refresh-black18.png"))); // NOI18N
+        btUpdateAirline.setText("Lưu sửa đổi");
 
-        deleteAirline.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-delete-black18.png"))); // NOI18N
-        deleteAirline.setText("Xóa");
-
-        updateAirline.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-refresh-black18.png"))); // NOI18N
-        updateAirline.setText("Lưu sửa đổi");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtAirlineName, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+        javax.swing.GroupLayout pnAirlineInfoLayout = new javax.swing.GroupLayout(pnAirlineInfo);
+        pnAirlineInfo.setLayout(pnAirlineInfoLayout);
+        pnAirlineInfoLayout.setHorizontalGroup(
+            pnAirlineInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnAirlineInfoLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(pnAirlineInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtAirlineName, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbAirlineName))
+                .addGap(12, 12, 12)
+                .addGroup(pnAirlineInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbAirlineID)
+                    .addComponent(txtAirlineID, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 182, Short.MAX_VALUE)
+                .addComponent(btUpdateAirline)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(txtAirlineID, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
-                .addComponent(updateAirline)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(deleteAirline)
+                .addComponent(btDeleteAirline)
                 .addGap(24, 24, 24))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtAirlineName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtAirlineID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(updateAirline)
-                            .addComponent(deleteAirline))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        pnAirlineInfoLayout.setVerticalGroup(
+            pnAirlineInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnAirlineInfoLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(pnAirlineInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbAirlineName)
+                    .addComponent(lbAirlineID))
+                .addGap(4, 4, 4)
+                .addGroup(pnAirlineInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtAirlineName, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtAirlineID, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(16, 16, 16))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnAirlineInfoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnAirlineInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btUpdateAirline, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btDeleteAirline, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(23, 23, 23))
         );
 
-        jPanel2.setBackground(Styles.PRI_LIGHTER);
+        pnPlaneDetail.setBackground(new java.awt.Color(230, 243, 246));
 
-        displayPlaneName.setFont(Styles.H1);
-        displayPlaneName.setForeground(Styles.GRAY_600);
-        displayPlaneName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        displayPlaneName.setText("Boeing 787");
+        lbPlaneName.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lbPlaneName.setForeground(Styles.GRAY_600);
+        lbPlaneName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbPlaneName.setText("Boeing 787");
 
-        displayPlaneID.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        displayPlaneID.setText("ID: VN123");
+        lbPlaneID.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbPlaneID.setText("ID: VN123");
 
-        jLabel7.setFont(Styles.Label);
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/info-seat-black20.png"))); // NOI18N
-        jLabel7.setText("Hạng ghế");
+        lbTicketClass.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbTicketClass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/info-seat-black20.png"))); // NOI18N
+        lbTicketClass.setText("Hạng ghế");
 
-        jScrollPane2.setBorder(null);
+        pnAllSeat.setBorder(null);
 
-        displayAllSeat.setColumns(20);
-        displayAllSeat.setFont(Styles.Label);
-        displayAllSeat.setForeground(Styles.PRI_NORMAL);
-        displayAllSeat.setLineWrap(true);
-        displayAllSeat.setRows(5);
-        displayAllSeat.setText("A1, A2, A3");
-        jScrollPane2.setViewportView(displayAllSeat);
+        txtAllSeat.setColumns(20);
+        txtAllSeat.setFont(Styles.Label);
+        txtAllSeat.setLineWrap(true);
+        txtAllSeat.setRows(5);
+        txtAllSeat.setMinimumSize(new java.awt.Dimension(20, 20));
+        pnAllSeat.setViewportView(txtAllSeat);
 
-        deletePlane.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-delete-red18.png"))); // NOI18N
-        deletePlane.setText("Xóa máy bay");
-        deletePlane.addActionListener(new java.awt.event.ActionListener() {
+        btDeletePlane.setBackground(new java.awt.Color(255, 229, 211));
+        btDeletePlane.setForeground(new java.awt.Color(255, 58, 40));
+        btDeletePlane.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-delete-red18.png"))); // NOI18N
+        btDeletePlane.setText("Xóa máy bay");
+        btDeletePlane.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deletePlaneActionPerformed(evt);
+                btDeletePlaneActionPerformed(evt);
             }
         });
 
-        updatePlane.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-refresh-pri18.png"))); // NOI18N
-        updatePlane.setText("Sửa thông tin");
+        btUpdatePlane.setBackground(new java.awt.Color(1, 138, 165));
+        btUpdatePlane.setForeground(new java.awt.Color(255, 255, 255));
+        btUpdatePlane.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-refresh-white18.png"))); // NOI18N
+        btUpdatePlane.setText("Sửa thông tin");
 
-        comboBoxTicketClass.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Phổ thông", "Thương gia" }));
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(displayPlaneName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(displayPlaneID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(deletePlane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(updatePlane, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
-                    .addComponent(comboBoxTicketClass, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+        javax.swing.GroupLayout pnPlaneDetailLayout = new javax.swing.GroupLayout(pnPlaneDetail);
+        pnPlaneDetail.setLayout(pnPlaneDetailLayout);
+        pnPlaneDetailLayout.setHorizontalGroup(
+            pnPlaneDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lbPlaneName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lbPlaneID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lbTicketClass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnAllSeat, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(btDeletePlane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btUpdatePlane, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+            .addComponent(cbTicketClass, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        pnPlaneDetailLayout.setVerticalGroup(
+            pnPlaneDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnPlaneDetailLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(displayPlaneName)
+                .addComponent(lbPlaneName)
+                .addGap(4, 4, 4)
+                .addComponent(lbPlaneID)
+                .addGap(20, 20, 20)
+                .addComponent(lbTicketClass)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(displayPlaneID)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(comboBoxTicketClass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbTicketClass, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(8, 8, 8)
+                .addComponent(pnAllSeat)
+                .addGap(12, 12, 12)
+                .addComponent(btDeletePlane, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
-                .addGap(15, 15, 15)
-                .addComponent(deletePlane)
-                .addGap(15, 15, 15)
-                .addComponent(updatePlane)
-                .addGap(15, 15, 15))
+                .addComponent(btUpdatePlane, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
 
-        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
-        jScrollPane1.setBorder(null);
-        jScrollPane1.setHorizontalScrollBar(null);
-        jScrollPane1.setMinimumSize(new java.awt.Dimension(16, 490));
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(100, 490));
+        pnMainBody.setBackground(new java.awt.Color(255, 255, 255));
+        pnMainBody.setBorder(null);
+        pnMainBody.setHorizontalScrollBar(null);
+        pnMainBody.setMinimumSize(new java.awt.Dimension(16, 490));
+        pnMainBody.setPreferredSize(new java.awt.Dimension(100, 490));
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        pnMain.setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        pnPlanes.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel3.setFont(Styles.H2);
-        jLabel3.setForeground(Styles.GRAY_600);
-        jLabel3.setText("Danh sách máy bay");
+        lbTitlePlane.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lbTitlePlane.setForeground(Styles.GRAY_600);
+        lbTitlePlane.setText("Danh sách máy bay");
 
-        addPlane.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-pri18.png"))); // NOI18N
-        addPlane.setText("Thêm máy bay");
+        btAddPlane.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-pri18.png"))); // NOI18N
+        btAddPlane.setText("Thêm máy bay");
 
-        tableAllPlane.setModel(new javax.swing.table.DefaultTableModel(
+        tbAllPlane.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
@@ -261,68 +338,71 @@ public class AirlinePlaneAD extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane3.setViewportView(tableAllPlane);
-        if (tableAllPlane.getColumnModel().getColumnCount() > 0) {
-            tableAllPlane.getColumnModel().getColumn(0).setMinWidth(40);
-            tableAllPlane.getColumnModel().getColumn(0).setMaxWidth(50);
-            tableAllPlane.getColumnModel().getColumn(3).setMinWidth(60);
-            tableAllPlane.getColumnModel().getColumn(3).setMaxWidth(70);
-            tableAllPlane.getColumnModel().getColumn(3).setHeaderValue("Số ghế");
+        tbAllPlane.setMinimumSize(new java.awt.Dimension(100, 80));
+        pnAllPlane.setViewportView(tbAllPlane);
+        if (tbAllPlane.getColumnModel().getColumnCount() > 0) {
+            tbAllPlane.getColumnModel().getColumn(0).setMinWidth(40);
+            tbAllPlane.getColumnModel().getColumn(0).setMaxWidth(50);
+            tbAllPlane.getColumnModel().getColumn(3).setMinWidth(60);
+            tbAllPlane.getColumnModel().getColumn(3).setMaxWidth(70);
         }
 
-        jLabel4.setFont(Styles.Micro);
-        jLabel4.setText("Có tất cả");
+        lbTotalPlaneHead.setFont(Styles.Micro);
+        lbTotalPlaneHead.setText("Có tất cả");
 
-        displayTotalPlane.setFont(Styles.Label);
-        displayTotalPlane.setText("?");
+        lbTotalPlane.setFont(Styles.Label);
+        lbTotalPlane.setText("?");
 
-        jLabel9.setFont(Styles.Micro);
-        jLabel9.setText("máy bay");
+        lbTotalPlaneTail.setFont(Styles.Micro);
+        lbTotalPlaneTail.setText("máy bay");
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(displayTotalPlane)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel9)
+        javax.swing.GroupLayout pnPlanesLayout = new javax.swing.GroupLayout(pnPlanes);
+        pnPlanes.setLayout(pnPlanesLayout);
+        pnPlanesLayout.setHorizontalGroup(
+            pnPlanesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnPlanesLayout.createSequentialGroup()
+                .addGap(2, 2, 2)
+                .addGroup(pnPlanesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnPlanesLayout.createSequentialGroup()
+                        .addComponent(lbTitlePlane)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btAddPlane))
+                    .addGroup(pnPlanesLayout.createSequentialGroup()
+                        .addComponent(lbTotalPlaneHead)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbTotalPlane)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbTotalPlaneTail)
+                        .addContainerGap())
+                    .addComponent(pnAllPlane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE)))
+        );
+        pnPlanesLayout.setVerticalGroup(
+            pnPlanesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnPlanesLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(pnPlanesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbTitlePlane)
+                    .addComponent(btAddPlane, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addComponent(pnAllPlane, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(8, 8, 8)
+                .addGroup(pnPlanesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbTotalPlaneHead)
+                    .addComponent(lbTotalPlane)
+                    .addComponent(lbTotalPlaneTail))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(addPlane))
-            .addComponent(jScrollPane3)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(addPlane))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
-                .addGap(10, 10, 10)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(displayTotalPlane)
-                    .addComponent(jLabel9))
-                .addContainerGap())
         );
 
-        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        pnMoreLugage.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel10.setFont(Styles.H2);
-        jLabel10.setForeground(Styles.GRAY_600);
-        jLabel10.setText("Hành lý bổ sung");
+        lbTitleMoreLuggage.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lbTitleMoreLuggage.setForeground(Styles.GRAY_600);
+        lbTitleMoreLuggage.setText("Hành lý bổ sung");
 
-        updateLanguage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-refresh-pri18.png"))); // NOI18N
-        updateLanguage.setText("Lưu sửa đổi");
+        btUpdateLuggage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-refresh-pri18.png"))); // NOI18N
+        btUpdateLuggage.setText("Lưu sửa đổi");
 
-        tableAllLanguage.setModel(new javax.swing.table.DefaultTableModel(
+        tbAllLugage.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -348,139 +428,145 @@ public class AirlinePlaneAD extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane4.setViewportView(tableAllLanguage);
-        if (tableAllLanguage.getColumnModel().getColumnCount() > 0) {
-            tableAllLanguage.getColumnModel().getColumn(0).setMinWidth(40);
-            tableAllLanguage.getColumnModel().getColumn(0).setMaxWidth(50);
+        pnAllLugage.setViewportView(tbAllLugage);
+        if (tbAllLugage.getColumnModel().getColumnCount() > 0) {
+            tbAllLugage.getColumnModel().getColumn(0).setMinWidth(40);
+            tbAllLugage.getColumnModel().getColumn(0).setMaxWidth(50);
         }
 
-        jLabel11.setFont(Styles.Micro);
-        jLabel11.setText("Có tất cả");
+        lbTotalOptionLugageHead.setFont(Styles.Micro);
+        lbTotalOptionLugageHead.setText("Có tất cả");
 
-        displayTotalOptionLanguage.setFont(Styles.Label);
-        displayTotalOptionLanguage.setText("?");
+        lbTotalOptionLugage.setFont(Styles.Label);
+        lbTotalOptionLugage.setText("?");
 
-        jLabel13.setFont(Styles.Micro);
-        jLabel13.setText("sự lựa chọn bổ sung");
+        lbTotalOptionLugageTail.setFont(Styles.Micro);
+        lbTotalOptionLugageTail.setText("sự lựa chọn bổ sung");
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addComponent(jLabel11)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(displayTotalOptionLanguage)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel13)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(updateLanguage))
+        javax.swing.GroupLayout pnMoreLugageLayout = new javax.swing.GroupLayout(pnMoreLugage);
+        pnMoreLugage.setLayout(pnMoreLugageLayout);
+        pnMoreLugageLayout.setHorizontalGroup(
+            pnMoreLugageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnMoreLugageLayout.createSequentialGroup()
+                .addGap(2, 2, 2)
+                .addGroup(pnMoreLugageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnMoreLugageLayout.createSequentialGroup()
+                        .addComponent(lbTitleMoreLuggage)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btUpdateLuggage))
+                    .addGroup(pnMoreLugageLayout.createSequentialGroup()
+                        .addComponent(lbTotalOptionLugageHead)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbTotalOptionLugage)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lbTotalOptionLugageTail)
+                        .addContainerGap())
+                    .addComponent(pnAllLugage, javax.swing.GroupLayout.Alignment.TRAILING)))
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(updateLanguage))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
-                .addGap(10, 10, 10)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(displayTotalOptionLanguage)
-                    .addComponent(jLabel13))
-                .addContainerGap())
-        );
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(14, 14, 14))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        pnMoreLugageLayout.setVerticalGroup(
+            pnMoreLugageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnMoreLugageLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(13, 13, 13))
+                .addGroup(pnMoreLugageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btUpdateLuggage, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbTitleMoreLuggage))
+                .addGap(12, 12, 12)
+                .addComponent(pnAllLugage, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(8, 8, 8)
+                .addGroup(pnMoreLugageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbTotalOptionLugage)
+                    .addComponent(lbTotalOptionLugageTail)
+                    .addComponent(lbTotalOptionLugageHead))
+                .addGap(24, 24, 24))
         );
 
-        jScrollPane1.setViewportView(jPanel3);
+        javax.swing.GroupLayout pnMainLayout = new javax.swing.GroupLayout(pnMain);
+        pnMain.setLayout(pnMainLayout);
+        pnMainLayout.setHorizontalGroup(
+            pnMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnMainLayout.createSequentialGroup()
+                .addGroup(pnMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(pnMoreLugage, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnPlanes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(24, 24, 24))
+        );
+        pnMainLayout.setVerticalGroup(
+            pnMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnMainLayout.createSequentialGroup()
+                .addGap(0, 0, 0)
+                .addComponent(pnPlanes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(pnMoreLugage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
+        );
+
+        pnMainBody.setViewportView(pnMain);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnAirlineInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addComponent(pnMainBody, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
+                .addComponent(pnPlaneDetail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(pnAirlineInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(0, 0, 0))
+                    .addComponent(pnMainBody, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(pnPlaneDetail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(24, 24, 24))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void deletePlaneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletePlaneActionPerformed
+    private void btDeletePlaneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeletePlaneActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_deletePlaneActionPerformed
+    }//GEN-LAST:event_btDeletePlaneActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addPlane;
-    private javax.swing.JComboBox<String> comboBoxTicketClass;
-    private javax.swing.JButton deleteAirline;
-    private javax.swing.JButton deletePlane;
-    private javax.swing.JTextArea displayAllSeat;
-    private javax.swing.JLabel displayPlaneID;
-    private javax.swing.JLabel displayPlaneName;
-    private javax.swing.JLabel displayTotalOptionLanguage;
-    private javax.swing.JLabel displayTotalPlane;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTable tableAllLanguage;
-    private javax.swing.JTable tableAllPlane;
+    private javax.swing.JButton btAddPlane;
+    private javax.swing.JButton btDeleteAirline;
+    private javax.swing.JButton btDeletePlane;
+    private javax.swing.JButton btUpdateAirline;
+    private javax.swing.JButton btUpdateLuggage;
+    private javax.swing.JButton btUpdatePlane;
+    private javax.swing.JComboBox<String> cbTicketClass;
+    private javax.swing.JLabel lbAirlineID;
+    private javax.swing.JLabel lbAirlineName;
+    private javax.swing.JLabel lbPlaneID;
+    private javax.swing.JLabel lbPlaneName;
+    private javax.swing.JLabel lbTicketClass;
+    private javax.swing.JLabel lbTitleMoreLuggage;
+    private javax.swing.JLabel lbTitlePlane;
+    private javax.swing.JLabel lbTotalOptionLugage;
+    private javax.swing.JLabel lbTotalOptionLugageHead;
+    private javax.swing.JLabel lbTotalOptionLugageTail;
+    private javax.swing.JLabel lbTotalPlane;
+    private javax.swing.JLabel lbTotalPlaneHead;
+    private javax.swing.JLabel lbTotalPlaneTail;
+    private javax.swing.JPanel pnAirlineInfo;
+    private javax.swing.JScrollPane pnAllLugage;
+    private javax.swing.JScrollPane pnAllPlane;
+    private javax.swing.JScrollPane pnAllSeat;
+    private javax.swing.JPanel pnMain;
+    private javax.swing.JScrollPane pnMainBody;
+    private javax.swing.JPanel pnMoreLugage;
+    private javax.swing.JPanel pnPlaneDetail;
+    private javax.swing.JPanel pnPlanes;
+    private javax.swing.JTable tbAllLugage;
+    private javax.swing.JTable tbAllPlane;
     private javax.swing.JTextField txtAirlineID;
     private javax.swing.JTextField txtAirlineName;
-    private javax.swing.JButton updateAirline;
-    private javax.swing.JButton updateLanguage;
-    private javax.swing.JButton updatePlane;
+    private javax.swing.JTextArea txtAllSeat;
     // End of variables declaration//GEN-END:variables
 }

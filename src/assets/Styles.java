@@ -25,6 +25,7 @@ import javax.swing.JTextField;
 import javax.swing.border.AbstractBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 import javax.swing.table.JTableHeader;
 
 /**
@@ -145,6 +146,14 @@ public class Styles {
         table.setBackground(WHITE);
         scrollPane.setBorder(new TextBubbleBorder(Styles.GRAY_200,1,12,0, true));
         scrollPane.setBackground(WHITE);
+        
+        scrollPane.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+            protected void configureScrollBarColors() {
+                this.thumbColor = GRAY_200;
+                this.scrollBarWidth = 6;
+                this.trackColor = GRAY_100;
+            }
+        });
     }
     
     public static void TopbarHeader(JLabel text){
