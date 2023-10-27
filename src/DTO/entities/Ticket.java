@@ -13,20 +13,21 @@ public class Ticket {
     protected String flightID;
     protected String gateID;
     protected String seatID;
-    protected int price;
-    protected int soldout;
+    protected int importPrice;
+    protected int sellingPrice;
+    protected int soldout = 0;
     protected int isDelete = 0;
 
     public Ticket() {
     }
 
-    public Ticket(String ticketID, String flightID, String gateID, String seatID, int price, int soldout) {
+    public Ticket(String ticketID, String flightID, String gateID, String seatID, int importPrice, int sellingPrice) {
         this.ticketID = ticketID;
         this.flightID = flightID;
         this.gateID = gateID;
         this.seatID = seatID;
-        this.price = price;
-        this.soldout = soldout;
+        this.importPrice = importPrice;
+        this.sellingPrice = sellingPrice;
     }
 
     public String getTicketID() {
@@ -45,8 +46,12 @@ public class Ticket {
         return seatID;
     }
 
-    public int getPrice() {
-        return price;
+    public int getImportPrice() {
+        return importPrice;
+    }
+
+    public int getSellingPrice() {
+        return sellingPrice;
     }
 
     public int getSoldout() {
@@ -73,8 +78,12 @@ public class Ticket {
         this.seatID = seatID;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public void setImportPrice(int importPrice) {
+        this.importPrice = importPrice;
+    }
+
+    public void setSellingPrice(int sellingPrice) {
+        this.sellingPrice = sellingPrice;
     }
 
     public void setSoldout(int soldout) {

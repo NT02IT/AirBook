@@ -179,7 +179,7 @@ public class TicketViews {
             seatsOnClass.put(className_currentTK, seats);
             
             Map<String, Integer> pricebyClass = new LinkedHashMap<>();
-            int price_currentTK = currentTicket.getPrice();
+            int price_currentTK = currentTicket.getImportPrice();
             pricebyClass.put(className_currentTK, price_currentTK);
             
             int quantity = 0;
@@ -215,7 +215,7 @@ public class TicketViews {
                         }
                     }
                     if(!haveClass){
-                        int price_otherTK = otherTicket.getPrice();
+                        int price_otherTK = otherTicket.getImportPrice();
                         classes.add(className_otherTK);
                         seats = new ArrayList<>();
                         seats.add(seatName_otherTK);

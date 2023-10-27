@@ -47,11 +47,11 @@ VALUES
 -- Insert into tickets
 GO
 INSERT INTO
-    tickets(Ticket_ID, Flight_ID, Gate_ID, Price, Seat_ID, Sold_out, IsDelete )
+    tickets(Ticket_ID, Flight_ID, Gate_ID, Seat_ID, Import_price, Selling_price, Sold_out, IsDelete )
 VALUES
-    ('TK0001', 'VN1001', 'SGN-D03', 1200000, 'VN-01-A1', 0, 0 ),
-    ('TK0002', 'VN1001', 'SGN-D03', 1200000, 'VN-01-A2', 0, 0 ),
-    ('TK0003', 'VJ1001', 'HAN-D03', 900000, 'VJ-03-A1', 0, 0 );
+    ('TK0001', 'VN1001', 'SGN-D03', 'VN-01-A1', 1200000, 1500000, 0, 0 ),
+    ('TK0002', 'VN1001', 'SGN-D03', 'VN-01-A2', 1200000, 1500000, 0, 0 ),
+    ('TK0003', 'VJ1001', 'HAN-D03', 'VJ-03-A1', 900000, 1000000, 0, 0 );
 
 -- Insert into promotions
 GO

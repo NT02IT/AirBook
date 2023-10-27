@@ -46,9 +46,10 @@ public class TicketDAO {
                 ticket.setFlightID(rs.getString(2));
                 ticket.setGateID(rs.getString(3));
                 ticket.setSeatID(rs.getString(4));
-                ticket.setPrice(rs.getInt(5));
-                ticket.setSoldout(rs.getInt(6));
-                ticket.setIsDelete(rs.getInt(7));
+                ticket.setImportPrice(rs.getInt(5));
+                ticket.setSellingPrice(rs.getInt(6));
+                ticket.setSoldout(rs.getInt(7));
+                ticket.setIsDelete(rs.getInt(8));
                 list.add(ticket);
             }
         } catch (SQLException ex) {
@@ -62,16 +63,17 @@ public class TicketDAO {
         String context = this.getClass().getName();
         connectDB.connect(context);
         try {
-            String sql = "INSERT INTO tickets(Ticket_ID, Flight_ID, Gate_ID, Seat_ID, Price, Sold_out, IsDelete) "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO tickets(Ticket_ID, Flight_ID, Gate_ID, Seat_ID, Import_price, Selling_price, Sold_out, IsDelete) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement pstmt = connectDB.conn.prepareStatement(sql);
             pstmt.setString(1, ticket.getTicketID());
             pstmt.setString(2, ticket.getFlightID());
             pstmt.setString(3, ticket.getGateID());
             pstmt.setString(4, ticket.getSeatID());
-            pstmt.setInt(5, ticket.getPrice());            
-            pstmt.setInt(6, ticket.getSoldout()); 
-            pstmt.setInt(7, ticket.getIsDelete()); 
+            pstmt.setInt(5, ticket.getImportPrice());   
+            pstmt.setInt(6, ticket.getSellingPrice());   
+            pstmt.setInt(7, ticket.getSoldout()); 
+            pstmt.setInt(8, ticket.getIsDelete()); 
             pstmt.executeUpdate();
             list.add(ticket);
             return true;
