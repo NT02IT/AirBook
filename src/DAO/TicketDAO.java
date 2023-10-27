@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  * @author agond
  */
 public class TicketDAO {
-    protected ArrayList<Ticket> list = new ArrayList<>();
+    protected static ArrayList<Ticket> list = new ArrayList<>();
     protected Ticket ticket = new Ticket();
     private ConnectDB connectDB;
 

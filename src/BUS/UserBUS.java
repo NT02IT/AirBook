@@ -27,16 +27,16 @@ public class UserBUS {
         quantity = list.size();
     }
 
-    public static ArrayList<Person> getList() {
+    public ArrayList<Person> getList() {
         return list;
     }
     
-    public static int getQuantity() {
+    public int getQuantity() {
         quantity = list.size();
         return quantity;
     }
     
-    public static User signIn(User user) throws NoSuchAlgorithmException{
+    public User signIn(User user) throws NoSuchAlgorithmException{
         user.setPwd(User.hashPassword(user.getPwd()));
         User temp;
         for(Person _user : list){
@@ -47,7 +47,7 @@ public class UserBUS {
         return null;
     }
     
-    public static boolean checkUnique(User user){
+    public boolean checkUnique(User user){
         User temp;
         for(Person _user : list){
             temp = (User)_user;
@@ -57,7 +57,7 @@ public class UserBUS {
         return true;
     }
     
-    public static void signUp(User user) throws NoSuchAlgorithmException, ClassNotFoundException, SQLException{
+    public void signUp(User user) throws NoSuchAlgorithmException, ClassNotFoundException, SQLException{
         user.setPwd(User.hashPassword(user.getPwd()));
         userDAO.create(user);
         list.add(user);  

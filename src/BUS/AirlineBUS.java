@@ -4,8 +4,8 @@
  */
 package BUS;
 
-import DAO.TicketDAO;
-import DTO.entities.Ticket;
+import DAO.AirlineDAO;
+import DTO.entities.Airline;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -14,18 +14,18 @@ import java.util.ArrayList;
  *
  * @author agond
  */
-public class TicketBUS {
-    protected static ArrayList<Ticket> list;
-    protected static TicketDAO ticketDAO;
+public class AirlineBUS {
+    protected static ArrayList<Airline> list;
+    protected static AirlineDAO airlineDAO;
     private static int quantity = 0;
 
-    public TicketBUS() throws ClassNotFoundException, SQLException, IOException {
-        ticketDAO = new TicketDAO();
-        list = new ArrayList<>(ticketDAO.getList());
+    public AirlineBUS() throws ClassNotFoundException, SQLException, IOException {
+        airlineDAO = new AirlineDAO();
+        list = new ArrayList<>(airlineDAO.getList());
         quantity = list.size();
     }
 
-    public ArrayList<Ticket> getList() {
+    public ArrayList<Airline> getList() {
         return list;
     }
     
@@ -34,10 +34,10 @@ public class TicketBUS {
         return quantity;
     }
     
-    public Ticket getObjectbyID(String ID){
-        for(Ticket ticket : list){
-            if(ID.equals(ticket.getTicketID()))
-                return ticket;
+    public Airline getObjectbyID(String ID){
+        for(Airline airline : list){
+            if(ID.equals(airline.getAirlineID()))
+                return airline;
         }
         return null;
     }

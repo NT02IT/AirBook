@@ -27,16 +27,16 @@ public class SeatBUS {
         quantity = list.size();
     }
 
-    public static ArrayList<Seat> getList() {
+    public ArrayList<Seat> getList() {
         return list;
     }
     
-    public static int getQuantity() {
+    public int getQuantity() {
         quantity = list.size();
         return quantity;
     }
     
-    public static Seat getObjectbyID(String ID){
+    public Seat getObjectbyID(String ID){
         for(Seat seat : list){
             if(ID.equals(seat.getSeatID()))
                 return seat;

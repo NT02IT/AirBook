@@ -26,16 +26,16 @@ public class FlightBUS {
         quantity = list.size();
     }
 
-    public static ArrayList<Flight> getList() {
+    public ArrayList<Flight> getList() {
         return list;
     }
     
-    public static int getQuantity() {
+    public int getQuantity() {
         quantity = list.size();
         return quantity;
     }
     
-    public static Flight getObjectbyID(String ID){
+    public Flight getObjectbyID(String ID){
         for(Flight flight : list){
             if(ID.equals(flight.getFlightID()))
                 return flight;

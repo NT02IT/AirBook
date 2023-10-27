@@ -4,7 +4,10 @@
  */
 package application;
 
+import DTO.entities.User;
+import GUI.IndexEUC;
 import GUI.SigninGUI;
+import GUI.body_panel.BuyTicketEUC;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -18,8 +21,11 @@ public class Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws SQLException, ClassNotFoundException, IOException {
-        SigninGUI signinGUI = new SigninGUI();
-        signinGUI.setVisible(true);
+//        SigninGUI signinGUI = new SigninGUI();
+//        signinGUI.setVisible(true);
+
+        IndexEUC indexEUC = new IndexEUC(new User());
+        indexEUC.setVisible(true);
     }
     
 }

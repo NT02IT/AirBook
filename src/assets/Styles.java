@@ -14,8 +14,6 @@ import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.geom.Path2D;
 import java.awt.geom.RoundRectangle2D;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -24,12 +22,9 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.AbstractBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import javax.swing.plaf.metal.MetalLookAndFeel;
 import javax.swing.table.JTableHeader;
 
 /**
@@ -149,6 +144,7 @@ public class Styles {
         table.setFont(Styles.Body);      
         table.setBackground(WHITE);
         scrollPane.setBorder(new TextBubbleBorder(Styles.GRAY_200,1,12,0, true));
+        scrollPane.setBackground(WHITE);
     }
     
     public static void TopbarHeader(JLabel text){
@@ -188,9 +184,13 @@ public class Styles {
         radio.setFont(Body);
         radio.setForeground(GRAY_600);
         radio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        group.add(radio);
+        try {
+            group.add(radio);
+        } catch (java.lang.NullPointerException e) {
+        }        
         radio.setBorderPainted(false);
         radio.setFocusPainted(false);
+        radio.setBackground(WHITE);
     }
     
     public static void ComboBox(JComboBox comboBox){

@@ -82,7 +82,7 @@ public class SidebarEUC extends javax.swing.JPanel implements ISidebar{
     }
     
     @Override
-    public void navigateTo(Order siteOrder){
+    public void navigateTo(Order siteOrder) throws ClassNotFoundException, SQLException, IOException{
         ((IndexEUC)frParrent).SiteOrder(siteOrder);
     }
     
@@ -298,22 +298,54 @@ public class SidebarEUC extends javax.swing.JPanel implements ISidebar{
 
     private void btBuyTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btBuyTicketActionPerformed
         this.siteOrder = Order.BUY_TICKET;
-        navigateTo(siteOrder);
+        try {
+            navigateTo(siteOrder);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SidebarEUC.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(SidebarEUC.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(SidebarEUC.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btBuyTicketActionPerformed
 
     private void btMyTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMyTicketActionPerformed
         this.siteOrder = Order.MY_TICKET;
-        navigateTo(siteOrder);
+        try {
+            navigateTo(siteOrder);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SidebarEUC.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(SidebarEUC.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(SidebarEUC.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btMyTicketActionPerformed
 
     private void btPromoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPromoActionPerformed
         this.siteOrder = Order.PROMOTION;
-        navigateTo(siteOrder);
+        try {
+            navigateTo(siteOrder);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SidebarEUC.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(SidebarEUC.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(SidebarEUC.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btPromoActionPerformed
 
     private void btAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAccountActionPerformed
         this.siteOrder = Order.ACCOUNT;
-        navigateTo(siteOrder);
+        try {
+            navigateTo(siteOrder);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SidebarEUC.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(SidebarEUC.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(SidebarEUC.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btAccountActionPerformed
 
     private void btLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btLogoutActionPerformed

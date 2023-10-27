@@ -31,7 +31,7 @@ public class TicketImportAD extends javax.swing.JFrame {
         
         this.getContentPane().setBackground(Styles.WHITE);
         pnDetail.setBackground(this.getContentPane().getBackground());
-        pnTicketList.setBackground(this.getContentPane().getBackground());
+//        pnTicketList.setBackground(this.getContentPane().getBackground());
         
         lbTitle.setFont(Styles.H2);
         lbTitle.setForeground(Styles.GRAY_600);

@@ -4,11 +4,9 @@
  */
 package BUS;
 
-import static BUS.UserBUS.userDAO;
 import DAO.AirportDAO;
 import DAO.UserDAO;
 import DTO.entities.Airport;
-import DTO.entities.Person;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -23,21 +21,21 @@ public class AirportBUS {
     private static int quantity = 0;
     
     public AirportBUS() throws ClassNotFoundException, SQLException, IOException {
-        userDAO = new UserDAO();
+        airportDAO = new AirportDAO();
         list = new ArrayList<>(airportDAO.getList());
         quantity = list.size();
     }
     
-    public static ArrayList<Airport> getList() {
+    public ArrayList<Airport> getList() {
         return list;
     }
     
-    public static int getQuantity() {
+    public int getQuantity() {
         quantity = list.size();
         return quantity;
     }
     
-    public static Airport getObjectbyID(String ID){
+    public Airport getObjectbyID(String ID){
         for(Airport airport : list){
             if(ID.equals(airport.getAirportID()))
                 return airport;

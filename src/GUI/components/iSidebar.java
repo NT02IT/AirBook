@@ -5,6 +5,8 @@
 package GUI.components;
 
 import assets.Site.Order;
+import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  *
@@ -14,5 +16,5 @@ public interface ISidebar {
     void style();
     void siteOrder(Order siteOrder);
     void resetNavItemBG();
-    void navigateTo(Order siteOrder);
+    void navigateTo(Order siteOrder) throws ClassNotFoundException, SQLException, IOException;
 }

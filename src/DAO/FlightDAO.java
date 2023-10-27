@@ -40,7 +40,7 @@ public class FlightDAO {
         String context = this.getClass().getName();
         connectDB.connect(context);
         try {
-            String sql = "Select * from users";
+            String sql = "Select * from flights";
             Statement stmt = connectDB.conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while(rs.next()){
@@ -49,9 +49,10 @@ public class FlightDAO {
                 flight.setFlyingFrom(rs.getString(2));
                 flight.setFlyingTo(rs.getString(3));
                 flight.setHoursFly(rs.getInt(4));
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm-ss.S");
-                LocalDateTime departure = LocalDateTime.parse(rs.getString(5), formatter);
-                flight.setDepartureFlight(departure);
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm-ss");
+//                LocalDateTime departure = LocalDateTime.parse(rs.getString(5), formatter);
+//                flight.setDepartureFlight(departure);
+                flight.setDepartureFlight(rs.getTimestamp(5).toLocalDateTime());
                 list.add(flight);
             }
         } catch (SQLException ex) {

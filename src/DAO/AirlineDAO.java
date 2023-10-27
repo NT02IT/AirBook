@@ -4,7 +4,7 @@
  */
 package DAO;
 
-import DTO.entities.Seat;
+import DTO.entities.Airline;
 import connection.ConnectDB;
 import java.io.IOException;
 import java.sql.PreparedStatement;
@@ -19,56 +19,54 @@ import java.util.logging.Logger;
  *
  * @author agond
  */
-public class SeatDAO {
-    protected static ArrayList<Seat> list = new ArrayList<>();
-    protected Seat seat = new Seat();
+public class AirlineDAO {
+    protected ArrayList<Airline> list = new ArrayList<>();
+    protected Airline airline = new Airline();
     private ConnectDB connectDB;
 
-    public SeatDAO() throws ClassNotFoundException, SQLException, IOException {
+    public AirlineDAO() throws ClassNotFoundException, SQLException, IOException {
         connectDB = new ConnectDB();
         read();
     }
 
-    public ArrayList<Seat> getList() {
+    public ArrayList<Airline> getList() {
         return list;
     }
 
-    public ArrayList<Seat> read() throws IOException, ClassNotFoundException, SQLException{
+    public ArrayList<Airline> read() throws IOException, ClassNotFoundException, SQLException{
         String context = this.getClass().getName();
         connectDB.connect(context);
         try {
-            String sql = "Select * from seats";
+            String sql = "Select * from airlines";
             Statement stmt = connectDB.conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while(rs.next()){
-                Seat seat = new Seat();
-                seat.setSeatID(rs.getString(1));
-                seat.setTicketClassID(rs.getString(2));
-                seat.setSeatName(rs.getString(3));
-                list.add(seat);
+                Airline airline = new Airline();
+                airline.setAirlineID(rs.getString(1));
+                airline.setAirlineName(rs.getString(2));
+                list.add(airline);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(SeatDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AirlineDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         connectDB.disconnect(context);
         return list;
     }
     
-    public boolean create(Seat seat) throws ClassNotFoundException, SQLException {
+    public boolean create(Airline airline) throws ClassNotFoundException, SQLException {
         String context = this.getClass().getName();
         connectDB.connect(context);
         try {
-            String sql = "INSERT INTO seats(Seat_ID, Ticket_class_ID, Seat_name) "
-                    + "VALUES (?, ?, ?)";
+            String sql = "INSERT INTO airlines(Airline_ID, Airline_name) "
+                    + "VALUES (?, ?)";
             PreparedStatement pstmt = connectDB.conn.prepareStatement(sql);
-            pstmt.setString(1, seat.getSeatID());
-            pstmt.setString(2, seat.getTicketClassID());
-            pstmt.setString(3, seat.getSeatName());
+            pstmt.setString(1, airline.getAirlineID());
+            pstmt.setString(2, airline.getAirlineName());
             pstmt.executeUpdate();
-            list.add(seat);
+            list.add(airline);
             return true;
         } catch (SQLException ex) {
-            Logger.getLogger(SeatDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AirlineDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         connectDB.disconnect(context);
         return false;

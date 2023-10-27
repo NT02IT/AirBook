@@ -7,6 +7,10 @@ package GUI.components;
 import GUI.IndexEUC;
 import assets.Site.Order;
 import assets.Styles;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
@@ -121,7 +125,15 @@ public class TopbarEUC extends javax.swing.JPanel implements ITopbar{
 
     private void btCTAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCTAActionPerformed
         this.siteOrder = Order.MY_TICKET;
-        ((IndexEUC)frParrent).SiteOrder(siteOrder);    
+        try {    
+            ((IndexEUC)frParrent).SiteOrder(siteOrder);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TopbarEUC.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(TopbarEUC.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(TopbarEUC.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.siteOrder(siteOrder);
     }//GEN-LAST:event_btCTAActionPerformed
 

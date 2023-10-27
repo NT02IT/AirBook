@@ -42,9 +42,9 @@ public class ConnectDB{
     }
     
     public void connect(String context) throws SQLException {
-        conn = DriverManager.getConnection(strConnect);
+        conn = DriverManager.getConnection(strConnect);        
         try {
-            System.out.print("Database is connected by " + context + "\n");
+            System.out.print("Database: Connected by " + context + "\n");
         } catch (java.lang.NullPointerException e) {
         }        
     }
@@ -52,7 +52,8 @@ public class ConnectDB{
     public void disconnect(String context) throws SQLException {
         conn.close();
         try {
-            System.out.println("Disconnected Database by " + context + "\n");
+            System.out.println("Database: Disconnected by " + context + "\n");
+            System.out.println("--------------------------------------------------------");
         } catch (java.lang.NullPointerException e) {
         }        
     }

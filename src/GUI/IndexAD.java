@@ -14,6 +14,8 @@ import GUI.body_panel.StatisticAD;
 import GUI.body_panel.TicketAD;
 import assets.Site.Order;
 import java.awt.Toolkit;
+import java.io.IOException;
+import java.sql.SQLException;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
@@ -38,7 +40,7 @@ public class IndexAD extends javax.swing.JFrame implements IIndex{
         this.setTitle("Airbook - Thống kê");
     }
     
-    public void SiteOrder(Order siteOrder){
+    public void SiteOrder(Order siteOrder) throws ClassNotFoundException, SQLException, IOException{
         this.siteOrder = siteOrder;
         if(siteOrder == Order.STATISTIC){
             remove(pnBody);

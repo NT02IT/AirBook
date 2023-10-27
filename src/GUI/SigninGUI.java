@@ -312,7 +312,16 @@ public class SigninGUI extends javax.swing.JFrame {
             
             if(user.getRoleID().equals("ROLE3")){
                 this.setVisible(false);
-                IndexEUC indexEUC = new IndexEUC(user);
+                IndexEUC indexEUC = null;
+                try {
+                    indexEUC = new IndexEUC(user);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(SigninGUI.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(SigninGUI.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(SigninGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 indexEUC.setVisible(true);
             } else {
                 this.setVisible(false);

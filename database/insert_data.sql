@@ -5,21 +5,21 @@ GO
 INSERT INTO
     users(User_ID, Role_ID, Username, Pwd, Real_name, DoB, Gender, Nation, User_address, Phone_number, CCCD, Email, Date_create)
 VALUES
-	('AC00000000', 'ROLE0', 'root', 'z/mGwlDDBsqBfqeAA/IIOwVgDMGd8B0/oq8Vi/uEiuw=', 'Root', '2023-10-05', 'Nam', 'Việt Nam', 'Việt Nam', '0327531105', '000000000000', 'root@airbook.com', '2023-10-05 10:00:00'),
-	('AC00000001', 'ROLE1', 'mysV', 'z/mGwlDDBsqBfqeAA/IIOwVgDMGd8B0/oq8Vi/uEiuw=', 'Hà Quốc Vĩ', '2002-01-17', 'Nam', 'Việt Nam', 'Việt Nam', '0320410607', '17524729102', 'quocvi1701@gmail.com', '2023-10-05 10:00:00'),
-	('AC00000002', 'ROLE1', 'lowtee', 'z/mGwlDDBsqBfqeAA/IIOwVgDMGd8B0/oq8Vi/uEiuw=', 'Nguyễn Anh Tuấn', '2002-11-19', 'Nam', 'Việt Nam', 'Việt Nam', '0327531105', '738291648291', 'lowtee.vn@gmail.vn', '2023-10-05 10:00:00'),
-	('AC55351285', 'ROLE2', 'bossVN', 'z/mGwlDDBsqBfqeAA/IIOwVgDMGd8B0/oq8Vi/uEiuw=', 'GĐ VN', '1985-09-12', 'Nam', 'Việt Nam', 'Việt Nam', '0327531105', '762846592016', 'bossVN@airbook.com', '2023-10-05 10:00:00'),
-	('AC25716701', 'ROLE3', 'maito', 'z/mGwlDDBsqBfqeAA/IIOwVgDMGd8B0/oq8Vi/uEiuw=', 'Lê Thái Vi', '2002-01-17', 'Nam', 'Việt Nam', 'Việt Nam', '0327531105', '762846592016', 'maito@gmail.com', '2023-10-05 10:00:00'),
-	('AC26289183', 'ROLE3', 'khachhang', 'z/mGwlDDBsqBfqeAA/IIOwVgDMGd8B0/oq8Vi/uEiuw=', 'Khách hàng', '1985-09-12', 'Nam', 'Việt Nam', 'Việt Nam', '0327531105', '762846592016', 'bossVN@airbook.com', '2023-10-05 10:00:00');    
+	('AC00000000', 'ROLE0', 'root', 'z/mGwlDDBsqBfqeAA/IIOwVgDMGd8B0/oq8Vi/uEiuw=', N'Root', '2023-10-05', N'Nam', N'Việt Nam', N'Việt Nam', '0327531105', '000000000000', 'root@airbook.com', '2023-10-05 10:00:00'),
+	('AC00000001', 'ROLE1', 'mysV', 'z/mGwlDDBsqBfqeAA/IIOwVgDMGd8B0/oq8Vi/uEiuw=', N'Hà Quốc Vĩ', '2002-01-17', N'Nam', N'Việt Nam', N'Việt Nam', '0320410607', '17524729102', 'quocvi1701@gmail.com', '2023-10-05 10:00:00'),
+	('AC00000002', 'ROLE1', 'lowtee', 'z/mGwlDDBsqBfqeAA/IIOwVgDMGd8B0/oq8Vi/uEiuw=', N'Nguyễn Anh Tuấn', '2002-11-19', N'Nam', N'Việt Nam', N'Việt Nam', '0327531105', '738291648291', 'lowtee.vn@gmail.vn', '2023-10-05 10:00:00'),
+	('AC55351285', 'ROLE2', 'bossVN', 'z/mGwlDDBsqBfqeAA/IIOwVgDMGd8B0/oq8Vi/uEiuw=', N'GĐ VN', '1985-09-12', N'Nam', N'Việt Nam', N'Việt Nam', '0327531105', '762846592016', 'bossVN@airbook.com', '2023-10-05 10:00:00'),
+	('AC25716701', 'ROLE3', 'maito', 'z/mGwlDDBsqBfqeAA/IIOwVgDMGd8B0/oq8Vi/uEiuw=', N'Lê Thái Vi', '2002-01-17', N'Nam', N'Việt Nam', N'Việt Nam', '0327531105', '762846592016', 'maito@gmail.com', '2023-10-05 10:00:00'),
+	('AC26289183', 'ROLE3', 'khachhang', 'z/mGwlDDBsqBfqeAA/IIOwVgDMGd8B0/oq8Vi/uEiuw=', N'Khách hàng', '1985-09-12', N'Nam', N'Việt Nam', N'Việt Nam', '0327531105', '762846592016', 'bossVN@airbook.com', '2023-10-05 10:00:00');    
 
 -- Insert into receivers
 GO
 INSERT INTO
     receivers(Receiver_ID, Receiver_name, Gender, DoB, Receiver_address, Nation, Phone_number, CCCD, Email, User_ID)
 VALUES
-	('REC55351285', 'Hà Quốc Vĩ', 'Nam', '2002-01-17', 'Hiệp Bình Chánh, Thủ Đức', 'Việt Nam', '0320410607', '17524729102', 'quocvi1701@gmail.com', 'AC0100'),
-	('REC25716701', 'Nguyễn Anh Tuấn', 'Nam', '2002-11-19', 'Hiệp Bình Chánh, Thủ Đức', 'Việt Nam', '0320410607', '17524729102', 'lowtee@gmail.com', 'AC0101'),
-	('REC26289183', 'Lê Thái Vi', 'Nam', '2002-01-15', 'Quận 10', 'Việt Nam', '0320410607', '17524729102', 'maito@gmail.com', 'AC0100');
+	('REC55351285', N'Hà Quốc Vĩ', N'Nam', '2002-01-17', N'Hiệp Bình Chánh, Thủ Đức', N'Việt Nam', '0320410607', '17524729102', 'quocvi1701@gmail.com', 'AC25716701'),
+	('REC25716701', N'Nguyễn Anh Tuấn', N'Nam', '2002-11-19', N'Hiệp Bình Chánh, Thủ Đức', N'Việt Nam', '0320410607', '17524729102', 'lowtee@gmail.com', 'AC25716701'),
+	('REC26289183', N'Lê Thái Vi', N'Nam', '2002-01-15', N'Quận 10', N'Việt Nam', '0320410607', '17524729102', 'maito@gmail.com', 'AC26289183');
 
 -- Insert into seats
 GO

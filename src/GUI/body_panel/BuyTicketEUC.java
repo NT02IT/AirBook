@@ -4,7 +4,22 @@
  */
 package GUI.body_panel;
 
+import BUS.AirportBUS;
+import BUS.TicketBUS;
+import DTO.entities.Airport;
+import DTO.entities.Ticket;
 import DTO.entities.User;
+import DTO.views.TicketViews;
+import DTO.views.TicketViews.TicketView;
+import assets.Styles;
+import assets.TextBubbleBorder;
+import java.awt.Color;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import javax.swing.JCheckBox;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -12,17 +27,89 @@ import DTO.entities.User;
  */
 public class BuyTicketEUC extends javax.swing.JPanel {
     private User user;
+    
+    private TicketViews ticketViews;
+    private TicketBUS ticketBUS;
+    private ArrayList<Ticket> listTicket;
+    private ArrayList<TicketView> listTicketView;
+    private DefaultTableModel ticketsModel;
     /**
      * Creates new form BuyTicketEUC
      */
-    public BuyTicketEUC() {
+    public BuyTicketEUC() throws ClassNotFoundException, SQLException, IOException {
         initComponents();
+        style();
+        initTickets();
+        initProvine();
     }
     
-    public BuyTicketEUC(User user) {
+    public BuyTicketEUC(User user) throws ClassNotFoundException, SQLException, IOException {
         this.user = user;
         initComponents();
+        style();
+        initTickets();
+        initProvine();
     }
+    
+    public void style(){
+        TextBubbleBorder border = new TextBubbleBorder(Color.yellow, 0, 12, 0, true);
+        pnSearch.setBorder(border);
+        Styles.FormLabel(lbFlyingFrom);
+        Styles.ComboBox(cbFlyingFrom);
+        Styles.FormLabel(lbFlyingTo);
+        Styles.ComboBox(cbFlyingTo);
+        Styles.FormLabel(lbDepartureFlight);
+        Styles.FormTextFeild(txtDepartureFlight);
+        Styles.ButtonSecondary(btSearch);
+        Styles.FormRadio(rdoAllTicket, null);
+        Styles.Table(tbTikets, pnTickets);
+        
+        lbTitle.setFont(Styles.H2);
+        lbTitle.setForeground(Styles.GRAY_600);
+        lbTicketCount.setFont(Styles.Body);
+        lbTicketCount.setForeground(Styles.GRAY_600);
+        lbFlyingFrom.setForeground(Styles.WHITE);
+        lbFlyingTo.setForeground(Styles.WHITE);
+        lbDepartureFlight.setForeground(Styles.WHITE);
+    }
+    
+    public void initTickets() throws ClassNotFoundException, SQLException, IOException{
+        ticketBUS = new TicketBUS();
+        listTicket = ticketBUS.getList();
+        ticketViews = new TicketViews(listTicket);
+        listTicketView = ticketViews.getList();
+        
+        ticketsModel = (DefaultTableModel) tbTikets.getModel();
+        
+        int stt = 1;
+        String airline, flyingFrom, flyingTo, remain;
+        LocalDateTime departureFlight;
+        int hoursFly;
+        
+        for (TicketView ticketView : listTicketView){
+            airline = ticketView.getAirline();
+            flyingFrom = ticketView.getFlyingFrom();
+            flyingTo = ticketView.getFlyingTo();
+            remain = ticketView.getRemain() + "/" + ticketView.getQuantity();
+            departureFlight = ticketView.getDepartureFlight();
+            hoursFly = ticketView.getHoursFly();
+            ticketsModel.addRow(new Object[]{stt++, airline, flyingFrom, flyingTo, departureFlight, hoursFly, remain});
+        }
+        
+        int ticketCount = 0;
+        for(TicketView item : listTicketView){
+            ticketCount += item.getQuantity();
+        }
+        lbTicketCount.setText("Có tất cả " + ticketCount + " vé");
+    }
+    
+    public void initProvine() throws ClassNotFoundException, SQLException, IOException{
+        AirportBUS airportBUS = new AirportBUS();
+        for(Airport airport : airportBUS.getList()){
+            cbFlyingFrom.addItem(airport.getProvince());
+            cbFlyingTo.addItem(airport.getProvince());
+        }
+    }    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -33,21 +120,217 @@ public class BuyTicketEUC extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane = new javax.swing.JScrollPane();
+        pnMainBody2 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        pnSearch = new javax.swing.JPanel();
+        lbFlyingFrom = new javax.swing.JLabel();
+        cbFlyingFrom = new javax.swing.JComboBox<>();
+        cbFlyingTo = new javax.swing.JComboBox<>();
+        lbFlyingTo = new javax.swing.JLabel();
+        lbDepartureFlight = new javax.swing.JLabel();
+        txtDepartureFlight = new javax.swing.JTextField();
+        btSearch = new javax.swing.JButton();
+        rdoAllTicket = new javax.swing.JRadioButton();
+        lbTitle = new javax.swing.JLabel();
+        pnTickets = new javax.swing.JScrollPane();
+        tbTikets = new javax.swing.JTable();
+        lbTicketCount = new javax.swing.JLabel();
+
         setBackground(new java.awt.Color(153, 255, 153));
+
+        jScrollPane.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane.setBorder(null);
+        jScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        pnMainBody2.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel9.setBackground(new java.awt.Color(255, 102, 51));
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/image/ticketbaner.png"))); // NOI18N
+
+        pnSearch.setBackground(new java.awt.Color(27, 124, 148));
+
+        lbFlyingFrom.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbFlyingFrom.setForeground(new java.awt.Color(255, 255, 255));
+        lbFlyingFrom.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/info-flight-from-white20.png"))); // NOI18N
+        lbFlyingFrom.setText("Bay từ");
+
+        cbFlyingFrom.setBorder(null);
+
+        cbFlyingTo.setBorder(null);
+
+        lbFlyingTo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbFlyingTo.setForeground(new java.awt.Color(255, 255, 255));
+        lbFlyingTo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/info-flight-to-white20.png"))); // NOI18N
+        lbFlyingTo.setText("Bay đến");
+
+        lbDepartureFlight.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbDepartureFlight.setForeground(new java.awt.Color(255, 255, 255));
+        lbDepartureFlight.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/info-time-white20.png"))); // NOI18N
+        lbDepartureFlight.setText("Ngày khởi hành");
+
+        txtDepartureFlight.setBorder(null);
+
+        btSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-search-pri18.png"))); // NOI18N
+        btSearch.setText("Tìm kiếm");
+
+        javax.swing.GroupLayout pnSearchLayout = new javax.swing.GroupLayout(pnSearch);
+        pnSearch.setLayout(pnSearchLayout);
+        pnSearchLayout.setHorizontalGroup(
+            pnSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnSearchLayout.createSequentialGroup()
+                .addGroup(pnSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(pnSearchLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnSearchLayout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addGroup(pnSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbFlyingFrom, 0, 127, Short.MAX_VALUE)
+                            .addComponent(lbFlyingFrom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(12, 12, 12)
+                        .addGroup(pnSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cbFlyingTo, 0, 127, Short.MAX_VALUE)
+                            .addComponent(lbFlyingTo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbDepartureFlight, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtDepartureFlight))))
+                .addGap(24, 24, 24))
+        );
+        pnSearchLayout.setVerticalGroup(
+            pnSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnSearchLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(pnSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbFlyingTo, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lbDepartureFlight, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lbFlyingFrom))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(cbFlyingFrom, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                    .addComponent(cbFlyingTo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                    .addComponent(txtDepartureFlight, javax.swing.GroupLayout.Alignment.LEADING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
+        );
+
+        rdoAllTicket.setText("Hiển thị tất cả vé");
+
+        lbTitle.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lbTitle.setText("Danh sách vé");
+
+        tbTikets.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "STT", "Hãng bay", "Ga đi", "Ga đến", "Khởi hành", "Thời gian bay", "Còn lại"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        pnTickets.setViewportView(tbTikets);
+        if (tbTikets.getColumnModel().getColumnCount() > 0) {
+            tbTikets.getColumnModel().getColumn(0).setMinWidth(46);
+            tbTikets.getColumnModel().getColumn(0).setMaxWidth(46);
+            tbTikets.getColumnModel().getColumn(4).setMinWidth(132);
+            tbTikets.getColumnModel().getColumn(4).setMaxWidth(132);
+            tbTikets.getColumnModel().getColumn(5).setMinWidth(106);
+            tbTikets.getColumnModel().getColumn(5).setMaxWidth(106);
+            tbTikets.getColumnModel().getColumn(6).setMinWidth(72);
+            tbTikets.getColumnModel().getColumn(6).setMaxWidth(72);
+            tbTikets.getColumnModel().getColumn(6).setCellRenderer(null);
+        }
+
+        lbTicketCount.setText("Có tất cả 20 vé");
+
+        javax.swing.GroupLayout pnMainBody2Layout = new javax.swing.GroupLayout(pnMainBody2);
+        pnMainBody2.setLayout(pnMainBody2Layout);
+        pnMainBody2Layout.setHorizontalGroup(
+            pnMainBody2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnMainBody2Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(pnMainBody2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnMainBody2Layout.createSequentialGroup()
+                        .addComponent(lbTicketCount)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnMainBody2Layout.createSequentialGroup()
+                        .addGroup(pnMainBody2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(pnTickets)
+                            .addGroup(pnMainBody2Layout.createSequentialGroup()
+                                .addComponent(lbTitle)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(rdoAllTicket))
+                            .addGroup(pnMainBody2Layout.createSequentialGroup()
+                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(20, 20, 20)
+                                .addComponent(pnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(24, 24, 24))))
+        );
+        pnMainBody2Layout.setVerticalGroup(
+            pnMainBody2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnMainBody2Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(pnMainBody2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(20, 20, 20)
+                .addGroup(pnMainBody2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rdoAllTicket)
+                    .addComponent(lbTitle))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pnTickets, javax.swing.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
+                .addGap(8, 8, 8)
+                .addComponent(lbTicketCount)
+                .addGap(24, 24, 24))
+        );
+
+        jScrollPane.setViewportView(pnMainBody2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 697, Short.MAX_VALUE)
+            .addComponent(jScrollPane)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 522, Short.MAX_VALUE)
+            .addComponent(jScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btSearch;
+    private javax.swing.JComboBox<String> cbFlyingFrom;
+    private javax.swing.JComboBox<String> cbFlyingTo;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane;
+    private javax.swing.JLabel lbDepartureFlight;
+    private javax.swing.JLabel lbFlyingFrom;
+    private javax.swing.JLabel lbFlyingTo;
+    private javax.swing.JLabel lbTicketCount;
+    private javax.swing.JLabel lbTitle;
+    private javax.swing.JPanel pnMainBody2;
+    private javax.swing.JPanel pnSearch;
+    private javax.swing.JScrollPane pnTickets;
+    private javax.swing.JRadioButton rdoAllTicket;
+    private javax.swing.JTable tbTikets;
+    private javax.swing.JTextField txtDepartureFlight;
     // End of variables declaration//GEN-END:variables
 }

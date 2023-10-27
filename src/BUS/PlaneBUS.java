@@ -4,10 +4,10 @@
  */
 package BUS;
 
-import DAO.TicketClassDAO;
+import DAO.PlaneDAO;
 import DAO.TicketDAO;
+import DTO.entities.Plane;
 import DTO.entities.Ticket;
-import DTO.entities.TicketClass;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,18 +16,18 @@ import java.util.ArrayList;
  *
  * @author agond
  */
-public class TicketClassBUS {
-    protected static ArrayList<TicketClass> list;
-    protected static TicketClassDAO ticketClassDAO;
+public class PlaneBUS {
+    protected static ArrayList<Plane> list;
+    protected static PlaneDAO planeDAO;
     private static int quantity = 0;
 
-    public TicketClassBUS() throws ClassNotFoundException, SQLException, IOException {
-        ticketClassDAO = new TicketClassDAO();
-        list = new ArrayList<>(ticketClassDAO.getList());
+    public PlaneBUS() throws ClassNotFoundException, SQLException, IOException {
+        planeDAO = new PlaneDAO();
+        list = new ArrayList<>(planeDAO.getList());
         quantity = list.size();
     }
 
-    public ArrayList<TicketClass> getList() {
+    public ArrayList<Plane> getList() {
         return list;
     }
     
@@ -36,10 +36,10 @@ public class TicketClassBUS {
         return quantity;
     }
     
-    public TicketClass getObjectbyID(String ID){
-        for(TicketClass ticketClass : list){
-            if(ID.equals(ticketClass.getTicketClassID()))
-                return ticketClass;
+    public Plane getObjectbyID(String ID){
+        for(Plane plane : list){
+            if(ID.equals(plane.getPlaneID()))
+                return plane;
         }
         return null;
     }

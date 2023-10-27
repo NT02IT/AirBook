@@ -6,8 +6,9 @@ USE AIRBOOK;
 GO
 CREATE TABLE actions (
     Action_ID varchar(20) NOT NULL,
-    Action_name nvarchar(50) NOT NULL,
-	Info nvarchar(200),
+    Action_name nvarchar(MAX) NOT NULL,
+	Info nvarchar(MAX),
+	IsDelete bit,
     PRIMARY KEY (Action_ID)
 );
 
@@ -15,7 +16,8 @@ CREATE TABLE actions (
 GO
 CREATE TABLE roles (
     Role_ID varchar(20) NOT NULL,
-    Role_name nvarchar(50) NOT NULL,
+    Role_name nvarchar(200) NOT NULL,
+	IsDelete bit,
     PRIMARY KEY (Role_ID)
 );
 
@@ -30,6 +32,7 @@ CREATE TABLE permission (
 	Per_view bit NOT NULL,
 	Per_edit bit NOT NULL,
 	Per_delete bit NOT NULL,
+	IsDelete bit,
     PRIMARY KEY (Per_ID),
 	FOREIGN KEY(Role_ID) REFERENCES roles(Role_ID),
 	FOREIGN KEY(Action_ID) REFERENCES actions(Action_ID)
@@ -41,21 +44,20 @@ CREATE TABLE users (
     User_ID varchar(20) NOT NULL,
     Role_ID varchar(20) NOT NULL,
 	Username varchar(20) NOT NULL,
-	Pwd varchar(20) NOT NULL, 
+	Pwd varchar(MAX) NOT NULL, 
 	Real_name nvarchar(50) NOT NULL,
 	DoB date NOT NULL, 
 	Gender nvarchar(10) NOT NULL,
 	Nation nvarchar(20) NOT NULL, 
-	User_address nvarchar(50) NOT NULL,
+	User_address nvarchar(100) NOT NULL,
 	Phone_number varchar(11) NOT NULL,
 	CCCD varchar(12) NOT NULL,
 	Email varchar(50) NOT NULL,
 	Date_create datetime NOT NULL,
+	IsDelete bit,
 	PRIMARY KEY (User_ID),
 	FOREIGN KEY(Role_ID) REFERENCES roles(Role_ID)
 );
-GO
-ALTER TABLE AIRBOOK.dbo.users ALTER COLUMN Pwd VARCHAR(MAX);
 
 -- Table structure for table receivers
 GO
@@ -64,23 +66,22 @@ CREATE TABLE receivers (
 	Receiver_name nvarchar(50) NOT NULL,
 	Gender nvarchar(10) NOT NULL,
 	DoB date NOT NULL, 
-	Receiver_address nvarchar(50) NOT NULL,
+	Receiver_address nvarchar(100) NOT NULL,
 	Nation nvarchar(20) NOT NULL, 
 	Phone_number varchar(11) NOT NULL,
 	CCCD varchar(12),
 	Email varchar(50) NOT NULL,
+	User_ID varchar(20) REFERENCES users(User_ID),
+	IsDelete bit,
 	PRIMARY KEY (Receiver_ID),
 );
-
-GO
-ALTER TABLE receivers 
-ADD User_ID varchar(20) REFERENCES users(User_ID);
 
 -- Table structure for table airline
 GO
 CREATE TABLE airlines (
     Airline_ID varchar(20) NOT NULL,
 	Airline_name nvarchar(50) NOT NULL,
+	IsDelete bit,
 	PRIMARY KEY (Airline_ID)
 );
 
@@ -91,6 +92,7 @@ CREATE TABLE more_luggage (
 	Airline_ID varchar(20) NOT NULL,
 	Luggage_weight int NOT NULL,
 	Price int NOT NULL,
+	IsDelete bit,
 	PRIMARY KEY (More_luggage_ID),
 	FOREIGN KEY (Airline_ID) REFERENCES airlines(Airline_ID)
 );
@@ -103,6 +105,7 @@ CREATE TABLE planes (
 	Plane_name nvarchar(50) NOT NULL,
 	Seats int NOT NULL,
 	Plane_desc nvarchar(100),
+	IsDelete bit,
 	PRIMARY KEY (Plane_ID),
 	FOREIGN KEY (Airline_ID) REFERENCES airlines(Airline_ID)
 );
@@ -114,6 +117,7 @@ CREATE TABLE ticket_classes (
 	Plane_ID varchar(20) NOT NULL,
 	Class_name nvarchar(50) NOT NULL,
 	Seats_quantity int NOT NULL,
+	IsDelete bit,
 	PRIMARY KEY (Ticket_class_ID),
 	FOREIGN KEY (Plane_ID) REFERENCES planes(Plane_ID)
 );
@@ -124,6 +128,7 @@ CREATE TABLE seats (
     Seat_ID varchar(20) NOT NULL,
 	Ticket_class_ID varchar(20) NOT NULL,
 	Seat_name nvarchar(10) NOT NULL,
+	IsDelete bit,
 	PRIMARY KEY (Seat_ID),
 	FOREIGN KEY (Ticket_class_ID) REFERENCES ticket_classes(Ticket_class_ID)
 );
@@ -134,6 +139,7 @@ CREATE TABLE airports (
     Airport_ID varchar(20) NOT NULL,
 	Airport_name nvarchar(50) NOT NULL,
 	Province nvarchar(50) NOT NULL,
+	IsDelete bit,
 	PRIMARY KEY (Airport_ID)
 );
 
@@ -143,6 +149,7 @@ CREATE TABLE airport_gates (
     Gate_ID varchar(20) NOT NULL,
 	Airport_ID varchar(20) NOT NULL,
 	Gate_name nvarchar(50) NOT NULL,
+	IsDelete bit,
 	PRIMARY KEY (Gate_ID),
 	FOREIGN KEY (Airport_ID) REFERENCES airports(Airport_ID)
 );
@@ -155,6 +162,7 @@ CREATE TABLE flights (
 	Flying_to varchar(20) NOT NULL,
 	Hours_fly int NOT NULL, 
 	Departure_flight datetime NOT NULL,
+	IsDelete bit,
 	PRIMARY KEY (Flight_ID),
 	FOREIGN KEY (Flying_from) REFERENCES airports(Airport_ID),
 	FOREIGN KEY (Flying_to) REFERENCES airports(Airport_ID)
@@ -169,6 +177,7 @@ CREATE TABLE tickets (
 	Seat_ID varchar(20) NOT NULL,
 	Price int NOT NULL,
 	Sold_out bit NOT NULL,
+	IsDelete bit,
 	PRIMARY KEY (Ticket_ID),
 	FOREIGN KEY (Flight_ID) REFERENCES flights(Flight_ID),
 	FOREIGN KEY (Gate_ID) REFERENCES airport_gates(Gate_ID),
@@ -185,6 +194,7 @@ CREATE TABLE promotions (
 	Date_start datetime NOT NULL,
 	Date_end datetime NOT NULL,
 	Decreased int NOT NULL,
+	IsDelete bit,
 	PRIMARY KEY (Promo_ID),
 	FOREIGN KEY (Airline_ID) REFERENCES airlines(Airline_ID)
 );
@@ -234,7 +244,8 @@ VALUES
 	('TIK', 'Ticket', ' '),
 	('PLN', 'Plane', ' '),
 	('ALN', 'Airline', ' '),
-	('APT', 'Airport', ' ');
+	('APT', 'Airport', ' '),
+	('FET', 'Features', ' ');
 
 -- Insert into roles
 GO
@@ -261,6 +272,7 @@ VALUES
 	('ROLE0-PLN', 'ROLE0', 'PLN', '1', '1', '1', '1', '1'),
 	('ROLE0-ALN', 'ROLE0', 'ALN', '1', '1', '1', '1', '1'),
 	('ROLE0-APT', 'ROLE0', 'APT', '1', '1', '1', '1', '1'),
+	('ROLE0-FET', 'ROLE0', 'FET', '1', '1', '1', '1', '1'),
 	('ROLE1-EUC', 'ROLE1', 'EUC', '1', '1', '1', '1', '1'),
     ('ROLE1-ADM', 'ROLE1', 'ADM', '1', '0', '1', '0', '0'),
 	('ROLE1-ROL', 'ROLE1', 'ROL', '1', '0', '1', '0', '0'),
@@ -271,6 +283,7 @@ VALUES
 	('ROLE1-PLN', 'ROLE1', 'PLN', '1', '1', '1', '1', '1'),
 	('ROLE1-ALN', 'ROLE1', 'ALN', '1', '1', '1', '1', '1'),
 	('ROLE1-APT', 'ROLE1', 'APT', '1', '1', '1', '1', '1'),
+	('ROLE1-APT', 'ROLE1', 'APT', '1', '0', '1', '0', '0'),
     ('ROLE2-EUC', 'ROLE2', 'EUC', '1', '0', '1', '0', '0'),
     ('ROLE2-ADM', 'ROLE2', 'ADM', '1', '0', '1', '0', '0'),
 	('ROLE2-ROL', 'ROLE2', 'ROL', '1', '0', '1', '0', '0'),
@@ -281,6 +294,7 @@ VALUES
 	('ROLE2-PLN', 'ROLE2', 'PLN', '1', '0', '1', '0', '0'),
 	('ROLE2-ALN', 'ROLE2', 'ALN', '1', '0', '1', '0', '0'),
 	('ROLE2-APT', 'ROLE2', 'APT', '1', '0', '1', '0', '0'),
+	('ROLE2-FET', 'ROLE2', 'FET', '1', '0', '1', '0', '0'),
     ('ROLE3-EUC', 'ROLE3', 'EUC', '1', '0', '0', '1', '1'),
     ('ROLE3-ADM', 'ROLE3', 'ADM', '0', '0', '0', '0', '0'),
 	('ROLE3-ROL', 'ROLE3', 'ROL', '0', '0', '0', '0', '0'),
@@ -290,7 +304,8 @@ VALUES
 	('ROLE3-TIK', 'ROLE3', 'TIK', '1', '0', '1', '0', '0'),
 	('ROLE3-PLN', 'ROLE3', 'PLN', '1', '0', '0', '0', '0'),
 	('ROLE3-ALN', 'ROLE3', 'ALN', '1', '0', '1', '0', '0'),
-	('ROLE3-APT', 'ROLE3', 'APT', '1', '0', '1', '0', '0');
+	('ROLE3-APT', 'ROLE3', 'APT', '1', '0', '1', '0', '0'),
+	('ROLE3-FET', 'ROLE3', 'FET', '0', '0', '0', '0', '0');
 
 -- Insert into airlines
 GO
@@ -412,29 +427,29 @@ GO
 INSERT INTO
     airports(Airport_ID, Airport_name, Province)
 VALUES
-    ('VCA', 'Can Tho International Airport', 'Cần Thơ'),
-    ('DAD', 'Da Nang International Airport', 'Đà Nẵng'),
-    ('HPH', 'Cai Bi International Airport', 'Hải Phòng'),
-    ('HAN', 'Noi Bai International Airport', 'Hà Nội'),
-    ('SGN', 'Tan Son Nhat International Airport', 'Hồ Chí Minh'),
-    ('HUI', 'Phu Bai International Airport', 'Huế'),
-    ('CXR', 'Cam Ranh International Airport', 'Khánh Hòa'),
-    ('PQC', 'Phu Quoc International Airport', 'Kiên Giang'),
-    ('VDO', 'Van Don International Airport', 'Quảng Ninh'),
-    ('VII', 'Vinh International Airport', 'Nghệ An'),
-    ('BMV', 'Buon Ma Thuot Airport', 'Đắk Lắk'),
-    ('CAH', 'Ca Mau Airport', 'Cà Mau'),
-    ('VCS', 'Chu Lai Airport', 'Quảng Nam'),
-    ('VCL', 'Co Ong Airport', 'Bà Rịa - Vũng Tàu'),
-    ('DLI', 'Lien Khuong Airport', 'Đà Lạt'),
-    ('DIN', 'Dien Bien Phu Airport', 'Điện Biên'),
-    ('VDH', 'Dong Hoi Airport', 'Quảng Bình'),
-    ('PXU', 'Pleiku Airport', 'Gia Lai'),
-    ('UIH', 'Phu Cat Airport', 'Bình Định'),
-    ('VKG', 'Rach Gia Airport', 'Kiên Giang'),
-    ('TBB', 'Dong Tac Airport', 'Phú Yên'),
-    ('VTG', 'Vung Tau Airport', 'Bà Rịa - Vũng Tàu'),
-    ('THD', 'Tho Xuan Airport', 'Thanh Hóa');
+    ('VCA', 'Can Tho International Airport', N'Cần Thơ'),
+    ('DAD', 'Da Nang International Airport', N'Đà Nẵng'),
+    ('HPH', 'Cai Bi International Airport', N'Hải Phòng'),
+    ('HAN', 'Noi Bai International Airport', N'Hà Nội'),
+    ('SGN', 'Tan Son Nhat International Airport', N'Hồ Chí Minh'),
+    ('HUI', 'Phu Bai International Airport', N'Huế'),
+    ('CXR', 'Cam Ranh International Airport', N'Khánh Hòa'),
+    ('PQC', 'Phu Quoc International Airport', N'Kiên Giang'),
+    ('VDO', 'Van Don International Airport', N'Quảng Ninh'),
+    ('VII', 'Vinh International Airport', N'Nghệ An'),
+    ('BMV', 'Buon Ma Thuot Airport', N'Đắk Lắk'),
+    ('CAH', 'Ca Mau Airport', N'Cà Mau'),
+    ('VCS', 'Chu Lai Airport', N'Quảng Nam'),
+    ('VCL', 'Co Ong Airport', N'Bà Rịa - Vũng Tàu'),
+    ('DLI', 'Lien Khuong Airport', N'Đà Lạt'),
+    ('DIN', 'Dien Bien Phu Airport', N'Điện Biên'),
+    ('VDH', 'Dong Hoi Airport', N'Quảng Bình'),
+    ('PXU', 'Pleiku Airport', N'Gia Lai'),
+    ('UIH', 'Phu Cat Airport', N'Bình Định'),
+    ('VKG', 'Rach Gia Airport', N'Kiên Giang'),
+    ('TBB', 'Dong Tac Airport', N'Phú Yên'),
+    ('VTG', 'Vung Tau Airport', N'Bà Rịa - Vũng Tàu'),
+    ('THD', 'Tho Xuan Airport', N'Thanh Hóa');
 
 -- Insert into airport_gates
 GO

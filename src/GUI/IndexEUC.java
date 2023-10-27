@@ -14,6 +14,10 @@ import assets.Styles;
 import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
@@ -29,7 +33,7 @@ public class IndexEUC extends javax.swing.JFrame implements IIndex{
     /**
      * Creates new form IndexEUC
      */
-    public IndexEUC(User user) {
+    public IndexEUC(User user)  throws ClassNotFoundException, SQLException, IOException{
         this.user = user;
         init();
 //        initComponents();
@@ -40,7 +44,7 @@ public class IndexEUC extends javax.swing.JFrame implements IIndex{
         this.setTitle("Airbook - Mua vé");
     }
     
-    public void SiteOrder(Order siteOrder){
+    public void SiteOrder(Order siteOrder) throws ClassNotFoundException, SQLException, IOException{
         this.siteOrder = siteOrder;
         if(siteOrder == Order.BUY_TICKET){
             remove(pnBody);
@@ -92,7 +96,7 @@ public class IndexEUC extends javax.swing.JFrame implements IIndex{
         );
     }
     
-    private void init(){
+    private void init() throws ClassNotFoundException, SQLException, IOException{
         sidebarEUC = new GUI.components.SidebarEUC(this);
         topbarEUC = new GUI.components.TopbarEUC(this);
         pnBody = new BuyTicketEUC(user);
@@ -200,7 +204,15 @@ public class IndexEUC extends javax.swing.JFrame implements IIndex{
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new IndexEUC(new User()).setVisible(true);
+                try {
+                    new IndexEUC(new User()).setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(IndexEUC.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(IndexEUC.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(IndexEUC.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

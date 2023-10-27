@@ -5,11 +5,13 @@
 package GUI;
 
 import assets.Site.Order;
+import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  *
  * @author agond
  */
 public interface IIndex {
-    void SiteOrder(Order siteOrder);
+    void SiteOrder(Order siteOrder) throws ClassNotFoundException, SQLException, IOException;
 }
