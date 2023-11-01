@@ -179,6 +179,7 @@ public class MyTicketEUC extends javax.swing.JPanel {
         lbUnpaidTotal.setText("?");
 
         lbPromoCode.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbPromoCode.setLabelFor(txtPromoCode);
         lbPromoCode.setText("Mã khuyến mãi");
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));

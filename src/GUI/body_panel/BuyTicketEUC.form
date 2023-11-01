@@ -248,6 +248,9 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/assets/icon/info-time-white20.png"/>
                     </Property>
+                    <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+                      <ComponentRef name="txtDepartureFlight"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" value="Ng&#xe0;y kh&#x1edf;i h&#xe0;nh"/>
                   </Properties>
                 </Component>

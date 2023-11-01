@@ -66,15 +66,47 @@ public class TicketAD extends javax.swing.JPanel {
 
         btSearchTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-search-pri18.png"))); // NOI18N
         btSearchTicket.setText("Tìm kiếm");
+        btSearchTicket.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btSearchTicketMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btSearchTicketMouseExited(evt);
+            }
+        });
 
         btImportTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-import-black18.png"))); // NOI18N
+        btImportTicket.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btImportTicketMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btImportTicketMouseExited(evt);
+            }
+        });
 
         lbTitle.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         lbTitle.setText("Quản lý chuyến bay");
 
         btAddTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-black18.png"))); // NOI18N
+        btAddTicket.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btAddTicketMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btAddTicketMouseExited(evt);
+            }
+        });
 
         btExportTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-export-black18.png"))); // NOI18N
+        btExportTicket.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btExportTicketMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btExportTicketMouseExited(evt);
+            }
+        });
 
         tbAllTicket.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -171,6 +203,48 @@ public class TicketAD extends javax.swing.JPanel {
                         .addGap(482, 482, 482))))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btSearchTicketMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btSearchTicketMouseEntered
+        btSearchTicket.setBackground(Styles.PRI_NORMAL);
+        btSearchTicket.setForeground(Styles.WHITE);
+        btSearchTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-search-white18.png")));
+    }//GEN-LAST:event_btSearchTicketMouseEntered
+
+    private void btSearchTicketMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btSearchTicketMouseExited
+        btSearchTicket.setBackground(Styles.PRI_LIGHTER);
+        btSearchTicket.setForeground(Styles.PRI_NORMAL);
+        btSearchTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-search-pri18.png")));
+    }//GEN-LAST:event_btSearchTicketMouseExited
+
+    private void btAddTicketMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAddTicketMouseEntered
+        btAddTicket.setBackground(Styles.PRI_NORMAL);
+        btAddTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-white18.png")));
+    }//GEN-LAST:event_btAddTicketMouseEntered
+
+    private void btAddTicketMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAddTicketMouseExited
+        btAddTicket.setBackground(Styles.GRAY_100);
+        btAddTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-black18.png")));
+    }//GEN-LAST:event_btAddTicketMouseExited
+
+    private void btImportTicketMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btImportTicketMouseEntered
+        btImportTicket.setBackground(Styles.PRI_NORMAL);
+        btImportTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-import-white18.png")));
+    }//GEN-LAST:event_btImportTicketMouseEntered
+
+    private void btImportTicketMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btImportTicketMouseExited
+        btImportTicket.setBackground(Styles.GRAY_100);
+        btImportTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-import-black18.png")));
+    }//GEN-LAST:event_btImportTicketMouseExited
+
+    private void btExportTicketMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btExportTicketMouseEntered
+        btExportTicket.setBackground(Styles.PRI_NORMAL);
+        btExportTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-export-white18.png")));
+    }//GEN-LAST:event_btExportTicketMouseEntered
+
+    private void btExportTicketMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btExportTicketMouseExited
+        btExportTicket.setBackground(Styles.GRAY_100);
+        btExportTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-export-black18.png")));
+    }//GEN-LAST:event_btExportTicketMouseExited
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

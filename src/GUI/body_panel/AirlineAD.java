@@ -6,6 +6,15 @@ package GUI.body_panel;
 
 import assets.Styles;
 import DTO.entities.User;
+import GUI.IndexAD;
+import assets.Site;
+import java.awt.Container;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  *
@@ -13,6 +22,8 @@ import DTO.entities.User;
  */
 public class AirlineAD extends javax.swing.JPanel {
     private User user;
+    private int rowPosition;
+    private JFrame context;
     /**
      * Creates new form AirlineAD
      */
@@ -21,11 +32,13 @@ public class AirlineAD extends javax.swing.JPanel {
         styles();
     }
     
-    public AirlineAD(User user) {
+    public AirlineAD(JFrame context, User user) {
         this.user = user;
+        this.context = context;
         initComponents();
         styles();
     }
+    
     public void styles(){
         Styles.Table(tbAllAirline, pnAllAirline);
         Styles.ButtonSecondary(btAddAirline);
@@ -65,6 +78,14 @@ public class AirlineAD extends javax.swing.JPanel {
 
         btAddAirline.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-pri18.png"))); // NOI18N
         btAddAirline.setText("Thêm hãng bay");
+        btAddAirline.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btAddAirlineMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btAddAirlineMouseExited(evt);
+            }
+        });
 
         tbAllAirline.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -90,6 +111,11 @@ public class AirlineAD extends javax.swing.JPanel {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tbAllAirline.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbAllAirlineMouseClicked(evt);
             }
         });
         pnAllAirline.setViewportView(tbAllAirline);
@@ -146,6 +172,32 @@ public class AirlineAD extends javax.swing.JPanel {
                 .addGap(24, 24, 24))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btAddAirlineMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAddAirlineMouseEntered
+        btAddAirline.setBackground(Styles.PRI_NORMAL);
+        btAddAirline.setForeground(Styles.WHITE);
+        btAddAirline.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-white18.png")));
+    }//GEN-LAST:event_btAddAirlineMouseEntered
+
+    private void btAddAirlineMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAddAirlineMouseExited
+        btAddAirline.setBackground(Styles.PRI_LIGHTER);
+        btAddAirline.setForeground(Styles.PRI_NORMAL);
+        btAddAirline.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-pri18.png")));
+    }//GEN-LAST:event_btAddAirlineMouseExited
+
+    private void tbAllAirlineMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbAllAirlineMouseClicked
+        rowPosition = this.tbAllAirline.getSelectedRow();
+        IndexAD indexAD = (IndexAD)context;
+        try {
+            indexAD.SiteOrder(Site.Order.AIRLINEPLANE);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AirlineAD.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AirlineAD.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(AirlineAD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_tbAllAirlineMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

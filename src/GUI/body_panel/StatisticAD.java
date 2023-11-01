@@ -6,7 +6,6 @@ package GUI.body_panel;
 
 import DTO.entities.User;
 import assets.Styles;
-import static assets.Styles.GRAY_200;
 import assets.TextBubbleBorder;
 import javax.swing.border.AbstractBorder;
 
@@ -64,6 +63,7 @@ public class StatisticAD extends javax.swing.JPanel {
         pnNewEUC.setBorder(border);
         pnRevenue.setBorder(border);
         pnTicketCount.setBorder(border);
+        pnProfit.setBorder(border);
         
         lbStatisticWith.setFont(Styles.Body);
         lbStatisticWith.setForeground(Styles.GRAY_600);
@@ -239,12 +239,36 @@ public class StatisticAD extends javax.swing.JPanel {
 
         btCreateTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/info-ticket-pri18.png"))); // NOI18N
         btCreateTicket.setText("Tạo vé");
+        btCreateTicket.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btCreateTicketMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btCreateTicketMouseExited(evt);
+            }
+        });
 
         btCreatePromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/info-promotion-pri18.png"))); // NOI18N
         btCreatePromo.setText("Tạo chương trình KM");
+        btCreatePromo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btCreatePromoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btCreatePromoMouseExited(evt);
+            }
+        });
 
         btCreateFlight.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/info-flight-pri18.png"))); // NOI18N
         btCreateFlight.setText("Thêm chuyến bay mới");
+        btCreateFlight.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btCreateFlightMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btCreateFlightMouseExited(evt);
+            }
+        });
 
         pnProfit.setBackground(new java.awt.Color(255, 229, 211));
 
@@ -341,6 +365,42 @@ public class StatisticAD extends javax.swing.JPanel {
                 .addContainerGap(112, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btCreateTicketMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btCreateTicketMouseEntered
+        btCreateTicket.setBackground(Styles.PRI_NORMAL);
+        btCreateTicket.setForeground(Styles.WHITE);
+        btCreateTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/info-ticket-white18.png")));
+    }//GEN-LAST:event_btCreateTicketMouseEntered
+
+    private void btCreateTicketMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btCreateTicketMouseExited
+        btCreateTicket.setBackground(Styles.PRI_LIGHTER);
+        btCreateTicket.setForeground(Styles.PRI_NORMAL);
+        btCreateTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/info-ticket-pri18.png")));
+    }//GEN-LAST:event_btCreateTicketMouseExited
+
+    private void btCreatePromoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btCreatePromoMouseEntered
+        btCreatePromo.setBackground(Styles.PRI_NORMAL);
+        btCreatePromo.setForeground(Styles.WHITE);
+        btCreatePromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/info-promotion-white18.png")));
+    }//GEN-LAST:event_btCreatePromoMouseEntered
+
+    private void btCreatePromoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btCreatePromoMouseExited
+        btCreatePromo.setBackground(Styles.PRI_LIGHTER);
+        btCreatePromo.setForeground(Styles.PRI_NORMAL);
+        btCreatePromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/info-promotion-pri18.png")));
+    }//GEN-LAST:event_btCreatePromoMouseExited
+
+    private void btCreateFlightMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btCreateFlightMouseEntered
+        btCreateFlight.setBackground(Styles.PRI_NORMAL);
+        btCreateFlight.setForeground(Styles.WHITE);
+        btCreateFlight.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/info-flight-white18.png")));
+    }//GEN-LAST:event_btCreateFlightMouseEntered
+
+    private void btCreateFlightMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btCreateFlightMouseExited
+        btCreateFlight.setBackground(Styles.PRI_LIGHTER);
+        btCreateFlight.setForeground(Styles.PRI_NORMAL);
+        btCreateFlight.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/info-flight-pri18.png")));
+    }//GEN-LAST:event_btCreateFlightMouseExited
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

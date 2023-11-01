@@ -41,7 +41,7 @@
                   <Component id="lbSitename" min="-2" pref="34" max="-2" attributes="0"/>
                   <Component id="btCTA" min="-2" pref="34" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="15" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>

@@ -8,9 +8,7 @@ import GUI.IndexEUC;
 import GUI.SigninGUI;
 import GUI.SignupEUC;
 import assets.Site.Order;
-import javax.swing.BorderFactory;
 import assets.Styles;
-import java.awt.Insets;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -25,7 +23,7 @@ import javax.swing.JOptionPane;
  */
 public class SidebarEUC extends javax.swing.JPanel implements ISidebar{
     Order siteOrder;
-    JFrame frParrent;
+    JFrame context;
     /**
      * Creates new form SidebarEUC
      */
@@ -41,7 +39,7 @@ public class SidebarEUC extends javax.swing.JPanel implements ISidebar{
         style();
         siteOrder = Order.BUY_TICKET;
         siteOrder(siteOrder);
-        this.frParrent = frParrent;
+        this.context = frParrent;
     }
     
     @Override
@@ -83,7 +81,7 @@ public class SidebarEUC extends javax.swing.JPanel implements ISidebar{
     
     @Override
     public void navigateTo(Order siteOrder) throws ClassNotFoundException, SQLException, IOException{
-        ((IndexEUC)frParrent).SiteOrder(siteOrder);
+        ((IndexEUC)context).SiteOrder(siteOrder);
     }
     
 
@@ -353,7 +351,7 @@ public class SidebarEUC extends javax.swing.JPanel implements ISidebar{
         dialog.setLocationRelativeTo(this);
         int result = JOptionPane.showConfirmDialog(dialog, "Bạn có muốn đăng xuất", "Đăng xuất", JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION) {
-            frParrent.setVisible(false);
+            context.setVisible(false);
             try {
                 SigninGUI signinGUI = new SigninGUI();
                 signinGUI.setVisible(true);

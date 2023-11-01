@@ -105,6 +105,10 @@
         </Property>
         <Property name="text" type="java.lang.String" value="T&#xec;m ki&#x1ebf;m"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btSearchPromoMouseEntered"/>
+        <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btSearchPromoMouseExited"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btAddPromo">
       <Properties>
@@ -112,6 +116,10 @@
           <Image iconType="3" name="/assets/icon/action-add-black18.png"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btAddPromoMouseEntered"/>
+        <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btAddPromoMouseExited"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btImportPromo">
       <Properties>
@@ -119,6 +127,10 @@
           <Image iconType="3" name="/assets/icon/action-export-black18.png"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btImportPromoMouseEntered"/>
+        <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btImportPromoMouseExited"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btExportPromo">
       <Properties>
@@ -126,6 +138,10 @@
           <Image iconType="3" name="/assets/icon/action-import-black18.png"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btExportPromoMouseEntered"/>
+        <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btExportPromoMouseExited"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="pnAllPromo">
       <AuxValues>

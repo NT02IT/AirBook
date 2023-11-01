@@ -4,9 +4,15 @@
  */
 package GUI.components;
 
+import GUI.IndexAD;
 import GUI.popup.TicketImportAD;
-import assets.Site.Order;
+import static assets.Site.Order;
 import assets.Styles;
+import java.awt.Container;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
@@ -14,8 +20,9 @@ import javax.swing.JFrame;
  * @author agond
  */
 public class TopbarAD extends javax.swing.JPanel {
-    Order siteOrder;
-    JFrame frParrent;
+    private Order siteOrder;
+    private JFrame context;
+    private Boolean haveBackBTN;
     /**
      * Creates new form TopbarEUC
      */
@@ -25,31 +32,106 @@ public class TopbarAD extends javax.swing.JPanel {
         siteOrder(Order.STATISTIC);
     }
     
-    public TopbarAD(JFrame frParrent) {
+    public TopbarAD(JFrame frParents) {
         initComponents();
         style();
         siteOrder(Order.STATISTIC);
-        this.frParrent = frParrent;
+        this.context = frParents;
+    }
+    
+    public TopbarAD(JFrame frParents, boolean haveBackBTN, Order backTo) {
+        initComponents();
+        this.context = (IndexAD)frParents;
+        siteOrder(backTo);
+        if(haveBackBTN){
+            javax.swing.JButton btBack = new javax.swing.JButton();
+            
+            btBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-arrow-back-white18.png"))); // NOI18N
+            Styles.ButtonPrimary(btBack);
+            btBack.addMouseListener(new java.awt.event.MouseAdapter() {
+                public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    btBack.setBackground(Styles.PRI_DARK);
+                }
+                public void mouseExited(java.awt.event.MouseEvent evt) {
+                    btBack.setBackground(Styles.PRI_NORMAL);
+                }
+            });
+            btBack.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    Container topbarContainer = btBack.getParent();
+                    JFrame indexADFrame = ((TopbarAD)topbarContainer).context;
+                    IndexAD indexAD = (IndexAD)indexADFrame;
+                    try {    
+                        indexAD.SiteOrder(backTo);
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(TopbarAD.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(TopbarAD.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(TopbarAD.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+            javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+            this.setLayout(layout);
+            layout.setHorizontalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(24, 24, 24)
+                    .addComponent(btBack, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(16, 16, 16)
+                    .addComponent(lbSitename)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 404, Short.MAX_VALUE)
+                    .addComponent(btCTA, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(24, 24, 24))
+            );
+            layout.setVerticalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(13, 13, 13)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lbSitename, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btBack, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btCTA, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(11, 11, 11))
+            );
+        }        
+        style();
     }
     
     public void siteOrder(Order siteOrder){
         this.siteOrder = siteOrder;
-        if(siteOrder == Order.STATISTIC){
-            lbSitename.setText("Thống kê");
-        } else if (siteOrder == Order.TICKET) {
-            lbSitename.setText("Vé máy bay");
-        } else if (siteOrder == Order.PROMOTION) {
-            lbSitename.setText("Khuyến mãi");
-        } else if (siteOrder == Order.FLIGHT) {
-            lbSitename.setText("Chuyến bay");
-        } else if (siteOrder == Order.AIRLINE) {
-            lbSitename.setText("Hãng bay");
-        } else if (siteOrder == Order.AIRPORT) {
-            lbSitename.setText("Sân bay");
-        } else if (siteOrder == Order.ACCOUNT) {
-            lbSitename.setText("Tài khoản");
-        } else if (siteOrder == Order.FEATURES) {
-            lbSitename.setText("Chức năng");
+        switch (siteOrder) {
+            case STATISTIC:
+                lbSitename.setText("Thống kê");
+                break;
+            case TICKET:
+                lbSitename.setText("Vé máy bay");
+                break;
+            case PROMOTION:
+                lbSitename.setText("Khuyến mãi");
+                break;
+            case FLIGHT:
+                lbSitename.setText("Tuyến bay");
+                break;
+            case AIRLINE:
+                lbSitename.setText("Hãng bay");
+                break;
+            case AIRLINEPLANE:
+                lbSitename.setText("Chi tiết hãng bay");
+                break;
+            case AIRPORT:
+                lbSitename.setText("Sân bay");
+                break;
+            case ACCOUNT:
+                lbSitename.setText("Tài khoản");
+                break;
+            case FEATURES:
+                lbSitename.setText("Chức năng");
+                break;
+            default:
+                throw new AssertionError();
         }
     }
     
@@ -116,7 +198,7 @@ public class TopbarAD extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbSitename, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btCTA, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addGap(11, 11, 11))
         );
     }// </editor-fold>//GEN-END:initComponents
 

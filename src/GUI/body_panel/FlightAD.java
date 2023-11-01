@@ -64,6 +64,14 @@ public class FlightAD extends javax.swing.JPanel {
 
         btAddFlight.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-pri18.png"))); // NOI18N
         btAddFlight.setText("Thêm tuyến");
+        btAddFlight.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btAddFlightMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btAddFlightMouseExited(evt);
+            }
+        });
 
         tbAllFlight.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -145,6 +153,18 @@ public class FlightAD extends javax.swing.JPanel {
                 .addGap(24, 24, 24))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btAddFlightMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAddFlightMouseEntered
+        btAddFlight.setBackground(Styles.PRI_NORMAL);
+        btAddFlight.setForeground(Styles.WHITE);
+        btAddFlight.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-white18.png")));
+    }//GEN-LAST:event_btAddFlightMouseEntered
+
+    private void btAddFlightMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAddFlightMouseExited
+        btAddFlight.setBackground(Styles.PRI_LIGHTER);
+        btAddFlight.setForeground(Styles.PRI_NORMAL);
+        btAddFlight.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-pri18.png")));
+    }//GEN-LAST:event_btAddFlightMouseExited
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

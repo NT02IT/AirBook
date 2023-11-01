@@ -19,7 +19,7 @@ import javax.swing.JFrame;
  */
 public class TopbarEUC extends javax.swing.JPanel implements ITopbar{
     Order siteOrder;
-    JFrame frParrent;
+    JFrame context;
     /**
      * Creates new form TopbarEUC
      */
@@ -35,7 +35,7 @@ public class TopbarEUC extends javax.swing.JPanel implements ITopbar{
         style();
         siteOrder = Order.BUY_TICKET;
         siteOrder(siteOrder);
-        this.frParrent = frParrent;
+        this.context = frParrent;
     }    
         
     @Override
@@ -126,7 +126,7 @@ public class TopbarEUC extends javax.swing.JPanel implements ITopbar{
     private void btCTAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCTAActionPerformed
         this.siteOrder = Order.MY_TICKET;
         try {    
-            ((IndexEUC)frParrent).SiteOrder(siteOrder);
+            ((IndexEUC)context).SiteOrder(siteOrder);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(TopbarEUC.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {

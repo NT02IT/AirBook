@@ -14,6 +14,7 @@ import GUI.body_panel.FlightAD;
 import GUI.body_panel.PromoAD;
 import GUI.body_panel.StatisticAD;
 import GUI.body_panel.TicketAD;
+import GUI.components.TopbarAD;
 import assets.Site.Order;
 import java.awt.Toolkit;
 import java.io.IOException;
@@ -30,6 +31,7 @@ public class IndexAD extends javax.swing.JFrame implements IIndex{
     private static JPanel pnBody;
     public static Order siteOrder;
     public static User user;
+    private static String suffix = "";
     /**
      * Creates new form IndexAD
      */
@@ -39,7 +41,12 @@ public class IndexAD extends javax.swing.JFrame implements IIndex{
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 //        this.setUndecorated(true);
         this.setLocationRelativeTo(null);
-        this.setTitle("Airbook - Thống kê");
+        try {
+            suffix = "@" + user.getUsername();
+            this.setTitle("Airbook - Thống kê " + suffix);
+        } catch (java.lang.NullPointerException e) {
+            this.setTitle("Airbook - Thống kê");
+        }        
     }
     public IndexAD(User user) {
         this.user = user;
@@ -49,37 +56,71 @@ public class IndexAD extends javax.swing.JFrame implements IIndex{
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 //        this.setUndecorated(true);
         this.setLocationRelativeTo(null);
-        this.setTitle("Airbook - Thống kê");
+        try {
+            suffix = "@" + user.getUsername();
+            this.setTitle("Airbook - Thống kê " + suffix);
+        } catch (java.lang.NullPointerException e) {
+            this.setTitle("Airbook - Thống kê");
+        }  
     }
     
     public void SiteOrder(Order siteOrder) throws ClassNotFoundException, SQLException, IOException{
         this.siteOrder = siteOrder;
-        if(siteOrder == Order.STATISTIC){
-            remove(pnBody);
-            pnBody = new StatisticAD(user);
-        } else if (siteOrder == Order.TICKET) {
-            remove(pnBody);
-            pnBody = new TicketAD(user);
-        } else if (siteOrder == Order.PROMOTION) {
-            remove(pnBody);
-            pnBody = new PromoAD(user);
-        } else if (siteOrder == Order.FLIGHT) {
-            remove(pnBody);
-            pnBody = new FlightAD(user);
-        } else if (siteOrder == Order.AIRLINE) {
-            remove(pnBody);
-            pnBody = new AirlinePlaneAD(user);
-        } else if (siteOrder == Order.AIRPORT) {
-            remove(pnBody);
-            pnBody = new AirportAD(user);
-        } else if (siteOrder == Order.ACCOUNT) {
-            remove(pnBody);
-            pnBody = new AccountAD(user);
-        } else if (siteOrder == Order.FEATURES) {
-            remove(pnBody);
-            pnBody = new FeaturesAD(user);
-        }
-        
+        remove(pnBody);
+        remove(topbarAD);
+        try {
+            suffix = "@" + user.getUsername();
+        } catch (java.lang.NullPointerException e) {
+        }  
+        switch (siteOrder) {
+            case STATISTIC:                
+                pnBody = new StatisticAD(user);
+                topbarAD = new TopbarAD(this);
+                this.setTitle("Airbook - Thống kê " + suffix);
+                break;
+            case TICKET:
+                pnBody = new TicketAD(user);
+                topbarAD = new TopbarAD(this);
+                this.setTitle("Airbook - Vé máy bay " + suffix);
+                break;
+            case PROMOTION:
+                pnBody = new PromoAD(user);
+                topbarAD = new TopbarAD(this);
+                this.setTitle("Airbook - Khuyến mãi " + suffix);
+                break;
+            case FLIGHT:
+                pnBody = new FlightAD(user);
+                topbarAD = new TopbarAD(this);
+                this.setTitle("Airbook - Tuyến bay " + suffix);
+                break;
+            case AIRLINE:
+                pnBody = new AirlineAD(this, user);
+                topbarAD = new TopbarAD(this);
+                this.setTitle("Airbook - Hãng bay " + suffix);
+                break;
+            case AIRLINEPLANE:
+                pnBody = new AirlinePlaneAD(user);
+                topbarAD = new TopbarAD(this, true, Order.AIRLINE);
+                this.setTitle("Airbook - Chi tiết hãng bay " + suffix);
+                break;
+            case AIRPORT:
+                pnBody = new AirportAD(user);
+                topbarAD = new TopbarAD(this);
+                this.setTitle("Airbook - Sân bay " + suffix);
+                break;
+            case ACCOUNT:
+                pnBody = new AccountAD(user);
+                topbarAD = new TopbarAD(this);
+                this.setTitle("Airbook - Tài khoản " + suffix);
+                break;
+            case FEATURES:
+                pnBody = new FeaturesAD(user);
+                topbarAD = new TopbarAD(this);
+                this.setTitle("Airbook - Chức năng " + suffix);
+                break;
+            default:
+                throw new AssertionError();
+        }        
         sidebarAD.siteOrder(siteOrder);
         topbarAD.siteOrder(siteOrder);
 
@@ -117,8 +158,8 @@ public class IndexAD extends javax.swing.JFrame implements IIndex{
     }
     
     private void init(){
-        sidebarAD = new GUI.components.SidebarAD(this);
         topbarAD = new GUI.components.TopbarAD(this);
+        sidebarAD = new GUI.components.SidebarAD(this);        
         pnBody = new StatisticAD(user);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);

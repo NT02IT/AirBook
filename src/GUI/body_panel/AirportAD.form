@@ -115,6 +115,10 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Th&#xea;m s&#xe2;n bay"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btAddAirportMouseEntered"/>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btAddAirportMouseExited"/>
+          </Events>
         </Component>
         <Container class="javax.swing.JScrollPane" name="pnAllAirport">
           <AuxValues>
@@ -201,8 +205,9 @@
               <Component id="lbAirportName" alignment="0" max="32767" attributes="0"/>
               <Component id="lbGate" max="32767" attributes="0"/>
               <Component id="jScrollPane2" alignment="0" pref="0" max="32767" attributes="0"/>
-              <Component id="btDeleteAirport" max="32767" attributes="0"/>
+              <Component id="btCancelEditAirport" max="32767" attributes="0"/>
               <Component id="btUpdateGate" alignment="0" pref="182" max="32767" attributes="0"/>
+              <Component id="btDeleteAirport" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -210,17 +215,19 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                   <Component id="lbAirportID" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Component id="lbAirportName" min="-2" pref="30" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Component id="lbGate" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                   <Component id="jScrollPane2" max="32767" attributes="0"/>
                   <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                   <Component id="btDeleteAirport" min="-2" pref="34" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                  <Component id="btCancelEditAirport" min="-2" pref="34" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   <Component id="btUpdateGate" min="-2" pref="34" max="-2" attributes="0"/>
-                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -279,13 +286,17 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="btDeleteAirport">
+        <Component class="javax.swing.JButton" name="btCancelEditAirport">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/assets/icon/action-delete-red18.png"/>
+              <Image iconType="3" name="/assets/icon/action-cancel-white18.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="X&#xf3;a s&#xe2;n bay"/>
+            <Property name="text" type="java.lang.String" value="H&#x1ee7;y thay &#x111;&#x1ed5;i"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btCancelEditAirportMouseEntered"/>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btCancelEditAirportMouseExited"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btUpdateGate">
           <Properties>
@@ -294,6 +305,22 @@
             </Property>
             <Property name="text" type="java.lang.String" value="C&#x1ead;p nh&#x1ead;t c&#x1ed5;ng"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btUpdateGateMouseEntered"/>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btUpdateGateMouseExited"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="btDeleteAirport">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/assets/icon/action-delete-red18.png"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="X&#xf3;a s&#xe2;n bay"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btDeleteAirportMouseEntered"/>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btDeleteAirportMouseExited"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

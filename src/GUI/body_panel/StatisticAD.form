@@ -355,6 +355,10 @@
         </Property>
         <Property name="text" type="java.lang.String" value="T&#x1ea1;o v&#xe9;"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btCreateTicketMouseEntered"/>
+        <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btCreateTicketMouseExited"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btCreatePromo">
       <Properties>
@@ -363,6 +367,10 @@
         </Property>
         <Property name="text" type="java.lang.String" value="T&#x1ea1;o ch&#x1b0;&#x1a1;ng tr&#xec;nh KM"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btCreatePromoMouseEntered"/>
+        <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btCreatePromoMouseExited"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btCreateFlight">
       <Properties>
@@ -371,6 +379,10 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Th&#xea;m chuy&#x1ebf;n bay m&#x1edb;i"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btCreateFlightMouseEntered"/>
+        <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btCreateFlightMouseExited"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JPanel" name="pnProfit">
       <Properties>

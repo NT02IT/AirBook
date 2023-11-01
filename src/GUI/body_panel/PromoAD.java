@@ -69,12 +69,44 @@ public class PromoAD extends javax.swing.JPanel {
 
         btSearchPromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-search-pri18.png"))); // NOI18N
         btSearchPromo.setText("Tìm kiếm");
+        btSearchPromo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btSearchPromoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btSearchPromoMouseExited(evt);
+            }
+        });
 
         btAddPromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-black18.png"))); // NOI18N
+        btAddPromo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btAddPromoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btAddPromoMouseExited(evt);
+            }
+        });
 
         btImportPromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-export-black18.png"))); // NOI18N
+        btImportPromo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btImportPromoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btImportPromoMouseExited(evt);
+            }
+        });
 
         btExportPromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-import-black18.png"))); // NOI18N
+        btExportPromo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btExportPromoMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btExportPromoMouseExited(evt);
+            }
+        });
 
         tbAllPromo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -171,6 +203,48 @@ public class PromoAD extends javax.swing.JPanel {
                         .addGap(441, 441, 441))))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btSearchPromoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btSearchPromoMouseEntered
+        btSearchPromo.setBackground(Styles.PRI_NORMAL);
+        btSearchPromo.setForeground(Styles.WHITE);
+        btSearchPromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-search-white18.png")));
+    }//GEN-LAST:event_btSearchPromoMouseEntered
+
+    private void btSearchPromoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btSearchPromoMouseExited
+        btSearchPromo.setBackground(Styles.PRI_LIGHTER);
+        btSearchPromo.setForeground(Styles.PRI_NORMAL);
+        btSearchPromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-search-pri18.png")));
+    }//GEN-LAST:event_btSearchPromoMouseExited
+
+    private void btAddPromoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAddPromoMouseEntered
+        btAddPromo.setBackground(Styles.PRI_NORMAL);
+        btAddPromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-white18.png")));
+    }//GEN-LAST:event_btAddPromoMouseEntered
+
+    private void btAddPromoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAddPromoMouseExited
+        btAddPromo.setBackground(Styles.GRAY_100);
+        btAddPromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-black18.png")));
+    }//GEN-LAST:event_btAddPromoMouseExited
+
+    private void btImportPromoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btImportPromoMouseEntered
+        btImportPromo.setBackground(Styles.PRI_NORMAL);
+        btImportPromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-import-white18.png")));
+    }//GEN-LAST:event_btImportPromoMouseEntered
+
+    private void btImportPromoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btImportPromoMouseExited
+        btImportPromo.setBackground(Styles.GRAY_100);
+        btImportPromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-import-black18.png")));
+    }//GEN-LAST:event_btImportPromoMouseExited
+
+    private void btExportPromoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btExportPromoMouseEntered
+        btExportPromo.setBackground(Styles.PRI_NORMAL);
+        btExportPromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-export-white18.png")));
+    }//GEN-LAST:event_btExportPromoMouseEntered
+
+    private void btExportPromoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btExportPromoMouseExited
+        btExportPromo.setBackground(Styles.GRAY_100);
+        btExportPromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-export-black18.png")));
+    }//GEN-LAST:event_btExportPromoMouseExited
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

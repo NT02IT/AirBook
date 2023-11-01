@@ -129,6 +129,10 @@
                   <Image iconType="3" name="/assets/icon/action-add-black18.png"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btAddAccountMouseEntered"/>
+                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btAddAccountMouseExited"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btSearchAccount">
               <Properties>
@@ -138,6 +142,8 @@
                 <Property name="text" type="java.lang.String" value="T&#xec;m ki&#x1ebf;m"/>
               </Properties>
               <Events>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btSearchAccountMouseEntered"/>
+                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btSearchAccountMouseExited"/>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btSearchAccountActionPerformed"/>
               </Events>
             </Component>
@@ -372,6 +378,10 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="Th&#xea;m m&#x1edb;i"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btAddRoleMouseEntered"/>
+                    <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btAddRoleMouseExited"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -425,6 +435,9 @@
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Segoe UI" size="16" style="1"/>
+                    </Property>
+                    <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+                      <ComponentRef name="txtRoleName"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Quy&#x1ec1;n t&#xe0;i kho&#x1ea3;n"/>
                   </Properties>
@@ -511,6 +524,8 @@
                     <Property name="text" type="java.lang.String" value="X&#xf3;a"/>
                   </Properties>
                   <Events>
+                    <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btDeletePermissionMouseEntered"/>
+                    <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btDeletePermissionMouseExited"/>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btDeletePermissionActionPerformed"/>
                   </Events>
                 </Component>
@@ -521,6 +536,10 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="C&#x1ead;p nh&#x1ead;t"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btUpdatePermissionMouseEntered"/>
+                    <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btUpdatePermissionMouseExited"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>

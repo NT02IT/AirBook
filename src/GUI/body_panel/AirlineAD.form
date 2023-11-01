@@ -88,6 +88,10 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Th&#xea;m h&#xe3;ng bay"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btAddAirlineMouseEntered"/>
+        <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btAddAirlineMouseExited"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="pnAllAirline">
       <AuxValues>
@@ -140,6 +144,9 @@
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tbAllAirlineMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

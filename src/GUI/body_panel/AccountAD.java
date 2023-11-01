@@ -93,9 +93,25 @@ public class AccountAD extends javax.swing.JPanel {
         tabAccount.setBackground(new java.awt.Color(255, 255, 255));
 
         btAddAccount.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-black18.png"))); // NOI18N
+        btAddAccount.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btAddAccountMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btAddAccountMouseExited(evt);
+            }
+        });
 
         btSearchAccount.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-search-pri18.png"))); // NOI18N
         btSearchAccount.setText("Tìm kiếm");
+        btSearchAccount.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btSearchAccountMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btSearchAccountMouseExited(evt);
+            }
+        });
         btSearchAccount.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSearchAccountActionPerformed(evt);
@@ -239,6 +255,14 @@ public class AccountAD extends javax.swing.JPanel {
         btAddRole.setForeground(new java.awt.Color(255, 255, 255));
         btAddRole.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-white18.png"))); // NOI18N
         btAddRole.setText("Thêm mới");
+        btAddRole.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btAddRoleMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btAddRoleMouseExited(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnAllAccountLayout = new javax.swing.GroupLayout(pnAllAccount);
         pnAllAccount.setLayout(pnAllAccountLayout);
@@ -264,6 +288,7 @@ public class AccountAD extends javax.swing.JPanel {
         pnAuth.setPreferredSize(new java.awt.Dimension(455, 452));
 
         lbTitleAuth.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        lbTitleAuth.setLabelFor(txtRoleName);
         lbTitleAuth.setText("Quyền tài khoản");
 
         txtRoleName.setText("Người dùng");
@@ -314,6 +339,14 @@ public class AccountAD extends javax.swing.JPanel {
 
         btDeletePermission.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-delete-red18.png"))); // NOI18N
         btDeletePermission.setText("Xóa");
+        btDeletePermission.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btDeletePermissionMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btDeletePermissionMouseExited(evt);
+            }
+        });
         btDeletePermission.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btDeletePermissionActionPerformed(evt);
@@ -322,6 +355,14 @@ public class AccountAD extends javax.swing.JPanel {
 
         btUpdatePermission.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-refresh-pri18.png"))); // NOI18N
         btUpdatePermission.setText("Cập nhật");
+        btUpdatePermission.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btUpdatePermissionMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btUpdatePermissionMouseExited(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnAuthLayout = new javax.swing.GroupLayout(pnAuth);
         pnAuth.setLayout(pnAuthLayout);
@@ -396,6 +437,60 @@ public class AccountAD extends javax.swing.JPanel {
     private void btDeletePermissionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeletePermissionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btDeletePermissionActionPerformed
+
+    private void btSearchAccountMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btSearchAccountMouseEntered
+        btSearchAccount.setBackground(Styles.PRI_NORMAL);
+        btSearchAccount.setForeground(Styles.WHITE);
+        btSearchAccount.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-search-white18.png")));
+    }//GEN-LAST:event_btSearchAccountMouseEntered
+
+    private void btSearchAccountMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btSearchAccountMouseExited
+        btSearchAccount.setBackground(Styles.PRI_LIGHTER);
+        btSearchAccount.setForeground(Styles.PRI_NORMAL);
+        btSearchAccount.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-search-pri18.png")));
+    }//GEN-LAST:event_btSearchAccountMouseExited
+
+    private void btAddAccountMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAddAccountMouseEntered
+        btAddAccount.setBackground(Styles.PRI_NORMAL);
+        btAddAccount.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-white18.png")));
+    }//GEN-LAST:event_btAddAccountMouseEntered
+
+    private void btAddRoleMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAddRoleMouseEntered
+        btAddRole.setBackground(Styles.PRI_DARK);
+    }//GEN-LAST:event_btAddRoleMouseEntered
+
+    private void btAddRoleMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAddRoleMouseExited
+        btAddRole.setBackground(Styles.PRI_NORMAL);
+    }//GEN-LAST:event_btAddRoleMouseExited
+
+    private void btUpdatePermissionMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btUpdatePermissionMouseEntered
+        btUpdatePermission.setBackground(Styles.PRI_NORMAL);
+        btUpdatePermission.setForeground(Styles.WHITE);
+        btUpdatePermission.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-refresh-white18.png")));
+    }//GEN-LAST:event_btUpdatePermissionMouseEntered
+
+    private void btAddAccountMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAddAccountMouseExited
+        btAddAccount.setBackground(Styles.GRAY_100);
+        btAddAccount.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-black18.png")));
+    }//GEN-LAST:event_btAddAccountMouseExited
+
+    private void btUpdatePermissionMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btUpdatePermissionMouseExited
+        btUpdatePermission.setBackground(Styles.GRAY_100);
+        btUpdatePermission.setForeground(Styles.PRI_NORMAL);
+        btUpdatePermission.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-refresh-pri18.png")));
+    }//GEN-LAST:event_btUpdatePermissionMouseExited
+
+    private void btDeletePermissionMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btDeletePermissionMouseEntered
+        btDeletePermission.setBackground(Styles.FUNC_DANGER);
+        btDeletePermission.setForeground(Styles.WHITE);
+        btDeletePermission.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-delete-white18.png")));
+    }//GEN-LAST:event_btDeletePermissionMouseEntered
+
+    private void btDeletePermissionMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btDeletePermissionMouseExited
+        btDeletePermission.setBackground(Styles.FUNC_DANGER_LIGHT);
+        btDeletePermission.setForeground(Styles.FUNC_DANGER);
+        btDeletePermission.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-delete-red18.png")));
+    }//GEN-LAST:event_btDeletePermissionMouseExited
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

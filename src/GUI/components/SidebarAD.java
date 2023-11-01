@@ -8,8 +8,6 @@ import GUI.IndexAD;
 import GUI.SigninGUI;
 import GUI.SignupEUC;
 import assets.Site.Order ;
-import javax.swing.BorderFactory;
-
 import assets.Styles;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -25,7 +23,7 @@ import javax.swing.JOptionPane;
  */
 public class SidebarAD extends javax.swing.JPanel implements ISidebar{
     Order siteOrder;
-    JFrame frParrent;
+    JFrame context;
     /**
      * Creates new form SidebarEUC
      */
@@ -36,12 +34,12 @@ public class SidebarAD extends javax.swing.JPanel implements ISidebar{
         siteOrder(siteOrder);
     }
     
-    public SidebarAD(JFrame frParrent) {
+    public SidebarAD(JFrame context) {
         initComponents();
         style();
         siteOrder = Order.STATISTIC;
         siteOrder(siteOrder);
-        this.frParrent = frParrent;
+        this.context = context;
     }
     
     @Override
@@ -67,42 +65,49 @@ public class SidebarAD extends javax.swing.JPanel implements ISidebar{
         btAirline.setBackground(this.getBackground());
         btAirport.setBackground(this.getBackground());
         btAccount.setBackground(this.getBackground());
+        btFeatures.setBackground(this.getBackground());
     }
     
     @Override
     public void siteOrder(Order siteOrder){
         this.siteOrder = siteOrder;
-        style();        
-        if(siteOrder == Order.STATISTIC){
-            resetNavItemBG();
-            btStatistic.setBackground(Styles.PRI_DARK);
-        } else if (siteOrder == Order.TICKET) {
-            resetNavItemBG();
-            btTicket.setBackground(Styles.PRI_DARK);
-        } else if (siteOrder == Order.PROMOTION) {
-            resetNavItemBG();
-            btPromo.setBackground(Styles.PRI_DARK);
-        } else if (siteOrder == Order.FLIGHT) {
-            resetNavItemBG();
-            btFlight.setBackground(Styles.PRI_DARK);
-        } else if (siteOrder == Order.AIRLINE) {
-            resetNavItemBG();
-            btAirline.setBackground(Styles.PRI_DARK);
-        } else if (siteOrder == Order.AIRPORT) {
-            resetNavItemBG();
-            btAirport.setBackground(Styles.PRI_DARK);
-        } else if (siteOrder == Order.ACCOUNT) {
-            resetNavItemBG();
-            btAccount.setBackground(Styles.PRI_DARK);
-        } else if (siteOrder == Order.FEATURES) {
-            resetNavItemBG();
-            btFeatures.setBackground(Styles.PRI_DARK);
+        style();                
+        resetNavItemBG();
+        switch (siteOrder) {
+            case STATISTIC:
+                btStatistic.setBackground(Styles.PRI_DARK);
+                break;
+            case TICKET:
+                btTicket.setBackground(Styles.PRI_DARK);
+                break;
+            case PROMOTION:
+                btPromo.setBackground(Styles.PRI_DARK);
+                break;
+            case FLIGHT:
+                btFlight.setBackground(Styles.PRI_DARK);
+                break;
+            case AIRLINE:
+                btAirline.setBackground(Styles.PRI_DARK);
+                break;
+            case AIRLINEPLANE:
+                break;
+            case AIRPORT:
+                btAirport.setBackground(Styles.PRI_DARK);
+                break;
+            case ACCOUNT:
+                btAccount.setBackground(Styles.PRI_DARK);
+                break;
+            case FEATURES:
+                btFeatures.setBackground(Styles.PRI_DARK);
+                break;
+            default:
+                throw new AssertionError();
         }
     }
     
     @Override
     public void navigateTo(Order siteOrder) throws ClassNotFoundException, SQLException, IOException{
-        ((IndexAD)frParrent).SiteOrder(siteOrder);
+        ((IndexAD)context).SiteOrder(siteOrder);
         this.siteOrder(siteOrder);
     }
     
@@ -239,7 +244,7 @@ public class SidebarAD extends javax.swing.JPanel implements ISidebar{
         btFlight.setBackground(getBackground());
         btFlight.setForeground(new java.awt.Color(255, 255, 255));
         btFlight.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/nav-flight-white20.png"))); // NOI18N
-        btFlight.setText("Chuyến bay");
+        btFlight.setText("Tuyến bay");
         btFlight.setBorder(null);
         grpNav.add(btFlight);
         btFlight.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -437,7 +442,7 @@ public class SidebarAD extends javax.swing.JPanel implements ISidebar{
         dialog.setLocationRelativeTo(this);
         int result = JOptionPane.showConfirmDialog(dialog, "Bạn có muốn đăng xuất", "Đăng xuất", JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION) {
-            frParrent.setVisible(false);
+            context.setVisible(false);
             try {
                 SigninGUI signinGUI = new SigninGUI();
                 signinGUI.setVisible(true);
@@ -641,7 +646,9 @@ public class SidebarAD extends javax.swing.JPanel implements ISidebar{
     }//GEN-LAST:event_btFeaturesMouseEntered
 
     private void btFeaturesMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btFeaturesMouseExited
-        btFeatures.setBackground(Styles.PRI_NORMAL);
+        if (btFeatures.getBackground() == Styles.PRI_DARKER) {
+            btFeatures.setBackground(Styles.PRI_NORMAL);
+        }
     }//GEN-LAST:event_btFeaturesMouseExited
 
     private void btFeaturesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btFeaturesActionPerformed

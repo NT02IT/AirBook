@@ -122,6 +122,9 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
+            <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="txtAirlineName"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="T&#xea;n h&#xe3;ng bay"/>
           </Properties>
         </Component>
@@ -135,6 +138,9 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
+            <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="txtAirlineID"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="M&#xe3; h&#xe3;ng bay"/>
           </Properties>
         </Component>
@@ -147,6 +153,10 @@
             </Property>
             <Property name="text" type="java.lang.String" value="X&#xf3;a"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btDeleteAirlineMouseEntered"/>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btDeleteAirlineMouseExited"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btUpdateAirline">
           <Properties>
@@ -155,6 +165,10 @@
             </Property>
             <Property name="text" type="java.lang.String" value="L&#x1b0;u s&#x1eed;a &#x111;&#x1ed5;i"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btUpdateAirlineMouseEntered"/>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btUpdateAirlineMouseExited"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -172,9 +186,10 @@
               <Component id="lbPlaneID" alignment="0" max="32767" attributes="0"/>
               <Component id="lbTicketClass" alignment="0" max="32767" attributes="0"/>
               <Component id="pnAllSeat" alignment="0" pref="0" max="32767" attributes="0"/>
-              <Component id="btDeletePlane" alignment="0" max="32767" attributes="0"/>
+              <Component id="btCancelEditPlane" alignment="0" max="32767" attributes="0"/>
               <Component id="btUpdatePlane" alignment="0" pref="180" max="32767" attributes="0"/>
               <Component id="cbTicketClass" alignment="0" max="32767" attributes="0"/>
+              <Component id="btDeletePlane" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -193,8 +208,10 @@
                   <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                   <Component id="btDeletePlane" min="-2" pref="34" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                  <Component id="btCancelEditPlane" min="-2" pref="34" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   <Component id="btUpdatePlane" min="-2" pref="34" max="-2" attributes="0"/>
-                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -256,21 +273,23 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="btDeletePlane">
+        <Component class="javax.swing.JButton" name="btCancelEditPlane">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="d3" green="e5" red="ff" type="rgb"/>
+              <Color blue="a5" green="8a" red="1" type="rgb"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="28" green="3a" red="ff" type="rgb"/>
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/assets/icon/action-delete-red18.png"/>
+              <Image iconType="3" name="/assets/icon/action-cancel-white18.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="X&#xf3;a m&#xe1;y bay"/>
+            <Property name="text" type="java.lang.String" value="H&#x1ee7;y s&#x1eed;a &#x111;&#x1ed5;i"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btDeletePlaneActionPerformed"/>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btCancelEditPlaneMouseEntered"/>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btCancelEditPlaneMouseExited"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btCancelEditPlaneActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btUpdatePlane">
@@ -286,6 +305,10 @@
             </Property>
             <Property name="text" type="java.lang.String" value="S&#x1eed;a th&#xf4;ng tin"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btUpdatePlaneMouseEntered"/>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btUpdatePlaneMouseExited"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="cbTicketClass">
           <Properties>
@@ -296,6 +319,25 @@
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
+        </Component>
+        <Component class="javax.swing.JButton" name="btDeletePlane">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="d3" green="e5" red="ff" type="rgb"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="28" green="3a" red="ff" type="rgb"/>
+            </Property>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/assets/icon/action-delete-red18.png"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="X&#xf3;a m&#xe1;y bay"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btDeletePlaneMouseEntered"/>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btDeletePlaneMouseExited"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btDeletePlaneActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -423,6 +465,10 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="Th&#xea;m m&#xe1;y bay"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btAddPlaneMouseEntered"/>
+                    <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btAddPlaneMouseExited"/>
+                  </Events>
                 </Component>
                 <Container class="javax.swing.JScrollPane" name="pnAllPlane">
                   <AuxValues>
@@ -517,7 +563,7 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="lbTitleMoreLuggage" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="btUpdateLuggage" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btAddLuggage" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="lbTotalOptionLugageHead" min="-2" max="-2" attributes="0"/>
@@ -537,7 +583,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="btUpdateLuggage" alignment="0" min="-2" pref="34" max="-2" attributes="0"/>
+                              <Component id="btAddLuggage" alignment="0" min="-2" pref="34" max="-2" attributes="0"/>
                               <Component id="lbTitleMoreLuggage" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
@@ -565,13 +611,17 @@
                     <Property name="text" type="java.lang.String" value="H&#xe0;nh l&#xfd; b&#x1ed5; sung"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JButton" name="btUpdateLuggage">
+                <Component class="javax.swing.JButton" name="btAddLuggage">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/assets/icon/action-refresh-pri18.png"/>
+                      <Image iconType="3" name="/assets/icon/action-add-pri18.png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="L&#x1b0;u s&#x1eed;a &#x111;&#x1ed5;i"/>
+                    <Property name="text" type="java.lang.String" value="Th&#xea;m HLBS"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btAddLuggageMouseEntered"/>
+                    <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btAddLuggageMouseExited"/>
+                  </Events>
                 </Component>
                 <Container class="javax.swing.JScrollPane" name="pnAllLugage">
                   <AuxValues>

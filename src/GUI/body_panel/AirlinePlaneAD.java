@@ -36,10 +36,11 @@ public class AirlinePlaneAD extends javax.swing.JPanel {
         Styles.ButtonNeutral(btUpdateAirline );
         Styles.ButtonSecondary(btAddPlane);
         Styles.Table(tbAllPlane, pnAllPlane);
-        Styles.ButtonSecondary(btUpdateLuggage);
+        Styles.ButtonSecondary(btAddLuggage);
+        Styles.ButtonPrimary(btCancelEditPlane);
         Styles.ButtonDanger(btDeletePlane);
         Styles.ButtonPrimary(btUpdatePlane);
-        Styles.ButtonSecondary(btUpdateLuggage);
+        Styles.ButtonSecondary(btAddLuggage);
         Styles.Table(tbAllLugage, pnAllLugage);
         
         pnMainBody.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
@@ -106,9 +107,10 @@ public class AirlinePlaneAD extends javax.swing.JPanel {
         lbTicketClass = new javax.swing.JLabel();
         pnAllSeat = new javax.swing.JScrollPane();
         txtAllSeat = new javax.swing.JTextArea();
-        btDeletePlane = new javax.swing.JButton();
+        btCancelEditPlane = new javax.swing.JButton();
         btUpdatePlane = new javax.swing.JButton();
         cbTicketClass = new javax.swing.JComboBox<>();
+        btDeletePlane = new javax.swing.JButton();
         pnMainBody = new javax.swing.JScrollPane();
         pnMain = new javax.swing.JPanel();
         pnPlanes = new javax.swing.JPanel();
@@ -121,7 +123,7 @@ public class AirlinePlaneAD extends javax.swing.JPanel {
         lbTotalPlaneTail = new javax.swing.JLabel();
         pnMoreLugage = new javax.swing.JPanel();
         lbTitleMoreLuggage = new javax.swing.JLabel();
-        btUpdateLuggage = new javax.swing.JButton();
+        btAddLuggage = new javax.swing.JButton();
         pnAllLugage = new javax.swing.JScrollPane();
         tbAllLugage = new javax.swing.JTable();
         lbTotalOptionLugageHead = new javax.swing.JLabel();
@@ -137,17 +139,35 @@ public class AirlinePlaneAD extends javax.swing.JPanel {
 
         lbAirlineName.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbAirlineName.setForeground(new java.awt.Color(255, 255, 255));
+        lbAirlineName.setLabelFor(txtAirlineName);
         lbAirlineName.setText("Tên hãng bay");
 
         lbAirlineID.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbAirlineID.setForeground(new java.awt.Color(255, 255, 255));
+        lbAirlineID.setLabelFor(txtAirlineID);
         lbAirlineID.setText("Mã hãng bay");
 
         btDeleteAirline.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-delete-black18.png"))); // NOI18N
         btDeleteAirline.setText("Xóa");
+        btDeleteAirline.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btDeleteAirlineMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btDeleteAirlineMouseExited(evt);
+            }
+        });
 
         btUpdateAirline.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-refresh-black18.png"))); // NOI18N
         btUpdateAirline.setText("Lưu sửa đổi");
+        btUpdateAirline.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btUpdateAirlineMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btUpdateAirlineMouseExited(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnAirlineInfoLayout = new javax.swing.GroupLayout(pnAirlineInfo);
         pnAirlineInfo.setLayout(pnAirlineInfoLayout);
@@ -211,13 +231,21 @@ public class AirlinePlaneAD extends javax.swing.JPanel {
         txtAllSeat.setMinimumSize(new java.awt.Dimension(20, 20));
         pnAllSeat.setViewportView(txtAllSeat);
 
-        btDeletePlane.setBackground(new java.awt.Color(255, 229, 211));
-        btDeletePlane.setForeground(new java.awt.Color(255, 58, 40));
-        btDeletePlane.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-delete-red18.png"))); // NOI18N
-        btDeletePlane.setText("Xóa máy bay");
-        btDeletePlane.addActionListener(new java.awt.event.ActionListener() {
+        btCancelEditPlane.setBackground(new java.awt.Color(1, 138, 165));
+        btCancelEditPlane.setForeground(new java.awt.Color(255, 255, 255));
+        btCancelEditPlane.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-cancel-white18.png"))); // NOI18N
+        btCancelEditPlane.setText("Hủy sửa đổi");
+        btCancelEditPlane.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btCancelEditPlaneMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btCancelEditPlaneMouseExited(evt);
+            }
+        });
+        btCancelEditPlane.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btDeletePlaneActionPerformed(evt);
+                btCancelEditPlaneActionPerformed(evt);
             }
         });
 
@@ -225,6 +253,32 @@ public class AirlinePlaneAD extends javax.swing.JPanel {
         btUpdatePlane.setForeground(new java.awt.Color(255, 255, 255));
         btUpdatePlane.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-refresh-white18.png"))); // NOI18N
         btUpdatePlane.setText("Sửa thông tin");
+        btUpdatePlane.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btUpdatePlaneMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btUpdatePlaneMouseExited(evt);
+            }
+        });
+
+        btDeletePlane.setBackground(new java.awt.Color(255, 229, 211));
+        btDeletePlane.setForeground(new java.awt.Color(255, 58, 40));
+        btDeletePlane.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-delete-red18.png"))); // NOI18N
+        btDeletePlane.setText("Xóa máy bay");
+        btDeletePlane.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btDeletePlaneMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btDeletePlaneMouseExited(evt);
+            }
+        });
+        btDeletePlane.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btDeletePlaneActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnPlaneDetailLayout = new javax.swing.GroupLayout(pnPlaneDetail);
         pnPlaneDetail.setLayout(pnPlaneDetailLayout);
@@ -234,9 +288,10 @@ public class AirlinePlaneAD extends javax.swing.JPanel {
             .addComponent(lbPlaneID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(lbTicketClass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(pnAllSeat, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-            .addComponent(btDeletePlane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btCancelEditPlane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btUpdatePlane, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
             .addComponent(cbTicketClass, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btDeletePlane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnPlaneDetailLayout.setVerticalGroup(
             pnPlaneDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -253,6 +308,8 @@ public class AirlinePlaneAD extends javax.swing.JPanel {
                 .addComponent(pnAllSeat)
                 .addGap(12, 12, 12)
                 .addComponent(btDeletePlane, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(btCancelEditPlane, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(btUpdatePlane, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
@@ -274,6 +331,14 @@ public class AirlinePlaneAD extends javax.swing.JPanel {
 
         btAddPlane.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-pri18.png"))); // NOI18N
         btAddPlane.setText("Thêm máy bay");
+        btAddPlane.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btAddPlaneMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btAddPlaneMouseExited(evt);
+            }
+        });
 
         tbAllPlane.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -399,8 +464,16 @@ public class AirlinePlaneAD extends javax.swing.JPanel {
         lbTitleMoreLuggage.setForeground(Styles.GRAY_600);
         lbTitleMoreLuggage.setText("Hành lý bổ sung");
 
-        btUpdateLuggage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-refresh-pri18.png"))); // NOI18N
-        btUpdateLuggage.setText("Lưu sửa đổi");
+        btAddLuggage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-pri18.png"))); // NOI18N
+        btAddLuggage.setText("Thêm HLBS");
+        btAddLuggage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btAddLuggageMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btAddLuggageMouseExited(evt);
+            }
+        });
 
         tbAllLugage.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -453,7 +526,7 @@ public class AirlinePlaneAD extends javax.swing.JPanel {
                     .addGroup(pnMoreLugageLayout.createSequentialGroup()
                         .addComponent(lbTitleMoreLuggage)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btUpdateLuggage))
+                        .addComponent(btAddLuggage))
                     .addGroup(pnMoreLugageLayout.createSequentialGroup()
                         .addComponent(lbTotalOptionLugageHead)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -468,7 +541,7 @@ public class AirlinePlaneAD extends javax.swing.JPanel {
             .addGroup(pnMoreLugageLayout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(pnMoreLugageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btUpdateLuggage, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btAddLuggage, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbTitleMoreLuggage))
                 .addGap(12, 12, 12)
                 .addComponent(pnAllLugage, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -528,17 +601,98 @@ public class AirlinePlaneAD extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btCancelEditPlaneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelEditPlaneActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btCancelEditPlaneActionPerformed
+
+    private void btUpdateAirlineMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btUpdateAirlineMouseEntered
+        btUpdateAirline.setBackground(Styles.PRI_LIGHTER);
+        btUpdateAirline.setForeground(Styles.PRI_NORMAL);
+        btUpdateAirline.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-refresh-pri18.png")));
+    }//GEN-LAST:event_btUpdateAirlineMouseEntered
+
+    private void btUpdateAirlineMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btUpdateAirlineMouseExited
+        btUpdateAirline.setBackground(Styles.GRAY_100);
+        btUpdateAirline.setForeground(Styles.GRAY_600);
+        btUpdateAirline.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-refresh-black18.png")));
+    }//GEN-LAST:event_btUpdateAirlineMouseExited
+
+    private void btDeleteAirlineMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btDeleteAirlineMouseEntered
+        btDeleteAirline.setBackground(Styles.FUNC_DANGER_LIGHT);
+        btDeleteAirline.setForeground(Styles.FUNC_DANGER);
+        btDeleteAirline.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-delete-red18.png")));
+    }//GEN-LAST:event_btDeleteAirlineMouseEntered
+
+    private void btDeleteAirlineMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btDeleteAirlineMouseExited
+        btDeleteAirline.setBackground(Styles.GRAY_100);
+        btDeleteAirline.setForeground(Styles.GRAY_600);
+        btDeleteAirline.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-delete-black18.png")));
+    }//GEN-LAST:event_btDeleteAirlineMouseExited
+
+    private void btCancelEditPlaneMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btCancelEditPlaneMouseEntered
+        btCancelEditPlane.setBackground(Styles.PRI_DARK);
+    }//GEN-LAST:event_btCancelEditPlaneMouseEntered
+
+    private void btCancelEditPlaneMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btCancelEditPlaneMouseExited
+        btCancelEditPlane.setBackground(Styles.PRI_NORMAL);
+    }//GEN-LAST:event_btCancelEditPlaneMouseExited
+
+    private void btUpdatePlaneMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btUpdatePlaneMouseEntered
+        btUpdatePlane.setBackground(Styles.PRI_DARK);
+    }//GEN-LAST:event_btUpdatePlaneMouseEntered
+
+    private void btUpdatePlaneMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btUpdatePlaneMouseExited
+        btUpdatePlane.setBackground(Styles.PRI_NORMAL);
+    }//GEN-LAST:event_btUpdatePlaneMouseExited
+
+    private void btAddPlaneMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAddPlaneMouseEntered
+        btAddPlane.setBackground(Styles.PRI_NORMAL);
+        btAddPlane.setForeground(Styles.WHITE);
+        btAddPlane.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-white18.png")));
+    }//GEN-LAST:event_btAddPlaneMouseEntered
+
+    private void btAddPlaneMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAddPlaneMouseExited
+        btAddPlane.setBackground(Styles.PRI_LIGHTER);
+        btAddPlane.setForeground(Styles.PRI_NORMAL);
+        btAddPlane.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-pri18.png")));
+    }//GEN-LAST:event_btAddPlaneMouseExited
+
+    private void btAddLuggageMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAddLuggageMouseEntered
+        btAddLuggage.setBackground(Styles.PRI_NORMAL);
+        btAddLuggage.setForeground(Styles.WHITE);
+        btAddLuggage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-white18.png")));
+    }//GEN-LAST:event_btAddLuggageMouseEntered
+
+    private void btAddLuggageMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAddLuggageMouseExited
+        btAddLuggage.setBackground(Styles.PRI_LIGHTER);
+        btAddLuggage.setForeground(Styles.PRI_NORMAL);
+        btAddLuggage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-pri18.png")));
+    }//GEN-LAST:event_btAddLuggageMouseExited
+
+    private void btDeletePlaneMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btDeletePlaneMouseEntered
+        btDeletePlane.setBackground(Styles.FUNC_DANGER);
+        btDeletePlane.setForeground(Styles.WHITE);
+        btDeletePlane.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-delete-white18.png")));
+    }//GEN-LAST:event_btDeletePlaneMouseEntered
+
+    private void btDeletePlaneMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btDeletePlaneMouseExited
+        btDeletePlane.setBackground(Styles.FUNC_DANGER_LIGHT);
+        btDeletePlane.setForeground(Styles.FUNC_DANGER);
+        btDeletePlane.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-delete-red18.png")));
+    }//GEN-LAST:event_btDeletePlaneMouseExited
+
     private void btDeletePlaneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeletePlaneActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btDeletePlaneActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btAddLuggage;
     private javax.swing.JButton btAddPlane;
+    private javax.swing.JButton btCancelEditPlane;
     private javax.swing.JButton btDeleteAirline;
     private javax.swing.JButton btDeletePlane;
     private javax.swing.JButton btUpdateAirline;
-    private javax.swing.JButton btUpdateLuggage;
     private javax.swing.JButton btUpdatePlane;
     private javax.swing.JComboBox<String> cbTicketClass;
     private javax.swing.JLabel lbAirlineID;

@@ -242,12 +242,15 @@ public class AccountEUC extends javax.swing.JPanel {
         lbAccInfo.setText("Thông tin tài khoản");
 
         lbUsername.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbUsername.setLabelFor(txtUsername);
         lbUsername.setText("Username");
 
         lbEmail.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbEmail.setLabelFor(txtEmail);
         lbEmail.setText("Email");
 
         lbPwd.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbPwd.setLabelFor(txtPwd);
         lbPwd.setText("Mật khẩu");
 
         javax.swing.GroupLayout pnAccountInfo5Layout = new javax.swing.GroupLayout(pnAccountInfo5);
@@ -301,26 +304,33 @@ public class AccountEUC extends javax.swing.JPanel {
         lbPersonalInfo.setText("Thông tin cá nhân");
 
         lbName.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbName.setLabelFor(txtName);
         lbName.setText("Họ và tên");
 
         lbGender.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbGender.setLabelFor(txtGender);
         lbGender.setText("Giới tính");
 
         txtGender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nam", "Nữ", "Khác" }));
 
         lbDoB.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbDoB.setLabelFor(txtDoB);
         lbDoB.setText("Ngày sinh");
 
         lbAddress.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbAddress.setLabelFor(txtAddress);
         lbAddress.setText("Địa chỉ");
 
         lbNation.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbNation.setLabelFor(txtNation);
         lbNation.setText("Quốc tịch ");
 
         lbPhoneNum.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbPhoneNum.setLabelFor(txtPhoneNum);
         lbPhoneNum.setText("Số điện thoại");
 
         lbCCCD.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbCCCD.setLabelFor(txtCCCD);
         lbCCCD.setText("Số CCCD");
 
         javax.swing.GroupLayout pnAccountInfo6Layout = new javax.swing.GroupLayout(pnAccountInfo6);
@@ -461,21 +471,6 @@ public class AccountEUC extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btDeleteAccount;
     private javax.swing.JButton btUpdateAccount;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox4;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     private javax.swing.JLabel lbAccInfo;
     private javax.swing.JLabel lbAddress;
     private javax.swing.JLabel lbCCCD;
@@ -497,9 +492,6 @@ public class AccountEUC extends javax.swing.JPanel {
     private javax.swing.JLabel lbTotalNum;
     private javax.swing.JLabel lbUsername;
     private javax.swing.JPanel pnAccountInfo;
-    private javax.swing.JPanel pnAccountInfo1;
-    private javax.swing.JPanel pnAccountInfo2;
-    private javax.swing.JPanel pnAccountInfo3;
     private javax.swing.JPanel pnAccountInfo5;
     private javax.swing.JPanel pnAccountInfo6;
     private javax.swing.JPanel pnFlightUpcoming;

@@ -183,6 +183,7 @@ public class BuyTicketEUC extends javax.swing.JPanel {
         lbDepartureFlight.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbDepartureFlight.setForeground(new java.awt.Color(255, 255, 255));
         lbDepartureFlight.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/info-time-white20.png"))); // NOI18N
+        lbDepartureFlight.setLabelFor(txtDepartureFlight);
         lbDepartureFlight.setText("Ngày khởi hành");
 
         txtDepartureFlight.setBorder(null);

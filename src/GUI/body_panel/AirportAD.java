@@ -28,6 +28,7 @@ public class AirportAD extends javax.swing.JPanel {
     }
     public  void  styles(){
         Styles.Table(tbAllAirport, pnAllAirport);
+        Styles.ButtonPrimary(btCancelEditAirport);
         Styles.ButtonDanger(btDeleteAirport);
         Styles.ButtonPrimary(btUpdateGate);
         Styles.ButtonSecondary(btAddAirport);
@@ -73,8 +74,9 @@ public class AirportAD extends javax.swing.JPanel {
         lbGate = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtAllGate = new javax.swing.JTextArea();
-        btDeleteAirport = new javax.swing.JButton();
+        btCancelEditAirport = new javax.swing.JButton();
         btUpdateGate = new javax.swing.JButton();
+        btDeleteAirport = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -87,6 +89,14 @@ public class AirportAD extends javax.swing.JPanel {
 
         btAddAirport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-pri18.png"))); // NOI18N
         btAddAirport.setText("Thêm sân bay");
+        btAddAirport.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btAddAirportMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btAddAirportMouseExited(evt);
+            }
+        });
 
         tbAllAirport.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -188,11 +198,38 @@ public class AirportAD extends javax.swing.JPanel {
         txtAllGate.setText("A1, A2, A3");
         jScrollPane2.setViewportView(txtAllGate);
 
-        btDeleteAirport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-delete-red18.png"))); // NOI18N
-        btDeleteAirport.setText("Xóa sân bay");
+        btCancelEditAirport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-cancel-white18.png"))); // NOI18N
+        btCancelEditAirport.setText("Hủy thay đổi");
+        btCancelEditAirport.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btCancelEditAirportMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btCancelEditAirportMouseExited(evt);
+            }
+        });
 
         btUpdateGate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-refresh-white18.png"))); // NOI18N
         btUpdateGate.setText("Cập nhật cổng");
+        btUpdateGate.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btUpdateGateMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btUpdateGateMouseExited(evt);
+            }
+        });
+
+        btDeleteAirport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-delete-red18.png"))); // NOI18N
+        btDeleteAirport.setText("Xóa sân bay");
+        btDeleteAirport.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btDeleteAirportMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btDeleteAirportMouseExited(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnAirportDetailLayout = new javax.swing.GroupLayout(pnAirportDetail);
         pnAirportDetail.setLayout(pnAirportDetailLayout);
@@ -202,8 +239,9 @@ public class AirportAD extends javax.swing.JPanel {
             .addComponent(lbAirportName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(lbGate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-            .addComponent(btDeleteAirport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btCancelEditAirport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btUpdateGate, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
+            .addComponent(btDeleteAirport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnAirportDetailLayout.setVerticalGroup(
             pnAirportDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -218,6 +256,8 @@ public class AirportAD extends javax.swing.JPanel {
                 .addComponent(jScrollPane2)
                 .addGap(12, 12, 12)
                 .addComponent(btDeleteAirport, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(btCancelEditAirport, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
                 .addComponent(btUpdateGate, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
@@ -243,9 +283,50 @@ public class AirportAD extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btAddAirportMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAddAirportMouseEntered
+        btAddAirport.setBackground(Styles.PRI_NORMAL);
+        btAddAirport.setForeground(Styles.WHITE);
+        btAddAirport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-white18.png")));
+    }//GEN-LAST:event_btAddAirportMouseEntered
+
+    private void btAddAirportMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAddAirportMouseExited
+        btAddAirport.setBackground(Styles.PRI_LIGHTER);
+        btAddAirport.setForeground(Styles.PRI_NORMAL);
+        btAddAirport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-pri18.png")));
+    }//GEN-LAST:event_btAddAirportMouseExited
+
+    private void btUpdateGateMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btUpdateGateMouseEntered
+        btUpdateGate.setBackground(Styles.PRI_DARK);
+    }//GEN-LAST:event_btUpdateGateMouseEntered
+
+    private void btUpdateGateMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btUpdateGateMouseExited
+        btUpdateGate.setBackground(Styles.PRI_NORMAL);
+    }//GEN-LAST:event_btUpdateGateMouseExited
+
+    private void btCancelEditAirportMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btCancelEditAirportMouseEntered
+        btCancelEditAirport.setBackground(Styles.PRI_DARK);
+    }//GEN-LAST:event_btCancelEditAirportMouseEntered
+
+    private void btCancelEditAirportMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btCancelEditAirportMouseExited
+        btCancelEditAirport.setBackground(Styles.PRI_NORMAL);
+    }//GEN-LAST:event_btCancelEditAirportMouseExited
+
+    private void btDeleteAirportMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btDeleteAirportMouseEntered
+        btDeleteAirport.setBackground(Styles.FUNC_DANGER);
+        btDeleteAirport.setForeground(Styles.WHITE);
+        btDeleteAirport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-delete-white18.png")));
+    }//GEN-LAST:event_btDeleteAirportMouseEntered
+
+    private void btDeleteAirportMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btDeleteAirportMouseExited
+        btDeleteAirport.setBackground(Styles.FUNC_DANGER_LIGHT);
+        btDeleteAirport.setForeground(Styles.FUNC_DANGER);
+        btDeleteAirport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-delete-red18.png")));
+    }//GEN-LAST:event_btDeleteAirportMouseExited
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAddAirport;
+    private javax.swing.JButton btCancelEditAirport;
     private javax.swing.JButton btDeleteAirport;
     private javax.swing.JButton btUpdateGate;
     private javax.swing.JPanel jPanel1;

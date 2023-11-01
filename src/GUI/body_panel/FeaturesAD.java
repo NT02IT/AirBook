@@ -68,6 +68,14 @@ public class FeaturesAD extends javax.swing.JPanel {
 
         btAddFeature.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-pri18.png"))); // NOI18N
         btAddFeature.setText("Thêm chức năng");
+        btAddFeature.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btAddFeatureMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btAddFeatureMouseExited(evt);
+            }
+        });
 
         tbAllFeature.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -113,9 +121,25 @@ public class FeaturesAD extends javax.swing.JPanel {
 
         btUpdateFeature.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-refresh-pri18.png"))); // NOI18N
         btUpdateFeature.setText("Lưu thay đổi");
+        btUpdateFeature.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btUpdateFeatureMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btUpdateFeatureMouseExited(evt);
+            }
+        });
 
         btDeleteFeature.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-delete-red18.png"))); // NOI18N
         btDeleteFeature.setText("Xóa chức năng");
+        btDeleteFeature.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btDeleteFeatureMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btDeleteFeatureMouseExited(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -164,6 +188,42 @@ public class FeaturesAD extends javax.swing.JPanel {
                 .addGap(24, 24, 24))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btAddFeatureMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAddFeatureMouseEntered
+        btAddFeature.setBackground(Styles.PRI_NORMAL);
+        btAddFeature.setForeground(Styles.WHITE);
+        btAddFeature.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-white18.png")));
+    }//GEN-LAST:event_btAddFeatureMouseEntered
+
+    private void btAddFeatureMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btAddFeatureMouseExited
+        btAddFeature.setBackground(Styles.PRI_LIGHTER);
+        btAddFeature.setForeground(Styles.PRI_NORMAL);
+        btAddFeature.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-pri18.png")));
+    }//GEN-LAST:event_btAddFeatureMouseExited
+
+    private void btUpdateFeatureMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btUpdateFeatureMouseEntered
+        btUpdateFeature.setBackground(Styles.PRI_NORMAL);
+        btUpdateFeature.setForeground(Styles.WHITE);
+        btUpdateFeature.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-refresh-white18.png")));
+    }//GEN-LAST:event_btUpdateFeatureMouseEntered
+
+    private void btUpdateFeatureMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btUpdateFeatureMouseExited
+        btUpdateFeature.setBackground(Styles.PRI_LIGHTER);
+        btUpdateFeature.setForeground(Styles.PRI_NORMAL);
+        btUpdateFeature.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-refresh-pri18.png")));
+    }//GEN-LAST:event_btUpdateFeatureMouseExited
+
+    private void btDeleteFeatureMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btDeleteFeatureMouseEntered
+        btDeleteFeature.setBackground(Styles.FUNC_DANGER);
+        btDeleteFeature.setForeground(Styles.WHITE);
+        btDeleteFeature.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-delete-white18.png")));
+    }//GEN-LAST:event_btDeleteFeatureMouseEntered
+
+    private void btDeleteFeatureMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btDeleteFeatureMouseExited
+        btDeleteFeature.setBackground(Styles.FUNC_DANGER_LIGHT);
+        btDeleteFeature.setForeground(Styles.FUNC_DANGER);
+        btDeleteFeature.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-delete-red18.png")));
+    }//GEN-LAST:event_btDeleteFeatureMouseExited
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
