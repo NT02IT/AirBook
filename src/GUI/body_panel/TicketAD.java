@@ -110,10 +110,7 @@ public class TicketAD extends javax.swing.JPanel {
 
         tbAllTicket.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "STT", "Hãy bay", "Ga đi", "Ga đến", "Khởi hành", "Thời gian bay", "Còn lại"

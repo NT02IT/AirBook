@@ -110,10 +110,7 @@ public class PromoAD extends javax.swing.JPanel {
 
         tbAllPromo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "STT", "Mã khuyến mãi", "Hãng bay", "Ngày kết thúc", "Khuyến mãi"

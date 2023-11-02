@@ -123,10 +123,7 @@ public class AccountAD extends javax.swing.JPanel {
 
         tableAllAccounts.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "STT", "Username", "Tên nhân viên", "Ngày tạo TK", "Loại TK"

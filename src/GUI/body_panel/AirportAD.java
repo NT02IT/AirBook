@@ -100,10 +100,7 @@ public class AirportAD extends javax.swing.JPanel {
 
         tbAllAirport.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "STT", "Mã cảng", "Tên cảng", "Tỉnh thành"
@@ -199,7 +196,7 @@ public class AirportAD extends javax.swing.JPanel {
         jScrollPane2.setViewportView(txtAllGate);
 
         btCancelEditAirport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-cancel-white18.png"))); // NOI18N
-        btCancelEditAirport.setText("Hủy thay đổi");
+        btCancelEditAirport.setText("Hủy sửa đổi");
         btCancelEditAirport.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btCancelEditAirportMouseEntered(evt);

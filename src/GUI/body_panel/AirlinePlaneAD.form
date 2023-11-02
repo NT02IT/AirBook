@@ -480,7 +480,7 @@
                     <Component class="javax.swing.JTable" name="tbAllPlane">
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="4" rowCount="41">
+                          <Table columnCount="4" rowCount="0">
                             <Column editable="false" title="STT" type="java.lang.String"/>
                             <Column editable="false" title="M&#xe3; m&#xe1;y bay" type="java.lang.String"/>
                             <Column editable="true" title="T&#xea;n m&#xe1;y bay" type="java.lang.String"/>
@@ -633,7 +633,7 @@
                     <Component class="javax.swing.JTable" name="tbAllLugage">
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                          <Table columnCount="3" rowCount="4">
+                          <Table columnCount="3" rowCount="0">
                             <Column editable="false" title="STT" type="java.lang.String"/>
                             <Column editable="false" title="Kh&#x1ed1;i l&#x1b0;&#x1ee3;ng (kg)" type="java.lang.String"/>
                             <Column editable="false" title="Gi&#xe1; th&#xe0;nh (&#x111;)" type="java.lang.String"/>

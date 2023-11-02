@@ -75,10 +75,7 @@ public class FlightAD extends javax.swing.JPanel {
 
         tbAllFlight.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "STT", "Ga đi", "Ga đến", "Số giờ bay", "Khởi hành"

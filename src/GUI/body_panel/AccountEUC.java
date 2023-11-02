@@ -292,11 +292,27 @@ public class AccountEUC extends javax.swing.JPanel {
 
         btDeleteAccount.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-delete-red18.png"))); // NOI18N
         btDeleteAccount.setText("Xóa tài khoản");
+        btDeleteAccount.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btDeleteAccountMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btDeleteAccountMouseExited(evt);
+            }
+        });
 
         btUpdateAccount.setBackground(new java.awt.Color(1, 138, 165));
         btUpdateAccount.setForeground(new java.awt.Color(255, 255, 255));
         btUpdateAccount.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-refresh-white18.png"))); // NOI18N
         btUpdateAccount.setText("Sửa thông tin");
+        btUpdateAccount.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btUpdateAccountMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btUpdateAccountMouseExited(evt);
+            }
+        });
 
         pnAccountInfo6.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -466,6 +482,26 @@ public class AccountEUC extends javax.swing.JPanel {
                 .addContainerGap(24, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btUpdateAccountMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btUpdateAccountMouseEntered
+        btUpdateAccount.setBackground(Styles.PRI_DARK);
+    }//GEN-LAST:event_btUpdateAccountMouseEntered
+
+    private void btUpdateAccountMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btUpdateAccountMouseExited
+        btUpdateAccount.setBackground(Styles.PRI_NORMAL);
+    }//GEN-LAST:event_btUpdateAccountMouseExited
+
+    private void btDeleteAccountMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btDeleteAccountMouseEntered
+        btDeleteAccount.setBackground(Styles.FUNC_DANGER);
+        btDeleteAccount.setForeground(Styles.WHITE);
+        btDeleteAccount.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-delete-white18.png")));
+    }//GEN-LAST:event_btDeleteAccountMouseEntered
+
+    private void btDeleteAccountMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btDeleteAccountMouseExited
+        btDeleteAccount.setBackground(Styles.FUNC_DANGER_LIGHT);
+        btDeleteAccount.setForeground(Styles.FUNC_DANGER);
+        btDeleteAccount.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-delete-red18.png")));
+    }//GEN-LAST:event_btDeleteAccountMouseExited
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

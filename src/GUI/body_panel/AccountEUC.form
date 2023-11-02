@@ -421,6 +421,10 @@
             </Property>
             <Property name="text" type="java.lang.String" value="X&#xf3;a t&#xe0;i kho&#x1ea3;n"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btDeleteAccountMouseEntered"/>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btDeleteAccountMouseExited"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btUpdateAccount">
           <Properties>
@@ -435,6 +439,10 @@
             </Property>
             <Property name="text" type="java.lang.String" value="S&#x1eed;a th&#xf4;ng tin"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btUpdateAccountMouseEntered"/>
+            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btUpdateAccountMouseExited"/>
+          </Events>
         </Component>
         <Container class="javax.swing.JPanel" name="pnAccountInfo6">
           <Properties>

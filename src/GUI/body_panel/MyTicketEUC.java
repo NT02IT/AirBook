@@ -139,10 +139,7 @@ public class MyTicketEUC extends javax.swing.JPanel {
 
         tbUnpaid.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
                 "STT", "Hãng bay", "Ga đi", "Ga đến", "Khởi hành", "Giá vé"
@@ -196,6 +193,14 @@ public class MyTicketEUC extends javax.swing.JPanel {
         btPayment.setForeground(new java.awt.Color(255, 255, 255));
         btPayment.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-tick-white18.png"))); // NOI18N
         btPayment.setText("Thanh toán");
+        btPayment.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btPaymentMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btPaymentMouseExited(evt);
+            }
+        });
 
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
@@ -261,10 +266,7 @@ public class MyTicketEUC extends javax.swing.JPanel {
 
         tbFlightUpcoming.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
                 "STT", "Hãng bay", "Ga đi", "Ga đến", "Khởi hành", "Giá vé"
@@ -305,10 +307,7 @@ public class MyTicketEUC extends javax.swing.JPanel {
 
         tbHistory.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
                 "STT", "Hãng bay", "Ga đi", "Ga đến", "Khởi hành", "Giá vé"
@@ -444,6 +443,14 @@ public class MyTicketEUC extends javax.swing.JPanel {
             .addComponent(pnMainBody, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btPaymentMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btPaymentMouseEntered
+        btPayment.setBackground(Styles.PRI_DARK);
+    }//GEN-LAST:event_btPaymentMouseEntered
+
+    private void btPaymentMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btPaymentMouseExited
+        btPayment.setBackground(Styles.PRI_NORMAL);
+    }//GEN-LAST:event_btPaymentMouseExited
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

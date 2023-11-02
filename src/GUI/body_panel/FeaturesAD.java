@@ -79,10 +79,7 @@ public class FeaturesAD extends javax.swing.JPanel {
 
         tbAllFeature.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "STT", "Mã chức năng", "Tên chức năng", "Mô tả chức năng"

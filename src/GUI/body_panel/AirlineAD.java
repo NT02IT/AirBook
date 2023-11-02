@@ -89,10 +89,7 @@ public class AirlineAD extends javax.swing.JPanel {
 
         tbAllAirline.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "STT", "Mã hãng bay", "Tên máy bay", "Số máy bay", "Doanh thu"

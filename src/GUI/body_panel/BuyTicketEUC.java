@@ -190,6 +190,14 @@ public class BuyTicketEUC extends javax.swing.JPanel {
 
         btSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-search-pri18.png"))); // NOI18N
         btSearch.setText("Tìm kiếm");
+        btSearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btSearchMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btSearchMouseExited(evt);
+            }
+        });
         btSearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btSearchActionPerformed(evt);
@@ -352,6 +360,18 @@ public class BuyTicketEUC extends javax.swing.JPanel {
     private void btSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSearchActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btSearchActionPerformed
+
+    private void btSearchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btSearchMouseEntered
+        btSearch.setBackground(Styles.PRI_DARKER);
+        btSearch.setForeground(Styles.WHITE);
+        btSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-search-white18.png")));
+    }//GEN-LAST:event_btSearchMouseEntered
+
+    private void btSearchMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btSearchMouseExited
+        btSearch.setBackground(Styles.PRI_LIGHTER);
+        btSearch.setForeground(Styles.PRI_NORMAL);
+        btSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-search-pri18.png")));
+    }//GEN-LAST:event_btSearchMouseExited
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

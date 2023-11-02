@@ -172,7 +172,7 @@
                 <Component class="javax.swing.JTable" name="tbUnpaid">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="6" rowCount="4">
+                      <Table columnCount="6" rowCount="0">
                         <Column editable="false" title="STT" type="java.lang.Object"/>
                         <Column editable="false" title="H&#xe3;ng bay" type="java.lang.String"/>
                         <Column editable="false" title="Ga &#x111;i" type="java.lang.String"/>
@@ -344,6 +344,10 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="Thanh to&#xe1;n"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btPaymentMouseEntered"/>
+                    <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btPaymentMouseExited"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JSeparator" name="jSeparator1">
                   <Properties>
@@ -406,7 +410,7 @@
                 <Component class="javax.swing.JTable" name="tbFlightUpcoming">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="6" rowCount="4">
+                      <Table columnCount="6" rowCount="0">
                         <Column editable="false" title="STT" type="java.lang.String"/>
                         <Column editable="false" title="H&#xe3;ng bay" type="java.lang.String"/>
                         <Column editable="false" title="Ga &#x111;i" type="java.lang.String"/>
@@ -495,7 +499,7 @@
                 <Component class="javax.swing.JTable" name="tbHistory">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="6" rowCount="4">
+                      <Table columnCount="6" rowCount="0">
                         <Column editable="false" title="STT" type="java.lang.String"/>
                         <Column editable="false" title="H&#xe3;ng bay" type="java.lang.String"/>
                         <Column editable="false" title="Ga &#x111;i" type="java.lang.String"/>
