@@ -256,6 +256,7 @@
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtDepartureFlight">
                   <Properties>
+                    <Property name="toolTipText" type="java.lang.String" value="dd/mm/yyyy"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="null"/>
                     </Property>
@@ -352,6 +353,9 @@
                       <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tbTiketsMouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -368,7 +372,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="Styles.Micro" type="code"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="m&#xe3; khuy&#x1ebf;n m&#xe3;i"/>
+                <Property name="text" type="java.lang.String" value="v&#xe9; bay"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="lbToltalTicket">

@@ -11,6 +11,7 @@ import DTO.entities.Ticket;
 import DTO.entities.User;
 import DTO.views.TicketViews;
 import DTO.views.TicketViews.TicketView;
+import GUI.popup.PuBuyTicketEUC;
 import assets.Styles;
 import assets.TextBubbleBorder;
 import java.awt.Color;
@@ -27,18 +28,25 @@ import javax.swing.table.DefaultTableModel;
  */
 public class BuyTicketEUC extends javax.swing.JPanel {
     private User user;
-    
+    private int rowPosition;
+    String rowPatternUnique;
     private TicketViews ticketViews;
+    private TicketView tkViewSendToDlg;
     private TicketBUS ticketBUS;
     private ArrayList<Ticket> listTicket;
     private ArrayList<TicketView> listTicketView;
     private DefaultTableModel ticketsModel;
     /**
-     * Creates new form BuyTicketEUC
+     * Creates new form PuBuyTicketEUC
      */
     public BuyTicketEUC() throws ClassNotFoundException, SQLException, IOException {
         initComponents();
         style();
+        ticketBUS = new TicketBUS();
+        listTicket = ticketBUS.getList();
+        ticketViews = new TicketViews(listTicket);
+        listTicketView = ticketViews.getList();
+        ticketsModel = (DefaultTableModel) tbTikets.getModel();
         initTickets();
         initProvine();
     }
@@ -47,6 +55,13 @@ public class BuyTicketEUC extends javax.swing.JPanel {
         this.user = user;
         initComponents();
         style();
+        ticketBUS = new TicketBUS();
+        listTicket = ticketBUS.getList();
+        
+        
+        ticketViews = new TicketViews(listTicket);
+        listTicketView = ticketViews.getList();
+        ticketsModel = (DefaultTableModel) tbTikets.getModel();
         initTickets();
         initProvine();        
     }
@@ -85,32 +100,25 @@ public class BuyTicketEUC extends javax.swing.JPanel {
         });
     }
     
-    public void initTickets() throws ClassNotFoundException, SQLException, IOException{
-        ticketBUS = new TicketBUS();
-        listTicket = ticketBUS.getList();
-        ticketViews = new TicketViews(listTicket);
-        listTicketView = ticketViews.getList();
-        
-        ticketsModel = (DefaultTableModel) tbTikets.getModel();
-        
+    public void initTickets() throws ClassNotFoundException, SQLException, IOException{       
         int stt = 1;
         String airline, flyingFrom, flyingTo, remain;
         LocalDateTime departureFlight;
         int hoursFly;
         
         for (TicketView ticketView : listTicketView){
-            airline = ticketView.getAirline();
-            flyingFrom = ticketView.getFlyingFrom();
-            flyingTo = ticketView.getFlyingTo();
-            remain = ticketView.getRemain() + "/" + ticketView.getQuantity();
-            departureFlight = ticketView.getDepartureFlight();
-            hoursFly = ticketView.getHoursFly();
+            airline = ticketView.airline;
+            flyingFrom = ticketView.flyingFrom;
+            flyingTo = ticketView.flyingTo;
+            remain = ticketView.remain + "/" + ticketView.quantity;
+            departureFlight = ticketView.departureFlight;
+            hoursFly = ticketView.hoursFly;
             ticketsModel.addRow(new Object[]{stt++, airline, flyingFrom, flyingTo, departureFlight, hoursFly, remain});
         }
         
         int ticketCount = 0;
         for(TicketView item : listTicketView){
-            ticketCount += item.getQuantity();
+            ticketCount += item.remain;
         }
         lbToltalTicket.setText(ticketCount + "");
     }
@@ -186,6 +194,7 @@ public class BuyTicketEUC extends javax.swing.JPanel {
         lbDepartureFlight.setLabelFor(txtDepartureFlight);
         lbDepartureFlight.setText("Ngày khởi hành");
 
+        txtDepartureFlight.setToolTipText("dd/mm/yyyy");
         txtDepartureFlight.setBorder(null);
 
         btSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-search-pri18.png"))); // NOI18N
@@ -274,6 +283,11 @@ public class BuyTicketEUC extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tbTikets.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbTiketsMouseClicked(evt);
+            }
+        });
         pnTickets.setViewportView(tbTikets);
         if (tbTikets.getColumnModel().getColumnCount() > 0) {
             tbTikets.getColumnModel().getColumn(0).setMinWidth(46);
@@ -290,7 +304,7 @@ public class BuyTicketEUC extends javax.swing.JPanel {
         lbToltalTicketHead.setText("Có tất cả");
 
         lbToltalTicketTail.setFont(Styles.Micro);
-        lbToltalTicketTail.setText("mã khuyến mãi");
+        lbToltalTicketTail.setText("vé bay");
 
         lbToltalTicket.setFont(Styles.Label);
         lbToltalTicket.setText("?");
@@ -372,6 +386,19 @@ public class BuyTicketEUC extends javax.swing.JPanel {
         btSearch.setForeground(Styles.PRI_NORMAL);
         btSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-search-pri18.png")));
     }//GEN-LAST:event_btSearchMouseExited
+
+    private void tbTiketsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbTiketsMouseClicked
+        rowPosition = this.tbTikets.getSelectedRow();
+        rowPatternUnique = ticketsModel.getValueAt(rowPosition, 1).toString()
+                + ticketsModel.getValueAt(rowPosition, 2).toString()
+                + ticketsModel.getValueAt(rowPosition, 3).toString();
+        System.out.println(rowPatternUnique);
+        tkViewSendToDlg = ticketViews.findObjectByPatternUnique(rowPatternUnique.trim());
+        System.out.println(tkViewSendToDlg);
+        PuBuyTicketEUC puBuyTicketEUC= new PuBuyTicketEUC(tkViewSendToDlg);
+        puBuyTicketEUC.setVisible(true);
+        puBuyTicketEUC.setLocationRelativeTo(null);
+    }//GEN-LAST:event_tbTiketsMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

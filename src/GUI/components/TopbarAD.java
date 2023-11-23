@@ -5,7 +5,7 @@
 package GUI.components;
 
 import GUI.IndexAD;
-import GUI.popup.TicketImportAD;
+import GUI.popup.PuTicketImportAD;
 import static assets.Site.Order;
 import assets.Styles;
 import java.awt.Container;
@@ -211,7 +211,7 @@ public class TopbarAD extends javax.swing.JPanel {
     }//GEN-LAST:event_btCTAMouseExited
 
     private void btCTAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCTAActionPerformed
-        TicketImportAD ticketImportAD = new TicketImportAD();
+        PuTicketImportAD ticketImportAD = new PuTicketImportAD();
         ticketImportAD.setVisible(true);
     }//GEN-LAST:event_btCTAActionPerformed
 

@@ -20,12 +20,14 @@ import java.util.logging.Logger;
  * @author agond
  */
 public class TicketClassDAO {
-    protected ArrayList<TicketClass> list = new ArrayList<>();
-    protected TicketClass ticketClass = new TicketClass();
+    protected ArrayList<TicketClass> list;
+    protected TicketClass ticketClass;
     private ConnectDB connectDB;
 
     public TicketClassDAO() throws ClassNotFoundException, SQLException, IOException {
         connectDB = new ConnectDB();
+        list = new ArrayList<>();
+        ticketClass = new TicketClass();
         read();
     }
 

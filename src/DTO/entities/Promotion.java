@@ -5,6 +5,7 @@
 package DTO.entities;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  *
@@ -14,8 +15,8 @@ public abstract class Promotion {
     protected String promoID;
     protected String airlineID;
     protected String promoName;
-    protected LocalDateTime dateStart;
-    protected LocalDateTime dateEnd;
+    protected Date dateStart;
+    protected Date dateEnd;
     protected int decreased;
     protected int isDelete = 0;
     
@@ -24,7 +25,7 @@ public abstract class Promotion {
     public Promotion() {
     }
 
-    public Promotion(String promoID, String airlineID, String promoName, LocalDateTime dateStart, LocalDateTime dateEnd, int decreased) {
+    public Promotion(String promoID, String airlineID, String promoName, Date dateStart, Date dateEnd, int decreased) {
         this.promoID = promoID;
         this.airlineID = airlineID;
         this.promoName = promoName;
@@ -45,11 +46,11 @@ public abstract class Promotion {
         return promoName;
     }
 
-    public LocalDateTime getDateStart() {
+    public Date getDateStart() {
         return dateStart;
     }
 
-    public LocalDateTime getDateEnd() {
+    public Date getDateEnd() {
         return dateEnd;
     }
 
@@ -73,11 +74,11 @@ public abstract class Promotion {
         this.promoName = promoName;
     }
 
-    public void setDateStart(LocalDateTime dateStart) {
+    public void setDateStart(Date dateStart) {
         this.dateStart = dateStart;
     }
 
-    public void setDateEnd(LocalDateTime dateEnd) {
+    public void setDateEnd(Date dateEnd) {
         this.dateEnd = dateEnd;
     }
 

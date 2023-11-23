@@ -22,12 +22,14 @@ import java.util.logging.Logger;
  * @author agond
  */
 public class FlightDAO {
-    protected ArrayList<Flight> list = new ArrayList<>();
-    protected Flight flight = new Flight();
+    protected ArrayList<Flight> list;
+    protected Flight flight;
     private ConnectDB connectDB;
 
     public FlightDAO() throws ClassNotFoundException, SQLException, IOException {
         connectDB = new ConnectDB();
+        list = new ArrayList<>();
+        flight = new Flight();
         read();
     }
 

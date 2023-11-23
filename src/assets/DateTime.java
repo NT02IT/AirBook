@@ -17,15 +17,24 @@ import assets.EnumCheck.DateValidStatus;
  * @author agond
  */
 public class DateTime{
-    private String strDate;
+    private String strDate; //Truyen vao voi dinh dang dd/mm/yyyy moi hoat dong
     private static String pattern = "\\d{1,2}/\\d{1,2}/\\d{4}";
     private static Date dateDate;
     private static SimpleDateFormat ddMMyyyy  = new SimpleDateFormat("dd/MM/yyyy");
     
     public DateTime(){}
     
-    public DateTime(String strDate){
+    public DateTime(String strDate) throws ParseException{
         this.strDate = strDate;
+        dateDate = ddMMyyyy.parse(strDate);
+    }
+    
+    public static String convertFormat(String dateString, String originalFormat, String newFormat) throws ParseException{
+        SimpleDateFormat originalFormatSDF = new SimpleDateFormat(originalFormat);
+        Date dateInput = originalFormatSDF.parse(dateString);
+        SimpleDateFormat newFormatSDF = new SimpleDateFormat(newFormat);
+        String dateOutput = newFormatSDF.format(dateInput);
+        return dateOutput;
     }
 
     public static boolean isLeapYear(int year) {
@@ -73,4 +82,9 @@ public class DateTime{
         if(isMatch) return DateValidStatus.VALID;
         else return DateValidStatus.UNCORRECTFORMAT;
     }
+
+    @Override
+    public String toString() {
+        return dateDate.toString();
+    }    
 }

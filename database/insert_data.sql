@@ -70,13 +70,6 @@ VALUES
     ('OD0001', 'AC25716701', '2032-9-29'),
     ('OD0002', 'AC26289183', '2032-9-29');
 
-GO
-INSERT INTO
-    orders(Order_ID, User_ID, Promo_ID, Date_order)
-VALUES
-    ('OD0003', 'AC26289183', 'VN-PR01', '2032-9-30'),
-    ('OD0004', 'AC25716701', 'VJ-PR02', '2032-9-30');
-
 -- Insert into order_details
 GO
 INSERT INTO

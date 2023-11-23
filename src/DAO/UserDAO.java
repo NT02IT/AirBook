@@ -21,12 +21,14 @@ import java.util.logging.Logger;
  * @author agond
  */
 public class UserDAO {
-    protected ArrayList<Person> list = new ArrayList<>();
-    protected Person user = new User();
+    protected ArrayList<Person> list;
+    protected Person user;
     private ConnectDB connectDB;
 
     public UserDAO() throws ClassNotFoundException, SQLException, IOException {
         connectDB = new ConnectDB();
+        list = new ArrayList<>();
+        user = new User();
         read();
     }
 

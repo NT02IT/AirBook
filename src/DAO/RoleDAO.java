@@ -21,12 +21,13 @@ import java.util.logging.Logger;
  * @author agond
  */
 public class RoleDAO {
-    public static Map<String, String> list = new HashMap<>();
+    public static Map<String, String> list;
     protected Role role;
     private ConnectDB connectDB;
     
     public RoleDAO() throws ClassNotFoundException, SQLException, IOException {
         connectDB = new ConnectDB();
+        list = new HashMap<>();
         read();
     }
     
