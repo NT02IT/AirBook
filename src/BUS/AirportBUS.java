@@ -43,4 +43,8 @@ public class AirportBUS {
         return null;
     }
     
+    public String getIDByName(String airportName) throws SQLException{
+        return airportDAO.getIDByName(airportName);
+    }
+    
 }

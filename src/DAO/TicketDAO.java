@@ -88,4 +88,31 @@ public class TicketDAO {
         connectDB.disconnect(context);
         return false;
     }
+    
+    public Ticket getObjectByFlightIDSeatID(String FlightID, String SeatID) throws SQLException{
+        String context = this.getClass().getName();
+        connectDB.connect(context);
+        try {
+            String sql = "Select * from tickets, flights, seats "
+                    + "Where tickets.Seat_ID=seats.Seat_ID "
+                    + "AND tickets.Flight_ID=flights.Flight_ID";
+            Statement stmt = connectDB.conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                Ticket ticket = new Ticket();
+                ticket.setTicketID(rs.getString(1));
+                ticket.setFlightID(rs.getString(2));
+                ticket.setGateID(rs.getString(3));
+                ticket.setSeatID(rs.getString(4));
+                ticket.setImportPrice(rs.getInt(5));
+                ticket.setSellingPrice(rs.getInt(6));
+                ticket.setSoldout(rs.getInt(7));
+                ticket.setIsDelete(rs.getInt(8));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TicketDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        connectDB.disconnect(context);
+        return ticket;
+    }
 }

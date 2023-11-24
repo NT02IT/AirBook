@@ -4,8 +4,27 @@
  */
 package GUI.popup;
 
-import DTO.views.TicketViews.TicketView;
+import BUS.AirlineBUS;
+import BUS.AirportBUS;
+import BUS.FlightBUS;
+import BUS.PlaneBUS;
+import BUS.SeatBUS;
+import BUS.TicketBUS;
+import BUS.TicketClassBUS;
+import DTO.entities.Airline;
+import DTO.entities.Flight;
+import DTO.entities.Plane;
+import DTO.entities.Seat;
+import DTO.entities.Ticket;
+import DTO.entities.TicketClass;
 import assets.Styles;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
 /**
@@ -13,7 +32,18 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
  * @author agond
  */
 public class PuBuyTicketEUC extends javax.swing.JFrame {
-    private TicketView ticketView;
+    private ArrayList<Ticket> tickets;
+    private SeatBUS seatBUS;
+    private FlightBUS flightBUS;
+    private AirlineBUS airlineBUS;
+    private PlaneBUS planeBUS;
+    private AirportBUS airportBUS;
+    private TicketClassBUS ticketClassBUS;
+    private String flight_ID;
+    private ArrayList<Seat> seats;
+    private String[] seatName;
+    private String ticketClass;
+    private String ticketClassID;
     /**
      * Creates new form BuyTicketEUC
      */
@@ -22,11 +52,27 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
         style();
     }
     
-    public PuBuyTicketEUC(TicketView ticketView) {
-        this.ticketView = ticketView;
-        initComponents();
-        style();
-        initDataTicketView();
+    public PuBuyTicketEUC(ArrayList<Ticket> tickets) {
+        try {
+            this.tickets = tickets;
+            flightBUS = new FlightBUS();
+            seatBUS = new SeatBUS();
+            airlineBUS = new AirlineBUS();
+            planeBUS = new PlaneBUS();
+            airportBUS = new AirportBUS();
+            ticketClassBUS = new TicketClassBUS();
+            initComponents();
+            style();
+            initDataTicketView();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PuBuyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(PuBuyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(PuBuyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(PuBuyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void style(){
@@ -92,7 +138,7 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
         chkRoundTrip.setBackground(this.getBackground());
         
         Styles.FormLabel(lbTurnDeparture);
-        Styles.ComboBox(cbTurnDeparture);
+        Styles.FormTextFeild(txtTurnDeparture);
         Styles.FormLabel(lbTurnTicketClass);
         Styles.ComboBox(cbTurnTicketClass);
         Styles.FormLabel(lbTurnSeat);
@@ -106,7 +152,7 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
         Styles.FormTextFeild(txtTurnMoreLuggagePrice);
         
         Styles.FormLabel(lbReturnDeparture);
-        Styles.ComboBox(cbReturnDeparture);
+        Styles.FormTextFeild(txtReturnDeparture);
         Styles.FormLabel(lbReturnTicketClass);
         Styles.ComboBox(cbReturnTicketClass);
         Styles.FormLabel(lbReturnSeat);
@@ -120,10 +166,55 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
         Styles.FormTextFeild(txtReturnMoreLuggagePrice);
     }
 
-    public void initDataTicketView(){
-        txtAirline.setText(ticketView.airline);
-        txtFlyingFrom.setText(ticketView.flyingFrom);
-        txtFlyingTo.setText(ticketView.flyingTo);
+    public void initDataTicketView() throws IOException, ClassNotFoundException, SQLException, ParseException{
+//        txtAirline.setText(ticketView.airline);
+//        txtFlyingFrom.setText(ticketView.flyingFrom);
+//        txtFlyingTo.setText(ticketView.flyingTo);
+//        txtHourFly.setText(ticketView.hoursFly + " giờ");
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+//        String turnDeparture = ticketView.departureFlight.format(formatter);
+//        txtTurnDeparture.setText(turnDeparture);
+//        cbTurnTicketClass.setModel(new javax.swing.DefaultComboBoxModel<>(ticketView.classes.toArray(new String[0])));
+        //cbTurnSeat.setModel(new javax.swing.DefaultComboBoxModel<>(ticketView.seatsOnClass.get("Business Class").toArray(new String[0])));
+        
+        
+//        flight_ID = flightBUS.getIDByDetail(txtFlyingFrom.getText(), txtFlyingTo.getText(), txtTurnDeparture.getText());
+//        seats = seatBUS.getAllByTicketDetail(txtAirline.getText(), flight_ID, cbTurnTicketClass.getItemAt(0));
+//        seatName = new String[seats.size()];
+//        int i = 0;
+//        for(Seat seat : seats){
+//                seatName[i] = seat.getSeatName();
+//                i++;
+//            }
+//        cbTurnSeat.setModel(new javax.swing.DefaultComboBoxModel<>(seatName));
+
+        Ticket ticket = tickets.get(0);
+        Flight flight = flightBUS.getObjectbyID(ticket.getFlightID());            
+        String flyingFrom = airportBUS.getObjectbyID(flight.getFlyingFrom()).getAirportName();
+        String flyingTo = airportBUS.getObjectbyID(flight.getFlyingTo()).getAirportName();
+        String hoursFly = flight.getHoursFly() + " giờ";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+        String departureFlight = flight.getDepartureFlight().format(formatter);
+        
+        txtFlyingFrom.setText(flyingFrom);
+        txtFlyingTo.setText(flyingTo);
+        txtTurnDeparture.setText(departureFlight);
+        txtHourFly.setText(hoursFly);
+        
+        Seat seat = seatBUS.getObjectbyID(ticket.getSeatID());
+        TicketClass ticketClass = ticketClassBUS.getObjectbyID(seat.getTicketClassID());
+        Plane plane = planeBUS.getObjectbyID(ticketClass.getPlaneID());
+        Airline airline = airlineBUS.getObjectbyID(plane.getAirlineID());
+        txtAirline.setText(airline.getAirlineName());
+        
+        ArrayList<TicketClass> ticketClasses = ticketClassBUS.getAllClassNameByAirlineIDFlightID(airline.getAirlineID(), flight.getFlightID());
+        int i = 0;
+        String[] ticketClassName = new String[ticketClasses.size()];
+        for(TicketClass tkCls : ticketClasses){
+            ticketClassName[i] = tkCls.getClassName();
+            i++;
+        }        
+        cbTurnTicketClass.setModel(new javax.swing.DefaultComboBoxModel<>(ticketClassName));
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -142,9 +233,6 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
         txtAirline = new javax.swing.JTextField();
         lbFlyingFrom = new javax.swing.JLabel();
         txtFlyingFrom = new javax.swing.JTextField();
-        txtFlyingTo = new javax.swing.JTextField();
-        lbFlyingTo = new javax.swing.JLabel();
-        jSeparator4 = new javax.swing.JSeparator();
         chkRoundTrip = new javax.swing.JCheckBox();
         jSeparator5 = new javax.swing.JSeparator();
         lbGrpTurnTicket = new javax.swing.JLabel();
@@ -168,15 +256,16 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
         lbGrpReturnBonus = new javax.swing.JLabel();
         lbReturnMoreLuggage = new javax.swing.JLabel();
         txtReturnMoreLuggagePrice = new javax.swing.JTextField();
-        cbTurnDeparture = new javax.swing.JComboBox<>();
         cbTurnTicketClass = new javax.swing.JComboBox<>();
         cbTurnSeat = new javax.swing.JComboBox<>();
-        cbReturnDeparture = new javax.swing.JComboBox<>();
         cbReturnTicketClass = new javax.swing.JComboBox<>();
         cbReturnSeat = new javax.swing.JComboBox<>();
-        jPanel2 = new javax.swing.JPanel();
         txtHourFly = new javax.swing.JTextField();
         lbHourFly = new javax.swing.JLabel();
+        lbFlyingTo = new javax.swing.JLabel();
+        txtFlyingTo = new javax.swing.JTextField();
+        txtReturnDeparture = new javax.swing.JTextField();
+        txtTurnDeparture = new javax.swing.JTextField();
         pnReceiverInfo = new javax.swing.JPanel();
         lbReceiver = new javax.swing.JLabel();
         jSeparator7 = new javax.swing.JSeparator();
@@ -208,6 +297,7 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
         btAddTicket = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Chi tiết vé");
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
 
@@ -229,12 +319,11 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
         lbFlyingFrom.setText("Bay từ");
 
         txtFlyingFrom.setEditable(false);
-
-        txtFlyingTo.setEditable(false);
-
-        lbFlyingTo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lbFlyingTo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/info-flight-to-black20.png"))); // NOI18N
-        lbFlyingTo.setText("Bay từ");
+        txtFlyingFrom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFlyingFromActionPerformed(evt);
+            }
+        });
 
         chkRoundTrip.setText("Chuyến bay khứ hồi");
 
@@ -258,7 +347,7 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
 
         lbTurnPriceNum.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         lbTurnPriceNum.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        lbTurnPriceNum.setText("2.000.000đ");
+        lbTurnPriceNum.setText("-");
 
         lbGrpTurnBonus.setText("Dịch vụ bổ sung");
 
@@ -266,11 +355,11 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
         lbTurnMoreLuggage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/info-luggage-black20.png"))); // NOI18N
         lbTurnMoreLuggage.setText("Thêm hành lý");
 
-        txtTurnMoreLuggagePrice.setText("80.000đ");
+        txtTurnMoreLuggagePrice.setToolTipText("");
 
-        cbTurnMoreLuggage.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10kg", "15kg" }));
+        cbTurnMoreLuggage.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
 
-        cbReturnMoreLuggage.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10kg", "15kg" }));
+        cbReturnMoreLuggage.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
 
         lbGrpReturnTicket.setText("Vé lượt về");
 
@@ -292,7 +381,7 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
 
         lbReturnPriceNum.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         lbReturnPriceNum.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        lbReturnPriceNum.setText("2.000.000đ");
+        lbReturnPriceNum.setText("-");
 
         lbGrpReturnBonus.setText("Dịch vụ bổ sung");
 
@@ -300,24 +389,26 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
         lbReturnMoreLuggage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/info-luggage-black20.png"))); // NOI18N
         lbReturnMoreLuggage.setText("Thêm hành lý");
 
-        txtReturnMoreLuggagePrice.setText("80.000đ");
+        cbTurnTicketClass.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
+        cbTurnTicketClass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbTurnTicketClassActionPerformed(evt);
+            }
+        });
 
-        cbTurnDeparture.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbTurnSeat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
+        cbTurnSeat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbTurnSeatActionPerformed(evt);
+            }
+        });
 
-        cbTurnTicketClass.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbReturnTicketClass.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
 
-        cbTurnSeat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cbReturnDeparture.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cbReturnTicketClass.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cbReturnSeat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        cbReturnSeat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
 
         txtHourFly.setEditable(false);
-        txtHourFly.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtHourFly.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         txtHourFly.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtHourFlyActionPerformed(evt);
@@ -325,91 +416,106 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
         });
 
         lbHourFly.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbHourFly.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbHourFly.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/info-time-black20.png"))); // NOI18N
+        lbHourFly.setText("Thời gian bay");
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbHourFly)
-                    .addComponent(txtHourFly, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addComponent(lbHourFly)
-                .addGap(4, 4, 4)
-                .addComponent(txtHourFly, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
+        lbFlyingTo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbFlyingTo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/info-flight-to-black20.png"))); // NOI18N
+        lbFlyingTo.setText("Bay đến");
+
+        txtFlyingTo.setEditable(false);
+        txtFlyingTo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFlyingToActionPerformed(evt);
+            }
+        });
+
+        txtReturnDeparture.setEditable(false);
+        txtReturnDeparture.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtReturnDeparture.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtReturnDepartureActionPerformed(evt);
+            }
+        });
+
+        txtTurnDeparture.setEditable(false);
+        txtTurnDeparture.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        txtTurnDeparture.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTurnDepartureActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnTicketInfoLayout = new javax.swing.GroupLayout(pnTicketInfo);
         pnTicketInfo.setLayout(pnTicketInfoLayout);
         pnTicketInfoLayout.setHorizontalGroup(
             pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnTicketInfoLayout.createSequentialGroup()
-                .addContainerGap(48, Short.MAX_VALUE)
+                .addGap(48, 48, 48)
                 .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnTicketInfoLayout.createSequentialGroup()
+                        .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(lbFlyingFrom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbAirline, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbFlyingTo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lbHourFly, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(27, 27, 27)
                         .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbReturnMoreLuggage)
-                            .addComponent(lbGrpReturnBonus)
-                            .addComponent(lbReturnSeat)
-                            .addComponent(lbReturnTicketClass)
-                            .addComponent(lbReturnDeparture)
-                            .addComponent(lbGrpReturnTicket)
-                            .addComponent(lbTurnMoreLuggage)
-                            .addComponent(lbGrpTurnBonus)
-                            .addComponent(lbTurnSeat, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbTurnTicketClass)
-                            .addComponent(lbTurnDeparture)
-                            .addComponent(lbGrpTurnTicket)
-                            .addComponent(chkRoundTrip)
-                            .addComponent(lbGrpFlightInfo))
-                        .addContainerGap())
+                            .addComponent(txtFlyingTo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtFlyingFrom, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtHourFly, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtAirline, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(pnTicketInfoLayout.createSequentialGroup()
-                        .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lbGrpTurnTicket)
+                                .addGroup(pnTicketInfoLayout.createSequentialGroup()
+                                    .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lbTurnDeparture)
+                                        .addComponent(lbTurnTicketClass)
+                                        .addComponent(lbTurnSeat))
+                                    .addGap(56, 56, 56)
+                                    .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(cbTurnTicketClass, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(txtTurnDeparture)
+                                        .addComponent(cbTurnSeat, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(lbTurnPriceNum, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(lbTurnPrice)
+                                        .addGroup(pnTicketInfoLayout.createSequentialGroup()
+                                            .addComponent(cbTurnMoreLuggage, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                                            .addComponent(txtTurnMoreLuggagePrice, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnTicketInfoLayout.createSequentialGroup()
+                                        .addComponent(lbReturnDeparture)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(txtReturnDeparture, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jSeparator6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(lbGrpFlightInfo, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(chkRoundTrip, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbGrpTurnBonus, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbTurnMoreLuggage, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbGrpReturnTicket, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbGrpReturnBonus, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnTicketInfoLayout.createSequentialGroup()
+                                        .addComponent(lbReturnMoreLuggage)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(txtReturnMoreLuggagePrice, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jSeparator5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(pnTicketInfoLayout.createSequentialGroup()
-                                .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                                    .addComponent(lbFlyingFrom)
-                                    .addComponent(txtFlyingFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(8, 8, 8)
                                 .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnTicketInfoLayout.createSequentialGroup()
-                                        .addComponent(cbReturnMoreLuggage, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(4, 4, 4)
-                                        .addComponent(txtReturnMoreLuggagePrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(cbReturnDeparture, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cbReturnTicketClass, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cbReturnSeat, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnTicketInfoLayout.createSequentialGroup()
-                                        .addComponent(cbTurnMoreLuggage, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(4, 4, 4)
-                                        .addComponent(txtTurnMoreLuggagePrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(cbTurnSeat, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cbTurnDeparture, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cbTurnTicketClass, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnTicketInfoLayout.createSequentialGroup()
-                                        .addComponent(jSeparator4)
-                                        .addGap(8, 8, 8)
-                                        .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                                            .addComponent(lbFlyingTo)
-                                            .addComponent(txtFlyingTo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lbTurnPriceNum, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lbReturnPriceNum, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtAirline, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jSeparator5, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jSeparator6, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lbTurnPrice, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lbReturnPrice, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(pnTicketInfoLayout.createSequentialGroup()
-                                .addComponent(lbAirline)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 232, Short.MAX_VALUE)))
+                                    .addComponent(lbReturnTicketClass)
+                                    .addComponent(lbReturnSeat))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cbReturnMoreLuggage, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(lbReturnPriceNum, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(lbReturnPrice, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(cbReturnTicketClass, 0, 186, Short.MAX_VALUE)
+                                        .addComponent(cbReturnSeat, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                         .addGap(24, 24, 24))))
         );
         pnTicketInfoLayout.setVerticalGroup(
@@ -417,42 +523,41 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
             .addGroup(pnTicketInfoLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(lbGrpFlightInfo)
-                .addGap(8, 8, 8)
+                .addGap(12, 12, 12)
                 .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(txtAirline, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbAirline))
-                .addGap(8, 8, 8)
-                .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnTicketInfoLayout.createSequentialGroup()
-                        .addComponent(lbFlyingFrom)
-                        .addGap(4, 4, 4)
-                        .addComponent(txtFlyingFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnTicketInfoLayout.createSequentialGroup()
-                        .addComponent(lbFlyingTo)
-                        .addGap(4, 4, 4)
-                        .addComponent(txtFlyingTo, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(15, 15, 15)
+                .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(txtFlyingFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbFlyingFrom))
+                .addGap(16, 16, 16)
+                .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(txtFlyingTo, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbFlyingTo))
+                .addGap(17, 17, 17)
+                .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(txtHourFly, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbHourFly))
+                .addGap(12, 12, 12)
                 .addComponent(chkRoundTrip)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbGrpTurnTicket)
-                .addGap(8, 8, 8)
-                .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbTurnDeparture, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(txtTurnDeparture, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbTurnDeparture))
-                .addGap(8, 8, 8)
-                .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbTurnTicketClass)
-                    .addComponent(cbTurnTicketClass, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
+                .addGap(16, 16, 16)
+                .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(cbTurnTicketClass, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbTurnTicketClass))
+                .addGap(16, 16, 16)
                 .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(cbTurnSeat, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbTurnSeat))
-                .addGap(8, 8, 8)
+                .addGap(12, 12, 12)
                 .addComponent(lbTurnPrice)
                 .addGap(4, 4, 4)
                 .addComponent(lbTurnPriceNum)
@@ -467,30 +572,30 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
                 .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbGrpReturnTicket)
-                .addGap(8, 8, 8)
-                .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbReturnDeparture, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(9, 9, 9)
+                .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(txtReturnDeparture, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbReturnDeparture))
                 .addGap(8, 8, 8)
                 .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(cbReturnTicketClass, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbReturnTicketClass))
-                .addGap(8, 8, 8)
-                .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lbReturnSeat)
-                    .addComponent(cbReturnSeat, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
+                .addGap(7, 7, 7)
+                .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(cbReturnSeat, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbReturnSeat))
+                .addGap(12, 12, 12)
                 .addComponent(lbReturnPrice)
                 .addGap(4, 4, 4)
                 .addComponent(lbReturnPriceNum)
-                .addGap(8, 8, 8)
+                .addGap(10, 10, 10)
                 .addComponent(lbGrpReturnBonus)
                 .addGap(8, 8, 8)
                 .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(txtReturnMoreLuggagePrice, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbReturnMoreLuggage)
                     .addComponent(cbReturnMoreLuggage, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addGap(48, 48, 48))
         );
 
         pnTicketInfoCont.setViewportView(pnTicketInfo);
@@ -703,6 +808,51 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtHourFlyActionPerformed
 
+    private void txtFlyingFromActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFlyingFromActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFlyingFromActionPerformed
+
+    private void txtFlyingToActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFlyingToActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFlyingToActionPerformed
+
+    private void txtReturnDepartureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtReturnDepartureActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtReturnDepartureActionPerformed
+
+    private void txtTurnDepartureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTurnDepartureActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTurnDepartureActionPerformed
+
+    private void cbTurnTicketClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTurnTicketClassActionPerformed
+        String selectedClass = cbTurnTicketClass.getSelectedItem().toString();           
+        try {
+            System.out.println("Hello oooooo");
+            //ticketClassID = ticketClassBUS.getObjectByPlaneIDClassName(planeID, selectedClass).getTicketClassID();
+            seats = seatBUS.getAllByTicketDetail(txtAirline.getText(), flight_ID, selectedClass);
+            seatName = new String[seats.size()];
+            int i = 0;
+            for(Seat seat : seats){
+                System.out.println("Hello oooooo " + i);
+                seatName[i] = seat.getSeatName();
+                i++;
+            }
+            cbTurnSeat.setModel(new javax.swing.DefaultComboBoxModel<>(seatName));
+        } catch (IOException ex) {
+            Logger.getLogger(PuBuyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PuBuyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(PuBuyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cbTurnTicketClassActionPerformed
+
+    private void cbTurnSeatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTurnSeatActionPerformed
+        String selectedSeatName = cbTurnSeat.getSelectedItem().toString();
+        
+        //lbTurnPriceNum.setText(ticketBUS.getObjectByFlightIDSeatID(flight_ID, seatID));
+    }//GEN-LAST:event_cbTurnSeatActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -746,17 +896,13 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbGender;
     private javax.swing.JComboBox<String> cbPromoCode;
     private javax.swing.JComboBox<String> cbReceiver;
-    private javax.swing.JComboBox<String> cbReturnDeparture;
     private javax.swing.JComboBox<String> cbReturnMoreLuggage;
     private javax.swing.JComboBox<String> cbReturnSeat;
     private javax.swing.JComboBox<String> cbReturnTicketClass;
-    private javax.swing.JComboBox<String> cbTurnDeparture;
     private javax.swing.JComboBox<String> cbTurnMoreLuggage;
     private javax.swing.JComboBox<String> cbTurnSeat;
     private javax.swing.JComboBox<String> cbTurnTicketClass;
     private javax.swing.JCheckBox chkRoundTrip;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
@@ -812,7 +958,9 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtNation;
     private javax.swing.JTextField txtPhoneNum;
+    private javax.swing.JTextField txtReturnDeparture;
     private javax.swing.JTextField txtReturnMoreLuggagePrice;
+    private javax.swing.JTextField txtTurnDeparture;
     private javax.swing.JTextField txtTurnMoreLuggagePrice;
     // End of variables declaration//GEN-END:variables
 }

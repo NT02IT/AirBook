@@ -77,4 +77,22 @@ public class AirportDAO {
         connectDB.disconnect(context);
         return false;
     }
+    
+    public String getIDByName(String airportName) throws SQLException{
+        String result = "---";
+        String context = this.getClass().getName();
+        connectDB.connect(context);
+        try {
+            String sql = "SELECT airports.Airport_ID FROM airports WHERE Airport_name = '" + airportName + "'";
+            Statement stmt = connectDB.conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                result = rs.getString(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FlightDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        connectDB.disconnect(context);
+        return result;
+    }
 }
