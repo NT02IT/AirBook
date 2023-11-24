@@ -5,12 +5,10 @@
         <group>
             <file>file:/D:/Workspace/Develop/Java/AirBook/src/GUI/body_panel/BuyTicketEUC.java</file>
             <file>file:/D:/Workspace/Develop/Java/AirBook/src/GUI/body_panel/PromoEUC.java</file>
-            <file>file:/D:/Workspace/Develop/Java/AirBook/src/DTO/views/TicketViews.java</file>
-            <file>file:/D:/Workspace/Develop/Java/AirBook/src/DTO/views/PromoViews.java</file>
             <file>file:/D:/Workspace/Develop/Java/AirBook/src/BUS/PromoBUS.java</file>
             <file>file:/D:/Workspace/Develop/Java/AirBook/src/GUI/popup/PuBuyTicketEUC.java</file>
             <file>file:/D:/Workspace/Develop/Java/AirBook/src/DAO/SeatDAO.java</file>
-            <file>file:/D:/Workspace/Develop/Java/AirBook/src/DAO/TicketClassDAO.java</file>
+            <file>file:/D:/Workspace/Develop/Java/AirBook/src/DTO/entities/Ticket.java</file>
         </group>
     </open-files>
 </project-private>
