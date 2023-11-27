@@ -25,10 +25,10 @@ public class Application {
 //        SigninGUI signinGUI = new SigninGUI();
 //        signinGUI.setVisible(true);
 
-        IndexEUC indexEUC = new IndexEUC(new User());
-        indexEUC.setVisible(true);
-//        IndexAD indexAD = new IndexAD();
-//        indexAD.setVisible(true);
+//        IndexEUC indexEUC = new IndexEUC(new User());
+//        indexEUC.setVisible(true);
+        IndexAD indexAD = new IndexAD();
+        indexAD.setVisible(true);
     }
     
 }

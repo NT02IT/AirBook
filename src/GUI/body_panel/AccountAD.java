@@ -25,6 +25,23 @@ public class AccountAD extends javax.swing.JPanel {
         initComponents();
         styles();
     }
+    public void initTableAccount(){
+//        roleBUS = new RoleBUS();
+//        listRole = roleBUS.getList();
+//        rolesModel = (DefaultTableModel) tbChucVu.getModel();
+//        int stt = 1;
+//        String roleID, roleName;
+//        for (Role role : listRole){
+//            roleID = role.getRoleID();
+//            roleName = role.getRoleName();
+//            rolesModel.addRow(new Object[]{stt++,roleName,roleID});
+//        }
+//        if (!listRole.isEmpty()) {
+//            Role firstRole = listRole.get(0);
+//            String firstRoleName = firstRole.getRoleName();
+//            initTablePermission(firstRoleName); // Initialize the permission table with the first role
+//        }
+    }
     public void styles(){
         Styles.ButtonNeutral(btAddAccount);
         Styles.ButtonSecondary(btSearchAccount);
