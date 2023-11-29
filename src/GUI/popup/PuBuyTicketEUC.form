@@ -96,63 +96,54 @@
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="lbGrpTurnTicket" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="lbTurnDeparture" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="lbTurnTicketClass" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              <Component id="lbTurnSeat" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                              <Component id="cbTurnTicketClass" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="txtTurnDeparture" max="32767" attributes="0"/>
-                                              <Component id="cbTurnSeat" max="32767" attributes="0"/>
-                                              <Component id="lbTurnPriceNum" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="lbTurnPrice" alignment="1" min="-2" max="-2" attributes="0"/>
-                                              <Group type="102" alignment="1" attributes="0">
-                                                  <Component id="cbTurnMoreLuggage" min="-2" pref="84" max="-2" attributes="0"/>
-                                                  <EmptySpace pref="24" max="32767" attributes="0"/>
-                                                  <Component id="txtTurnMoreLuggagePrice" min="-2" pref="76" max="-2" attributes="0"/>
-                                              </Group>
-                                          </Group>
+                                  <Component id="lbGrpTurnTicket" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="lbTurnDeparture" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lbTurnTicketClass" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lbTurnSeat" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                      <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                          <Component id="cbTurnTicketClass" alignment="0" pref="184" max="32767" attributes="0"/>
+                                          <Component id="txtTurnDeparture" max="32767" attributes="0"/>
+                                          <Component id="cbTurnSeat" max="32767" attributes="0"/>
+                                          <Component id="lbTurnPriceNum" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="lbTurnPrice" alignment="1" min="-2" max="-2" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Component id="lbReturnDeparture" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="32767" attributes="0"/>
-                                              <Component id="txtReturnDeparture" min="-2" pref="186" max="-2" attributes="0"/>
+                                              <Component id="cbTurnMoreLuggage" min="-2" pref="84" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Component id="txtTurnMoreLuggagePrice" max="32767" attributes="0"/>
                                           </Group>
-                                          <Component id="jSeparator6" alignment="0" min="-2" pref="330" max="-2" attributes="0"/>
-                                          <Component id="lbGrpFlightInfo" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="chkRoundTrip" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lbGrpTurnBonus" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lbTurnMoreLuggage" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lbGrpReturnTicket" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lbGrpReturnBonus" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Component id="lbReturnMoreLuggage" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace max="32767" attributes="0"/>
-                                              <Component id="txtReturnMoreLuggagePrice" min="-2" pref="76" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Component id="jSeparator5" alignment="0" min="-2" pref="330" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
+                                  <Component id="lbGrpFlightInfo" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="chkRoundTrip" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbGrpTurnBonus" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbTurnMoreLuggage" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbGrpReturnTicket" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbGrpReturnBonus" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lbReturnMoreLuggage" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jSeparator5" alignment="0" min="-2" pref="330" max="-2" attributes="0"/>
+                                  <Component id="jSeparator6" alignment="0" max="32767" attributes="0"/>
                                   <Group type="102" alignment="1" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="lbReturnTicketClass" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="lbReturnSeat" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="lbReturnDeparture" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="32767" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="cbReturnMoreLuggage" min="-2" pref="84" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="lbReturnPriceNum" alignment="1" max="32767" attributes="0"/>
-                                              <Component id="lbReturnPrice" alignment="1" max="32767" attributes="0"/>
-                                              <Component id="cbReturnTicketClass" pref="186" max="32767" attributes="0"/>
-                                              <Component id="cbReturnSeat" max="32767" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <Component id="cbReturnMoreLuggage" min="-2" pref="84" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Component id="txtReturnMoreLuggagePrice" max="32767" attributes="0"/>
                                           </Group>
+                                          <Component id="lbReturnPriceNum" alignment="1" max="32767" attributes="0"/>
+                                          <Component id="lbReturnPrice" alignment="1" max="32767" attributes="0"/>
+                                          <Component id="cbReturnTicketClass" pref="186" max="32767" attributes="0"/>
+                                          <Component id="cbReturnSeat" max="32767" attributes="0"/>
+                                          <Component id="cbReturnDeparture" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -224,12 +215,12 @@
                       <Component id="jSeparator6" min="-2" pref="12" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="lbGrpReturnTicket" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="2" attributes="0">
-                          <Component id="txtReturnDeparture" alignment="2" min="-2" pref="28" max="-2" attributes="0"/>
-                          <Component id="lbReturnDeparture" alignment="2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lbReturnDeparture" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cbReturnDeparture" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="2" attributes="0">
                           <Component id="cbReturnTicketClass" alignment="2" min="-2" pref="28" max="-2" attributes="0"/>
                           <Component id="lbReturnTicketClass" alignment="2" min="-2" max="-2" attributes="0"/>
@@ -301,6 +292,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Chuy&#x1ebf;n bay kh&#x1ee9; h&#x1ed3;i"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chkRoundTripActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JSeparator" name="jSeparator5">
             </Component>
@@ -378,6 +372,8 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txtTurnMoreLuggagePrice">
               <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+                <Property name="text" type="java.lang.String" value="-"/>
                 <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
             </Component>
@@ -389,6 +385,9 @@
                   </StringArray>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbTurnMoreLuggageActionPerformed"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
@@ -402,7 +401,11 @@
                     <StringItem index="0" value="-"/>
                   </StringArray>
                 </Property>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbReturnMoreLuggageActionPerformed"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
@@ -480,6 +483,11 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtReturnMoreLuggagePrice">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+                <Property name="text" type="java.lang.String" value="-"/>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
             </Component>
             <Component class="javax.swing.JComboBox" name="cbTurnTicketClass">
               <Properties>
@@ -518,7 +526,11 @@
                     <StringItem index="0" value="-"/>
                   </StringArray>
                 </Property>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbReturnTicketClassActionPerformed"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
@@ -530,7 +542,11 @@
                     <StringItem index="0" value="-"/>
                   </StringArray>
                 </Property>
+                <Property name="enabled" type="boolean" value="false"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbReturnSeatActionPerformed"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
@@ -575,15 +591,6 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFlyingToActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JTextField" name="txtReturnDeparture">
-              <Properties>
-                <Property name="editable" type="boolean" value="false"/>
-                <Property name="horizontalAlignment" type="int" value="2"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtReturnDepartureActionPerformed"/>
-              </Events>
-            </Component>
             <Component class="javax.swing.JTextField" name="txtTurnDeparture">
               <Properties>
                 <Property name="editable" type="boolean" value="false"/>
@@ -592,6 +599,19 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtTurnDepartureActionPerformed"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JComboBox" name="cbReturnDeparture">
+              <Properties>
+                <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                  <StringArray count="1">
+                    <StringItem index="0" value="-"/>
+                  </StringArray>
+                </Property>
+                <Property name="enabled" type="boolean" value="false"/>
+              </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>
@@ -755,9 +775,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtName">
-          <Properties>
-            <Property name="editable" type="boolean" value="false"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lbName">
           <Properties>
@@ -778,11 +795,10 @@
         <Component class="javax.swing.JComboBox" name="cbGender">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
+              <StringArray count="3">
+                <StringItem index="0" value="Nam"/>
+                <StringItem index="1" value="N&#x1eef;"/>
+                <StringItem index="2" value="Kh&#xe1;c"/>
               </StringArray>
             </Property>
           </Properties>
@@ -793,14 +809,14 @@
         <Component class="javax.swing.JComboBox" name="cbReceiver">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
+              <StringArray count="1">
+                <StringItem index="0" value="-"/>
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbReceiverActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
@@ -814,14 +830,8 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtDoB">
-          <Properties>
-            <Property name="editable" type="boolean" value="false"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtAddress">
-          <Properties>
-            <Property name="editable" type="boolean" value="false"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lbAddress">
           <Properties>
@@ -832,9 +842,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtNation">
-          <Properties>
-            <Property name="editable" type="boolean" value="false"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lbNation">
           <Properties>
@@ -845,9 +852,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtEmail">
-          <Properties>
-            <Property name="editable" type="boolean" value="false"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lbEmail">
           <Properties>
@@ -858,9 +862,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtPhoneNum">
-          <Properties>
-            <Property name="editable" type="boolean" value="false"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lbPhoneNum">
           <Properties>
@@ -871,9 +872,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtCCCD">
-          <Properties>
-            <Property name="editable" type="boolean" value="false"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lbCCCD">
           <Properties>
@@ -893,14 +891,14 @@
         <Component class="javax.swing.JComboBox" name="cbPromoCode">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
+              <StringArray count="1">
+                <StringItem index="0" value="-"/>
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbPromoCodeActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
@@ -911,7 +909,7 @@
               <Font name="Segoe UI" size="14" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="4"/>
-            <Property name="text" type="java.lang.String" value="-120.000&#x111;"/>
+            <Property name="text" type="java.lang.String" value="-"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JSeparator" name="jSeparator9">
@@ -946,6 +944,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Th&#xea;m v&#xe9;"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btAddTicketActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

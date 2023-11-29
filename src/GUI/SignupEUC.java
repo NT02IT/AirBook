@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import BUS.ReceiverBUS;
 import BUS.UserBUS;
 import DTO.entities.User;
 import assets.DateTime;
@@ -37,6 +38,7 @@ public class SignupEUC extends javax.swing.JFrame {
     private DateTime date= new DateTime();
     private User newAccount;
     private UserBUS userBUS;
+    private ReceiverBUS receiverBUS;
     
     public SignupEUC() throws ClassNotFoundException, SQLException {
         initComponents();
@@ -44,6 +46,7 @@ public class SignupEUC extends javax.swing.JFrame {
         this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/assets/image/app-favicon.png")));
         try {
             userBUS = new UserBUS();
+            receiverBUS = new ReceiverBUS();
         } catch (IOException ex) {
             Logger.getLogger(SignupEUC.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -780,6 +783,7 @@ public class SignupEUC extends javax.swing.JFrame {
             if (userBUS.checkUnique(newAccount)) {
                 try {
                     userBUS.signUp(newAccount);
+                    receiverBUS.create(newAccount);
                 } catch (NoSuchAlgorithmException ex) {
                     Logger.getLogger(SignupEUC.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ClassNotFoundException ex) {

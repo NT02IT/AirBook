@@ -35,6 +35,18 @@ public class UserBUS {
         quantity = list.size();
         return quantity;
     }
+
+//    public User getByID (String ID) throws SQLException{
+//        return userDAO.getByID(ID);
+//    }
+//    
+//    public User getByUsername (String Username) throws SQLException{
+//        return userDAO.getByUserName(Username);
+//    }
+//
+//    public int getTotalTypeAccountByRoleID(String roleID) throws SQLException{
+//        return userDAO.getTotalAccountByRoleID(roleID);
+//    }
     
     public User signIn(User user) throws NoSuchAlgorithmException{
         user.setPwd(User.hashPassword(user.getPwd()));
@@ -62,5 +74,10 @@ public class UserBUS {
         userDAO.create(user);
         list.add(user);  
         quantity = list.size();
+    }
+    
+    public boolean update(User user) throws SQLException, NoSuchAlgorithmException {
+        user.setPwd(User.hashPassword(user.getPwd()));
+        return userDAO.update(user);
     }
 }

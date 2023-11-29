@@ -87,4 +87,33 @@ public class PermissionDAO {
         connectDB.disconnect(context);
         return false;
     }
+
+    public ArrayList<Permission> getPermissonByRoleID(String roleID) throws IOException, ClassNotFoundException, SQLException{
+        String context = this.getClass().getName();
+        connectDB.connect(context);
+        ArrayList<Permission> listPermissonByRoleID = new ArrayList<>();    
+        try {
+            String sql = "Select * from permission where Role_ID = ?";
+            PreparedStatement stmt = ConnectDB.conn.prepareStatement(sql);
+            stmt.setString(1, roleID);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                Permission per = new Permission();
+                per.setPerID(rs.getString(1));
+                per.setRoleID(rs.getString(2));
+                per.setActionID(rs.getString(3));
+                per.setPerAccess(rs.getInt(4));
+                per.setPerCreate(rs.getInt(5));
+                per.setPerView(rs.getInt(6));
+                per.setPerEdit(rs.getInt(7));
+                per.setPerDelete(rs.getInt(8));  
+                per.setIsDelete(rs.getInt(9));       
+                listPermissonByRoleID.add(per);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PermissionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        connectDB.disconnect(context);
+        return listPermissonByRoleID;
+    }
 }

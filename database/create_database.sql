@@ -232,6 +232,7 @@ CREATE TABLE order_details (
 --
 
 -- Update 2/11/2023 - Nối Promocode vào OrderDetail thay vì Order
+GO
 ALTER TABLE order_details
 ADD Promo_ID varchar(20) REFERENCES promotions(Promo_ID)
 GO
@@ -240,6 +241,20 @@ DROP CONSTRAINT FK__orders__Promo_ID__628FA481
 GO
 ALTER TABLE orders
 DROP COLUMN Promo_ID
+
+-- Update 28/11/2023 - Thêm bảng promo_collection, thêm trường notPaid cho order_detail
+GO
+ALTER TABLE order_details
+ADD NotPaid BIT 
+GO
+ALTER TABLE order_details
+ADD IsDelete BIT 
+GO
+CREATE TABLE promo_collection(
+	Promo_collection_ID varchar(20) PRIMARY KEY,
+	User_ID varchar(20) REFERENCES users(User_ID),
+	Promo_ID varchar(20) REFERENCES promotions(Promo_ID)
+)
 
 --
 -- INSERT DATA

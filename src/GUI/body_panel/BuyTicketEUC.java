@@ -51,7 +51,8 @@ public class BuyTicketEUC extends javax.swing.JPanel {
     private SeatBUS seatBUS;
     private ArrayList<Ticket> listTicket;
     private Map<String,ArrayList<Ticket>> listTicketView;
-    private Map<String, ArrayList<Ticket>> mapRowTicket;
+    private Map<String,ArrayList<Ticket>> mapRowTicket;
+    private Map<String,ArrayList<Ticket>> mapRowReturnTicket;
     private DefaultTableModel ticketsModel;
     /**
      * Creates new form PuBuyTicketEUC
@@ -60,6 +61,7 @@ public class BuyTicketEUC extends javax.swing.JPanel {
         initComponents();
         style();
         mapRowTicket = new HashMap<String, ArrayList<Ticket>>();
+        mapRowReturnTicket = new HashMap<String, ArrayList<Ticket>>();
         airlineBUS = new AirlineBUS();
         planeBUS = new PlaneBUS();
         ticketClassBUS = new TicketClassBUS();
@@ -80,6 +82,7 @@ public class BuyTicketEUC extends javax.swing.JPanel {
         initComponents();
         style();
         mapRowTicket = new HashMap<String, ArrayList<Ticket>>();
+        mapRowReturnTicket = new HashMap<String, ArrayList<Ticket>>();
         airlineBUS = new AirlineBUS();
         planeBUS = new PlaneBUS();
         ticketClassBUS = new TicketClassBUS();
@@ -163,24 +166,19 @@ public class BuyTicketEUC extends javax.swing.JPanel {
             
             ticketsModel.addRow(new Object[]{stt++, airline, flyingFrom, flyingTo, departureFlight, hoursFly, remain});
             String key = airline + flyingFrom + flyingTo + departureFlight;            
-            mapRowTicket.put(key, entry.getValue());
+            mapRowTicket.put(key.trim(), entry.getValue());
+            
+            String keyReturnTicket = airline + flyingFrom + flyingTo;
+            if(mapRowReturnTicket.get(keyReturnTicket) == null){
+                mapRowReturnTicket.put(keyReturnTicket.trim(), entry.getValue());
+            } else{
+                for(Ticket tk : entry.getValue()){
+                    mapRowReturnTicket.get(keyReturnTicket).add(tk);
+                }                
+            }
+            
         }
         
-//        for (TicketView ticketView : listTicketView){
-//            airline = ticketView.airline;
-//            flyingFrom = ticketView.flyingFrom;
-//            flyingTo = ticketView.flyingTo;
-//            remain = ticketView.remain + "/" + ticketView.quantity;
-//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-//            departureFlight = ticketView.departureFlight.format(formatter);
-//            hoursFly = ticketView.hoursFly + " giờ";
-//            ticketsModel.addRow(new Object[]{stt++, airline, flyingFrom, flyingTo, departureFlight, hoursFly, remain});
-//        }
-        
-//        int ticketCount = 0;
-//        for(TicketView item : listTicketView){
-//            ticketCount += item.remain;
-//        }
         lbToltalTicket.setText(totalTicketRemain + "");
     }
     
@@ -450,14 +448,22 @@ public class BuyTicketEUC extends javax.swing.JPanel {
 
     private void tbTiketsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbTiketsMouseClicked
         rowPosition = this.tbTikets.getSelectedRow();
-        String rowKey = ticketsModel.getValueAt(rowPosition, 1).toString()
+        String rowKeyTicketTurn = ticketsModel.getValueAt(rowPosition, 1).toString()
                 + ticketsModel.getValueAt(rowPosition, 2).toString()
                 + ticketsModel.getValueAt(rowPosition, 3).toString()
-                + ticketsModel.getValueAt(rowPosition, 4).toString();
-        System.out.println(rowKey);
-        ArrayList<Ticket> tickets = mapRowTicket.get(rowKey);
+                + ticketsModel.getValueAt(rowPosition, 4).toString();        
+        ArrayList<Ticket> tickets = mapRowTicket.get(rowKeyTicketTurn.trim());
+        System.out.println(rowKeyTicketTurn);
+        System.out.println(tickets);
         
-        PuBuyTicketEUC puBuyTicketEUC= new PuBuyTicketEUC(tickets);
+        String rowKeyTicketReturn = ticketsModel.getValueAt(rowPosition, 1).toString()
+                + ticketsModel.getValueAt(rowPosition, 3).toString()
+                + ticketsModel.getValueAt(rowPosition, 2).toString();      
+        ArrayList<Ticket> returnTickets = mapRowReturnTicket.get(rowKeyTicketReturn.trim());
+        System.out.println(rowKeyTicketReturn);
+        System.out.println(returnTickets);
+        
+        PuBuyTicketEUC puBuyTicketEUC= new PuBuyTicketEUC(tickets, returnTickets, user);
         puBuyTicketEUC.setVisible(true);
         puBuyTicketEUC.setLocationRelativeTo(null);
     }//GEN-LAST:event_tbTiketsMouseClicked

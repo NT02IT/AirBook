@@ -5,6 +5,8 @@
 package GUI.body_panel;
 
 import BUS.PromoBUS;
+import BUS.PromoCollectionBUS;
+import DTO.entities.PromoCollection;
 import DTO.entities.Promotion;
 import DTO.entities.User;
 import DTO.views.PromoViews;
@@ -13,6 +15,9 @@ import assets.Styles;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -25,6 +30,8 @@ public class PromoEUC extends javax.swing.JPanel {
     private ArrayList<PromoView> listPromoView;
     private PromoBUS promoBUS;
     private DefaultTableModel promosModel;
+    private int rowPosition;
+    private String promoCodeSelected;
     /**
      * Creates new form PromoEUC
      */
@@ -135,6 +142,11 @@ public class PromoEUC extends javax.swing.JPanel {
         tbPromoCode.setSelectionForeground(Styles.PRI_NORMAL);
         tbPromoCode.setShowGrid(true);
         tbPromoCode.getTableHeader().setReorderingAllowed(false);
+        tbPromoCode.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbPromoCodeMouseClicked(evt);
+            }
+        });
         pnPromoCode.setViewportView(tbPromoCode);
         if (tbPromoCode.getColumnModel().getColumnCount() > 0) {
             tbPromoCode.getColumnModel().getColumn(0).setMinWidth(46);
@@ -192,6 +204,23 @@ public class PromoEUC extends javax.swing.JPanel {
         btSearch.setForeground(Styles.PRI_NORMAL);
         btSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-search-pri18.png")));
     }//GEN-LAST:event_btSearchMouseExited
+
+    private void tbPromoCodeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbPromoCodeMouseClicked
+        rowPosition = this.tbPromoCode.getSelectedRow();
+        promoCodeSelected = promosModel.getValueAt(rowPosition, 1).toString();
+        JOptionPane.showMessageDialog(this,"Copy mã khuyến mãi " + promoCodeSelected, "Copy MKM", JOptionPane.INFORMATION_MESSAGE);
+        PromoCollection promoCollection = new PromoCollection(PromoCollection.generateID(), user.getID(), promoCodeSelected);
+        try {
+            PromoCollectionBUS prmCollectionBUS = new PromoCollectionBUS();
+            prmCollectionBUS.create(promoCollection);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PromoEUC.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(PromoEUC.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(PromoEUC.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_tbPromoCodeMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

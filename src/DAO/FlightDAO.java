@@ -5,6 +5,7 @@
 package DAO;
 
 import BUS.AirportBUS;
+import DTO.entities.Airline;
 import DTO.entities.Flight;
 import assets.DateTime;
 import java.sql.Timestamp;
@@ -130,5 +131,40 @@ public class FlightDAO {
         }
         connectDB.disconnect(context);
         return result;
+    }
+    
+    public ArrayList<Flight> getAllFlightOfAirline(Airline airline) throws SQLException{
+        ArrayList<Flight> flights = new ArrayList<>();
+        String context = this.getClass().getName();
+        connectDB.connect(context);
+        try {
+            String sql = "SELECT f.Flight_ID, f.Flying_from, f.Flying_to, f.Hours_fly, f.Departure_flight, f.IsDelete FROM flights f \n" +
+                "JOIN tickets t ON f.Flight_ID = t.Flight_ID\n" +
+                "JOIN seats s ON t.Seat_ID = s.Seat_ID\n" +
+                "JOIN ticket_classes tc ON s.Ticket_class_ID = tc.Ticket_class_ID\n" +
+                "JOIN planes p ON tc.Plane_ID = p.Plane_ID\n" +
+                "JOIN airlines a ON p.Airline_ID = a.Airline_ID\n" +
+                "WHERE a.Airline_ID = '" + airline.getAirlineID() + "'\n" +
+                "GROUP BY f.Flight_ID, f.Flying_from, f.Flying_to, f.Hours_fly, f.Departure_flight, f.IsDelete";
+            Statement stmt = connectDB.conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                Flight flight = new Flight();
+                flight.setFlightID(rs.getString(1));
+                flight.setFlyingFrom(rs.getString(2));
+                flight.setFlyingTo(rs.getString(3));
+                flight.setHoursFly(rs.getInt(4));
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH-mm-ss");
+//                LocalDateTime departure = LocalDateTime.parse(rs.getString(5), formatter);
+//                flight.setDepartureFlight(departure);
+                flight.setDepartureFlight(rs.getTimestamp(5).toLocalDateTime());
+                flight.setIsDelete(rs.getInt(6));
+                flights.add(flight);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FlightDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        connectDB.disconnect(context);
+        return flights;
     }
 }

@@ -33,4 +33,11 @@ public class PromoBUS {
         quantity = list.size();
         return quantity;
     }
+    
+    public static Promotion getObjectbyID(String ID){
+        for(Promotion p : list){
+            if(ID.equals(p.getPromoID())) return p;
+        }
+        return null;
+    }
 }
