@@ -3,12 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package GUI.body_panel;
+import BUS.TicketBUS;
+
 import BUS.AirportBUS;
 import BUS.FlightBUS;
 import DAO.FlightDAO;
 import BUS.FlightBUS;
 import DTO.entities.Airport;
 import DTO.entities.Flight;
+
 import DTO.entities.User;
 import DTO.views.FlightViews;
 import DTO.views.FlightViews.FlightView;
@@ -27,6 +30,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class FlightAD extends javax.swing.JPanel {
     private User user;
+    private TicketBUS ticketBUS;
+    
+    
     private ArrayList<Flight> listFlight;
     private ArrayList<FlightViews.FlightView> listFlightView;
     private FlightBUS flightBUS;
@@ -48,7 +54,9 @@ public class FlightAD extends javax.swing.JPanel {
         initFlight();
     }
     
-  
+    public void initTableTicket(){
+        
+    }
     public void styles(){
         Styles.ButtonSecondary(btAddFlight);
         Styles.Table(tbAllFlight, pnAllFlight);

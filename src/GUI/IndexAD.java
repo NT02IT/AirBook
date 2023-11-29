@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import BUS.PermissionBUS;
 import DTO.entities.User;
 import GUI.body_panel.AccountAD;
 import GUI.body_panel.AirlineAD;
@@ -19,7 +20,10 @@ import assets.Site.Order;
 import java.awt.Toolkit;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
@@ -31,7 +35,9 @@ public class IndexAD extends javax.swing.JFrame implements iIndex{
     private static JPanel pnBody;
     public static Order siteOrder;
     public static User user;
+    private PermissionBUS permissionBUS;
     private static String suffix = "";
+
     private String airlineID;
     /**
      * Creates new form IndexAD
@@ -49,13 +55,15 @@ public class IndexAD extends javax.swing.JFrame implements iIndex{
             this.setTitle("Airbook - Thống kê");
         }        
     }
+
+    public IndexAD(User user) throws ClassNotFoundException, SQLException, IOException {
+=======
     
     public void setAirlineID(String airlineID) {
         this.airlineID = airlineID;
     }
-    
-    public IndexAD(User user) {
         this.user = user;
+        this.permissionBUS = new PermissionBUS();
         init();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/assets/image/app-favicon.png")));
@@ -79,53 +87,90 @@ public class IndexAD extends javax.swing.JFrame implements iIndex{
         } catch (java.lang.NullPointerException e) {
         }  
         switch (siteOrder) {
-            case STATISTIC:                
+            case STATISTIC:
                 pnBody = new StatisticAD(user);
                 topbarAD = new TopbarAD(this);
                 this.setTitle("Airbook - Thống kê " + suffix);
                 break;
             case TICKET:
-                pnBody = new TicketAD(user);
-                topbarAD = new TopbarAD(this);
-                this.setTitle("Airbook - Vé máy bay " + suffix);
-                break;
+                if(permissionBUS.hasPerAccess(user.getRoleID(), "TIK")){
+                    pnBody = new TicketAD(user);
+                    topbarAD = new TopbarAD(this);
+                    this.setTitle("Airbook - Vé máy bay " + suffix);
+                    break;
+                }else {
+                    JOptionPane.showMessageDialog(this, "Bạn không có quyền truy cập!");
+                    break;
+                }
+                
             case PROMOTION:
-                pnBody = new PromoAD(user);
-                topbarAD = new TopbarAD(this);
-                this.setTitle("Airbook - Khuyến mãi " + suffix);
-                break;
+                if(permissionBUS.hasPerAccess(user.getRoleID(), "PRM")){
+                    pnBody = new PromoAD(user);
+                    topbarAD = new TopbarAD(this);
+                    this.setTitle("Airbook - Khuyến mãi " + suffix);
+                    break;
+                }
+                else {
+                    JOptionPane.showMessageDialog(this, "Bạn không có quyền truy cập!");
+                    break;
+                }
             case FLIGHT:
-                pnBody = new FlightAD(user);
-                topbarAD = new TopbarAD(this);
-                this.setTitle("Airbook - Tuyến bay " + suffix);
-                break;
+                if(permissionBUS.hasPerAccess(user.getRoleID(), "FLT")){
+                    pnBody = new FlightAD(user);
+                    topbarAD = new TopbarAD(this);
+                    this.setTitle("Airbook - Tuyến bay " + suffix);
+                    break;
+                }else {
+                    JOptionPane.showMessageDialog(this, "Bạn không có quyền truy cập!");
+                    break;
+                }
             case AIRLINE:
-                pnBody = new AirlineAD(this, user);
-                topbarAD = new TopbarAD(this);
-                this.setTitle("Airbook - Hãng bay " + suffix);
-                break;
+                if(permissionBUS.hasPerAccess(user.getRoleID(), "ALN")){
+                    pnBody = new AirlineAD(this, user); 
+                    topbarAD = new TopbarAD(this);
+                    this.setTitle("Airbook - Hãng bay " + suffix);
+                    break;
+                }else {
+                    JOptionPane.showMessageDialog(this, "Bạn không có quyền truy cập!");
+                    break;
+                }
             case AIRLINEPLANE:
-                pnBody = new AirlinePlaneAD(user);
-                topbarAD = new TopbarAD(this, true, Order.AIRLINE);
-                this.setTitle("Airbook - Chi tiết hãng bay " + suffix);
+                    pnBody = new AirlinePlaneAD(user);
+                    topbarAD = new TopbarAD(this, true, Order.AIRLINE);
+                    this.setTitle("Airbook - Chi tiết hãng bay " + suffix);
+                    break;
+                
+            case AIRPORT:
+                if(permissionBUS.hasPerAccess(user.getRoleID(), "APT")){
+                    pnBody = new AirportAD(user);
+                    topbarAD = new TopbarAD(this);
+                    this.setTitle("Airbook - Sân bay " + suffix);
+                    break;
+                }
+                else {
+                    JOptionPane.showMessageDialog(this, "Bạn không có quyền truy cập!");
+                    break;
+                }
+                
+              
                 ((AirlinePlaneAD) pnBody).setAirlineID(airlineID); // Truyền giá trị airlineID cho AirlinePlaneAD
                 ((AirlinePlaneAD) pnBody).initPlane();
-                break;
-                case AIRPORT:
-                pnBody = new AirportAD(user);
-                topbarAD = new TopbarAD(this);
-                this.setTitle("Airbook - Sân bay " + suffix);
-                break;
+
             case ACCOUNT:
                 pnBody = new AccountAD(user);
                 topbarAD = new TopbarAD(this);
                 this.setTitle("Airbook - Tài khoản " + suffix);
                 break;
             case FEATURES:
+                if(permissionBUS.hasPerAccess(user.getRoleID(), "FET")){
                 pnBody = new FeaturesAD(user);
                 topbarAD = new TopbarAD(this);
                 this.setTitle("Airbook - Chức năng " + suffix);
-                break;
+                break;}
+                else {
+                    JOptionPane.showMessageDialog(this, "Bạn không có quyền truy cập!");
+                    break;
+                }
             default:
                 throw new AssertionError();
         }        
@@ -274,7 +319,15 @@ public class IndexAD extends javax.swing.JFrame implements iIndex{
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new IndexAD(new User()).setVisible(true);
+                try {
+                    new IndexAD(new User()).setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(IndexAD.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(IndexAD.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(IndexAD.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

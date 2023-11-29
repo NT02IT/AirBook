@@ -47,5 +47,10 @@ public class Role {
     public void setIsDelete(int isDelete) {
         this.isDelete = isDelete;
     }
-    
+    public static String generateID(){
+        long millis = System.currentTimeMillis();
+        String time = String.valueOf(millis);
+        String id = "ROLE" + time.substring(time.length()-3);
+        return id;
+    }
 }
