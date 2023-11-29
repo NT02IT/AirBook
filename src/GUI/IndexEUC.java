@@ -23,7 +23,7 @@ import javax.swing.WindowConstants;
  *
  * @author agond
  */
-public class IndexEUC extends javax.swing.JFrame implements IIndex{
+public class IndexEUC extends javax.swing.JFrame implements iIndex{
     private static JPanel pnBody;
     public static Order siteOrder;
     private User user;

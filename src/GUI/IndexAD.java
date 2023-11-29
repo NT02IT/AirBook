@@ -27,11 +27,12 @@ import javax.swing.WindowConstants;
  *
  * @author agond
  */
-public class IndexAD extends javax.swing.JFrame implements IIndex{
+public class IndexAD extends javax.swing.JFrame implements iIndex{
     private static JPanel pnBody;
     public static Order siteOrder;
     public static User user;
     private static String suffix = "";
+    private String airlineID;
     /**
      * Creates new form IndexAD
      */
@@ -48,6 +49,11 @@ public class IndexAD extends javax.swing.JFrame implements IIndex{
             this.setTitle("Airbook - Thống kê");
         }        
     }
+    
+    public void setAirlineID(String airlineID) {
+        this.airlineID = airlineID;
+    }
+    
     public IndexAD(User user) {
         this.user = user;
         init();
@@ -102,8 +108,10 @@ public class IndexAD extends javax.swing.JFrame implements IIndex{
                 pnBody = new AirlinePlaneAD(user);
                 topbarAD = new TopbarAD(this, true, Order.AIRLINE);
                 this.setTitle("Airbook - Chi tiết hãng bay " + suffix);
+                ((AirlinePlaneAD) pnBody).setAirlineID(airlineID); // Truyền giá trị airlineID cho AirlinePlaneAD
+                ((AirlinePlaneAD) pnBody).initPlane();
                 break;
-            case AIRPORT:
+                case AIRPORT:
                 pnBody = new AirportAD(user);
                 topbarAD = new TopbarAD(this);
                 this.setTitle("Airbook - Sân bay " + suffix);
