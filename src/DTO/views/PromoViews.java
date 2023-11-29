@@ -27,6 +27,7 @@ public class PromoViews {
         public String HangBay;
         public String NgayKetThuc;
         public String KhuyenMai;
+        public int HetHan;
 
         @Override
         public String toString() {
@@ -63,6 +64,7 @@ public class PromoViews {
                     pvItem.HangBay = promotion.getAirlineID();
                     pvItem.NgayKetThuc = DateTime.convertFormat(promotion.getDateEnd().toString(), "yyyy-MM-dd", "dd/MM/yyyy");
                     pvItem.KhuyenMai = ((FlatDiscount)promotion).getDecreased() + "đ";
+                    pvItem.HetHan = promotion.getIsDelete();
                     list.add(pvItem);
                 } catch (ParseException ex) {
                     Logger.getLogger(PromoViews.class.getName()).log(Level.SEVERE, null, ex);
@@ -74,6 +76,7 @@ public class PromoViews {
                     pvItem.HangBay = promotion.getAirlineID();
                     pvItem.NgayKetThuc = DateTime.convertFormat(promotion.getDateEnd().toString(), "yyyy-MM-dd", "dd/MM/yyyy");
                     pvItem.KhuyenMai = ((PercentDiscount)promotion).getDecreased() + "%";
+                    pvItem.HetHan = promotion.getIsDelete();
                     list.add(pvItem);
                 } catch (ParseException ex) {
                     Logger.getLogger(PromoViews.class.getName()).log(Level.SEVERE, null, ex);

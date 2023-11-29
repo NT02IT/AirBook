@@ -1,3 +1,4 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -79,4 +80,38 @@ public class ActionDAO {
         connectDB.disconnect(context);
         return false;
     }
+    public boolean update(Action action) throws SQLException {
+            String context = this.getClass().getName();
+            connectDB.connect(context);
+            try {
+                String sql = "UPDATE actions SET Action_Name = ? , Info = ?  "
+                        + "WHERE Action_ID = ?";
+                PreparedStatement pstmt = ConnectDB.conn.prepareStatement(sql);
+                pstmt.setString(1, action.getActionName());
+                pstmt.setString(2, action.getInfo());
+                pstmt.setString(3, action.getActionID());
+                pstmt.executeUpdate();
+                return true;
+            } catch (SQLException ex) {
+                Logger.getLogger(PermissionDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            connectDB.disconnect(context);
+            return false;
+        }
+    public boolean delete(Action action) throws SQLException{
+        String context = this.getClass().getName();
+        connectDB.connect(context);
+        try {
+            String sql = "UPDATE actions SET IsDelete = 1 WHERE Action_ID = ?";
+            PreparedStatement pstmt = ConnectDB.conn.prepareStatement(sql);
+            pstmt.setString(1, action.getActionID());
+            pstmt.executeUpdate();        
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+
+    }
 }
+

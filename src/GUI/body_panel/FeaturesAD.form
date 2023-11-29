@@ -34,14 +34,12 @@
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="pnAllFeature" alignment="0" max="32767" attributes="0"/>
+                          <Component id="pnAllFeature" alignment="0" pref="692" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Component id="lbTitle" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="117" max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                               <Component id="btDeleteFeature" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                              <Component id="btUpdateFeature" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="btAddFeature" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -59,7 +57,6 @@
                   <Component id="lbTitle" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                       <Component id="btAddFeature" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
-                      <Component id="btUpdateFeature" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
                       <Component id="btDeleteFeature" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -95,6 +92,7 @@
       <Events>
         <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btAddFeatureMouseEntered"/>
         <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btAddFeatureMouseExited"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btAddFeatureActionPerformed"/>
       </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="pnAllFeature">
@@ -142,6 +140,9 @@
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tbAllFeatureMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -166,18 +167,6 @@
         <Property name="text" type="java.lang.String" value="ch&#x1ee9;c n&#x103;ng"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="btUpdateFeature">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/assets/icon/action-refresh-pri18.png"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="L&#x1b0;u thay &#x111;&#x1ed5;i"/>
-      </Properties>
-      <Events>
-        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btUpdateFeatureMouseEntered"/>
-        <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btUpdateFeatureMouseExited"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JButton" name="btDeleteFeature">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
@@ -188,6 +177,7 @@
       <Events>
         <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btDeleteFeatureMouseEntered"/>
         <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btDeleteFeatureMouseExited"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btDeleteFeatureActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

@@ -12,6 +12,6 @@ import java.sql.SQLException;
  *
  * @author agond
  */
-public interface IIndex {
+public interface iIndex {
     void SiteOrder(Order siteOrder) throws ClassNotFoundException, SQLException, IOException;
 }

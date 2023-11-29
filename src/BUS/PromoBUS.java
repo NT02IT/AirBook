@@ -5,6 +5,7 @@
 package BUS;
 
 import DAO.PromoDAO;
+import DTO.entities.FlatDiscount;
 import DTO.entities.Promotion;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -33,11 +34,24 @@ public class PromoBUS {
         quantity = list.size();
         return quantity;
     }
+
     
     public static Promotion getObjectbyID(String ID){
         for(Promotion p : list){
             if(ID.equals(p.getPromoID())) return p;
         }
-        return null;
+        return null
+  }
+    public boolean createNewPromoPer(PercentDiscount p) throws ClassNotFoundException, SQLException{
+        return promoDAO.createPercent(p);
+    }
+    public boolean createNewPromoFlat(FlatDiscount p) throws ClassNotFoundException, SQLException{
+        return promoDAO.createFlat(p);
+    }
+    public boolean updatePromo(PercentDiscount p, int promoType) throws ClassNotFoundException, SQLException{
+        return promoDAO.update(p, promoType);
+    }
+    public boolean deletePromo(String id) throws ClassNotFoundException, SQLException{
+        return promoDAO.delete(id);
     }
 }

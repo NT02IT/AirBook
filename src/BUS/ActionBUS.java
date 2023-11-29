@@ -1,3 +1,4 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -27,4 +28,14 @@ public class ActionBUS {
     public ArrayList<Action> getList() {
         return list;
     }
+    public boolean createNewAction(Action action) throws ClassNotFoundException, SQLException{
+        return actionDAO.create(action);
+    }
+    public boolean updateAction(Action action) throws ClassNotFoundException, SQLException{
+        return actionDAO.update(action);
+    }
+    public boolean deleteAction(Action action) throws ClassNotFoundException, SQLException{
+        return actionDAO.delete(action);
+    }
 }
+

@@ -11,6 +11,9 @@ import java.util.Date;
 import java.util.regex.Pattern;
 
 import assets.EnumCheck.DateValidStatus;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 /**
  *
@@ -36,6 +39,14 @@ public class DateTime{
         String dateOutput = newFormatSDF.format(dateInput);
         return dateOutput;
     }
+    public static String convertFormatDayTime(String dateString, String originalFormat, String newFormat) throws DateTimeParseException {
+        DateTimeFormatter originalFormatter = DateTimeFormatter.ofPattern(originalFormat);
+        LocalDateTime dateTime = LocalDateTime.parse(dateString, originalFormatter);
+        DateTimeFormatter newFormatter = DateTimeFormatter.ofPattern(newFormat);
+        String formattedDate = dateTime.format(newFormatter);
+        return formattedDate;
+    }
+
 
     public static boolean isLeapYear(int year) {
         return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);

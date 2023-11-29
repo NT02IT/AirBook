@@ -34,20 +34,22 @@ public class UserBUS {
     public int getQuantity() {
         quantity = list.size();
         return quantity;
-    }
+    }    
 
-//    public User getByID (String ID) throws SQLException{
-//        return userDAO.getByID(ID);
-//    }
-//    
-//    public User getByUsername (String Username) throws SQLException{
-//        return userDAO.getByUserName(Username);
-//    }
-//
-//    public int getTotalTypeAccountByRoleID(String roleID) throws SQLException{
-//        return userDAO.getTotalAccountByRoleID(roleID);
-//    }
-    
+    public User getByID (String ID) throws SQLException{
+        return userDAO.getByID(ID);
+    }
+    public User getByUsername (String Username) throws SQLException{
+        return userDAO.getByUserName(Username);
+    }
+    public int getTotalTypeAccountByRoleID(String roleID) throws SQLException{
+        return userDAO.getTotalAccountByRoleID(roleID);
+    }
+    public User deleteUser (User user) throws SQLException{
+        userDAO.delete(user);
+        list.remove(user);
+        return null;
+    }
     public User signIn(User user) throws NoSuchAlgorithmException{
         user.setPwd(User.hashPassword(user.getPwd()));
         User temp;

@@ -321,9 +321,17 @@ public class SigninGUI extends javax.swing.JFrame {
                 }
                 indexEUC.setVisible(true);
             } else {
-                this.setVisible(false);
-                IndexAD indexAD = new IndexAD(user);
-                indexAD.setVisible(true);
+                try {
+                    this.setVisible(false);
+                    IndexAD indexAD = new IndexAD(user);
+                    indexAD.setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(SigninGUI.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(SigninGUI.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(SigninGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }            
         } else
             JOptionPane.showMessageDialog(null,"Sai thông tin đăng nhập!!!", "Error",JOptionPane.INFORMATION_MESSAGE);

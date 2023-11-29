@@ -4,6 +4,8 @@
  */
 package DTO.entities;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author agond
@@ -80,6 +82,6 @@ public class Plane {
 
     public void setIsDelete(int isDelete) {
         this.isDelete = isDelete;
-    }
+    }       
     
 }

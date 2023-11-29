@@ -34,6 +34,8 @@ public abstract class Promotion {
         this.decreased = decreased;
     }
 
+    
+
     public String getPromoID() {
         return promoID;
     }

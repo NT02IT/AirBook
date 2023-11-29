@@ -4,15 +4,34 @@
  */
 package GUI.body_panel;
 
+import BUS.ActionBUS;
+import BUS.PermissionBUS;
+import DTO.entities.Action;
+import DTO.entities.Person;
 import DTO.entities.User;
+import GUI.popup.PuFeatureAD;
 import assets.Styles;
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author agond
  */
 public class FeaturesAD extends javax.swing.JPanel {
-
+    private Person user;
+    
+    private ArrayList<Action> actionList;
+    private PermissionBUS permissionBUS;
+    private ActionBUS actionBUS;
+    private DefaultTableModel featureModel; 
     /**
      * Creates new form FeaturesAD
      */
@@ -21,14 +40,49 @@ public class FeaturesAD extends javax.swing.JPanel {
         style();
     }
     
-    public FeaturesAD(User user) {
+    public FeaturesAD(User user) throws ClassNotFoundException {
         initComponents();
+        this.user = user;
+        try {
+            this.permissionBUS = new PermissionBUS();
+            this.actionBUS = new ActionBUS();
+            actionList = actionBUS.getList();
+            initAccessPerRole();
+            initTableFeature(actionList);
+        } catch (SQLException ex) {
+            Logger.getLogger(FeaturesAD.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(FeaturesAD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         style();
     }
-    
+    public void initAccessPerRole() {
+        User userLogin = (User) this.user;
+        if(permissionBUS.hasPerCreate(userLogin.getRoleID(), "FET")) btAddFeature.setEnabled(true);
+        else btAddFeature.setEnabled(false);
+        
+        if(permissionBUS.hasPerDelete(userLogin.getRoleID(), "FET")) btDeleteFeature.setEnabled(true);
+        else btDeleteFeature.setEnabled(false);
+        
+    }
+    public void initTableFeature(ArrayList<Action> actions) throws ClassNotFoundException, SQLException, IOException{
+        
+        featureModel = (DefaultTableModel) tbAllFeature.getModel();
+        featureModel.setRowCount(0);
+        int stt = 1;
+        String featureID, featureName, featureDesc;
+        for (Action action : actionList){
+            if(action.getIsDelete() == 0){
+                featureID = action.getActionID();
+                featureName = action.getActionName();
+                featureDesc = action.getInfo();
+                featureModel.addRow(new Object[]{stt++,featureID,featureName,featureDesc});
+            }
+        }
+    }
     public void style(){
         Styles.ButtonDanger(btDeleteFeature);
-        Styles.ButtonSecondary(btUpdateFeature);
         Styles.ButtonSecondary(btAddFeature);
         Styles.Table(tbAllFeature, pnAllFeature);
         
@@ -58,7 +112,6 @@ public class FeaturesAD extends javax.swing.JPanel {
         lbTotalFeatureHead = new javax.swing.JLabel();
         lbTotalFeature = new javax.swing.JLabel();
         lbTotalFeatureTail = new javax.swing.JLabel();
-        btUpdateFeature = new javax.swing.JButton();
         btDeleteFeature = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -74,6 +127,11 @@ public class FeaturesAD extends javax.swing.JPanel {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btAddFeatureMouseExited(evt);
+            }
+        });
+        btAddFeature.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAddFeatureActionPerformed(evt);
             }
         });
 
@@ -100,6 +158,11 @@ public class FeaturesAD extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tbAllFeature.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbAllFeatureMouseClicked(evt);
+            }
+        });
         pnAllFeature.setViewportView(tbAllFeature);
         if (tbAllFeature.getColumnModel().getColumnCount() > 0) {
             tbAllFeature.getColumnModel().getColumn(0).setMinWidth(46);
@@ -116,17 +179,6 @@ public class FeaturesAD extends javax.swing.JPanel {
         lbTotalFeatureTail.setFont(Styles.Micro);
         lbTotalFeatureTail.setText("chức năng");
 
-        btUpdateFeature.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-refresh-pri18.png"))); // NOI18N
-        btUpdateFeature.setText("Lưu thay đổi");
-        btUpdateFeature.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btUpdateFeatureMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btUpdateFeatureMouseExited(evt);
-            }
-        });
-
         btDeleteFeature.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-delete-red18.png"))); // NOI18N
         btDeleteFeature.setText("Xóa chức năng");
         btDeleteFeature.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -135,6 +187,11 @@ public class FeaturesAD extends javax.swing.JPanel {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btDeleteFeatureMouseExited(evt);
+            }
+        });
+        btDeleteFeature.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btDeleteFeatureActionPerformed(evt);
             }
         });
 
@@ -154,14 +211,12 @@ public class FeaturesAD extends javax.swing.JPanel {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(pnAllFeature, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pnAllFeature, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lbTitle)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btDeleteFeature)
-                                .addGap(8, 8, 8)
-                                .addComponent(btUpdateFeature)
-                                .addGap(8, 8, 8)
+                                .addGap(18, 18, 18)
                                 .addComponent(btAddFeature)))
                         .addGap(24, 24, 24))))
         );
@@ -173,7 +228,6 @@ public class FeaturesAD extends javax.swing.JPanel {
                     .addComponent(lbTitle)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btAddFeature, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btUpdateFeature, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btDeleteFeature, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(12, 12, 12)
                 .addComponent(pnAllFeature)
@@ -198,18 +252,6 @@ public class FeaturesAD extends javax.swing.JPanel {
         btAddFeature.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-pri18.png")));
     }//GEN-LAST:event_btAddFeatureMouseExited
 
-    private void btUpdateFeatureMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btUpdateFeatureMouseEntered
-        btUpdateFeature.setBackground(Styles.PRI_NORMAL);
-        btUpdateFeature.setForeground(Styles.WHITE);
-        btUpdateFeature.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-refresh-white18.png")));
-    }//GEN-LAST:event_btUpdateFeatureMouseEntered
-
-    private void btUpdateFeatureMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btUpdateFeatureMouseExited
-        btUpdateFeature.setBackground(Styles.PRI_LIGHTER);
-        btUpdateFeature.setForeground(Styles.PRI_NORMAL);
-        btUpdateFeature.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-refresh-pri18.png")));
-    }//GEN-LAST:event_btUpdateFeatureMouseExited
-
     private void btDeleteFeatureMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btDeleteFeatureMouseEntered
         btDeleteFeature.setBackground(Styles.FUNC_DANGER);
         btDeleteFeature.setForeground(Styles.WHITE);
@@ -222,11 +264,54 @@ public class FeaturesAD extends javax.swing.JPanel {
         btDeleteFeature.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-delete-red18.png")));
     }//GEN-LAST:event_btDeleteFeatureMouseExited
 
+    private void btAddFeatureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddFeatureActionPerformed
+        PuFeatureAD puFeatureAD = new PuFeatureAD(null,(User) this.user);
+        puFeatureAD.setVisible(true);
+    }//GEN-LAST:event_btAddFeatureActionPerformed
+
+    private void tbAllFeatureMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbAllFeatureMouseClicked
+        User userLogin = (User) this.user;
+        if(evt.getClickCount() == 2 && permissionBUS.hasPerView(userLogin.getRoleID(), "FET")){
+            int selectedRow = tbAllFeature.getSelectedRow();
+            if(selectedRow != -1 ){
+                Action action = actionList.get(selectedRow);
+                if (action != null) {
+                    PuFeatureAD puFeatureAD = new PuFeatureAD(action, (User) this.user);
+                    puFeatureAD.setVisible(true);
+                }
+            }
+        }
+    }//GEN-LAST:event_tbAllFeatureMouseClicked
+
+    private void btDeleteFeatureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeleteFeatureActionPerformed
+        int selectedRow = tbAllFeature.getSelectedRow();
+        int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            try {
+                Action action = actionList.get(selectedRow);
+                boolean deleted = actionBUS.deleteAction(action);
+                if (deleted) {
+                    ActionBUS actionBUS = new ActionBUS();
+                    actionList = actionBUS.getList();
+                    JOptionPane.showMessageDialog(this, "Đã xóa thành công!", "Xác nhận xóa", JOptionPane.INFORMATION_MESSAGE);
+                    initTableFeature(actionList);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Xóa không thành công!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btDeleteFeatureActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAddFeature;
     private javax.swing.JButton btDeleteFeature;
-    private javax.swing.JButton btUpdateFeature;
     private javax.swing.JLabel lbTitle;
     private javax.swing.JLabel lbTotalFeature;
     private javax.swing.JLabel lbTotalFeatureHead;
