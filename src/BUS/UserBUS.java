@@ -78,8 +78,15 @@ public class UserBUS {
         quantity = list.size();
     }
     
+    public User getObjectbyID(String ID){
+        return userDAO.getObjectbyID(ID);
+    }
+    
     public boolean update(User user) throws SQLException, NoSuchAlgorithmException {
-        user.setPwd(User.hashPassword(user.getPwd()));
+        User tempUser = getObjectbyID(user.getID());
+        if(user.getPwd().equals(tempUser.getPwd()) == false){
+            user.setPwd(User.hashPassword(user.getPwd()));
+        }        
         return userDAO.update(user);
     }
 }
