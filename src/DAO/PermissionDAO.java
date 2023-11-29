@@ -27,6 +27,7 @@ public class PermissionDAO {
     private ConnectDB connectDB;
     
     public PermissionDAO() throws ClassNotFoundException, SQLException, IOException {
+        connectDB = new ConnectDB();
         list = new ArrayList<>();
         per = new Permission();
         read();

@@ -57,11 +57,6 @@ public class IndexAD extends javax.swing.JFrame implements iIndex{
     }
 
     public IndexAD(User user) throws ClassNotFoundException, SQLException, IOException {
-=======
-    
-    public void setAirlineID(String airlineID) {
-        this.airlineID = airlineID;
-    }
         this.user = user;
         this.permissionBUS = new PermissionBUS();
         init();
@@ -77,7 +72,9 @@ public class IndexAD extends javax.swing.JFrame implements iIndex{
             this.setTitle("Airbook - Thống kê");
         }  
     }
-    
+    public void setAirlineID(String airlineID) {
+        this.airlineID = airlineID;
+    }
     public void SiteOrder(Order siteOrder) throws ClassNotFoundException, SQLException, IOException{
         this.siteOrder = siteOrder;
         remove(pnBody);
@@ -138,6 +135,8 @@ public class IndexAD extends javax.swing.JFrame implements iIndex{
                     pnBody = new AirlinePlaneAD(user);
                     topbarAD = new TopbarAD(this, true, Order.AIRLINE);
                     this.setTitle("Airbook - Chi tiết hãng bay " + suffix);
+                    ((AirlinePlaneAD) pnBody).setAirlineID(airlineID); // Truyền giá trị airlineID cho AirlinePlaneAD
+                    ((AirlinePlaneAD) pnBody).initPlane();
                     break;
                 
             case AIRPORT:
@@ -151,11 +150,6 @@ public class IndexAD extends javax.swing.JFrame implements iIndex{
                     JOptionPane.showMessageDialog(this, "Bạn không có quyền truy cập!");
                     break;
                 }
-                
-              
-                ((AirlinePlaneAD) pnBody).setAirlineID(airlineID); // Truyền giá trị airlineID cho AirlinePlaneAD
-                ((AirlinePlaneAD) pnBody).initPlane();
-
             case ACCOUNT:
                 pnBody = new AccountAD(user);
                 topbarAD = new TopbarAD(this);
