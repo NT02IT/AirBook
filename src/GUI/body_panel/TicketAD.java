@@ -4,20 +4,33 @@
  */
 package GUI.body_panel;
 import BUS.AirlineBUS;
+import BUS.AirportBUS;
 import BUS.FlightBUS;
+import BUS.PermissionBUS;
+import BUS.PlaneBUS;
+import BUS.SeatBUS;
 import BUS.TicketBUS;
+import BUS.TicketClassBUS;
 import DTO.entities.Airline;
 import DTO.entities.Flight;
+import DTO.entities.Plane;
+import DTO.entities.Seat;
 import DTO.entities.Ticket;
+import DTO.entities.TicketClass;
 import assets.Styles;
 import DTO.entities.User;
+import DTO.views.TicketView;
 import GUI.popup.PuTicketSearchAD;
 import GUI.popup.puTicketAD;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
@@ -31,11 +44,22 @@ public class TicketAD extends javax.swing.JPanel {
     private TicketBUS ticketBUS;
     private FlightBUS flightBUS;
     private AirlineBUS airlineBUS;
+    private PermissionBUS permissionBUS;
     private DefaultTableModel ticketModel; 
+    
+    private AirportBUS airportBUS;
+    private SeatBUS seatBUS;
+    private TicketClassBUS ticketClassBUS;
+    private PlaneBUS planeBUS;
+    
+    private TicketView ticketView;
     
     private ArrayList<Ticket> ticketList;    
     private ArrayList<Flight> flightList;
     private ArrayList<Airline> airlineList;
+    private ArrayList<Ticket> listTicket;
+    private Map<String,ArrayList<Ticket>> listTicketView;
+    private Map<String, ArrayList<Ticket>> mapRowTicket;
 
     /**
      * Creates new form TicketAD
@@ -51,11 +75,21 @@ public class TicketAD extends javax.swing.JPanel {
             this.ticketBUS = new TicketBUS();
             this.flightBUS = new FlightBUS();
             this.airlineBUS = new AirlineBUS();
+            this.permissionBUS = new PermissionBUS();
+            this.listTicket = ticketBUS.getList();
+            airportBUS = new AirportBUS();
+            this.seatBUS = new SeatBUS();
+            this.ticketClassBUS = new TicketClassBUS();
+            this.planeBUS = new PlaneBUS();
             initComponents();
             styles();
             flightList = flightBUS.getList();
             this.airlineList = airlineBUS.getList();
-            initTableTicket(flightList);
+            ticketView = new TicketView(listTicket); 
+            listTicketView = ticketView.getList();
+            ticketModel = (DefaultTableModel) tbAllTicket.getModel();
+            mapRowTicket = new HashMap<String, ArrayList<Ticket>>();
+            initTickets();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(TicketAD.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -65,33 +99,72 @@ public class TicketAD extends javax.swing.JPanel {
         }
         
     }
-    
-    public void initTableTicket(ArrayList<Flight> flights) throws ClassNotFoundException, SQLException, IOException{
-        
-        ticketModel = (DefaultTableModel) tbAllTicket.getModel();
-        ticketModel.setRowCount(0);
-        
-        int stt = 1;
-        String airlineID, flightTo, flightFrom;
-        int timeFlight, quantity;
-        String timeStart;
-        for (Flight flight : flights){
-            if(flight.getIsDelete() == 0){
-                airlineID = flight.getFlightID().substring(0, 2);
-                for (Airline a : airlineList){
-                    if(a.getAirlineID().equals(airlineID)){
-                        airlineID = a.getAirlineName();
-                        break;
-                    }
-                }
-                flightFrom = flight.getFlyingFrom();
-                flightTo = flight.getFlyingTo();
-                timeFlight = flight.getHoursFly();
-                timeStart= assets.DateTime.convertFormatDayTime(flight.getDepartureFlight().toString(), "yyyy-MM-dd'T'HH:mm", "dd/MM/yyyy HH:mm:ss");
-                ticketModel.addRow(new Object[]{stt++,airlineID, flightFrom,flightTo,timeStart,timeFlight});
-            }
-            
+    public void initAccessPerRole() {
+        User userLogin = (User) this.user;
+        if(permissionBUS.hasPerCreate(userLogin.getRoleID(), "TIK")) {
+            btAddTicket.setEnabled(true);
+            btImportTicket.setEnabled(true);
         }
+        else {
+            btAddTicket.setEnabled(false);
+            btImportTicket.setEnabled(false );
+        }
+        
+    }
+    public void initTickets() throws ClassNotFoundException, SQLException, IOException{       
+        int stt = 1;
+        String airline, flyingFrom, flyingTo, remain;
+        String departureFlight;
+        String hoursFly;
+        Flight flight;
+        Ticket ticket;
+        
+        int totalTicketRemain = 0;
+        for(Map.Entry<String, ArrayList<Ticket>> entry : listTicketView.entrySet()){
+            ticket = entry.getValue().get(0);
+            flight = flightBUS.getObjectbyID(ticket.getFlightID());
+            
+            flyingFrom = airportBUS.getObjectbyID(flight.getFlyingFrom()).getAirportName();
+            flyingTo = airportBUS.getObjectbyID(flight.getFlyingTo()).getAirportName();
+            hoursFly = flight.getHoursFly() + " giờ";
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+            departureFlight = flight.getDepartureFlight().format(formatter);
+            
+            int remainTicket = 0;
+            int totalTicket = 0;
+            for(Ticket tk : entry.getValue()){
+                totalTicket++;
+                if(tk.getSoldout() == 0) remainTicket++;
+            }
+            totalTicketRemain += remainTicket;
+            remain = remainTicket + "/" + totalTicket;
+            
+            Seat seat = seatBUS.getObjectbyID(ticket.getSeatID());
+            TicketClass ticketClass = ticketClassBUS.getObjectbyID(seat.getTicketClassID());
+            Plane plane = planeBUS.getObjectbyID(ticketClass.getPlaneID());
+            airline = airlineBUS.getObjectbyID(plane.getAirlineID()).getAirlineName();            
+            
+            ticketModel.addRow(new Object[]{stt++, airline, flyingFrom, flyingTo, departureFlight, hoursFly, remain});
+            String key = airline + flyingFrom + flyingTo + departureFlight;            
+            mapRowTicket.put(key, entry.getValue());
+        }
+        
+//        for (TicketView ticketView : listTicketView){
+//            airline = ticketView.airline;
+//            flyingFrom = ticketView.flyingFrom;
+//            flyingTo = ticketView.flyingTo;
+//            remain = ticketView.remain + "/" + ticketView.quantity;
+//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+//            departureFlight = ticketView.departureFlight.format(formatter);
+//            hoursFly = ticketView.hoursFly + " giờ";
+//            ticketsModel.addRow(new Object[]{stt++, airline, flyingFrom, flyingTo, departureFlight, hoursFly, remain});
+//        }
+        
+//        int ticketCount = 0;
+//        for(TicketView item : listTicketView){
+//            ticketCount += item.remain;
+//        }
+//        lbToltalTicket.setText(totalTicketRemain + "");
     }
     public void styles(){
         Styles.ButtonNeutral(btAddTicket);        
@@ -207,6 +280,11 @@ public class TicketAD extends javax.swing.JPanel {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tbAllTicket.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbAllTicketMouseClicked(evt);
             }
         });
         pnAllTicket.setViewportView(tbAllTicket);
@@ -327,9 +405,35 @@ public class TicketAD extends javax.swing.JPanel {
     }//GEN-LAST:event_btSearchTicketActionPerformed
 
     private void btAddTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddTicketActionPerformed
-        puTicketAD pTicketAD = new puTicketAD();
-        pTicketAD.setVisible(true);
+        try {
+            puTicketAD pTicketAD = new puTicketAD(this.user, null);
+            pTicketAD.setVisible(true);
+        } catch (ParseException ex) {
+            Logger.getLogger(TicketAD.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btAddTicketActionPerformed
+
+    private void tbAllTicketMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbAllTicketMouseClicked
+        if(evt.getClickCount() == 2){
+            int rowPosition = this.tbAllTicket.getSelectedRow();
+            String rowKey = ticketModel.getValueAt(rowPosition, 1).toString()
+                    + ticketModel.getValueAt(rowPosition, 2).toString()
+                    + ticketModel.getValueAt(rowPosition, 3).toString()
+                    + ticketModel.getValueAt(rowPosition, 4).toString();
+            System.out.println(rowKey);
+            ArrayList<Ticket> tickets = mapRowTicket.get(rowKey);
+
+            puTicketAD pAD;
+            try {
+                pAD = new puTicketAD((User) this.user, tickets);
+                pAD.setVisible(true);
+                pAD.setLocationRelativeTo(null);
+            } catch (ParseException ex) {
+                Logger.getLogger(TicketAD.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+    }//GEN-LAST:event_tbAllTicketMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
