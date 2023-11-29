@@ -18,8 +18,8 @@ public class PercentDiscount extends Promotion{
     public PercentDiscount() {
     }
 
-    public PercentDiscount(String promoID, String airlineID, String promoName, Date dateStart, Date dateEnd, int decreased) {
-        super(promoID, airlineID, promoName, dateStart, dateEnd, decreased);
+    public PercentDiscount(String promoID, String airlineID, String promoName,  Date dateStart, Date dateEnd, int decreased) {
+        super(promoID, airlineID, promoName ,dateStart, dateEnd, decreased);
     }
     
     public int reduce(int billValue){

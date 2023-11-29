@@ -1,6 +1,13 @@
 ﻿CREATE DATABASE AIRBOOK;
 GO
 USE AIRBOOK;
+Select airlines.Airline_name, flights.Flying_from, flights.Flying_to,flights.Departure_flight,flights.Hours_fly
+FROM airlines, planes, ticket_classes,seats,tickets,flights,airports
+WHERE airlines.Airline_ID = planes.Airline_ID AND planes.Plane_ID= ticket_classes.Plane_ID
+AND ticket_classes.Ticket_class_ID = seats.Ticket_class_ID AND seats.Seat_ID = tickets.Seat_ID
+AND tickets.Flight_ID = flights.Flight_ID AND flights.Flying_from = airports.Airport_ID 
+
+Select * from airlines
 
 -- Table structure for table action
 GO

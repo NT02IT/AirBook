@@ -3,16 +3,35 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package GUI.body_panel;
+import BUS.AirlineBUS;
+import BUS.PermissionBUS;
+import DTO.entities.Airline;
+import DTO.entities.Promotion;
 import assets.Styles;
 import DTO.entities.User;
 import GUI.popup.PuPromoAD;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import java.util.ArrayList;
+import java.util.Date;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author agond
  */
 public class PromoAD extends javax.swing.JPanel {
     private User user;
+    private PermissionBUS permissionBUS;
+    private AirlineBUS airlineBUS;
+    
+    private ArrayList<Promotion> promotions;
+    private ArrayList<Airline> airlineList;    
+
+    
+    private DefaultTableModel promoModel;
     /**
      * Creates new form PromoAD
      */
@@ -22,9 +41,20 @@ public class PromoAD extends javax.swing.JPanel {
     }
     
     public PromoAD(User user) {
-        this.user = user;
-        initComponents();
-        styles();
+        try {
+            this.user = user;
+            this.permissionBUS = new PermissionBUS();
+            this.airlineBUS = new AirlineBUS();
+            this.airlineList = airlineBUS.getList();
+            initComponents();
+            styles();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PromoAD.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(PromoAD.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(PromoAD.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     public void styles(){
         Styles.ButtonNeutral(btAddPromo);        
@@ -41,6 +71,42 @@ public class PromoAD extends javax.swing.JPanel {
         lbTotalPromo.setBackground(Styles.GRAY_600);
         lbTotalPromoTail.setFont(Styles.Body);
         lbTotalPromoTail.setBackground(Styles.GRAY_600);
+    }
+    public void initAccessPerRole() {
+        User userLogin = (User) this.user;
+        if(permissionBUS.hasPerCreate(userLogin.getRoleID(), "PRM")) {
+            btAddPromo.setEnabled(true);
+            btImportPromo.setEnabled(true);
+        }
+        else {
+            btImportPromo.setEnabled(false);
+            btAddPromo.setEnabled(false);
+        }
+        
+        
+    }
+    public void initTableAccount(ArrayList<Promotion> promotions) throws ClassNotFoundException, SQLException, IOException{
+        
+        promoModel = (DefaultTableModel) tbAllPromo.getModel();
+        promoModel.setRowCount(0);
+        int stt = 1;
+        String promoID, airlineID, promoType;
+        String dayEnd;
+        for (Promotion p : promotions){
+            if(p.getIsDelete() == 0){
+                promoID = p.getPromoID();
+                airlineID = p.getAirlineID();
+                for (Airline a : airlineList){
+                    if(a.getAirlineID().equals(airlineID)){
+                        airlineID = a.getAirlineName();
+                        break;
+                    }
+                }
+                dayEnd = assets.DateTime.convertFormatDayTime(p.getDateEnd().toString(), "yyyy-MM-dd'T'HH:mm", "dd/MM/yyyy HH:mm:ss");
+                
+                promoModel.addRow(new Object[]{stt++,promoID,airlineID,dayEnd});
+            }
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.

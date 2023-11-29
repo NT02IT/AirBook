@@ -3,15 +3,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package GUI.body_panel;
+import BUS.AirlineBUS;
+import BUS.FlightBUS;
 import BUS.TicketBUS;
+import DTO.entities.Airline;
+import DTO.entities.Flight;
 import DTO.entities.Ticket;
 import assets.Styles;
 import DTO.entities.User;
 import GUI.popup.PuTicketSearchAD;
 import GUI.popup.puTicketAD;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -21,10 +29,14 @@ import javax.swing.table.DefaultTableModel;
 public class TicketAD extends javax.swing.JPanel {
     private User user;
     private TicketBUS ticketBUS;
-    
+    private FlightBUS flightBUS;
+    private AirlineBUS airlineBUS;
     private DefaultTableModel ticketModel; 
     
-    private ArrayList<Ticket> ticketList;
+    private ArrayList<Ticket> ticketList;    
+    private ArrayList<Flight> flightList;
+    private ArrayList<Airline> airlineList;
+
     /**
      * Creates new form TicketAD
      */
@@ -34,26 +46,51 @@ public class TicketAD extends javax.swing.JPanel {
     }
     
     public TicketAD(User user) {
-        this.user = user;
-        initComponents();
-        styles();
+        try {
+            this.user = user;
+            this.ticketBUS = new TicketBUS();
+            this.flightBUS = new FlightBUS();
+            this.airlineBUS = new AirlineBUS();
+            initComponents();
+            styles();
+            flightList = flightBUS.getList();
+            this.airlineList = airlineBUS.getList();
+            initTableTicket(flightList);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TicketAD.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(TicketAD.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(TicketAD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
     
-    public void initTableAccount(ArrayList<Ticket> ticketList) throws ClassNotFoundException, SQLException, IOException{
+    public void initTableTicket(ArrayList<Flight> flights) throws ClassNotFoundException, SQLException, IOException{
         
         ticketModel = (DefaultTableModel) tbAllTicket.getModel();
         ticketModel.setRowCount(0);
+        
         int stt = 1;
-        String airlineID, flightTo, flightFrom, timeStart, timeFlight, quantity;
-        Date dayStart;
-        for (Ticket ticket : ticketList){
-            if(ticket.getIsDelete() == 0){
-//                username = user.getUsername();
-//                staffName = user.getName();
-//                dayCreated = user.getDateCreate();
-//                typeAccount = user.getRoleID();
-//                usersModel.addRow(new Object[]{stt++,username,staffName,dayCreated,typeAccount});
+        String airlineID, flightTo, flightFrom;
+        int timeFlight, quantity;
+        String timeStart;
+        for (Flight flight : flights){
+            if(flight.getIsDelete() == 0){
+                airlineID = flight.getFlightID().substring(0, 2);
+                for (Airline a : airlineList){
+                    if(a.getAirlineID().equals(airlineID)){
+                        airlineID = a.getAirlineName();
+                        break;
+                    }
+                }
+                flightFrom = flight.getFlyingFrom();
+                flightTo = flight.getFlyingTo();
+                timeFlight = flight.getHoursFly();
+                timeStart= assets.DateTime.convertFormatDayTime(flight.getDepartureFlight().toString(), "yyyy-MM-dd'T'HH:mm", "dd/MM/yyyy HH:mm:ss");
+                ticketModel.addRow(new Object[]{stt++,airlineID, flightFrom,flightTo,timeStart,timeFlight});
             }
+            
         }
     }
     public void styles(){

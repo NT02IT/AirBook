@@ -17,6 +17,7 @@ public abstract class Promotion {
     protected String promoName;
     protected Date dateStart;
     protected Date dateEnd;
+    protected int promoType;
     protected int decreased;
     protected int isDelete = 0;
     
@@ -33,6 +34,8 @@ public abstract class Promotion {
         this.dateEnd = dateEnd;
         this.decreased = decreased;
     }
+
+    
 
     public String getPromoID() {
         return promoID;
