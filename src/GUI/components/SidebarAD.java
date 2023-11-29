@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
  *
  * @author agond
  */
-public class SidebarAD extends javax.swing.JPanel implements ISidebar{
+public class SidebarAD extends javax.swing.JPanel implements iSidebar{
     Order siteOrder;
     JFrame context;
     /**

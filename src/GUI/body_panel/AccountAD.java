@@ -4,26 +4,166 @@
  */
 package GUI.body_panel;
 
+import BUS.ActionBUS;
+import BUS.PermissionBUS;
+import BUS.RoleBUS;
+import BUS.UserBUS;
+import DTO.entities.Action;
+import DTO.entities.Permission;
+import DTO.entities.Person;
+import DTO.entities.Role;
 import DTO.entities.User;
+import GUI.popup.PuAccountAuthAD;
+import GUI.popup.PuAccountSearchAD;
+import GUI.popup.puAccountAD;
 import assets.Styles;
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JTabbedPane;
+
 /**
  *
  * @author agond
  */
 public class AccountAD extends javax.swing.JPanel {
-    private User user;
+    private Person user;
+    private UserBUS userBUS;    
+    private RoleBUS roleBUS;
+    private PermissionBUS permissionBUS;
+    private ActionBUS actionBUS;
+    
+    private ArrayList<Person> userList;    
+    private ArrayList<Permission> permissionList;  
+    private ArrayList<Action> actionList;    
+    private ArrayList<Permission> permissionOfRoleID;
+
+    private ArrayList<Role> roleList;
+
+    private DefaultTableModel usersModel;        
+    private DefaultTableModel rolesModel;     
+    private DefaultTableModel permissionModel;  
+    private String roleIDSelected = null;
+   
+
     /**
      * Creates new form AccountAD
      */
-    public AccountAD() {
+    public AccountAD() throws ClassNotFoundException, SQLException, IOException {
+        this.user = new User();
+        this.userBUS = new UserBUS();
+        this.roleBUS = new RoleBUS();
+        this.permissionBUS = new PermissionBUS();
         initComponents();
         styles();
     }
     
-    public AccountAD(User user) {
+    public AccountAD(User user) throws ClassNotFoundException, SQLException, IOException {
         this.user = user;
+        this.userBUS = new UserBUS();
+        this.roleBUS = new RoleBUS();
+        this.permissionBUS = new PermissionBUS();
         initComponents();
         styles();
+    }
+    public void initAccessPerAccount() {
+        User userLogin = (User) this.user;
+        if(permissionBUS.hasPerCreate(userLogin.getRoleID(), "ADM")) btAddAccount.setEnabled(true);
+        else btAddAccount.setEnabled(false);
+    }
+    public void initAccessPerRole() {
+        User userLogin = (User) this.user;
+        if(permissionBUS.hasPerCreate(userLogin.getRoleID(), "ADM")) btAddRole.setEnabled(true);
+        else btAddRole.setEnabled(false);
+        
+        if(permissionBUS.hasPerEdit(userLogin.getRoleID(), "ADM")) btUpdatePermission.setEnabled(true);
+        else btUpdatePermission.setEnabled(false);
+        
+        if(permissionBUS.hasPerDelete(userLogin.getRoleID(), "ADM")) btDeletePermission.setEnabled(true);
+        else btDeletePermission.setEnabled(false);
+        
+    }
+    public void initTableAccount(ArrayList<Person> userList) throws ClassNotFoundException, SQLException, IOException{
+        
+        usersModel = (DefaultTableModel) tableAllAccounts.getModel();
+        usersModel.setRowCount(0);
+        int stt = 1;
+        String username, staffName, typeAccount;
+        Date dayCreated;
+        for (Person account : userList){
+            User user = (User) account;
+            if(user.getIsDelete() == 0){
+                username = user.getUsername();
+                staffName = user.getName();
+                dayCreated = user.getDateCreate();
+                typeAccount = user.getRoleID();
+                usersModel.addRow(new Object[]{stt++,username,staffName,dayCreated,typeAccount});
+            }
+        }
+    }
+    public void initTableRoles(ArrayList<Role> roleList) throws ClassNotFoundException, SQLException, IOException, NoSuchAlgorithmException{
+        rolesModel = (DefaultTableModel) tbAllRole.getModel();
+        rolesModel.setRowCount(0);
+        int stt = 1;
+        String roleName;
+        int totalTypeAccount;
+        Role firstRoleEntry = null;
+        for (Role roleEntry : roleList) {
+            if(roleEntry.getIsDelete() == 0){
+                roleName = roleEntry.getRoleName();
+                totalTypeAccount = userBUS.getTotalTypeAccountByRoleID(roleEntry.getRoleID());
+                rolesModel.addRow(new Object[]{stt++, roleName, totalTypeAccount});
+                if (firstRoleEntry == null) {
+                    firstRoleEntry = roleEntry;
+                }
+            }
+        }
+        if (firstRoleEntry != null) {
+            initTablePermission(firstRoleEntry.getRoleID(), firstRoleEntry.getRoleName());
+        }
+    }
+    public void initTablePermission(String roleID, String roleName) throws ClassNotFoundException, SQLException, IOException, NoSuchAlgorithmException{
+        this.roleIDSelected = roleID;
+        permissionBUS = new PermissionBUS();
+        
+        ArrayList<Integer> listPer = new ArrayList<>();
+        
+        permissionModel = (DefaultTableModel) tbRolePermission.getModel();
+        permissionModel.setRowCount(0);
+        txtRoleName.setText(roleName);
+        txtRoleName.setEnabled(false);
+        
+        actionBUS = new ActionBUS();
+        actionList = actionBUS.getList();
+        
+        permissionOfRoleID = permissionBUS.canAccessForm(roleID);
+        
+        int stt = 1;
+        String funcPermission, actionName = null;
+        for (Permission permission : permissionOfRoleID){
+            for(Action action : actionList){
+                if(permission.getActionID().equals(action.getActionID()))
+                    actionName = action.getActionName();
+            }
+            funcPermission = permission.getActionID();
+            listPer = permissionBUS.hasPermission(roleID, funcPermission, permissionOfRoleID);
+            boolean A = (listPer.get(0) == 1);            
+            boolean C = (listPer.get(1) == 1);
+            boolean R = (listPer.get(2) == 1);
+            boolean U = (listPer.get(3) == 1);
+            boolean D = (listPer.get(4) == 1);
+            
+            permissionModel.addRow(new Object[]{stt++,actionName,A,C,R,U,D});
+        }
     }
     public void styles(){
         Styles.ButtonNeutral(btAddAccount);
@@ -89,6 +229,11 @@ public class AccountAD extends javax.swing.JPanel {
 
         jTabbedPane1.setBackground(new java.awt.Color(246, 246, 246));
         jTabbedPane1.setForeground(Styles.PRI_NORMAL);
+        jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jTabbedPane1StateChanged(evt);
+            }
+        });
 
         tabAccount.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -99,6 +244,11 @@ public class AccountAD extends javax.swing.JPanel {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btAddAccountMouseExited(evt);
+            }
+        });
+        btAddAccount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAddAccountActionPerformed(evt);
             }
         });
 
@@ -142,6 +292,11 @@ public class AccountAD extends javax.swing.JPanel {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tableAllAccounts.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableAllAccountsMouseClicked(evt);
             }
         });
         pnAllAccounts.setViewportView(tableAllAccounts);
@@ -214,10 +369,7 @@ public class AccountAD extends javax.swing.JPanel {
 
         tbAllRole.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "STT", "Loại Tài khoản", "SL"
@@ -227,7 +379,7 @@ public class AccountAD extends javax.swing.JPanel {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -239,7 +391,11 @@ public class AccountAD extends javax.swing.JPanel {
             }
         });
         tbAllRole.setMinimumSize(new java.awt.Dimension(60, 100));
-        tbAllRole.setPreferredSize(new java.awt.Dimension(300, 100));
+        tbAllRole.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbAllRoleMouseClicked(evt);
+            }
+        });
         pnAllRole.setViewportView(tbAllRole);
         if (tbAllRole.getColumnModel().getColumnCount() > 0) {
             tbAllRole.getColumnModel().getColumn(0).setMinWidth(40);
@@ -260,6 +416,11 @@ public class AccountAD extends javax.swing.JPanel {
                 btAddRoleMouseExited(evt);
             }
         });
+        btAddRole.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAddRoleActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnAllAccountLayout = new javax.swing.GroupLayout(pnAllAccount);
         pnAllAccount.setLayout(pnAllAccountLayout);
@@ -269,14 +430,14 @@ public class AccountAD extends javax.swing.JPanel {
                 .addComponent(lbTitleAllAccount)
                 .addGap(0, 84, Short.MAX_VALUE))
             .addComponent(btAddRole, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(pnAllRole, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(pnAllRole, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
         );
         pnAllAccountLayout.setVerticalGroup(
             pnAllAccountLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnAllAccountLayout.createSequentialGroup()
                 .addComponent(lbTitleAllAccount)
                 .addGap(24, 24, 24)
-                .addComponent(pnAllRole, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(pnAllRole, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
                 .addGap(12, 12, 12)
                 .addComponent(btAddRole, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -318,6 +479,11 @@ public class AccountAD extends javax.swing.JPanel {
         });
         tbRolePermission.setMinimumSize(new java.awt.Dimension(60, 100));
         tbRolePermission.getTableHeader().setReorderingAllowed(false);
+        tbRolePermission.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbRolePermissionMouseClicked(evt);
+            }
+        });
         pnRolePermission.setViewportView(tbRolePermission);
         if (tbRolePermission.getColumnModel().getColumnCount() > 0) {
             tbRolePermission.getColumnModel().getColumn(0).setMinWidth(40);
@@ -358,6 +524,11 @@ public class AccountAD extends javax.swing.JPanel {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btUpdatePermissionMouseExited(evt);
+            }
+        });
+        btUpdatePermission.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btUpdatePermissionActionPerformed(evt);
             }
         });
 
@@ -428,11 +599,36 @@ public class AccountAD extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSearchAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSearchAccountActionPerformed
-        // TODO add your handling code here:
+       PuAccountSearchAD puSearch = new PuAccountSearchAD();
+       puSearch.setVisible(true);
     }//GEN-LAST:event_btSearchAccountActionPerformed
 
     private void btDeletePermissionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeletePermissionActionPerformed
-        // TODO add your handling code here:
+        
+        int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xóa?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            try {
+                Role role = new Role();
+                role.setRoleID(roleIDSelected);
+                boolean deleted = roleBUS.deleteRole(role);
+                if (deleted) {
+                    RoleBUS roleBUS = new RoleBUS();
+                    roleList = roleBUS.getList();
+                    JOptionPane.showMessageDialog(this, "Đã xóa thành công!", "Xác nhận xóa", JOptionPane.INFORMATION_MESSAGE);
+                    initTableRoles(roleList);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Xóa không thành công!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_btDeletePermissionActionPerformed
 
     private void btSearchAccountMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btSearchAccountMouseEntered
@@ -488,6 +684,150 @@ public class AccountAD extends javax.swing.JPanel {
         btDeletePermission.setForeground(Styles.FUNC_DANGER);
         btDeletePermission.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-delete-red18.png")));
     }//GEN-LAST:event_btDeletePermissionMouseExited
+
+    private void btAddAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddAccountActionPerformed
+        puAccountAD addNewAccount;
+        User userLogin = (User) this.user;
+        if(permissionBUS.hasPerCreate(userLogin.getRoleID(), "ADM")){
+            try {
+                addNewAccount = new puAccountAD((User) this.user, null);
+                addNewAccount.setVisible(true);
+            } catch (ParseException ex) {
+                Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+    }//GEN-LAST:event_btAddAccountActionPerformed
+
+    private void btAddRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddRoleActionPerformed
+        User userLogin = (User) this.user;
+        if(permissionBUS.hasPerCreate(userLogin.getRoleID(),"ADM")){
+            PuAccountAuthAD puAccountAuthAD = new PuAccountAuthAD();
+            puAccountAuthAD.setVisible(true);
+        }
+    }//GEN-LAST:event_btAddRoleActionPerformed
+
+    private void tableAllAccountsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableAllAccountsMouseClicked
+        User userLogin = (User) this.user;
+        if(evt.getClickCount() == 2 && permissionBUS.hasPerView(userLogin.getRoleID(), "ADM")){
+            int selectedRow = tableAllAccounts.getSelectedRow();
+            if(selectedRow != -1 ){
+                try {
+                    Person person = userList.get(selectedRow);
+                    String userID = person.getID();
+                    User user = userBUS.getByID(userID);
+                    if (user != null) {
+                        puAccountAD pAccountAD = new puAccountAD((User) this.user, user);
+                        pAccountAD.setVisible(true);
+                    }
+                }   catch (SQLException ex) {
+                    Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
+                    Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }//GEN-LAST:event_tableAllAccountsMouseClicked
+
+    private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
+        JTabbedPane sourceTabbedPane = (JTabbedPane) evt.getSource();
+        int selectedIndex = sourceTabbedPane.getSelectedIndex();
+        if (selectedIndex == 0) {
+            try {
+                userList = userBUS.getList();
+                initTableAccount(userList);
+                initAccessPerAccount();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if (selectedIndex == 1) {
+            try {
+                roleList = roleBUS.getList();
+                initTableRoles(roleList);
+                initAccessPerRole();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jTabbedPane1StateChanged
+
+    private void tbRolePermissionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbRolePermissionMouseClicked
+        
+    }//GEN-LAST:event_tbRolePermissionMouseClicked
+
+    private void tbAllRoleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbAllRoleMouseClicked
+        if (evt.getClickCount() == 1){
+            int selectedRow = tbAllRole.getSelectedRow();
+            if (selectedRow != -1) {
+                
+                String roleName = (String) tbAllRole.getValueAt(selectedRow, 1); // Replace 0 with the desired column index
+                for (Role roleEntry : roleList){
+                    if(roleEntry.getRoleName().equals(roleName)){
+                        try {
+                            System.out.println(roleName +" "+ roleEntry.getRoleID());
+                            initTablePermission(roleEntry.getRoleID(), roleName);
+
+                        } catch (SQLException ex) {
+                            Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (IOException ex) {
+                            Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (NoSuchAlgorithmException ex) {
+                            Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (ClassNotFoundException ex) {
+                            Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+        
+    }//GEN-LAST:event_tbAllRoleMouseClicked
+
+    private void btUpdatePermissionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btUpdatePermissionActionPerformed
+        try {
+            int rowCount = tbRolePermission.getRowCount();
+            int[] columnIndices = {2, 3, 4, 5, 6}; // Chỉ mục của các cột cần lấy giá trị
+            List<List<Object>> dataList = new ArrayList<>();
+            for (int row = 0; row < rowCount; row++) {
+                List<Object> rowData = new ArrayList<>();
+                for (int columnIndex : columnIndices) {
+                    Object cellValue = tbRolePermission.getValueAt(row, columnIndex);
+                    rowData.add(cellValue);
+                }
+                dataList.add(rowData);
+            }
+            permissionBUS.updatePermissions(dataList, this.roleIDSelected);
+            JOptionPane.showMessageDialog(this,"Thay đổi thành công", "Thông báo thay đổi", JOptionPane.INFORMATION_MESSAGE);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_btUpdatePermissionActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

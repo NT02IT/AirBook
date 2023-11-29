@@ -16,26 +16,29 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author agond
  */
 public class RoleDAO {
-    public static Map<String, String> list;
+    public static ArrayList<Role> list;
+
     protected Role role;
     private ConnectDB connectDB;
     
     public RoleDAO() throws ClassNotFoundException, SQLException, IOException {
         connectDB = new ConnectDB();
-        list = new HashMap<>();
+        list = new ArrayList<>();
         read();
     }
     
-    public Map<String, String> getList() {
+    public ArrayList<Role> getList() {
         return list;
     }
     
-    public Map<String, String> read() throws IOException, ClassNotFoundException, SQLException{
+    public ArrayList<Role> read() throws IOException, ClassNotFoundException, SQLException{
         String context = this.getClass().getName();
         connectDB.connect(context);
         try {
@@ -47,7 +50,7 @@ public class RoleDAO {
                 role.setRoleID(rs.getString(1));
                 role.setRoleName(rs.getString(2));     
                 role.setIsDelete(rs.getInt(3));     
-                list.put(role.getRoleID(), role.getRoleName());
+                list.add(role);
             }
         } catch (SQLException ex) {
             Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -61,13 +64,12 @@ public class RoleDAO {
         connectDB.connect(context);
         try {
             String sql = "INSERT INTO roles(Role_ID, Role_name, IsDelete) "
-                    + "VALUES (?, ?, ?)";
+                    + "VALUES (?, ?, 0)";
             PreparedStatement pstmt = ConnectDB.conn.prepareStatement(sql);
             pstmt.setString(1, role.getRoleID());
             pstmt.setString(2, role.getRoleName());
-            pstmt.setInt(3, role.getIsDelete());
             pstmt.executeUpdate();
-            list.put(role.getRoleID(), role.getRoleName());
+            list.add(role);
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -75,4 +77,20 @@ public class RoleDAO {
         connectDB.disconnect(context);
         return false;
     }
+    public boolean delete(Role role) throws SQLException{
+        String context = this.getClass().getName();
+        connectDB.connect(context);
+        try {
+            String sql = "UPDATE roles SET IsDelete = 1 WHERE Role_ID = ?";
+            PreparedStatement pstmt = ConnectDB.conn.prepareStatement(sql);
+            pstmt.setString(1, role.getRoleID());
+            pstmt.executeUpdate();        
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+
+    }
+    
 }

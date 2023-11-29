@@ -35,18 +35,18 @@ public class AirportDAO {
         return list;
     }
 
-    public ArrayList<Airport> read() throws IOException, ClassNotFoundException, SQLException{
+    public ArrayList<Airport> read() throws IOException, ClassNotFoundException, SQLException {
         String context = this.getClass().getName();
         connectDB.connect(context);
         try {
-            String sql = "Select * from airports";
+            String sql = "SELECT * FROM airports WHERE IsDelete = 0";
             Statement stmt = connectDB.conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
-            while(rs.next()){
+            while (rs.next()) {
                 Airport airport = new Airport();
                 airport.setAirportID(rs.getString(1));
                 airport.setAirportName(rs.getString(2));
-                airport.setProvince(rs.getString(3)); 
+                airport.setProvince(rs.getString(3));
                 airport.setIsDelete(rs.getInt(4));
                 list.add(airport);
             }

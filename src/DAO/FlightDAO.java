@@ -47,7 +47,7 @@ public class FlightDAO {
         String context = this.getClass().getName();
         connectDB.connect(context);
         try {
-            String sql = "Select * from flights";
+            String sql = "Select * from flights WHERE IsDelete = 0";
             Statement stmt = connectDB.conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             while(rs.next()){
@@ -132,7 +132,6 @@ public class FlightDAO {
         connectDB.disconnect(context);
         return result;
     }
-    
     public ArrayList<Flight> getAllFlightOfAirline(Airline airline) throws SQLException{
         ArrayList<Flight> flights = new ArrayList<>();
         String context = this.getClass().getName();
@@ -161,10 +160,60 @@ public class FlightDAO {
                 flight.setIsDelete(rs.getInt(6));
                 flights.add(flight);
             }
+          return flights;
+        }
+        public boolean deleteFlight(Flight flight) throws ClassNotFoundException, SQLException {
+        String context = this.getClass().getName();
+        connectDB.connect(context);
+        try {
+            String updateSql = "UPDATE flights SET IsDelete = 1 WHERE Flight_ID = ?";
+            PreparedStatement updateStmt = connectDB.conn.prepareStatement(updateSql);
+            updateStmt.setString(1, flight.getFlightID());
+            int rowsAffected = updateStmt.executeUpdate();
+            if (rowsAffected > 0) {
+                flight.setIsDelete(1);
+
+                // Thực hiện truy vấn cập nhật để lưu thay đổi vào cơ sở dữ liệu
+                String saveSql = "UPDATE flights SET IsDelete = 1 WHERE Flight_ID = ?";
+                PreparedStatement saveStmt = connectDB.conn.prepareStatement(saveSql);
+                saveStmt.setString(1, flight.getFlightID());
+                saveStmt.executeUpdate();
+            
+                return true;
+            }
         } catch (SQLException ex) {
             Logger.getLogger(FlightDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         connectDB.disconnect(context);
-        return flights;
+        
+        return false;
+    }
+    
+       public boolean updateFlight(Flight flight) throws ClassNotFoundException, SQLException {
+            String context = this.getClass().getName();
+            connectDB.connect(context);
+            try {
+                String sql = "UPDATE airports SET Airport_name = ?, Province = ? WHERE Airport_ID = ?";
+                PreparedStatement pstmt = connectDB.conn.prepareStatement(sql);
+                //pstmt.setString(1, flight.getAirportName());
+                //pstmt.setString(2, flight.getProvince());
+                //pstmt.setString(3, flight.getAirportID());
+                int rowsAffected = pstmt.executeUpdate();
+                return rowsAffected > 0;
+            } catch (SQLException ex) {
+                Logger.getLogger(FlightDAO.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                connectDB.disconnect(context);
+            }
+            return false;
+        }
+    
+    public boolean existsFlightID(String flightID) {
+        for (Flight flight : list) {
+            if (flight.getFlightID().equals(flightID)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -3,9 +3,26 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package GUI.body_panel;
+import BUS.TicketBUS;
+
+import BUS.AirportBUS;
+import BUS.FlightBUS;
+import DAO.FlightDAO;
+import BUS.FlightBUS;
+import DTO.entities.Airport;
+import DTO.entities.Flight;
 
 import DTO.entities.User;
+import DTO.views.FlightViews;
+import DTO.views.FlightViews.FlightView;
+import GUI.popup.PuFlight;
 import assets.Styles;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -13,18 +30,32 @@ import assets.Styles;
  */
 public class FlightAD extends javax.swing.JPanel {
     private User user;
+    private TicketBUS ticketBUS;
+    
+    
+    private ArrayList<Flight> listFlight;
+    private ArrayList<FlightViews.FlightView> listFlightView;
+    private FlightBUS flightBUS;
+    private DefaultTableModel flightsModel;
+   // private ArrayList<Flight>
     /**
      * Creates new form FlightAD
      */
-    public FlightAD() {
+    public FlightAD() throws ClassNotFoundException, SQLException, IOException {
         initComponents();
         styles();
+        initFlight();
     }
     
-    public FlightAD(User user) {
+    public FlightAD(User user) throws ClassNotFoundException, SQLException, IOException {
         this.user = user;
         initComponents();
         styles();
+        initFlight();
+    }
+    
+    public void initTableTicket(){
+        
     }
     public void styles(){
         Styles.ButtonSecondary(btAddFlight);
@@ -38,6 +69,21 @@ public class FlightAD extends javax.swing.JPanel {
         lbTotalFlight.setForeground(Styles.GRAY_600);
         lbTotalFlightTail.setFont(Styles.Body);
         lbTotalFlightTail.setForeground(Styles.GRAY_600);
+    }
+    private void initFlight() throws ClassNotFoundException, SQLException, IOException{
+        flightBUS = new FlightBUS();
+        listFlight = flightBUS.getList();
+        FlightViews flightViews = new FlightViews(listFlight);
+        listFlightView = flightViews.getList();
+        
+        flightsModel = (DefaultTableModel) tbAllFlight.getModel();
+        int stt = 1;
+        for (FlightView flightView : listFlightView){
+            flightsModel.addRow(new Object[]{stt++, flightView.GaDi, flightView.GaDen, flightView.SoGioBay, flightView.KhoiHanh});
+        }
+        
+        lbTotalFlight.setText( listFlightView.size() + "");
+
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -70,6 +116,11 @@ public class FlightAD extends javax.swing.JPanel {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btAddFlightMouseExited(evt);
+            }
+        });
+        btAddFlight.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAddFlightActionPerformed(evt);
             }
         });
 
@@ -162,6 +213,21 @@ public class FlightAD extends javax.swing.JPanel {
         btAddFlight.setForeground(Styles.PRI_NORMAL);
         btAddFlight.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-pri18.png")));
     }//GEN-LAST:event_btAddFlightMouseExited
+
+    private void btAddFlightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddFlightActionPerformed
+        PuFlight puFlight;
+        try {
+            puFlight = new PuFlight();
+            puFlight.setVisible(true);
+            puFlight.setLocationRelativeTo(null);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(FlightAD.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FlightAD.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(FlightAD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btAddFlightActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
