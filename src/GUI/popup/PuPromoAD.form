@@ -6,7 +6,7 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -33,19 +33,22 @@
                   <Component id="lbDateStart" alignment="0" max="32767" attributes="0"/>
                   <Component id="lbDateEnd" alignment="0" max="32767" attributes="0"/>
                   <Component id="btnDeletePromo" max="32767" attributes="0"/>
+                  <Component id="lbPromoName" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="btnSavePromo" pref="147" max="32767" attributes="0"/>
-                  <Component id="txtDayEnd" max="32767" attributes="0"/>
-                  <Component id="txtDayStart" max="32767" attributes="0"/>
                   <Component id="txtPromotionID" max="32767" attributes="0"/>
                   <Component id="cbAirline" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="txtValueDecrease" max="32767" attributes="0"/>
-                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="cbValueDecreaseOpiton" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="txtPromotionName" max="32767" attributes="0"/>
+                  <Component id="txtDayStart" alignment="0" max="32767" attributes="0"/>
+                  <Component id="txtDayEnd" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
           </Group>
@@ -67,31 +70,31 @@
               </Group>
               <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="txtValueDecrease" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="cbValueDecreaseOpiton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lbValueDecrease" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                      <Component id="lbDateStart" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="txtDayStart" min="-2" pref="24" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="lbPromoName" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtPromotionName" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="txtDayEnd" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lbValueDecrease" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtValueDecrease" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="cbValueDecreaseOpiton" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lbDateStart" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtDayStart" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lbDateEnd" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="txtDayEnd" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnDeletePromo" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnSavePromo" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="0" pref="63" max="32767" attributes="0"/>
+              <EmptySpace pref="56" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -113,11 +116,8 @@
     <Component class="javax.swing.JComboBox" name="cbAirline">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="4">
-            <StringItem index="0" value="Item 1"/>
-            <StringItem index="1" value="Item 2"/>
-            <StringItem index="2" value="Item 3"/>
-            <StringItem index="3" value="Item 4"/>
+          <StringArray count="1">
+            <StringItem index="0" value=" "/>
           </StringArray>
         </Property>
       </Properties>
@@ -151,7 +151,7 @@
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
           <StringArray count="2">
             <StringItem index="0" value="%"/>
-            <StringItem index="1" value="VN&#x110;"/>
+            <StringItem index="1" value="&#x111;"/>
           </StringArray>
         </Property>
         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -203,6 +203,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="X&#xf3;a m&#xe3;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeletePromoActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnSavePromo">
       <Properties>
@@ -211,6 +214,19 @@
         </Property>
         <Property name="text" type="java.lang.String" value="L&#x1b0;u th&#xf4;ng tin"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSavePromoActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lbPromoName">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/assets/icon/info-ticket-black20.png"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="T&#xea;n m&#xe3; "/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="txtPromotionName">
     </Component>
   </SubComponents>
 </Form>

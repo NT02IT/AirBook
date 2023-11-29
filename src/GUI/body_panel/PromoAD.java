@@ -5,13 +5,20 @@
 package GUI.body_panel;
 import BUS.AirlineBUS;
 import BUS.PermissionBUS;
+import BUS.PromoBUS;
 import DTO.entities.Airline;
+import DTO.entities.Person;
 import DTO.entities.Promotion;
 import assets.Styles;
 import DTO.entities.User;
+import DTO.views.PromoViews;
+import DTO.views.PromoViews.PromoView;
 import GUI.popup.PuPromoAD;
+import GUI.popup.PuPromoSearchAD;
+import GUI.popup.puTicketAD;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,10 +30,13 @@ import javax.swing.table.DefaultTableModel;
  * @author agond
  */
 public class PromoAD extends javax.swing.JPanel {
-    private User user;
+    private Person user;
     private PermissionBUS permissionBUS;
-    private AirlineBUS airlineBUS;
+    private AirlineBUS airlineBUS;    
+    private PromoBUS promoBUS;
+
     
+    private ArrayList<PromoView> listPromoView;
     private ArrayList<Promotion> promotions;
     private ArrayList<Airline> airlineList;    
 
@@ -45,9 +55,13 @@ public class PromoAD extends javax.swing.JPanel {
             this.user = user;
             this.permissionBUS = new PermissionBUS();
             this.airlineBUS = new AirlineBUS();
+            this.promoBUS = new PromoBUS();
             this.airlineList = airlineBUS.getList();
+            this.promotions = promoBUS.getList();
             initComponents();
+            
             styles();
+            initTablePromo(promotions);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(PromoAD.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -85,28 +99,31 @@ public class PromoAD extends javax.swing.JPanel {
         
         
     }
-    public void initTableAccount(ArrayList<Promotion> promotions) throws ClassNotFoundException, SQLException, IOException{
-        
+    public void initTablePromo(ArrayList<Promotion> promotions) throws ClassNotFoundException, SQLException, IOException{
+        initAccessPerRole();
         promoModel = (DefaultTableModel) tbAllPromo.getModel();
         promoModel.setRowCount(0);
+        PromoViews promoViews = new PromoViews(promotions);
+        listPromoView = promoViews.getList();
         int stt = 1;
         String promoID, airlineID, promoType;
         String dayEnd;
-        for (Promotion p : promotions){
-            if(p.getIsDelete() == 0){
-                promoID = p.getPromoID();
-                airlineID = p.getAirlineID();
+        for (PromoView p : listPromoView){
+            if(p.HetHan == 0){
+                promoID = p.MaKhuyenMai;
+                airlineID = p.HangBay;
                 for (Airline a : airlineList){
                     if(a.getAirlineID().equals(airlineID)){
                         airlineID = a.getAirlineName();
                         break;
                     }
                 }
-                dayEnd = assets.DateTime.convertFormatDayTime(p.getDateEnd().toString(), "yyyy-MM-dd'T'HH:mm", "dd/MM/yyyy HH:mm:ss");
-                
-                promoModel.addRow(new Object[]{stt++,promoID,airlineID,dayEnd});
+                dayEnd = p.NgayKetThuc;
+                promoType = p.KhuyenMai;
+                promoModel.addRow(new Object[]{stt++,promoID,airlineID,dayEnd,promoType});
             }
         }
+        lbTotalPromo.setText(String.valueOf(promoBUS.getQuantity()));
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -142,6 +159,11 @@ public class PromoAD extends javax.swing.JPanel {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btSearchPromoMouseExited(evt);
+            }
+        });
+        btSearchPromo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSearchPromoActionPerformed(evt);
             }
         });
 
@@ -201,6 +223,11 @@ public class PromoAD extends javax.swing.JPanel {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tbAllPromo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbAllPromoMouseClicked(evt);
             }
         });
         pnAllPromo.setViewportView(tbAllPromo);
@@ -316,9 +343,36 @@ public class PromoAD extends javax.swing.JPanel {
     }//GEN-LAST:event_btExportPromoMouseExited
 
     private void btAddPromoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddPromoActionPerformed
-        PuPromoAD puPromoAD = new PuPromoAD();
-        puPromoAD.setVisible(true);
+        try {
+            PuPromoAD puPromoAD = new PuPromoAD((User)this.user, null);
+            puPromoAD.setVisible(true);
+        } catch (ParseException ex) {
+            Logger.getLogger(PromoAD.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btAddPromoActionPerformed
+
+    private void tbAllPromoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbAllPromoMouseClicked
+        User userLogin = (User) this.user;
+        if(evt.getClickCount() == 2 && permissionBUS.hasPerView(userLogin.getRoleID(), "PRM")){
+            int selectedRow = tbAllPromo.getSelectedRow();
+            if(selectedRow != -1 ){
+                Promotion promo = promotions.get(selectedRow);
+                if (user != null) {
+                    try {
+                        PuPromoAD pTicketAD = new PuPromoAD((User) this.user, promo);
+                        pTicketAD.setVisible(true);
+                    } catch (ParseException ex) {
+                        Logger.getLogger(PromoAD.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_tbAllPromoMouseClicked
+
+    private void btSearchPromoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSearchPromoActionPerformed
+        PuPromoSearchAD puPromoAD = new PuPromoSearchAD();
+        puPromoAD.setVisible(true);
+    }//GEN-LAST:event_btSearchPromoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
