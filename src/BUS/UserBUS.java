@@ -18,7 +18,7 @@ import java.sql.SQLException;
  */
 public class UserBUS {
     protected static ArrayList<Person> list;
-    protected static UserDAO userDAO;
+    protected static UserDAO userDAO;    
     private static int quantity = 0;
 
     public UserBUS() throws ClassNotFoundException, SQLException, IOException {

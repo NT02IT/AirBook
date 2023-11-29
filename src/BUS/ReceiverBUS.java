@@ -77,4 +77,13 @@ public class ReceiverBUS {
         }
         return result;
     }
+    
+    public static Person getObjectByID(String ID){
+        for(Person r : list){
+            if (r.getID().equals(ID)) {
+                return r;
+            }
+        }
+        return null;
+    }
 }

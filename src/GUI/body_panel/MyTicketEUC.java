@@ -4,9 +4,31 @@
  */
 package GUI.body_panel;
 
+import BUS.AirlineBUS;
+import BUS.AirportBUS;
+import BUS.FlightBUS;
+import BUS.OrderDetailBUS;
+import BUS.PlaneBUS;
+import BUS.SeatBUS;
+import BUS.TicketBUS;
+import BUS.TicketClassBUS;
+import DTO.entities.Flight;
+import DTO.entities.OrderDetail;
+import DTO.entities.Plane;
+import DTO.entities.Seat;
+import DTO.entities.Ticket;
+import DTO.entities.TicketClass;
 import DTO.entities.User;
 import assets.Styles;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.plaf.basic.BasicScrollBarUI;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -14,6 +36,17 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
  */
 public class MyTicketEUC extends javax.swing.JPanel {
     private User user;
+    private AirlineBUS airlineBUS;
+    private PlaneBUS planeBUS;
+    private FlightBUS flightBUS;
+    private AirportBUS airportBUS;
+    private TicketClassBUS ticketClassBUS;
+    private SeatBUS seatBUS;
+    private TicketBUS ticketBUS;
+    private OrderDetailBUS orderDetailBUS;
+    private ArrayList<OrderDetail> listOrderDetail;
+    private ArrayList<Ticket> listTicket;
+    private DefaultTableModel ticketsModel;
     /**
      * Creates new form MyTicketEUC
      */
@@ -23,9 +56,29 @@ public class MyTicketEUC extends javax.swing.JPanel {
     }
     
     public MyTicketEUC(User user) {
-        this.user = user;
-        initComponents();
-        style();
+        try {
+            initComponents();
+            style();
+            this.user = user;
+            orderDetailBUS = new OrderDetailBUS();
+            listOrderDetail = orderDetailBUS.getList();
+            airlineBUS = new AirlineBUS();
+            planeBUS = new PlaneBUS();
+            ticketClassBUS = new TicketClassBUS();
+            seatBUS = new SeatBUS();
+            airportBUS = new AirportBUS();
+            flightBUS = new FlightBUS();
+            ticketBUS = new TicketBUS();
+            listTicket = ticketBUS.getList();
+            ticketsModel = (DefaultTableModel) tbUnpaid.getModel();
+            initTickets();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(MyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(MyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void style(){
@@ -33,7 +86,7 @@ public class MyTicketEUC extends javax.swing.JPanel {
         Styles.Table(tbFlightUpcoming, pnFlightUpcoming);
         Styles.Table(tbHistory, pnHistory);
         Styles.ButtonPrimary(btPayment);
-        Styles.FormTextFeild(txtPromoCode);
+//        Styles.FormTextFeild(txtPromoCode);
         pnMainBody.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
             protected void configureScrollBarColors() {
                 this.thumbColor = Styles.GRAY_200;
@@ -44,8 +97,8 @@ public class MyTicketEUC extends javax.swing.JPanel {
         
         lbTitleUnpaid.setFont(Styles.H2);
         lbTitleUnpaid.setForeground(Styles.GRAY_600);
-        lbPromoCode.setFont(Styles.Label);
-        lbPromoCode.setForeground(Styles.GRAY_600);
+//        lbPromoCode.setFont(Styles.Label);
+//        lbPromoCode.setForeground(Styles.GRAY_600);
         lbFlightUpcoming.setFont(Styles.H2);
         lbFlightUpcoming.setForeground(Styles.GRAY_600);
         lbHistory.setFont(Styles.H2);
@@ -87,6 +140,39 @@ public class MyTicketEUC extends javax.swing.JPanel {
         lbTotalNum.setForeground(Styles.PRI_NORMAL);
     }
 
+    public void initTickets() throws ClassNotFoundException, SQLException, IOException{       
+        int stt = 1;
+        String airline, flyingFrom, flyingTo, remain;
+        String departureFlight;
+        String hoursFly;
+        Flight flight;
+        Ticket ticket;
+        int totalTicketUnpaid = 0;
+        System.out.println("listOrderDetail" + listOrderDetail);
+        for(OrderDetail od : listOrderDetail){
+            System.out.println("HELLO");
+            if(user.hasReceiver(od.getReceiverID()) != null){
+                System.out.println(user.hasReceiver(od.getReceiverID()).getID());
+                ticket = ticketBUS.getObjectbyID(od.getTicketID());
+                flight = flightBUS.getObjectbyID(ticket.getFlightID());
+            
+                flyingFrom = airportBUS.getObjectbyID(flight.getFlyingFrom()).getAirportName();
+                flyingTo = airportBUS.getObjectbyID(flight.getFlyingTo()).getAirportName();
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+                departureFlight = flight.getDepartureFlight().format(formatter);
+                
+                Seat seat = seatBUS.getObjectbyID(ticket.getSeatID());
+                TicketClass ticketClass = ticketClassBUS.getObjectbyID(seat.getTicketClassID());
+                Plane plane = planeBUS.getObjectbyID(ticketClass.getPlaneID());
+                airline = airlineBUS.getObjectbyID(plane.getAirlineID()).getAirlineName();     
+                ticketsModel.addRow(new Object[]{stt++, airline, flyingFrom, flyingTo, departureFlight, ticket.getSellingPrice() + "đ"});      
+                totalTicketUnpaid++;
+            }            
+        }        
+        lbUnpaidTotal.setText(totalTicketUnpaid + "");
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -104,8 +190,6 @@ public class MyTicketEUC extends javax.swing.JPanel {
         lbUnpaidTotalTail = new javax.swing.JLabel();
         lbUnpaidTotalHead = new javax.swing.JLabel();
         lbUnpaidTotal = new javax.swing.JLabel();
-        lbPromoCode = new javax.swing.JLabel();
-        txtPromoCode = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         lbTotal = new javax.swing.JLabel();
         lbTotalNum = new javax.swing.JLabel();
@@ -174,10 +258,6 @@ public class MyTicketEUC extends javax.swing.JPanel {
         lbUnpaidTotalHead.setText("Có tất cả");
 
         lbUnpaidTotal.setText("?");
-
-        lbPromoCode.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lbPromoCode.setLabelFor(txtPromoCode);
-        lbPromoCode.setText("Mã khuyến mãi");
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -363,13 +443,10 @@ public class MyTicketEUC extends javax.swing.JPanel {
                             .addComponent(pnFlightUpcoming, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(pnUnpaid, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbTitleUnpaid)
-                                    .addComponent(lbPromoCode))
+                                .addComponent(lbTitleUnpaid)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtPromoCode, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(212, 212, 212)
                                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(24, 24, 24))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -403,12 +480,7 @@ public class MyTicketEUC extends javax.swing.JPanel {
                     .addComponent(lbUnpaidTotalTail)
                     .addComponent(lbUnpaidTotal))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(lbPromoCode)
-                        .addGap(8, 8, 8)
-                        .addComponent(txtPromoCode, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24)
                 .addComponent(lbFlightUpcoming)
                 .addGap(16, 16, 16)
@@ -468,7 +540,6 @@ public class MyTicketEUC extends javax.swing.JPanel {
     private javax.swing.JLabel lbHistoryTotal;
     private javax.swing.JLabel lbHistoryTotalHead;
     private javax.swing.JLabel lbHistoryTotalTail;
-    private javax.swing.JLabel lbPromoCode;
     private javax.swing.JLabel lbTempPrice;
     private javax.swing.JLabel lbTempPriceNum;
     private javax.swing.JLabel lbTitleUnpaid;
@@ -484,6 +555,5 @@ public class MyTicketEUC extends javax.swing.JPanel {
     private javax.swing.JTable tbFlightUpcoming;
     private javax.swing.JTable tbHistory;
     private javax.swing.JTable tbUnpaid;
-    private javax.swing.JTextField txtPromoCode;
     // End of variables declaration//GEN-END:variables
 }

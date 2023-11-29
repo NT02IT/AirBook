@@ -4,12 +4,18 @@
  */
 package DTO.entities;
 
+import BUS.ReceiverBUS;
 import assets.EnumCheck.PwdValidStatus;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -21,8 +27,21 @@ public class User extends Person{
     protected String pwd;
     protected Date dateCreate;
     protected int isDelete = 0;
+    
+    protected ReceiverBUS receiverBUS;
+    protected ArrayList<Person> listReceiver;
 
     public User() {
+        try {
+            receiverBUS = new ReceiverBUS();
+            listReceiver = receiverBUS.getList();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+        }  
     }
     
     public User(User user){
@@ -31,11 +50,33 @@ public class User extends Person{
         this.username = user.getUsername();
         this.pwd = user.getPwd();
         this.dateCreate = user.getDateCreate();
+        
+        try {
+            receiverBUS = new ReceiverBUS();
+            listReceiver = receiverBUS.getList();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+        }        
     }
 
     public User(String username, String pwd) {
         this.username = username;
         this.pwd = pwd;
+        
+        try {
+            receiverBUS = new ReceiverBUS();
+            listReceiver = receiverBUS.getList();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+        }   
     }
 
     public User(String roleID, String username, String pwd, Date dateCreate, String ID, String name, String gender, Date doB, String address, String nation, String phoneNumber, String CCCD, String email) {
@@ -44,6 +85,17 @@ public class User extends Person{
         this.username = username;
         this.pwd = pwd;
         this.dateCreate = dateCreate;
+        
+        try {
+            receiverBUS = new ReceiverBUS();
+            listReceiver = receiverBUS.getList();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+        }   
     }
 
     public String getRoleID() {
@@ -129,5 +181,20 @@ public class User extends Person{
         }
         if(!hasLetter) return PwdValidStatus.MISSINGLETTER;
         return PwdValidStatus.VALID;
+    }
+    
+    public Person hasReceiver(String receiverID){        
+        Receiver receiver;
+        listReceiver = receiverBUS.getList();
+        for(Person p : listReceiver){
+            System.out.println(p.getName());
+            receiver = (Receiver)p;
+            if(receiver.getUserCreateID().equals(this.getID())){
+                if (receiver.getID().equals(receiverID)) {
+                    return receiver;
+                }
+            }
+        }
+        return null;
     }
 }
