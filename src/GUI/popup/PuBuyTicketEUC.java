@@ -1163,7 +1163,9 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
             orderBUS.create(order);
             
             String promoID = cbPromoCode.getSelectedItem().toString().trim();
-            
+            if(promoID.equals("-")){
+                promoID=null;
+            }
             
             MoreLuggage moreLuggage;
             String weightLuggage;       
