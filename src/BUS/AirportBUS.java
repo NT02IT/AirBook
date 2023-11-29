@@ -10,6 +10,7 @@ import DTO.entities.Airport;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -25,7 +26,7 @@ public class AirportBUS {
         list = new ArrayList<>(airportDAO.getList());
         quantity = list.size();
     }
-    
+        
     public ArrayList<Airport> getList() {
         return list;
     }
@@ -44,7 +45,6 @@ public class AirportBUS {
     }
     
     public String getIDByName(String airportName) throws SQLException{
-        return airportDAO.getIDByName(airportName);
-    }
-    
+    } 
+
 }

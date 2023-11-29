@@ -24,6 +24,7 @@ import java.util.ArrayList;
  */
 public class RoleDAO {
     public static ArrayList<Role> list;
+
     protected Role role;
     private ConnectDB connectDB;
     

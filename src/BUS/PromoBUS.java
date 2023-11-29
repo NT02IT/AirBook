@@ -6,7 +6,6 @@ package BUS;
 
 import DAO.PromoDAO;
 import DTO.entities.FlatDiscount;
-import DTO.entities.PercentDiscount;
 import DTO.entities.Promotion;
 import java.io.IOException;
 import java.sql.SQLException;

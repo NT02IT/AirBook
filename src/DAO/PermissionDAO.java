@@ -22,12 +22,11 @@ import java.util.logging.Logger;
  */
 public class PermissionDAO {
     protected ArrayList<Permission> list;
-    
+
     protected Permission per;
     private ConnectDB connectDB;
     
     public PermissionDAO() throws ClassNotFoundException, SQLException, IOException {
-        connectDB = new ConnectDB();
         list = new ArrayList<>();
         per = new Permission();
         read();

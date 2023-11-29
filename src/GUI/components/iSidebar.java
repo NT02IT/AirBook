@@ -12,7 +12,7 @@ import java.sql.SQLException;
  *
  * @author agond
  */
-public interface ISidebar {
+public interface iSidebar {
     void style();
     void siteOrder(Order siteOrder);
     void resetNavItemBG();

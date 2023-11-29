@@ -31,13 +31,14 @@ import javax.swing.WindowConstants;
  *
  * @author agond
  */
-public class IndexAD extends javax.swing.JFrame implements IIndex{
+public class IndexAD extends javax.swing.JFrame implements iIndex{
     private static JPanel pnBody;
     public static Order siteOrder;
     public static User user;
     private PermissionBUS permissionBUS;
     private static String suffix = "";
-    
+
+    private String airlineID;
     /**
      * Creates new form IndexAD
      */
@@ -54,7 +55,13 @@ public class IndexAD extends javax.swing.JFrame implements IIndex{
             this.setTitle("Airbook - Thống kê");
         }        
     }
+
     public IndexAD(User user) throws ClassNotFoundException, SQLException, IOException {
+=======
+    
+    public void setAirlineID(String airlineID) {
+        this.airlineID = airlineID;
+    }
         this.user = user;
         this.permissionBUS = new PermissionBUS();
         init();
@@ -144,6 +151,11 @@ public class IndexAD extends javax.swing.JFrame implements IIndex{
                     JOptionPane.showMessageDialog(this, "Bạn không có quyền truy cập!");
                     break;
                 }
+                
+              
+                ((AirlinePlaneAD) pnBody).setAirlineID(airlineID); // Truyền giá trị airlineID cho AirlinePlaneAD
+                ((AirlinePlaneAD) pnBody).initPlane();
+
             case ACCOUNT:
                 pnBody = new AccountAD(user);
                 topbarAD = new TopbarAD(this);

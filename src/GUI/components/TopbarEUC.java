@@ -17,7 +17,7 @@ import javax.swing.JFrame;
  *
  * @author agond
  */
-public class TopbarEUC extends javax.swing.JPanel implements ITopbar{
+public class TopbarEUC extends javax.swing.JPanel implements iTopbar{
     Order siteOrder;
     JFrame context;
     /**
