@@ -5,9 +5,7 @@
 package BUS;
 
 import DAO.SeatDAO;
-import DAO.TicketDAO;
 import DTO.entities.Seat;
-import DTO.entities.Ticket;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -42,5 +40,10 @@ public class SeatBUS {
                 return seat;
         }
         return null;
+    }
+    
+    public ArrayList<Seat> getAllByTicketDetail(String Airline, String Flight_ID, String Ticket_Class) throws IOException, ClassNotFoundException, SQLException{
+        ArrayList<Seat> result = seatDAO.getAllByTicketDetail(Airline, Flight_ID, Ticket_Class);        
+        return result;
     }
 }

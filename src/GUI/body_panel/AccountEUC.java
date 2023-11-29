@@ -5,8 +5,14 @@
 package GUI.body_panel;
 
 import DTO.entities.User;
+import assets.DateTime;
 import assets.Styles;
 import assets.TextBubbleBorder;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -20,12 +26,22 @@ public class AccountEUC extends javax.swing.JPanel {
     public AccountEUC() {
         initComponents();
         style();
+        try {
+            initAccountInfo();
+        } catch (ParseException ex) {
+            Logger.getLogger(AccountEUC.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public AccountEUC(User user) {
         this.user = user;
         initComponents();
-        style();        
+        style(); 
+        try {
+            initAccountInfo();
+        } catch (ParseException ex) {
+            Logger.getLogger(AccountEUC.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void style(){
@@ -78,6 +94,20 @@ public class AccountEUC extends javax.swing.JPanel {
         pnAccountInfo.setBorder(borderPnAcc);
     }
 
+    private void initAccountInfo() throws ParseException{
+        txtName.setText(user.getName());
+        txtGender.getModel().setSelectedItem(user.getGender());
+        
+        String doB = assets.DateTime.convertFormat(user.getDoB().toString(), "yyyy-MM-dd", "dd/MM/yyyy");
+        txtDoB.setText(doB);
+        txtAddress.setText(user.getAddress());
+        txtNation.setText(user.getNation());
+        txtPhoneNum.setText(user.getPhoneNumber());
+        txtCCCD.setText(user.getCCCD());
+        txtUsername.setText(user.getUsername());
+        txtEmail.setText(user.getEmail());
+        txtPwd.setText("SamplePwd");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

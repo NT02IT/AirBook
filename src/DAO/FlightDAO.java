@@ -4,7 +4,9 @@
  */
 package DAO;
 
+import BUS.AirportBUS;
 import DTO.entities.Flight;
+import assets.DateTime;
 import java.sql.Timestamp;
 import connection.ConnectDB;
 import java.io.IOException;
@@ -12,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -22,12 +25,16 @@ import java.util.logging.Logger;
  * @author agond
  */
 public class FlightDAO {
-    protected ArrayList<Flight> list = new ArrayList<>();
-    protected Flight flight = new Flight();
+    protected ArrayList<Flight> list;
+    protected Flight flight;
+    protected AirportBUS airportBUS;
     private ConnectDB connectDB;
 
     public FlightDAO() throws ClassNotFoundException, SQLException, IOException {
         connectDB = new ConnectDB();
+        list = new ArrayList<>();
+        flight = new Flight();
+        airportBUS = new AirportBUS();
         read();
     }
 
@@ -83,5 +90,45 @@ public class FlightDAO {
         }
         connectDB.disconnect(context);
         return false;
+    }
+    
+    public String getIDByDetail(String FromAirport, String ToAirport, String Departure) throws IOException, ClassNotFoundException, SQLException, ParseException{
+        FromAirport = "Noi Bai International Airport";
+        ToAirport = "Tan Son Nhat International Airport";
+        Departure = "30/09/2023 09:30";
+            
+        FromAirport = airportBUS.getIDByName(FromAirport);
+        ToAirport = airportBUS.getIDByName(ToAirport);
+        Departure = DateTime.convertFormat(Departure, "dd/MM/yyyy HH:mm", "yyyy-MM-dd HH:mm");
+        String context = this.getClass().getName();
+        connectDB.connect(context);
+        String result = "---";
+        try {
+//            String sql = "SELECT flights.Flight_ID"
+//                    + "FROM (flights, airports) "
+//                    + "WHERE flights.Flying_from = '" + FromAirport + "' "
+//                    + "AND flights.Flying_to = '" + ToAirport + "' "
+//                    + "AND (airports.Airport_ID = flights.Flying_from OR airports.Airport_ID = flights.Flying_to) "
+//                    + "AND flights.Departure_flight = '" + Departure + "' "
+//                    + "GROUP BY flights.Flight_ID;";
+
+            String sql = "SELECT flights.Flight_ID "
+                    + "FROM flights "
+                    + "JOIN airports AS flying_from ON flights.Flying_from = flying_from.Airport_ID "
+                    + "JOIN airports AS flying_to ON flights.Flying_to = flying_to.Airport_ID "
+                    + "WHERE flying_from.Airport_ID = '" + FromAirport + "' "
+                    + "AND flying_to.Airport_ID = '" + ToAirport + "' "
+                    + "AND flights.Departure_flight = '" + Departure + "'";
+
+            Statement stmt = connectDB.conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                result = rs.getString(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FlightDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        connectDB.disconnect(context);
+        return result;
     }
 }

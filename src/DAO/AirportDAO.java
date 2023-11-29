@@ -20,12 +20,14 @@ import java.util.logging.Logger;
  * @author agond
  */
 public class AirportDAO {
-    protected ArrayList<Airport> list = new ArrayList<>();
-    protected Airport airport = new Airport();
+    protected ArrayList<Airport> list;
+    protected Airport airport;
     private ConnectDB connectDB;
     
     public AirportDAO() throws ClassNotFoundException, SQLException, IOException {
         connectDB = new ConnectDB();
+        list = new ArrayList<>();
+        airport = new Airport();
         read();
     }
 
@@ -74,5 +76,23 @@ public class AirportDAO {
         }
         connectDB.disconnect(context);
         return false;
+    }
+    
+    public String getIDByName(String airportName) throws SQLException{
+        String result = "---";
+        String context = this.getClass().getName();
+        connectDB.connect(context);
+        try {
+            String sql = "SELECT airports.Airport_ID FROM airports WHERE Airport_name = '" + airportName + "'";
+            Statement stmt = connectDB.conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                result = rs.getString(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FlightDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        connectDB.disconnect(context);
+        return result;
     }
 }

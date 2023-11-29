@@ -4,6 +4,7 @@
  */
 package GUI.body_panel;
 
+import BUS.TicketBUS;
 import DTO.entities.User;
 import assets.Styles;
 
@@ -13,6 +14,9 @@ import assets.Styles;
  */
 public class FlightAD extends javax.swing.JPanel {
     private User user;
+    private TicketBUS ticketBUS;
+    
+    
     /**
      * Creates new form FlightAD
      */
@@ -25,6 +29,10 @@ public class FlightAD extends javax.swing.JPanel {
         this.user = user;
         initComponents();
         styles();
+    }
+    
+    public void initTableTicket(){
+        
     }
     public void styles(){
         Styles.ButtonSecondary(btAddFlight);

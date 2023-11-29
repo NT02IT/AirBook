@@ -86,18 +86,6 @@ public class User extends Person{
         this.isDelete = isDelete;
     }
     
-    // @Override
-    // public String toString(){
-    //     java.sql.Timestamp doB = new java.sql.Timestamp(this.doB.getTime());
-    //     String sql ="INSERT INTO "
-    //     + "users(User_ID, Role_ID, Username, Pwd, Real_name, DoB, Gender, Nation, User_address, Phone_number, CCCD, Email, Date_create) "
-    //     + "VALUES "
-    //     + "("
-    //     + this.ID + this.roleID + this.username + this.pwd + this.name + doB + this.gender + this.nation + this.address + this.phoneNumber + this.CCCD + this.email + this.dateCreate
-    //     + ")";
-    //     return sql;
-    // }
-    
     public static String generateID(){
         long millis = System.currentTimeMillis();
         String time = String.valueOf(millis);

@@ -9,6 +9,7 @@ import DTO.entities.Flight;
 import DTO.entities.Person;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 /**
@@ -41,5 +42,10 @@ public class FlightBUS {
                 return flight;
         }
         return null;
+    }
+    
+    public String getIDByDetail(String FromAirport, String ToAirport, String Departure) throws IOException, ClassNotFoundException, SQLException, ParseException{
+        String result = flightDAO.getIDByDetail(FromAirport, ToAirport, Departure);
+        return result;        
     }
 }

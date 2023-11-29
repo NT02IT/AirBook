@@ -3,8 +3,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package GUI.body_panel;
+import BUS.TicketBUS;
+import DTO.entities.Ticket;
 import assets.Styles;
 import DTO.entities.User;
+import GUI.popup.PuTicketSearchAD;
+import GUI.popup.puTicketAD;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -12,6 +20,11 @@ import DTO.entities.User;
  */
 public class TicketAD extends javax.swing.JPanel {
     private User user;
+    private TicketBUS ticketBUS;
+    
+    private DefaultTableModel ticketModel; 
+    
+    private ArrayList<Ticket> ticketList;
     /**
      * Creates new form TicketAD
      */
@@ -24,6 +37,24 @@ public class TicketAD extends javax.swing.JPanel {
         this.user = user;
         initComponents();
         styles();
+    }
+    
+    public void initTableAccount(ArrayList<Ticket> ticketList) throws ClassNotFoundException, SQLException, IOException{
+        
+        ticketModel = (DefaultTableModel) tbAllTicket.getModel();
+        ticketModel.setRowCount(0);
+        int stt = 1;
+        String airlineID, flightTo, flightFrom, timeStart, timeFlight, quantity;
+        Date dayStart;
+        for (Ticket ticket : ticketList){
+            if(ticket.getIsDelete() == 0){
+//                username = user.getUsername();
+//                staffName = user.getName();
+//                dayCreated = user.getDateCreate();
+//                typeAccount = user.getRoleID();
+//                usersModel.addRow(new Object[]{stt++,username,staffName,dayCreated,typeAccount});
+            }
+        }
     }
     public void styles(){
         Styles.ButtonNeutral(btAddTicket);        
@@ -74,6 +105,11 @@ public class TicketAD extends javax.swing.JPanel {
                 btSearchTicketMouseExited(evt);
             }
         });
+        btSearchTicket.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSearchTicketActionPerformed(evt);
+            }
+        });
 
         btImportTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-import-black18.png"))); // NOI18N
         btImportTicket.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -95,6 +131,11 @@ public class TicketAD extends javax.swing.JPanel {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btAddTicketMouseExited(evt);
+            }
+        });
+        btAddTicket.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAddTicketActionPerformed(evt);
             }
         });
 
@@ -242,6 +283,16 @@ public class TicketAD extends javax.swing.JPanel {
         btExportTicket.setBackground(Styles.GRAY_100);
         btExportTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-export-black18.png")));
     }//GEN-LAST:event_btExportTicketMouseExited
+
+    private void btSearchTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSearchTicketActionPerformed
+        PuTicketSearchAD puTicketSearchAD = new PuTicketSearchAD();
+        puTicketSearchAD.setVisible(true);
+    }//GEN-LAST:event_btSearchTicketActionPerformed
+
+    private void btAddTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddTicketActionPerformed
+        puTicketAD pTicketAD = new puTicketAD();
+        pTicketAD.setVisible(true);
+    }//GEN-LAST:event_btAddTicketActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

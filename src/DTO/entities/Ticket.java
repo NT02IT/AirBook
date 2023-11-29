@@ -94,4 +94,7 @@ public class Ticket {
         this.isDelete = isDelete;
     }
     
+    public String getFlightIDGateID(){
+        return this.flightID + this.gateID;
+    }
 }

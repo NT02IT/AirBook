@@ -4,12 +4,16 @@
  */
 package GUI.body_panel;
 
+import BUS.PromoBUS;
+import DTO.entities.Promotion;
 import DTO.entities.User;
+import DTO.views.PromoViews;
+import DTO.views.PromoViews.PromoView;
 import assets.Styles;
-import assets.TextBubbleBorder;
-import java.awt.Dimension;
-import javax.swing.border.AbstractBorder;
-import javax.swing.table.JTableHeader;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,18 +21,24 @@ import javax.swing.table.JTableHeader;
  */
 public class PromoEUC extends javax.swing.JPanel {
     private User user;
+    private ArrayList<Promotion> listPromo;
+    private ArrayList<PromoView> listPromoView;
+    private PromoBUS promoBUS;
+    private DefaultTableModel promosModel;
     /**
      * Creates new form PromoEUC
      */
-    public PromoEUC() {
+    public PromoEUC() throws ClassNotFoundException, SQLException, IOException {
         initComponents();
         style();
+        initPromo();
     }
     
-    public PromoEUC(User user) {
+    public PromoEUC(User user) throws ClassNotFoundException, SQLException, IOException {
         this.user = user;
         initComponents();
         style();
+        initPromo();
     }
     
     public void style(){
@@ -42,6 +52,21 @@ public class PromoEUC extends javax.swing.JPanel {
         lbPromoCount.setForeground(Styles.GRAY_600);
     }
 
+    private void initPromo() throws ClassNotFoundException, SQLException, IOException{
+        promoBUS = new PromoBUS();
+        listPromo = promoBUS.getList();
+        PromoViews promoViews = new PromoViews(listPromo);
+        listPromoView = promoViews.getList();
+        
+        promosModel = (DefaultTableModel) tbPromoCode.getModel();
+        int stt = 1;
+        
+        for (PromoView promoView : listPromoView){
+            promosModel.addRow(new Object[]{stt++, promoView.MaKhuyenMai, promoView.HangBay, promoView.NgayKetThuc, promoView.KhuyenMai});
+        }
+        
+        lbPromoCount.setText("Có tất cả " + listPromoView.size() + " mã khuyến mãi");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

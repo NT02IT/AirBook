@@ -6,6 +6,7 @@ package DTO.entities;
 
 import assets.EnumCheck.DiscountType;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  *
@@ -17,7 +18,7 @@ public class PercentDiscount extends Promotion{
     public PercentDiscount() {
     }
 
-    public PercentDiscount(String promoID, String airlineID, String promoName, LocalDateTime dateStart, LocalDateTime dateEnd, int decreased) {
+    public PercentDiscount(String promoID, String airlineID, String promoName, Date dateStart, Date dateEnd, int decreased) {
         super(promoID, airlineID, promoName, dateStart, dateEnd, decreased);
     }
     

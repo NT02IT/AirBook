@@ -43,4 +43,10 @@ public class TicketClassBUS {
         }
         return null;
     }
+    public ArrayList<TicketClass> getAllClassNameByAirlineIDFlightID(String Airline_ID, String Flight_ID) throws SQLException{
+        return ticketClassDAO.getAllClassNameByAirlineIDFlightID(Airline_ID, Flight_ID);
+    }
+    public TicketClass getObjectByPlaneIDClassName(String PlaneID, String ClassName) throws SQLException{
+        return ticketClassDAO.getObjectByPlaneIDClassName(PlaneID, ClassName);
+    }
 }

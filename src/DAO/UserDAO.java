@@ -21,12 +21,14 @@ import java.util.logging.Logger;
  * @author agond
  */
 public class UserDAO {
-    protected ArrayList<Person> list = new ArrayList<>();
-    protected Person user = new User();
+    protected ArrayList<Person> list;
+    protected Person user;
     private ConnectDB connectDB;
 
     public UserDAO() throws ClassNotFoundException, SQLException, IOException {
         connectDB = new ConnectDB();
+        list = new ArrayList<>();
+        user = new User();
         read();
     }
 
@@ -102,4 +104,112 @@ public class UserDAO {
         connectDB.disconnect(context);
         return false;
     }
+    public boolean delete(User data) throws SQLException {
+        String context = this.getClass().getName();
+        connectDB.connect(context);
+        try {
+            String sql = "UPDATE users SET IsDelete = 1 WHERE User_ID = ?;";
+            PreparedStatement pstmt = ConnectDB.conn.prepareStatement(sql);
+            pstmt.setString(1, data.getID());
+            pstmt.executeUpdate();     
+            list.remove(searchByID(data.getID()));
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    public User getByID (String userID) throws SQLException{
+        String context = this.getClass().getName();
+        connectDB.connect(context);
+        User user = null;
+        try {
+            String sql = "Select * from users where User_ID = ?";
+            PreparedStatement pstmt = connectDB.conn.prepareStatement(sql);
+            pstmt.setString(1, userID);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()){
+                user = new User();
+                user.setID(rs.getString(1));
+                user.setRoleID(rs.getString(2));
+                user.setUsername(rs.getString(3));
+                user.setPwd(rs.getString(4));
+                user.setName(rs.getString(5));
+                user.setDoB(rs.getDate(6));
+                user.setGender(rs.getString(7));
+                user.setNation(rs.getString(8));
+                user.setAddress(rs.getString(9));
+                user.setPhoneNumber(rs.getString(10));
+                user.setCCCD(rs.getString(11));
+                user.setEmail(rs.getString(12));
+                user.setDateCreate(rs.getDate(13));
+                user.setIsDelete(rs.getInt(14));
+                list.add(user);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        connectDB.disconnect(context);
+        return user;
+    }
+    public int getTotalAccountByRoleID (String roleID) throws SQLException{
+        String context = this.getClass().getName();
+        connectDB.connect(context);
+        int total = 0;
+        String sql = "SELECT COUNT(*) AS TotalCount FROM users WHERE Role_ID = ?";
+        PreparedStatement stmt = connectDB.conn.prepareStatement(sql);
+        stmt.setString(1, roleID);
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            total = rs.getInt("TotalCount");
+        }
+        connectDB.disconnect(context);
+        return total;
+        
+    }
+    public User getByUserName (String username) throws SQLException{
+        String context = this.getClass().getName();
+        connectDB.connect(context);
+        User user = null;
+        try {
+            String sql = "Select * from users where Username = ?";
+            PreparedStatement pstmt = connectDB.conn.prepareStatement(sql);
+            pstmt.setString(1, username);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()){
+                user = new User();
+                user.setID(rs.getString(1));
+                user.setRoleID(rs.getString(2));
+                user.setUsername(rs.getString(3));
+                user.setPwd(rs.getString(4));
+                user.setName(rs.getString(5));
+                user.setDoB(rs.getDate(6));
+                user.setGender(rs.getString(7));
+                user.setNation(rs.getString(8));
+                user.setAddress(rs.getString(9));
+                user.setPhoneNumber(rs.getString(10));
+                user.setCCCD(rs.getString(11));
+                user.setEmail(rs.getString(12));
+                user.setDateCreate(rs.getDate(13));
+                user.setIsDelete(rs.getInt(14));
+                list.add(user);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        connectDB.disconnect(context);
+        return user;
+    }
+    public int searchByID(String ID) { // ID = MaKH
+        int index = -1; // giá trị trả về mặc định nếu không tìm thấy
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getID().equals(ID)) {
+                index = i;
+                break;
+            }
+        }
+        return index;
+    }
+
+    
 }

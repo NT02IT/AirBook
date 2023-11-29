@@ -228,6 +228,20 @@ CREATE TABLE order_details (
 );
 
 --
+-- UPDATE DATABASE
+--
+
+-- Update 2/11/2023 - Nối Promocode vào OrderDetail thay vì Order
+ALTER TABLE order_details
+ADD Promo_ID varchar(20) REFERENCES promotions(Promo_ID)
+GO
+ALTER TABLE orders
+DROP CONSTRAINT FK__orders__Promo_ID__628FA481
+GO
+ALTER TABLE orders
+DROP COLUMN Promo_ID
+
+--
 -- INSERT DATA
 --
 

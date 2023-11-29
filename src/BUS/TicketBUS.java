@@ -41,4 +41,8 @@ public class TicketBUS {
         }
         return null;
     }
+    
+    public Ticket getObjectByFlightIDSeatID(String FlightID, String SeatID) throws SQLException{
+        return ticketDAO.getObjectByFlightIDSeatID(FlightID, SeatID);
+    }
 }

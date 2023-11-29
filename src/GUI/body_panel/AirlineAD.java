@@ -8,13 +8,11 @@ import assets.Styles;
 import DTO.entities.User;
 import GUI.IndexAD;
 import assets.Site;
-import java.awt.Container;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 /**
  *

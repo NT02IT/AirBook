@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import DTO.entities.Action;
 import DTO.entities.Permission;
 import connection.ConnectDB;
 import java.io.IOException;
@@ -20,12 +21,15 @@ import java.util.logging.Logger;
  * @author agond
  */
 public class PermissionDAO {
-    protected ArrayList<Permission> list = new ArrayList<>();
-    protected Permission per = new Permission();
+    protected ArrayList<Permission> list;
+    
+    protected Permission per;
     private ConnectDB connectDB;
     
     public PermissionDAO() throws ClassNotFoundException, SQLException, IOException {
-        ConnectDB connectDB = new ConnectDB();
+        connectDB = new ConnectDB();
+        list = new ArrayList<>();
+        per = new Permission();
         read();
     }
     
@@ -84,5 +88,57 @@ public class PermissionDAO {
         }
         connectDB.disconnect(context);
         return false;
+    }
+    
+        public boolean update(Permission per) throws SQLException {
+            String context = this.getClass().getName();
+            connectDB.connect(context);
+            try {
+                String sql = "UPDATE permission SET Per_access = ?, Per_create = ?, Per_view =?, Per_edit =?, Per_delete =?  "
+                        + "WHERE Role_ID = ? AND Action_ID = ?";
+                PreparedStatement pstmt = ConnectDB.conn.prepareStatement(sql);
+                pstmt.setInt(1, per.getPerAccess());
+                pstmt.setInt(2, per.getPerCreate());
+                pstmt.setInt(3, per.getPerView());
+                pstmt.setInt(4, per.getPerEdit());
+                pstmt.setInt(5, per.getPerDelete());            
+                pstmt.setString(6, per.getRoleID());            
+                pstmt.setString(7, per.getActionID());
+                pstmt.executeUpdate();
+                return true;
+            } catch (SQLException ex) {
+                Logger.getLogger(PermissionDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            connectDB.disconnect(context);
+            return false;
+        }
+        
+    public ArrayList<Permission> getPermissonByRoleID(String roleID) throws IOException, ClassNotFoundException, SQLException{
+        String context = this.getClass().getName();
+        connectDB.connect(context);
+        ArrayList<Permission> listPermissonByRoleID = new ArrayList<>();    
+        try {
+            String sql = "Select * from permission where Role_ID = ?";
+            PreparedStatement stmt = ConnectDB.conn.prepareStatement(sql);
+            stmt.setString(1, roleID);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                Permission per = new Permission();
+                per.setPerID(rs.getString(1));
+                per.setRoleID(rs.getString(2));
+                per.setActionID(rs.getString(3));
+                per.setPerAccess(rs.getInt(4));
+                per.setPerCreate(rs.getInt(5));
+                per.setPerView(rs.getInt(6));
+                per.setPerEdit(rs.getInt(7));
+                per.setPerDelete(rs.getInt(8));  
+                per.setIsDelete(rs.getInt(9));       
+                listPermissonByRoleID.add(per);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PermissionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        connectDB.disconnect(context);
+        return listPermissonByRoleID;
     }
 }

@@ -20,12 +20,14 @@ import java.util.logging.Logger;
  * @author agond
  */
 public class PlaneDAO {
-    protected ArrayList<Plane> list = new ArrayList<>();
-    protected Plane plane = new Plane();
+    protected ArrayList<Plane> list;
+    protected Plane plane;
     private ConnectDB connectDB;
 
     public PlaneDAO() throws ClassNotFoundException, SQLException, IOException {
         connectDB = new ConnectDB();
+        list = new ArrayList<>();
+        plane = new Plane();
         read();
     }
 

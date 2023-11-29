@@ -5,6 +5,7 @@
 package GUI.body_panel;
 import assets.Styles;
 import DTO.entities.User;
+import GUI.popup.PuPromoAD;
 
 /**
  *
@@ -85,6 +86,11 @@ public class PromoAD extends javax.swing.JPanel {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btAddPromoMouseExited(evt);
+            }
+        });
+        btAddPromo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAddPromoActionPerformed(evt);
             }
         });
 
@@ -242,6 +248,11 @@ public class PromoAD extends javax.swing.JPanel {
         btExportPromo.setBackground(Styles.GRAY_100);
         btExportPromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-export-black18.png")));
     }//GEN-LAST:event_btExportPromoMouseExited
+
+    private void btAddPromoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddPromoActionPerformed
+        PuPromoAD puPromoAD = new PuPromoAD();
+        puPromoAD.setVisible(true);
+    }//GEN-LAST:event_btAddPromoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
