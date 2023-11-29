@@ -14,8 +14,22 @@ public class OrderDetail {
     protected String moreLuggageID;
     protected String receiverID;
     protected String ticketID;
+    protected String promoID;
+    protected int notPaid;
+    protected int isDelete;
 
     public OrderDetail() {
+    }
+
+    public OrderDetail(String orderDetailID, String orderID, String moreLuggageID, String receiverID, String ticketID, String promoID, int notPaid, int isDelete) {
+        this.orderDetailID = orderDetailID;
+        this.orderID = orderID;
+        this.moreLuggageID = moreLuggageID;
+        this.receiverID = receiverID;
+        this.ticketID = ticketID;
+        this.promoID = promoID;
+        this.notPaid = notPaid;
+        this.isDelete = isDelete;
     }
 
     public OrderDetail(String orderDetailID, String orderID, String moreLuggageID, String receiverID, String ticketID) {
@@ -53,6 +67,18 @@ public class OrderDetail {
         return ticketID;
     }
 
+    public String getPromoID() {
+        return promoID;
+    }
+
+    public int getNotPaid() {
+        return notPaid;
+    }
+
+    public int getIsDelete() {
+        return isDelete;
+    }
+
     public void setOrderDetailID(String orderDetailID) {
         this.orderDetailID = orderDetailID;
     }
@@ -72,5 +98,23 @@ public class OrderDetail {
     public void setTicketID(String ticketID) {
         this.ticketID = ticketID;
     }
+
+    public void setPromoID(String promoID) {
+        this.promoID = promoID;
+    }
+
+    public void setNotPaid(int notPaid) {
+        this.notPaid = notPaid;
+    }
+
+    public void setIsDelete(int isDelete) {
+        this.isDelete = isDelete;
+    }    
     
+    public static String generateID(){
+        long millis = System.currentTimeMillis();
+        String time = String.valueOf(millis);
+        String id = "ODD" + time.substring(time.length()-8);
+        return id;
+    }
 }

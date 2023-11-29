@@ -45,4 +45,8 @@ public class TicketBUS {
     public Ticket getObjectByFlightIDSeatID(String FlightID, String SeatID) throws SQLException{
         return ticketDAO.getObjectByFlightIDSeatID(FlightID, SeatID);
     }
+    
+    public ArrayList<Ticket> setSoldout(String ID) throws ClassNotFoundException, SQLException, IOException {
+        return ticketDAO.setSoldout(ID);
+    }
 }

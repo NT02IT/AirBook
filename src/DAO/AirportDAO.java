@@ -95,6 +95,7 @@ public class AirportDAO {
         connectDB.disconnect(context);
         return result;
     }
+
     public boolean deleteAirport(Airport airport) throws ClassNotFoundException, SQLException {
         String context = this.getClass().getName();
         connectDB.connect(context);

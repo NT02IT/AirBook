@@ -5,8 +5,8 @@
 package BUS;
 
 import DAO.FlightDAO;
+import DTO.entities.Airline;
 import DTO.entities.Flight;
-import DTO.entities.Person;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -48,4 +48,17 @@ public class FlightBUS {
         String result = flightDAO.getIDByDetail(FromAirport, ToAirport, Departure);
         return result;        
     }
+    
+    public static ArrayList<Flight> getReturnFlight(Flight flight, Airline airline) throws SQLException{
+        ArrayList<Flight> result = new ArrayList<>();
+        ArrayList<Flight> allFlight = flightDAO.getAllFlightOfAirline(airline);
+        for(Flight fl : allFlight){
+            if(fl.getFlyingFrom().equals(flight.getFlyingTo()) && fl.getFlyingTo().equals(flight.getFlyingFrom())){
+                result.add(fl);
+            }
+        }
+        return result;
+    }
+    
+    
 }

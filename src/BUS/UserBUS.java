@@ -34,7 +34,8 @@ public class UserBUS {
     public int getQuantity() {
         quantity = list.size();
         return quantity;
-    }
+    }    
+
     public User getByID (String ID) throws SQLException{
         return userDAO.getByID(ID);
     }
@@ -76,5 +77,9 @@ public class UserBUS {
         list.add(user);  
         quantity = list.size();
     }
-
+    
+    public boolean update(User user) throws SQLException, NoSuchAlgorithmException {
+        user.setPwd(User.hashPassword(user.getPwd()));
+        return userDAO.update(user);
+    }
 }

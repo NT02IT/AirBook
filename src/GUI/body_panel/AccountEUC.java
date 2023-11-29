@@ -4,15 +4,21 @@
  */
 package GUI.body_panel;
 
+import BUS.UserBUS;
 import DTO.entities.User;
+import GUI.SigninGUI;
 import assets.DateTime;
 import assets.Styles;
 import assets.TextBubbleBorder;
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,28 +26,31 @@ import java.util.logging.Logger;
  */
 public class AccountEUC extends javax.swing.JPanel {
     private User user;
+    private UserBUS userBUS;
+    private DateTime date = new DateTime();
     /**
      * Creates new form AccountEUC
      */
     public AccountEUC() {
         initComponents();
         style();
-        try {
-            initAccountInfo();
-        } catch (ParseException ex) {
-            Logger.getLogger(AccountEUC.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        initAccountInfo();
     }
     
     public AccountEUC(User user) {
+        try {
+            userBUS = new UserBUS();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AccountEUC.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountEUC.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(AccountEUC.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.user = user;
         initComponents();
         style(); 
-        try {
-            initAccountInfo();
-        } catch (ParseException ex) {
-            Logger.getLogger(AccountEUC.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        initAccountInfo();
     }
     
     public void style(){
@@ -94,12 +103,16 @@ public class AccountEUC extends javax.swing.JPanel {
         pnAccountInfo.setBorder(borderPnAcc);
     }
 
-    private void initAccountInfo() throws ParseException{
+    private void initAccountInfo(){
         txtName.setText(user.getName());
         txtGender.getModel().setSelectedItem(user.getGender());
-        
-        String doB = assets.DateTime.convertFormat(user.getDoB().toString(), "yyyy-MM-dd", "dd/MM/yyyy");
-        txtDoB.setText(doB);
+        String doB;
+        try {
+            doB = assets.DateTime.convertFormat(user.getDoB().toString(), "yyyy-MM-dd", "dd/MM/yyyy");
+            txtDoB.setText(doB);
+        } catch (ParseException ex) {
+            Logger.getLogger(AccountEUC.class.getName()).log(Level.SEVERE, null, ex);
+        }        
         txtAddress.setText(user.getAddress());
         txtNation.setText(user.getNation());
         txtPhoneNum.setText(user.getPhoneNumber());
@@ -330,6 +343,11 @@ public class AccountEUC extends javax.swing.JPanel {
                 btDeleteAccountMouseExited(evt);
             }
         });
+        btDeleteAccount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btDeleteAccountActionPerformed(evt);
+            }
+        });
 
         btUpdateAccount.setBackground(new java.awt.Color(1, 138, 165));
         btUpdateAccount.setForeground(new java.awt.Color(255, 255, 255));
@@ -341,6 +359,11 @@ public class AccountEUC extends javax.swing.JPanel {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btUpdateAccountMouseExited(evt);
+            }
+        });
+        btUpdateAccount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btUpdateAccountActionPerformed(evt);
             }
         });
 
@@ -533,6 +556,56 @@ public class AccountEUC extends javax.swing.JPanel {
         btDeleteAccount.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-delete-red18.png")));
     }//GEN-LAST:event_btDeleteAccountMouseExited
 
+    private void btUpdateAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btUpdateAccountActionPerformed
+        try {
+            getFormData();
+            userBUS.update(user);
+            JOptionPane.showMessageDialog(this,"Thông tin của bạn đã được cập nhật!", "Cập nhật thành công", JOptionPane.INFORMATION_MESSAGE);
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountEUC.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this,"Thông tin của bạn không được cập nhật đúng cách!", "Cập nhật thất bại", JOptionPane.INFORMATION_MESSAGE);
+        } catch (ParseException ex) {
+            Logger.getLogger(AccountEUC.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this,"Thông tin của bạn không được cập nhật đúng cách!", "Cập nhật thất bại", JOptionPane.INFORMATION_MESSAGE);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(AccountEUC.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this,"Thông tin của bạn không được cập nhật đúng cách!", "Cập nhật thất bại", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btUpdateAccountActionPerformed
+
+    private void btDeleteAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeleteAccountActionPerformed
+        try {
+            user.setIsDelete(1);
+            userBUS.update(user);
+            JOptionPane.showMessageDialog(this,"Tài khoản của bạn đã bị xóa!", "Xóa tài khoản", JOptionPane.INFORMATION_MESSAGE);
+            SigninGUI signinGUI = new SigninGUI();
+            signinGUI.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountEUC.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(AccountEUC.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AccountEUC.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(AccountEUC.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btDeleteAccountActionPerformed
+
+    private void getFormData() throws ParseException{
+        user.setName(txtName.getText());
+        user.setGender(txtGender.getSelectedItem().toString());
+        user.setDoB(date.strtoDate(txtDoB.getText()));
+        user.setAddress(txtAddress.getText());
+        user.setNation(txtNation.getText());
+        user.setPhoneNumber(txtPhoneNum.getText());
+        user.setCCCD(txtCCCD.getText());
+        user.setUsername(txtUsername.getText());
+        user.setEmail(txtEmail.getText());
+        if(txtPwd.getText().equals("SamplePwd") == false){
+            user.setPwd(txtPwd.getText());
+        }
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btDeleteAccount;

@@ -115,4 +115,21 @@ public class TicketDAO {
         connectDB.disconnect(context);
         return ticket;
     }
+    
+    public ArrayList<Ticket> setSoldout(String ID) throws ClassNotFoundException, SQLException, IOException {
+        String context = this.getClass().getName();
+        connectDB.connect(context);
+        try {
+            String sql = "UPDATE tickets "
+                    + "SET Sold_out = 1 "
+                    + "WHERE Ticket_ID='" + ID + "'";
+            PreparedStatement pstmt = connectDB.conn.prepareStatement(sql);
+            pstmt.executeUpdate();
+            return read();
+        } catch (SQLException ex) {
+            Logger.getLogger(TicketDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        connectDB.disconnect(context);
+        return null;
+    }
 }

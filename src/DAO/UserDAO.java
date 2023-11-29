@@ -104,6 +104,39 @@ public class UserDAO {
         connectDB.disconnect(context);
         return false;
     }
+
+    
+    public boolean update(User user) throws SQLException {
+        String context = this.getClass().getName();
+        connectDB.connect(context);
+        try {
+            String sql = "UPDATE users SET Role_ID = ?, Username = ?, Pwd = ?, Real_name = ?, DoB = ?, Gender = ?, Nation = ?, User_address = ?, Phone_number = ?, CCCD = ?, Email = ?, Date_create = ?, IsDelete = ? WHERE User_ID = ?;";
+            PreparedStatement pstmt = connectDB.conn.prepareStatement(sql);
+            pstmt.setString(1, user.getRoleID());
+            pstmt.setString(2, user.getUsername());
+            pstmt.setString(3, user.getPwd());
+            pstmt.setString(4, user.getName());
+            java.sql.Timestamp doB = new java.sql.Timestamp(user.getDoB().getTime());
+            pstmt.setTimestamp(5, doB);       
+            pstmt.setString(6, user.getGender());
+            pstmt.setString(7, user.getNation());
+            pstmt.setString(8, user.getAddress());
+            pstmt.setString(9, user.getPhoneNumber());
+            pstmt.setString(10, user.getCCCD());
+            pstmt.setString(11, user.getEmail());
+            java.sql.Timestamp dateCreate = new java.sql.Timestamp(user.getDateCreate().getTime());
+            pstmt.setTimestamp(12, dateCreate);
+            pstmt.setInt(13, user.getIsDelete());
+            pstmt.setString(14, user.getID());
+            pstmt.executeUpdate();              
+            list.set(getIndexbyID(user.getID()), user);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
     public boolean delete(User data) throws SQLException {
         String context = this.getClass().getName();
         connectDB.connect(context);
@@ -119,6 +152,26 @@ public class UserDAO {
         }
         return false;
     }
+
+    
+    public User getObjectbyID(String ID){
+        for(Person u : list){
+            if(ID.equals(u.getID())) return (User)u;
+        }
+        return null;
+    }
+    
+    public int getIndexbyID(String ID){
+        int i = 0;
+        for(Person u : list){
+            if(ID.equals(u.getID())) {
+                return i;
+            }
+            i++;
+        }
+        return -1;
+    }
+   
     public User getByID (String userID) throws SQLException{
         String context = this.getClass().getName();
         connectDB.connect(context);

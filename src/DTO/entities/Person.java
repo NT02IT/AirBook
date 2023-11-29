@@ -4,13 +4,9 @@
  */
 package DTO.entities;
 
-import assets.EnumCheck;
 import assets.EnumCheck.NumbersValidStatus;
 import assets.EnumCheck.ValidStatus;
-import java.awt.Checkbox;
 import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  *
@@ -32,6 +28,17 @@ public abstract class Person {
 
     public Person(String ID, String name, String gender, Date doB, String address, String nation, String phoneNumber, String CCCD, String email) {
         this.ID = ID;
+        this.name = name;
+        this.gender = gender;
+        this.doB = doB;
+        this.address = address;
+        this.nation = nation;
+        this.phoneNumber = phoneNumber;
+        this.CCCD = CCCD;
+        this.email = email;
+    }
+    
+    public Person(String name, String gender, Date doB, String address, String nation, String phoneNumber, String CCCD, String email) {
         this.name = name;
         this.gender = gender;
         this.doB = doB;

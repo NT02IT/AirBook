@@ -7,24 +7,45 @@ package GUI.popup;
 import BUS.AirlineBUS;
 import BUS.AirportBUS;
 import BUS.FlightBUS;
+import BUS.MoreLuggageBUS;
+import BUS.OrderBUS;
+import BUS.OrderDetailBUS;
 import BUS.PlaneBUS;
+import BUS.PromoBUS;
+import BUS.PromoCollectionBUS;
+import BUS.ReceiverBUS;
 import BUS.SeatBUS;
 import BUS.TicketBUS;
 import BUS.TicketClassBUS;
 import DTO.entities.Airline;
+import DTO.entities.FlatDiscount;
 import DTO.entities.Flight;
+import DTO.entities.MoreLuggage;
+import DTO.entities.Order;
+import DTO.entities.OrderDetail;
+import DTO.entities.PercentDiscount;
 import DTO.entities.Plane;
+import DTO.entities.PromoCollection;
+import DTO.entities.Promotion;
+import DTO.entities.Receiver;
 import DTO.entities.Seat;
 import DTO.entities.Ticket;
 import DTO.entities.TicketClass;
+import DTO.entities.User;
+import assets.DateTime;
+import assets.EnumCheck;
 import assets.Styles;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
 /**
@@ -33,17 +54,36 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
  */
 public class PuBuyTicketEUC extends javax.swing.JFrame {
     private ArrayList<Ticket> tickets;
+    private ArrayList<Ticket> returnTickets;
+    private ArrayList<Receiver> receivers;
+    private ArrayList<String> seatTurnIDs;
+    private ArrayList<String> seatReturnIDs;
+    private ArrayList<PromoCollection> listPromoCode;
+    private ReceiverBUS receiverBUS;
     private SeatBUS seatBUS;
     private FlightBUS flightBUS;
     private AirlineBUS airlineBUS;
     private PlaneBUS planeBUS;
+    private OrderBUS orderBUS;
+    private OrderDetailBUS orderDetailBUS;
     private AirportBUS airportBUS;
     private TicketClassBUS ticketClassBUS;
-    private String flight_ID;
-    private ArrayList<Seat> seats;
-    private String[] seatName;
-    private String ticketClass;
-    private String ticketClassID;
+    private TicketBUS ticketBUS;
+    private MoreLuggageBUS moreLuggageBUS;
+    private PromoCollectionBUS promoCollectionBUS;
+    private String flyingFrom;
+    private String flyingTo;
+    private String hoursFly;
+    private String departureFlight;
+    private Flight flight;    
+    private ArrayList<Flight> flightReturn;
+    private Map<String,ArrayList<String>> mapClassSeat;
+    private Airline airline;
+    private User user;
+    private int totalValue = 0;
+    private Receiver receiver;
+    private DateTime date = new DateTime();
+    DateTimeFormatter datetimeFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
     /**
      * Creates new form BuyTicketEUC
      */
@@ -52,15 +92,23 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
         style();
     }
     
-    public PuBuyTicketEUC(ArrayList<Ticket> tickets) {
+    public PuBuyTicketEUC(ArrayList<Ticket> tickets, ArrayList<Ticket> returnTickets, User user) {
         try {
             this.tickets = tickets;
+            this.user = user;
+            this.returnTickets = returnTickets;
+            receiverBUS = new ReceiverBUS();
+            orderDetailBUS = new OrderDetailBUS();
             flightBUS = new FlightBUS();
             seatBUS = new SeatBUS();
             airlineBUS = new AirlineBUS();
             planeBUS = new PlaneBUS();
+            orderBUS = new OrderBUS();
+            ticketBUS = new TicketBUS();
             airportBUS = new AirportBUS();
+            moreLuggageBUS = new MoreLuggageBUS();
             ticketClassBUS = new TicketClassBUS();
+            promoCollectionBUS = new PromoCollectionBUS();
             initComponents();
             style();
             initDataTicketView();
@@ -152,7 +200,7 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
         Styles.FormTextFeild(txtTurnMoreLuggagePrice);
         
         Styles.FormLabel(lbReturnDeparture);
-        Styles.FormTextFeild(txtReturnDeparture);
+        Styles.ComboBox(cbReturnDeparture);
         Styles.FormLabel(lbReturnTicketClass);
         Styles.ComboBox(cbReturnTicketClass);
         Styles.FormLabel(lbReturnSeat);
@@ -165,36 +213,16 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
         Styles.ComboBox(cbReturnMoreLuggage);
         Styles.FormTextFeild(txtReturnMoreLuggagePrice);
     }
-
+    
     public void initDataTicketView() throws IOException, ClassNotFoundException, SQLException, ParseException{
-//        txtAirline.setText(ticketView.airline);
-//        txtFlyingFrom.setText(ticketView.flyingFrom);
-//        txtFlyingTo.setText(ticketView.flyingTo);
-//        txtHourFly.setText(ticketView.hoursFly + " giờ");
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-//        String turnDeparture = ticketView.departureFlight.format(formatter);
-//        txtTurnDeparture.setText(turnDeparture);
-//        cbTurnTicketClass.setModel(new javax.swing.DefaultComboBoxModel<>(ticketView.classes.toArray(new String[0])));
-        //cbTurnSeat.setModel(new javax.swing.DefaultComboBoxModel<>(ticketView.seatsOnClass.get("Business Class").toArray(new String[0])));
+        mapClassSeat = new HashMap<>();
         
-        
-//        flight_ID = flightBUS.getIDByDetail(txtFlyingFrom.getText(), txtFlyingTo.getText(), txtTurnDeparture.getText());
-//        seats = seatBUS.getAllByTicketDetail(txtAirline.getText(), flight_ID, cbTurnTicketClass.getItemAt(0));
-//        seatName = new String[seats.size()];
-//        int i = 0;
-//        for(Seat seat : seats){
-//                seatName[i] = seat.getSeatName();
-//                i++;
-//            }
-//        cbTurnSeat.setModel(new javax.swing.DefaultComboBoxModel<>(seatName));
-
         Ticket ticket = tickets.get(0);
-        Flight flight = flightBUS.getObjectbyID(ticket.getFlightID());            
-        String flyingFrom = airportBUS.getObjectbyID(flight.getFlyingFrom()).getAirportName();
-        String flyingTo = airportBUS.getObjectbyID(flight.getFlyingTo()).getAirportName();
-        String hoursFly = flight.getHoursFly() + " giờ";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-        String departureFlight = flight.getDepartureFlight().format(formatter);
+        flight = flightBUS.getObjectbyID(ticket.getFlightID());
+        flyingFrom = airportBUS.getObjectbyID(flight.getFlyingFrom()).getAirportName();
+        flyingTo = airportBUS.getObjectbyID(flight.getFlyingTo()).getAirportName();
+        hoursFly = flight.getHoursFly() + " giờ";
+        departureFlight = flight.getDepartureFlight().format(datetimeFormat);
         
         txtFlyingFrom.setText(flyingFrom);
         txtFlyingTo.setText(flyingTo);
@@ -204,9 +232,49 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
         Seat seat = seatBUS.getObjectbyID(ticket.getSeatID());
         TicketClass ticketClass = ticketClassBUS.getObjectbyID(seat.getTicketClassID());
         Plane plane = planeBUS.getObjectbyID(ticketClass.getPlaneID());
-        Airline airline = airlineBUS.getObjectbyID(plane.getAirlineID());
+        airline = airlineBUS.getObjectbyID(plane.getAirlineID());
         txtAirline.setText(airline.getAirlineName());
+        listPromoCode =  promoCollectionBUS.getList(user, airline);
         
+        flightReturn = flightBUS.getReturnFlight(flight, airline);
+        if(flightReturn.size()!=0){
+            chkRoundTrip.setEnabled(true);
+        } else chkRoundTrip.setEnabled(false);
+        
+        initReceiver(cbReceiver);
+        initCbTicketClass(cbTurnTicketClass, flight, airline);
+        initCbSeat(cbTurnSeat, cbTurnTicketClass.getItemAt(0), tickets);
+        loadPrice(lbTurnPriceNum, cbTurnTicketClass, tickets);
+        initCbMoreLuggage(cbTurnMoreLuggage, airline);
+        initPromoCode();
+        
+        seatTurnIDs = mapClassSeat.get(cbTurnSeat.getName()+cbTurnTicketClass.getSelectedItem().toString());
+    }
+    
+    private void initPromoCode(){
+        String[] listPromoCodeStr = new String[listPromoCode.size()+1];
+        listPromoCodeStr[0] = "-";
+        int i = 1;
+        for(PromoCollection pc : listPromoCode){
+            listPromoCodeStr[i] = pc.getPromo_ID();
+            i++;
+        }
+        cbPromoCode.setModel(new javax.swing.DefaultComboBoxModel<>(listPromoCodeStr));
+    }
+    
+    private void initCbMoreLuggage(javax.swing.JComboBox<String> combobox, Airline airline){
+        ArrayList<MoreLuggage> moreLuggages = moreLuggageBUS.getObjectbyAirlineID(airline.getAirlineID());
+        String[] moreLuggageStrings = new String[moreLuggages.size()+1];
+        moreLuggageStrings[0] = "-";
+        int i = 1;
+        for(MoreLuggage ml : moreLuggages){
+            moreLuggageStrings[i] = ml.getLuggageWeight() + " kg";
+            i++;
+        }
+        combobox.setModel(new javax.swing.DefaultComboBoxModel<>(moreLuggageStrings));
+    }
+    
+    private void initCbTicketClass(javax.swing.JComboBox<String> combobox, Flight flight, Airline airline) throws SQLException{
         ArrayList<TicketClass> ticketClasses = ticketClassBUS.getAllClassNameByAirlineIDFlightID(airline.getAirlineID(), flight.getFlightID());
         int i = 0;
         String[] ticketClassName = new String[ticketClasses.size()];
@@ -214,8 +282,45 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
             ticketClassName[i] = tkCls.getClassName();
             i++;
         }        
-        cbTurnTicketClass.setModel(new javax.swing.DefaultComboBoxModel<>(ticketClassName));
+        combobox.setModel(new javax.swing.DefaultComboBoxModel<>(ticketClassName));
     }
+    
+    private void initCbSeat(javax.swing.JComboBox<String> combobox, String selectedClassName, ArrayList<Ticket> tickets){
+        ArrayList<String> seatIDList = new ArrayList<>();
+        TicketClass ticketClass;
+        Seat seat;
+        for(Ticket tk : tickets){
+            seat = seatBUS.getObjectbyID(tk.getSeatID());
+            ticketClass = ticketClassBUS.getObjectbyID(seat.getTicketClassID());
+            if(!seatIDList.contains(tk.getSeatID()) && selectedClassName.equals(ticketClass.getClassName()) && tk.getSoldout() == 0){
+                seatIDList.add(tk.getSeatID());
+            }
+        }
+
+        int i = 0;
+        String[] seatNameList = new String[seatIDList.size()];
+        for(String seatID : seatIDList){
+            seatNameList[i] = seatBUS.getObjectbyID(seatID).getSeatName();
+            i++;
+        }
+        System.out.println("initCbSeat");
+        mapClassSeat.put(combobox.getName()+selectedClassName, seatIDList);
+        System.out.println("mapClassSeat" + mapClassSeat);
+        combobox.setModel(new javax.swing.DefaultComboBoxModel<>(seatNameList));
+    }
+    
+    private void initReceiver(javax.swing.JComboBox<String> combobox){
+        receivers = receiverBUS.getListFromUser(user);
+        String[] receiversString = new String[receivers.size()+1];
+        receiversString[0] = "-";
+        int i = 1;
+        for(Receiver r : receivers){
+            receiversString[i] = r.getName();
+            i++;
+        }
+        combobox.setModel(new javax.swing.DefaultComboBoxModel<>(receiversString));
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -264,8 +369,8 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
         lbHourFly = new javax.swing.JLabel();
         lbFlyingTo = new javax.swing.JLabel();
         txtFlyingTo = new javax.swing.JTextField();
-        txtReturnDeparture = new javax.swing.JTextField();
         txtTurnDeparture = new javax.swing.JTextField();
+        cbReturnDeparture = new javax.swing.JComboBox<>();
         pnReceiverInfo = new javax.swing.JPanel();
         lbReceiver = new javax.swing.JLabel();
         jSeparator7 = new javax.swing.JSeparator();
@@ -326,6 +431,11 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
         });
 
         chkRoundTrip.setText("Chuyến bay khứ hồi");
+        chkRoundTrip.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkRoundTripActionPerformed(evt);
+            }
+        });
 
         lbGrpTurnTicket.setText("Vé lượt đi");
 
@@ -355,11 +465,24 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
         lbTurnMoreLuggage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/info-luggage-black20.png"))); // NOI18N
         lbTurnMoreLuggage.setText("Thêm hành lý");
 
+        txtTurnMoreLuggagePrice.setEditable(false);
+        txtTurnMoreLuggagePrice.setText("-");
         txtTurnMoreLuggagePrice.setToolTipText("");
 
         cbTurnMoreLuggage.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
+        cbTurnMoreLuggage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbTurnMoreLuggageActionPerformed(evt);
+            }
+        });
 
         cbReturnMoreLuggage.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
+        cbReturnMoreLuggage.setEnabled(false);
+        cbReturnMoreLuggage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbReturnMoreLuggageActionPerformed(evt);
+            }
+        });
 
         lbGrpReturnTicket.setText("Vé lượt về");
 
@@ -389,6 +512,10 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
         lbReturnMoreLuggage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/info-luggage-black20.png"))); // NOI18N
         lbReturnMoreLuggage.setText("Thêm hành lý");
 
+        txtReturnMoreLuggagePrice.setEditable(false);
+        txtReturnMoreLuggagePrice.setText("-");
+        txtReturnMoreLuggagePrice.setEnabled(false);
+
         cbTurnTicketClass.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
         cbTurnTicketClass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -404,8 +531,20 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
         });
 
         cbReturnTicketClass.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
+        cbReturnTicketClass.setEnabled(false);
+        cbReturnTicketClass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbReturnTicketClassActionPerformed(evt);
+            }
+        });
 
         cbReturnSeat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
+        cbReturnSeat.setEnabled(false);
+        cbReturnSeat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbReturnSeatActionPerformed(evt);
+            }
+        });
 
         txtHourFly.setEditable(false);
         txtHourFly.setHorizontalAlignment(javax.swing.JTextField.LEFT);
@@ -431,14 +570,6 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
             }
         });
 
-        txtReturnDeparture.setEditable(false);
-        txtReturnDeparture.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        txtReturnDeparture.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtReturnDepartureActionPerformed(evt);
-            }
-        });
-
         txtTurnDeparture.setEditable(false);
         txtTurnDeparture.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         txtTurnDeparture.addActionListener(new java.awt.event.ActionListener() {
@@ -446,6 +577,9 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
                 txtTurnDepartureActionPerformed(evt);
             }
         });
+
+        cbReturnDeparture.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
+        cbReturnDeparture.setEnabled(false);
 
         javax.swing.GroupLayout pnTicketInfoLayout = new javax.swing.GroupLayout(pnTicketInfo);
         pnTicketInfo.setLayout(pnTicketInfoLayout);
@@ -469,53 +603,48 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(pnTicketInfoLayout.createSequentialGroup()
                         .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lbGrpTurnTicket)
-                                .addGroup(pnTicketInfoLayout.createSequentialGroup()
-                                    .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(lbTurnDeparture)
-                                        .addComponent(lbTurnTicketClass)
-                                        .addComponent(lbTurnSeat))
-                                    .addGap(56, 56, 56)
-                                    .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(cbTurnTicketClass, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(txtTurnDeparture)
-                                        .addComponent(cbTurnSeat, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(lbTurnPriceNum, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(lbTurnPrice)
-                                        .addGroup(pnTicketInfoLayout.createSequentialGroup()
-                                            .addComponent(cbTurnMoreLuggage, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
-                                            .addComponent(txtTurnMoreLuggagePrice, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(lbGrpTurnTicket, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnTicketInfoLayout.createSequentialGroup()
+                                .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lbTurnDeparture)
+                                    .addComponent(lbTurnTicketClass)
+                                    .addComponent(lbTurnSeat))
+                                .addGap(56, 56, 56)
                                 .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(cbTurnTicketClass, javax.swing.GroupLayout.Alignment.LEADING, 0, 184, Short.MAX_VALUE)
+                                    .addComponent(txtTurnDeparture)
+                                    .addComponent(cbTurnSeat, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lbTurnPriceNum, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lbTurnPrice)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnTicketInfoLayout.createSequentialGroup()
-                                        .addComponent(lbReturnDeparture)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(txtReturnDeparture, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jSeparator6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lbGrpFlightInfo, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(chkRoundTrip, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbGrpTurnBonus, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbTurnMoreLuggage, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbGrpReturnTicket, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lbGrpReturnBonus, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnTicketInfoLayout.createSequentialGroup()
-                                        .addComponent(lbReturnMoreLuggage)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(txtReturnMoreLuggagePrice, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jSeparator5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(cbTurnMoreLuggage, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtTurnMoreLuggagePrice))))
+                            .addComponent(lbGrpFlightInfo, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(chkRoundTrip, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbGrpTurnBonus, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbTurnMoreLuggage, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbGrpReturnTicket, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbGrpReturnBonus, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbReturnMoreLuggage, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jSeparator6, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnTicketInfoLayout.createSequentialGroup()
                                 .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lbReturnTicketClass)
-                                    .addComponent(lbReturnSeat))
+                                    .addComponent(lbReturnSeat)
+                                    .addComponent(lbReturnDeparture))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cbReturnMoreLuggage, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(lbReturnPriceNum, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(lbReturnPrice, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(cbReturnTicketClass, 0, 186, Short.MAX_VALUE)
-                                        .addComponent(cbReturnSeat, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(pnTicketInfoLayout.createSequentialGroup()
+                                        .addComponent(cbReturnMoreLuggage, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtReturnMoreLuggagePrice))
+                                    .addComponent(lbReturnPriceNum, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lbReturnPrice, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cbReturnTicketClass, 0, 186, Short.MAX_VALUE)
+                                    .addComponent(cbReturnSeat, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(cbReturnDeparture, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(24, 24, 24))))
         );
         pnTicketInfoLayout.setVerticalGroup(
@@ -572,11 +701,11 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
                 .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbGrpReturnTicket)
-                .addGap(9, 9, 9)
-                .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(txtReturnDeparture, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbReturnDeparture))
-                .addGap(8, 8, 8)
+                .addGap(10, 10, 10)
+                .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbReturnDeparture)
+                    .addComponent(cbReturnDeparture, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(7, 7, 7)
                 .addGroup(pnTicketInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(cbReturnTicketClass, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbReturnTicketClass))
@@ -605,55 +734,51 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
 
         lbGrpReceiverInfo.setText("Thông tin hành khách");
 
-        txtName.setEditable(false);
-
         lbName.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbName.setText("Họ và tên");
 
         lbGender.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbGender.setText("Giới tính");
 
-        cbGender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbGender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nam", "Nữ", "Khác" }));
 
-        cbReceiver.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbReceiver.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
+        cbReceiver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbReceiverActionPerformed(evt);
+            }
+        });
 
         lbDoB.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbDoB.setText("Ngày sinh");
 
-        txtDoB.setEditable(false);
-
-        txtAddress.setEditable(false);
-
         lbAddress.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbAddress.setText("Địa chỉ");
-
-        txtNation.setEditable(false);
 
         lbNation.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbNation.setText("Quốc tịch");
 
-        txtEmail.setEditable(false);
-
         lbEmail.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbEmail.setText("Email");
 
-        txtPhoneNum.setEditable(false);
-
         lbPhoneNum.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbPhoneNum.setText("Số điện thoại");
-
-        txtCCCD.setEditable(false);
 
         lbCCCD.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbCCCD.setText("Số CCCD");
 
         lbGrpPromo.setText("Mã khuyến mãi");
 
-        cbPromoCode.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbPromoCode.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
+        cbPromoCode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbPromoCodeActionPerformed(evt);
+            }
+        });
 
         lbPromoDiscount.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbPromoDiscount.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbPromoDiscount.setText("-120.000đ");
+        lbPromoDiscount.setText("-");
 
         lbTotal.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lbTotal.setText("Tổng cộng");
@@ -666,6 +791,11 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
         btAddTicket.setForeground(new java.awt.Color(255, 255, 255));
         btAddTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-add-white18.png"))); // NOI18N
         btAddTicket.setText("Thêm vé");
+        btAddTicket.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAddTicketActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnReceiverInfoLayout = new javax.swing.GroupLayout(pnReceiverInfo);
         pnReceiverInfo.setLayout(pnReceiverInfoLayout);
@@ -816,43 +946,440 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFlyingToActionPerformed
 
-    private void txtReturnDepartureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtReturnDepartureActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtReturnDepartureActionPerformed
-
     private void txtTurnDepartureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTurnDepartureActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTurnDepartureActionPerformed
 
     private void cbTurnTicketClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTurnTicketClassActionPerformed
-        String selectedClass = cbTurnTicketClass.getSelectedItem().toString();           
-        try {
-            System.out.println("Hello oooooo");
-            //ticketClassID = ticketClassBUS.getObjectByPlaneIDClassName(planeID, selectedClass).getTicketClassID();
-            seats = seatBUS.getAllByTicketDetail(txtAirline.getText(), flight_ID, selectedClass);
-            seatName = new String[seats.size()];
-            int i = 0;
-            for(Seat seat : seats){
-                System.out.println("Hello oooooo " + i);
-                seatName[i] = seat.getSeatName();
-                i++;
+        String selectedClassName = cbTurnTicketClass.getSelectedItem().toString().trim();
+        initCbSeat(cbTurnSeat, selectedClassName, tickets);
+        loadPrice(lbTurnPriceNum, cbTurnTicketClass, tickets);
+    }//GEN-LAST:event_cbTurnTicketClassActionPerformed
+    
+    private void cbTurnSeatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTurnSeatActionPerformed
+        //String selectedSeatName = cbTurnSeat.getSelectedItem().toString();
+        seatTurnIDs = mapClassSeat.get(cbTurnSeat.getName()+cbTurnTicketClass.getSelectedItem().toString());
+        System.out.println(seatTurnIDs);
+    }//GEN-LAST:event_cbTurnSeatActionPerformed
+
+    private void chkRoundTripActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkRoundTripActionPerformed
+        if(chkRoundTrip.isSelected()){
+            try {
+                cbReturnDeparture.setEnabled(true);
+                cbReturnTicketClass.setEnabled(true);
+                cbReturnSeat.setEnabled(true);
+                txtReturnMoreLuggagePrice.setEnabled(true);
+                cbReturnMoreLuggage.setEnabled(true);                
+                
+                String[] returnDeparture = new String[flightReturn.size()];
+                int i = 0;
+                for(Flight fl : flightReturn){
+                    returnDeparture[i] = fl.getDepartureFlight().format(datetimeFormat);
+                    i++;
+                }        
+                cbReturnDeparture.setModel(new javax.swing.DefaultComboBoxModel<>(returnDeparture));
+                
+                initCbTicketClass(cbReturnTicketClass, flightReturn.get(0), airline);
+                initCbSeat(cbReturnSeat, cbReturnTicketClass.getItemAt(0), tickets);
+                loadPrice(lbReturnPriceNum, cbReturnTicketClass, returnTickets);
+                initCbMoreLuggage(cbReturnMoreLuggage, airline);
+                seatReturnIDs = mapClassSeat.get(cbReturnSeat.getName()+cbReturnTicketClass.getSelectedItem().toString());
+            } catch (SQLException ex) {
+                Logger.getLogger(PuBuyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
             }
-            cbTurnSeat.setModel(new javax.swing.DefaultComboBoxModel<>(seatName));
-        } catch (IOException ex) {
+        } else{
+            cbReturnDeparture.setEnabled(false);
+            cbReturnTicketClass.setEnabled(false);
+            cbReturnSeat.setEnabled(false);
+            txtReturnMoreLuggagePrice.setEnabled(false);
+            cbReturnMoreLuggage.setEnabled(false);
+            
+            cbReturnDeparture.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
+            cbReturnTicketClass.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
+            cbReturnSeat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
+            lbReturnPriceNum.setText("-");
+            cbReturnMoreLuggage.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-" }));
+            txtReturnMoreLuggagePrice.setText("");
+        }
+    }//GEN-LAST:event_chkRoundTripActionPerformed
+
+    private void cbReturnTicketClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbReturnTicketClassActionPerformed
+        String selectedClassName = cbReturnTicketClass.getSelectedItem().toString().trim();
+        initCbSeat(cbReturnSeat, selectedClassName, returnTickets);
+        loadPrice(lbReturnPriceNum, cbReturnTicketClass, returnTickets);
+    }//GEN-LAST:event_cbReturnTicketClassActionPerformed
+
+    private void cbTurnMoreLuggageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTurnMoreLuggageActionPerformed
+        loadLuggagePrice(txtTurnMoreLuggagePrice, cbTurnMoreLuggage);
+    }//GEN-LAST:event_cbTurnMoreLuggageActionPerformed
+
+    private void cbReturnMoreLuggageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbReturnMoreLuggageActionPerformed
+        loadLuggagePrice(txtReturnMoreLuggagePrice, cbReturnMoreLuggage);
+    }//GEN-LAST:event_cbReturnMoreLuggageActionPerformed
+
+    private void cbReceiverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbReceiverActionPerformed
+        try {
+            int indexSelected = cbReceiver.getSelectedIndex();
+            indexSelected--;
+            if(indexSelected>=0){
+                receiver = receivers.get(indexSelected);
+                loadReceiver(receiver);
+            } else{
+                receiver = null;
+                loadReceiver(receiver);
+            }
+        } catch (ParseException ex) {
             Logger.getLogger(PuBuyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cbReceiverActionPerformed
+
+    private void btAddTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddTicketActionPerformed
+        if(receiver == null){            
+            EnumCheck.ValidStatus chkNewReceiver = EnumCheck.ValidStatus.VALID;
+            String strNoti = "";
+            String ID = Receiver.generateID();
+            
+            String name = txtName.getText();
+            name = User.formatName(name);
+            EnumCheck.ValidStatus chkName;
+            
+            String gender = cbGender.getSelectedItem().toString();
+            
+            String doB = txtDoB.getText();
+            doB = doB.trim();
+            EnumCheck.DateValidStatus chkDoB;
+            
+            String address = txtAddress.getText();
+            address = address.trim();
+            EnumCheck.ValidStatus chkAddress;
+            
+            String nation = txtNation.getText();
+            nation = nation.trim();
+            EnumCheck.ValidStatus chkNation;
+            
+            String phoneNumber = txtPhoneNum.getText();
+            phoneNumber = phoneNumber.trim();
+            EnumCheck.NumbersValidStatus chkPhone;
+            
+            String CCCD = txtCCCD.getText();
+            CCCD = CCCD.trim();
+            EnumCheck.NumbersValidStatus chkCCCD;
+            
+            String email = txtEmail.getText();
+            email = email.trim();
+            EnumCheck.ValidStatus chkEmail;
+            
+            String userCreateID = user.getID();
+            if(email.equals("")){
+                strNoti += "Email không được để trống.\n";
+                chkNewReceiver = EnumCheck.ValidStatus.INVALID;
+            } else{
+                chkEmail = User.checkEmailValid(email);
+                if(chkEmail == EnumCheck.ValidStatus.INVALID){
+                    strNoti += "Không đúng định dạng email.\n";
+                    chkNewReceiver = EnumCheck.ValidStatus.INVALID;
+                }
+            }         
+
+            if(name.equals("")){
+                strNoti += "Tên không được để trống.\n";
+                chkNewReceiver = EnumCheck.ValidStatus.INVALID;
+            }
+
+            chkDoB = date.checkFormat(doB);
+            if (chkDoB == EnumCheck.DateValidStatus.ISNULL) {
+                strNoti += "Ngày sinh không được để trống.\n";
+                chkNewReceiver = EnumCheck.ValidStatus.INVALID;
+            } else if (chkDoB == EnumCheck.DateValidStatus.UNCORRECTFORMAT) {
+                strNoti += "Ngày sinh phải có dạng dd/mm/yyyy.\n";
+                chkNewReceiver = EnumCheck.ValidStatus.INVALID;
+            } else if (chkDoB == EnumCheck.DateValidStatus.INVALID){
+                strNoti += "Ngày sinh không hợp lệ.\n";
+                chkNewReceiver = EnumCheck.ValidStatus.INVALID;
+            }
+
+            if(CCCD.equals("")){
+                strNoti += "CCCD không được để trống.\n";
+                chkNewReceiver = EnumCheck.ValidStatus.INVALID;
+            } else{
+                chkCCCD = User.checkCCCDValid(CCCD);
+                if(chkCCCD == EnumCheck.NumbersValidStatus.VERYLONG){
+                    strNoti += "Số CCCD quá dài.\n";
+                    chkNewReceiver = EnumCheck.ValidStatus.INVALID;
+                }
+                if(chkCCCD == EnumCheck.NumbersValidStatus.VERYSHORT){
+                    strNoti += "Số CCCD quá ngắn.\n";
+                    chkNewReceiver = EnumCheck.ValidStatus.INVALID;
+                }
+                if(chkCCCD == EnumCheck.NumbersValidStatus.HASLETTER){
+                    strNoti += "Số CCCD sai định dạng.\n";
+                    chkNewReceiver = EnumCheck.ValidStatus.INVALID;
+                }
+            }
+
+            if(nation.equals("")){
+                strNoti += "Quốc gia không được để trống.\n";
+                chkNewReceiver = EnumCheck.ValidStatus.INVALID;
+            }
+
+            if(address.equals("")){
+                strNoti += "Địa chỉ không được để trống.\n";
+                chkNewReceiver = EnumCheck.ValidStatus.INVALID;
+            }
+
+            if(phoneNumber.equals("")){
+                strNoti += "Số điện thoại không được để trống.\n";
+                chkNewReceiver = EnumCheck.ValidStatus.INVALID;
+            } else{
+                chkPhone = User.checkPhoneValid(phoneNumber);
+                if(chkPhone == EnumCheck.NumbersValidStatus.VERYLONG){
+                    strNoti += "Số điện thoại quá dài.\n";
+                    chkNewReceiver = EnumCheck.ValidStatus.INVALID;
+                }
+                if(chkPhone == EnumCheck.NumbersValidStatus.VERYSHORT){
+                    strNoti += "Số điện thoại quá ngắn.\n";
+                    chkNewReceiver = EnumCheck.ValidStatus.INVALID;
+                }
+                if(chkPhone == EnumCheck.NumbersValidStatus.HASLETTER){
+                    strNoti += "Số điện thoại sai định dạng.\n";
+                    chkNewReceiver = EnumCheck.ValidStatus.INVALID;
+                } 
+            }   
+            
+            if(chkNewReceiver == EnumCheck.ValidStatus.VALID){
+                try {
+                    receiver = new Receiver(userCreateID, name, gender, date.strtoDate(doB), address, nation, phoneNumber, CCCD, email, userCreateID);
+                    receiverBUS.create(receiver);
+                } catch (ParseException ex) {
+                    Logger.getLogger(PuBuyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this,strNoti, "Mua vé không thành công", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+        else{
+            String orderID = Order.generateID();
+            Order order = new Order(orderID, user.getID(), LocalDateTime.now());            
+            orderBUS.create(order);
+            
+            String promoID = cbPromoCode.getSelectedItem().toString().trim();
+            
+            
+            MoreLuggage moreLuggage;
+            String weightLuggage;       
+            //Vé đi
+            String turnMoreLuggageID = null;                 
+            try {
+                weightLuggage = cbTurnMoreLuggage.getSelectedItem().toString();     
+                weightLuggage = weightLuggage.replaceAll("[^0-9]", "");
+                moreLuggage = moreLuggageBUS.getObjectbyWeight(Integer.parseInt(weightLuggage));
+                turnMoreLuggageID = moreLuggage.getMoreLuggageID();
+            } catch (Exception e) {
+            }    
+            String orderDetailID = OrderDetail.generateID();
+            int seatTurnIndex = cbTurnSeat.getSelectedIndex();
+            String ticketTurnID = null;
+            for(Ticket tk : tickets){
+                if(tk.getSeatID().equals(seatTurnIDs.get(seatTurnIndex))){
+                    ticketTurnID = tk.getTicketID();
+                    try {
+                        ticketBUS.setSoldout(ticketTurnID);
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(PuBuyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(PuBuyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(PuBuyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+            OrderDetail orderDetailTurn = new OrderDetail(orderDetailID, orderID, turnMoreLuggageID, receiver.getID(), ticketTurnID, promoID, 1, 0);
+            orderDetailBUS.create(orderDetailTurn);
+            //Vé về
+            if(chkRoundTrip.isSelected()){
+                String returnMoreLuggageID = null;               
+                try {
+                    weightLuggage = cbReturnMoreLuggage.getSelectedItem().toString();     
+                    weightLuggage = weightLuggage.replaceAll("[^0-9]", "");
+                    moreLuggage = moreLuggageBUS.getObjectbyWeight(Integer.parseInt(weightLuggage));
+                    returnMoreLuggageID = moreLuggage.getMoreLuggageID();
+                } catch (Exception e) {
+                } 
+                int seatReturnIndex = cbReturnSeat.getSelectedIndex();
+                String ticketReturnID = null;
+                for(Ticket tk : returnTickets){
+                    if(tk.getSeatID().equals(seatReturnIDs.get(seatReturnIndex))){
+                        ticketReturnID = tk.getTicketID();
+                        try {
+                            ticketBUS.setSoldout(ticketReturnID);
+                        } catch (ClassNotFoundException ex) {
+                            Logger.getLogger(PuBuyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(PuBuyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (IOException ex) {
+                            Logger.getLogger(PuBuyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+                OrderDetail orderDetailReturn = new OrderDetail(orderDetailID, orderID, returnMoreLuggageID, receiver.getID(), ticketReturnID, promoID, 1, 0);            
+                orderDetailBUS.create(orderDetailReturn);
+            }            
+        }
+        this.dispose();
+    }//GEN-LAST:event_btAddTicketActionPerformed
+
+    private void cbPromoCodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbPromoCodeActionPerformed
+        loadDescreased();
+        loadTotalValue();
+    }//GEN-LAST:event_cbPromoCodeActionPerformed
+
+    private void cbReturnSeatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbReturnSeatActionPerformed
+        seatReturnIDs = mapClassSeat.get(cbReturnSeat.getName()+cbReturnTicketClass.getSelectedItem().toString());
+        System.out.println(seatReturnIDs);
+    }//GEN-LAST:event_cbReturnSeatActionPerformed
+
+    private void loadDescreased(){
+        try {
+            String promoID = cbPromoCode.getSelectedItem().toString().trim();
+            PromoBUS promoBUS = new PromoBUS();
+            Promotion promotion = promoBUS.getObjectbyID(promoID);
+            if(promotion instanceof PercentDiscount){
+                PercentDiscount pd = (PercentDiscount) promotion;
+                lbPromoDiscount.setText(pd.getDecreased() + "%");
+            }
+            else if(promotion instanceof FlatDiscount){
+                FlatDiscount fd = (FlatDiscount) promotion;
+                lbPromoDiscount.setText(fd.getDecreased() + "đ");
+            }
+            else lbPromoDiscount.setText("-");            
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(PuBuyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(PuBuyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(PuBuyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_cbTurnTicketClassActionPerformed
-
-    private void cbTurnSeatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTurnSeatActionPerformed
-        String selectedSeatName = cbTurnSeat.getSelectedItem().toString();
         
-        //lbTurnPriceNum.setText(ticketBUS.getObjectByFlightIDSeatID(flight_ID, seatID));
-    }//GEN-LAST:event_cbTurnSeatActionPerformed
-
+    }
+    
+    private void loadReceiver(Receiver receiver) throws ParseException{
+        if(receiver!=null){
+            txtName.setText(receiver.getName());
+            cbGender.setSelectedItem(receiver.getGender());
+            String doB = assets.DateTime.convertFormat(receiver.getDoB().toString(), "yyyy-MM-dd", "dd/MM/yyyy");
+            txtDoB.setText(doB);
+            txtAddress.setText(receiver.getAddress());
+            txtNation.setText(receiver.getNation());
+            txtEmail.setText(receiver.getEmail());
+            txtPhoneNum.setText(receiver.getPhoneNumber());
+            txtCCCD.setText(receiver.getCCCD());
+        } else{
+            txtName.setText("");
+            cbGender.setSelectedIndex(0);
+            txtDoB.setText("");
+            txtAddress.setText("");
+            txtNation.setText("");
+            txtEmail.setText("");
+            txtPhoneNum.setText("");
+            txtCCCD.setText("");
+        }
+        
+    }
+    
+    private void loadLuggagePrice(javax.swing.JTextField txtPrice, javax.swing.JComboBox<String> cbMoreLuggage){
+        String weight = cbMoreLuggage.getSelectedItem().toString();
+        weight = weight.replaceAll("[^0-9]", "");
+        try {
+            MoreLuggage moreLuggage = moreLuggageBUS.getObjectbyWeight(Integer.parseInt(weight));
+            txtPrice.setText(moreLuggage.getPrice()+"đ");
+        } catch (Exception e) {
+            txtPrice.setText("-");
+        }    
+        loadTotalValue();
+    }
+    
+    private void loadPrice(javax.swing.JLabel labelPrice, javax.swing.JComboBox<String> cbTicketClass, ArrayList<Ticket> tickets){
+        flight.getFlightID();
+        String ticketClassID;
+        for(Ticket tk : tickets){
+            ticketClassID = seatBUS.getObjectbyID(tk.getSeatID()).getTicketClassID();
+            if(ticketClassBUS.getObjectbyID(ticketClassID).getClassName().equals(cbTicketClass.getSelectedItem())){
+                labelPrice.setText(tk.getSellingPrice() + "đ");
+                loadTotalValue();
+                break;
+            }
+        }
+    }
+    
+    private void loadTotalValue(){   
+        System.out.println("-------Tính tiền--------");     
+        totalValue = 0;
+         
+        int turnPrice = 0;        
+        try {
+            String turnPriceStr = lbTurnPriceNum.getText().toString();
+            turnPriceStr = turnPriceStr.replaceAll("[^0-9]", "");
+            turnPrice = Integer.parseInt(turnPriceStr);
+        } catch (Exception e) {
+        }
+        totalValue += turnPrice;
+        System.out.println("turnPrice " + turnPrice);        
+        System.out.println("totalValue " + totalValue);
+        
+        int turnMoreLuggagePrice = 0;
+        try {
+            String turnMoreLuggagePriceStr = txtTurnMoreLuggagePrice.getText().toString();
+            turnMoreLuggagePriceStr = turnMoreLuggagePriceStr.replaceAll("[^0-9]", "");
+            turnMoreLuggagePrice = Integer.parseInt(turnMoreLuggagePriceStr);
+        } catch (Exception e) {
+        }
+        totalValue += turnMoreLuggagePrice;
+        System.out.println("turnMoreLuggagePrice " + turnMoreLuggagePrice);        
+        System.out.println("totalValue " + totalValue);
+        
+        int returnPriceNum = 0;
+        try {
+            String returnPriceNumStr = lbReturnPriceNum.getText().toString();
+            returnPriceNumStr = returnPriceNumStr.replaceAll("[^0-9]", "");
+            returnPriceNum = Integer.parseInt(returnPriceNumStr);
+        } catch (Exception e) {
+        }
+        totalValue += returnPriceNum;
+        System.out.println("returnPriceNum " + returnPriceNum);        
+        System.out.println("totalValue " + totalValue);
+        
+        int returnMoreLuggagePrice = 0;
+        try {
+            String returnMoreLuggagePriceStr = txtReturnMoreLuggagePrice.getText().toString();
+            returnMoreLuggagePriceStr = returnMoreLuggagePriceStr.replaceAll("[^0-9]", "");
+            returnMoreLuggagePrice = Integer.parseInt(returnMoreLuggagePriceStr);
+        } catch (Exception e) {
+        }
+        totalValue += returnMoreLuggagePrice;    
+        System.out.println("returnMoreLuggagePrice " + returnMoreLuggagePrice);        
+        System.out.println("totalValue " + totalValue);        
+        
+        int promoDiscount = 0;
+        try {
+            
+        } catch (Exception e) {
+        }
+        String promoDiscountStr = lbPromoDiscount.getText().toString();
+        if(promoDiscountStr.charAt(promoDiscountStr.length()-1) == 'đ'){
+            promoDiscountStr = promoDiscountStr.replaceAll("[^0-9]", "");
+            promoDiscount = Integer.parseInt(promoDiscountStr);
+        } else if(promoDiscountStr.charAt(promoDiscountStr.length()-1) == '%'){
+            promoDiscountStr = promoDiscountStr.replaceAll("[^0-9]", "");
+            promoDiscount = Integer.parseInt(promoDiscountStr);
+            promoDiscount = promoDiscount*totalValue/100;
+        } else System.out.println("error...");
+        totalValue -= promoDiscount;    
+        System.out.println("promoDiscount " + promoDiscount);        
+        System.out.println("totalValue " + totalValue);
+        
+        lbTotalValue.setText(totalValue + "đ");
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -896,6 +1423,7 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbGender;
     private javax.swing.JComboBox<String> cbPromoCode;
     private javax.swing.JComboBox<String> cbReceiver;
+    private javax.swing.JComboBox<String> cbReturnDeparture;
     private javax.swing.JComboBox<String> cbReturnMoreLuggage;
     private javax.swing.JComboBox<String> cbReturnSeat;
     private javax.swing.JComboBox<String> cbReturnTicketClass;
@@ -958,7 +1486,6 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
     private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtNation;
     private javax.swing.JTextField txtPhoneNum;
-    private javax.swing.JTextField txtReturnDeparture;
     private javax.swing.JTextField txtReturnMoreLuggagePrice;
     private javax.swing.JTextField txtTurnDeparture;
     private javax.swing.JTextField txtTurnMoreLuggagePrice;

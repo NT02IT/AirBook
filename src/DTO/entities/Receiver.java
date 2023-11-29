@@ -5,6 +5,8 @@
 package DTO.entities;
 
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -16,7 +18,7 @@ public class Receiver extends Person{
 
     public Receiver() {
     }
-
+    
     public Receiver(String receiverID, String receiverName, String gender, Date doB, String receiverAddress, String nation, String phoneNumber, String CCCD, String email, String userCreateID) {
         super(receiverID, receiverName, gender, doB, receiverAddress, nation, phoneNumber, CCCD, email);
         this.userCreateID = userCreateID;
@@ -30,6 +32,12 @@ public class Receiver extends Person{
     public Receiver(String receiverID, User user){
         super(receiverID, user.getName(), user.getGender(), user.getDoB(), user.getAddress(), user.getNation(), user.getPhoneNumber(), user.getCCCD(), user.getEmail());
         this.userCreateID = user.getID();
+    }
+    
+    public Receiver(User user){
+        super(user.getName(), user.getGender(), user.getDoB(), user.getAddress(), user.getNation(), user.getPhoneNumber(), user.getCCCD(), user.getEmail());
+        this.userCreateID = user.getID();
+        super.setID(generateID());
     }
 
     public String getUserCreateID() {

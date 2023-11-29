@@ -13,16 +13,14 @@ import java.time.LocalDateTime;
 public class Order {
     protected String orderID;
     protected String userID;
-    protected String promoID;
     protected LocalDateTime dateOrder;
 
     public Order() {
     }
 
-    public Order(String orderID, String userID, String promoID, LocalDateTime dateOrder) {
+    public Order(String orderID, String userID, LocalDateTime dateOrder) {
         this.orderID = orderID;
         this.userID = userID;
-        this.promoID = promoID;
         this.dateOrder = dateOrder;
     }
 
@@ -32,10 +30,6 @@ public class Order {
 
     public String getUserID() {
         return userID;
-    }
-
-    public String getPromoID() {
-        return promoID;
     }
 
     public LocalDateTime getDateOrder() {
@@ -50,12 +44,14 @@ public class Order {
         this.userID = userID;
     }
 
-    public void setPromoID(String promoID) {
-        this.promoID = promoID;
-    }
-
     public void setDateOrder(LocalDateTime dateOrder) {
         this.dateOrder = dateOrder;
     }
-
+    
+    public static String generateID(){
+        long millis = System.currentTimeMillis();
+        String time = String.valueOf(millis);
+        String id = "OD" + time.substring(time.length()-8);
+        return id;
+    }
 }

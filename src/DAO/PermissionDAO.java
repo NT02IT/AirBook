@@ -88,6 +88,7 @@ public class PermissionDAO {
         connectDB.disconnect(context);
         return false;
     }
+
     
         public boolean update(Permission per) throws SQLException {
             String context = this.getClass().getName();
@@ -112,6 +113,7 @@ public class PermissionDAO {
             return false;
         }
         
+
     public ArrayList<Permission> getPermissonByRoleID(String roleID) throws IOException, ClassNotFoundException, SQLException{
         String context = this.getClass().getName();
         connectDB.connect(context);

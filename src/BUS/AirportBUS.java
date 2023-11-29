@@ -5,7 +5,6 @@
 package BUS;
 
 import DAO.AirportDAO;
-import DAO.UserDAO;
 import DTO.entities.Airport;
 import java.io.IOException;
 import java.sql.SQLException;
