@@ -160,9 +160,14 @@ public class FlightDAO {
                 flight.setIsDelete(rs.getInt(6));
                 flights.add(flight);
             }
-          return flights;
+        }catch (SQLException ex) {
+            Logger.getLogger(FlightDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        public boolean deleteFlight(Flight flight) throws ClassNotFoundException, SQLException {
+        connectDB.disconnect(context);
+          return flights;
+    }
+        
+    public boolean deleteFlight(Flight flight) throws ClassNotFoundException, SQLException {
         String context = this.getClass().getName();
         connectDB.connect(context);
         try {
@@ -189,24 +194,24 @@ public class FlightDAO {
         return false;
     }
     
-       public boolean updateFlight(Flight flight) throws ClassNotFoundException, SQLException {
-            String context = this.getClass().getName();
-            connectDB.connect(context);
-            try {
-                String sql = "UPDATE airports SET Airport_name = ?, Province = ? WHERE Airport_ID = ?";
-                PreparedStatement pstmt = connectDB.conn.prepareStatement(sql);
-                //pstmt.setString(1, flight.getAirportName());
-                //pstmt.setString(2, flight.getProvince());
-                //pstmt.setString(3, flight.getAirportID());
-                int rowsAffected = pstmt.executeUpdate();
-                return rowsAffected > 0;
-            } catch (SQLException ex) {
-                Logger.getLogger(FlightDAO.class.getName()).log(Level.SEVERE, null, ex);
-            } finally {
-                connectDB.disconnect(context);
-            }
-            return false;
-        }
+    public boolean updateFlight(Flight flight) throws ClassNotFoundException, SQLException {
+         String context = this.getClass().getName();
+         connectDB.connect(context);
+         try {
+             String sql = "UPDATE airports SET Airport_name = ?, Province = ? WHERE Airport_ID = ?";
+             PreparedStatement pstmt = connectDB.conn.prepareStatement(sql);
+             //pstmt.setString(1, flight.getAirportName());
+             //pstmt.setString(2, flight.getProvince());
+             //pstmt.setString(3, flight.getAirportID());
+             int rowsAffected = pstmt.executeUpdate();
+             return rowsAffected > 0;
+         } catch (SQLException ex) {
+             Logger.getLogger(FlightDAO.class.getName()).log(Level.SEVERE, null, ex);
+         } finally {
+             connectDB.disconnect(context);
+         }
+         return false;
+     }
     
     public boolean existsFlightID(String flightID) {
         for (Flight flight : list) {
