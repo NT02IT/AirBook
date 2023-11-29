@@ -42,6 +42,8 @@
                           <Group type="102" attributes="0">
                               <Component id="lbTitle" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
+                              <Component id="btRefresh" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="btAddAirline" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -57,7 +59,10 @@
               <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="lbTitle" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="btAddAirline" alignment="0" min="-2" pref="34" max="-2" attributes="0"/>
+                  <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                      <Component id="btAddAirline" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
+                      <Component id="btRefresh" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
               <Component id="pnAllAirline" pref="381" max="32767" attributes="0"/>
@@ -91,6 +96,7 @@
       <Events>
         <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btAddAirlineMouseEntered"/>
         <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btAddAirlineMouseExited"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btAddAirlineActionPerformed"/>
       </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="pnAllAirline">
@@ -106,7 +112,7 @@
               <Table columnCount="5" rowCount="0">
                 <Column editable="false" title="STT" type="java.lang.String"/>
                 <Column editable="false" title="M&#xe3; h&#xe3;ng bay" type="java.lang.String"/>
-                <Column editable="false" title="T&#xea;n m&#xe1;y bay" type="java.lang.String"/>
+                <Column editable="false" title="T&#xea;n h&#xe3;ng bay" type="java.lang.String"/>
                 <Column editable="true" title="S&#x1ed1; m&#xe1;y bay" type="java.lang.String"/>
                 <Column editable="true" title="Doanh thu" type="java.lang.String"/>
               </Table>
@@ -170,6 +176,19 @@
         </Property>
         <Property name="text" type="java.lang.String" value="chuy&#x1ebf;n bay"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btRefresh">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/assets/icon/action-refresh-black18.png"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="L&#xe0;m m&#x1edb;i"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btRefreshMouseEntered"/>
+        <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btRefreshMouseExited"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btRefreshActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

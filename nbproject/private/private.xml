@@ -3,12 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Workspace/Develop/Java/AirBook/src/GUI/body_panel/BuyTicketEUC.java</file>
-            <file>file:/D:/Workspace/Develop/Java/AirBook/src/GUI/body_panel/PromoEUC.java</file>
-            <file>file:/D:/Workspace/Develop/Java/AirBook/src/BUS/PromoBUS.java</file>
-            <file>file:/D:/Workspace/Develop/Java/AirBook/src/GUI/popup/PuBuyTicketEUC.java</file>
-            <file>file:/D:/Workspace/Develop/Java/AirBook/src/DAO/SeatDAO.java</file>
-            <file>file:/D:/Workspace/Develop/Java/AirBook/src/DTO/entities/Ticket.java</file>
+            <file>file:/C:/Users/Admin/Desktop/AirBook/src/GUI/body_panel/AirlinePlaneAD.java</file>
+            <file>file:/C:/Users/Admin/Desktop/AirBook/src/DAO/PromoDAO.java</file>
+            <file>file:/C:/Users/Admin/Desktop/AirBook/src/GUI/body_panel/AirportAD.java</file>
+            <file>file:/C:/Users/Admin/Desktop/AirBook/src/GUI/body_panel/FlightAD.java</file>
+            <file>file:/C:/Users/Admin/Desktop/AirBook/src/GUI/popup/PuPlaneAD.java</file>
         </group>
     </open-files>
 </project-private>

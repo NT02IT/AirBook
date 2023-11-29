@@ -4,15 +4,25 @@
  */
 package GUI.body_panel;
 
+import BUS.AirlineBUS;
+import DAO.PlaneDAO;
+import DTO.entities.Airline;
 import assets.Styles;
 import DTO.entities.User;
+import DTO.views.AirlineViews;
+import DTO.views.AirlineViews.AirlineView;
 import GUI.IndexAD;
+import GUI.popup.PuAirline;
 import assets.Site;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -22,19 +32,31 @@ public class AirlineAD extends javax.swing.JPanel {
     private User user;
     private int rowPosition;
     private JFrame context;
+    private ArrayList<Airline> listAirline;
+    private ArrayList<AirlineView> listAirlineView;
+    private AirlineBUS airlineBUS;
+    private DefaultTableModel airlinesModel;
+    private String selectedAirlineID; 
+    //private PlaneDAO planeDAO;
     /**
      * Creates new form AirlineAD
      */
-    public AirlineAD() {
+    public AirlineAD() throws ClassNotFoundException, SQLException, IOException{
         initComponents();
         styles();
+        initAirline();
     }
     
-    public AirlineAD(JFrame context, User user) {
+    public AirlineAD(JFrame context, User user) throws ClassNotFoundException, SQLException, IOException{
         this.user = user;
         this.context = context;
         initComponents();
         styles();
+        initAirline();        
+    }
+    
+    public String getSelectedAirlineID() {
+        return selectedAirlineID;
     }
     
     public void styles(){
@@ -50,6 +72,27 @@ public class AirlineAD extends javax.swing.JPanel {
         lbTotalAirlineTail.setFont(Styles.Body);
         lbTotalAirlineTail.setForeground(Styles.GRAY_600);
     }
+    
+    private void initAirline() throws ClassNotFoundException, SQLException, IOException {
+        airlineBUS = new AirlineBUS();
+        listAirline = airlineBUS.getList();
+        AirlineViews airlineViews = new AirlineViews(listAirline);
+        listAirlineView = airlineViews.getList();        
+        airlinesModel = (DefaultTableModel) tbAllAirline.getModel();
+        int stt = 1;
+        for (AirlineView airlineView : listAirlineView){
+            String airlineID = airlineView.MaHangMayBay;
+            int numberOfPlanes = getNumberOfPlanesByAirlineID(airlineID);   
+            airlinesModel.addRow(new Object[]{stt++, airlineView.MaHangMayBay, airlineView.TenHangBay, numberOfPlanes, stt });
+        }
+        lbTotalAirline.setText(--stt + "");
+    }
+
+    private int getNumberOfPlanesByAirlineID(String airlineID) throws ClassNotFoundException, SQLException, IOException {
+        PlaneDAO planeDAO = new PlaneDAO();
+        int numberOfPlanes = planeDAO.getNumberOfPlanesByAirlineID(airlineID);
+        return numberOfPlanes;
+    }     
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -66,6 +109,7 @@ public class AirlineAD extends javax.swing.JPanel {
         lbTotalAirlineHead = new javax.swing.JLabel();
         lbTotalAirline = new javax.swing.JLabel();
         lbTotalAirlineTail = new javax.swing.JLabel();
+        btRefresh = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setFocusable(false);
@@ -84,13 +128,18 @@ public class AirlineAD extends javax.swing.JPanel {
                 btAddAirlineMouseExited(evt);
             }
         });
+        btAddAirline.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAddAirlineActionPerformed(evt);
+            }
+        });
 
         tbAllAirline.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "STT", "Mã hãng bay", "Tên máy bay", "Số máy bay", "Doanh thu"
+                "STT", "Mã hãng bay", "Tên hãng bay", "Số máy bay", "Doanh thu"
             }
         ) {
             Class[] types = new Class [] {
@@ -127,6 +176,22 @@ public class AirlineAD extends javax.swing.JPanel {
         lbTotalAirlineTail.setFont(Styles.Micro);
         lbTotalAirlineTail.setText("chuyến bay");
 
+        btRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-refresh-black18.png"))); // NOI18N
+        btRefresh.setText("Làm mới");
+        btRefresh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btRefreshMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btRefreshMouseExited(evt);
+            }
+        });
+        btRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btRefreshActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -147,6 +212,8 @@ public class AirlineAD extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lbTitle)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btRefresh)
+                                .addGap(18, 18, 18)
                                 .addComponent(btAddAirline)))
                         .addGap(24, 24, 24))))
         );
@@ -156,7 +223,9 @@ public class AirlineAD extends javax.swing.JPanel {
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbTitle)
-                    .addComponent(btAddAirline, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btAddAirline, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(12, 12, 12)
                 .addComponent(pnAllAirline, javax.swing.GroupLayout.DEFAULT_SIZE, 381, Short.MAX_VALUE)
                 .addGap(8, 8, 8)
@@ -181,22 +250,73 @@ public class AirlineAD extends javax.swing.JPanel {
     }//GEN-LAST:event_btAddAirlineMouseExited
 
     private void tbAllAirlineMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbAllAirlineMouseClicked
-        rowPosition = this.tbAllAirline.getSelectedRow();
-        IndexAD indexAD = (IndexAD)context;
-        try {
-            indexAD.SiteOrder(Site.Order.AIRLINEPLANE);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AirlineAD.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(AirlineAD.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(AirlineAD.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    int rowPosition = this.tbAllAirline.getSelectedRow();
+    IndexAD indexAD = (IndexAD) context;
+
+    try {
+        // Lấy giá trị AirlineID từ cột đã chọn trong bảng tbAllAirline
+        String airlineID = (String) tbAllAirline.getValueAt(rowPosition, 1);
+        selectedAirlineID = airlineID;
+        indexAD.setAirlineID(selectedAirlineID);
+        indexAD.SiteOrder(Site.Order.AIRLINEPLANE);
+        // Tạo đối tượng AirlinePlaneAD với đối số User
+        //AirlinePlaneAD airlinePlaneAD = new AirlinePlaneAD(user);
+        //airlinePlaneAD.setAirlineID(airlineID);
+        //System.out.println(airlineID);
+        //airlinePlaneAD.initPlane();
+    } catch (ClassNotFoundException ex) {
+        Logger.getLogger(AirlineAD.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (SQLException ex) {
+        Logger.getLogger(AirlineAD.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (IOException ex) {
+        Logger.getLogger(AirlineAD.class.getName()).log(Level.SEVERE, null, ex);
+    }
     }//GEN-LAST:event_tbAllAirlineMouseClicked
 
+    private void btAddAirlineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddAirlineActionPerformed
+        PuAirline puAirline= new PuAirline();
+        puAirline.setVisible(true);
+        puAirline.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btAddAirlineActionPerformed
+
+    private void btRefreshMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btRefreshMouseEntered
+        btRefresh.setBackground(Styles.PRI_LIGHTER);
+        btRefresh.setForeground(Styles.PRI_NORMAL);
+        btRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-refresh-pri18.png")));
+    }//GEN-LAST:event_btRefreshMouseEntered
+
+    private void btRefreshMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btRefreshMouseExited
+        btRefresh.setBackground(Styles.GRAY_100);
+        btRefresh.setForeground(Styles.GRAY_600);
+        btRefresh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-refresh-black18.png")));
+    }//GEN-LAST:event_btRefreshMouseExited
+
+    private void btRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRefreshActionPerformed
+        try {
+            refreshAirlineList();
+        } catch (IOException ex) {
+            Logger.getLogger(AirlinePlaneAD.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AirlinePlaneAD.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AirlinePlaneAD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btRefreshActionPerformed
+    public void refreshAirlineList() throws IOException, ClassNotFoundException, SQLException {
+        airlinesModel.setRowCount(0); // Xóa các hàng hiện tại trong bảng   
+        initAirline();
+    }
+//   
+//       public void displayPlaneTableByAirlineID(String airlineID) throws ClassNotFoundException, SQLException, IOException {
+//        // Gọi phương thức trong AirlinePlaneAD để hiển thị bảng Plane theo AirlineID
+//        AirlinePlaneAD airlinePlaneAD = new AirlinePlaneAD();
+//        airlinePlaneAD.
+//    }
+//    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btAddAirline;
+    private javax.swing.JButton btRefresh;
     private javax.swing.JLabel lbTitle;
     private javax.swing.JLabel lbTotalAirline;
     private javax.swing.JLabel lbTotalAirlineHead;
