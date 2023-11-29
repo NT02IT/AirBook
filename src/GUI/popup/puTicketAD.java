@@ -4,8 +4,31 @@
  */
 package GUI.popup;
 
+import BUS.AirlineBUS;
+import BUS.AirportBUS;
+import BUS.FlightBUS;
+import BUS.PermissionBUS;
+import BUS.PlaneBUS;
+import BUS.SeatBUS;
+import BUS.TicketClassBUS;
+import DTO.entities.Airline;
+import DTO.entities.Airport;
+import DTO.entities.Flight;
+import DTO.entities.Plane;
+import DTO.entities.Seat;
+import DTO.entities.Ticket;
+import DTO.entities.TicketClass;
+import DTO.entities.User;
+import assets.DateTime;
 import assets.Styles;
 import java.awt.Toolkit;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.WindowConstants;
 /**
@@ -13,27 +36,112 @@ import javax.swing.WindowConstants;
  * @author WIN 10
  */
 public class puTicketAD extends javax.swing.JFrame {
-
+    private User user;
+    private ArrayList<Ticket> tickets;
+    private AirlineBUS airlineBUS;
+    private ArrayList<Airline> airlines;
+    private ArrayList<Airport> airports;
+    
+    
+    private PermissionBUS permissionBUS;
+    private AirportBUS airportBUS;
+    private SeatBUS seatBUS;
+    private TicketClassBUS ticketClassBUS;
+    private PlaneBUS planeBUS;
+    private FlightBUS flightBUS;
+    
     /**
      * Creates new form puTicketAD
      */
-    public puTicketAD() {
-        initComponents();
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/assets/image/app-favicon.png")));
-        this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        this.setLocationRelativeTo(null);
-        this.setTitle("Chuyến bay");
-        style();
+    public puTicketAD(User user,ArrayList<Ticket> tickets) throws ParseException {
+        try {
+            initComponents();
+            this.user = user;
+            this.tickets = tickets;
+            this.airlineBUS = new AirlineBUS();
+            this.airlines = airlineBUS.getList();
+            this.permissionBUS = new PermissionBUS();
+            this.seatBUS = new SeatBUS();
+            this.airportBUS = new AirportBUS();
+            this.ticketClassBUS = new TicketClassBUS();
+            this.planeBUS = new PlaneBUS();
+            this.flightBUS = new FlightBUS();
+            this.airports = airportBUS.getList();
+            this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/assets/image/app-favicon.png")));
+            this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+            this.setLocationRelativeTo(null);
+            this.setTitle("Chuyến bay");
+            style();
+            initAccessPerRole();
+            initFormTextField();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(puTicketAD.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(puTicketAD.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(puTicketAD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void initAccessPerRole() {
+        User userLogin = (User) this.user;
+        if(permissionBUS.hasPerEdit(userLogin.getRoleID(), "TIK")) {
+            btUpdate.setEnabled(true);
+        }
+        else {
+            btUpdate.setEnabled(false);
+        }
+        if(permissionBUS.hasPerDelete(userLogin.getRoleID(), "TIK")) {
+            btDelete.setEnabled(true);
+        }
+        else {
+            btDelete.setEnabled(false);
+        }
+        
+        
+    }
+    public void initFormTextField() throws ParseException, ClassNotFoundException, SQLException, IOException{
+        if(this.tickets != null) {
+            Ticket ticket = tickets.get(0);
+            txtAirportGate.setText(ticket.getGateID());
+            cbAirline.setEnabled(false);
+            cbFlightFrom.setEnabled(false);
+            cbFlightTo.setEnabled(false);
+            txtDepartureFlight.setEnabled(false);
+            txtPlane.setEnabled(false);
+            Seat seat = seatBUS.getObjectbyID(ticket.getSeatID());
+            TicketClass ticketClass = ticketClassBUS.getObjectbyID(seat.getTicketClassID());
+            Plane plane = planeBUS.getObjectbyID(ticketClass.getPlaneID());
+            Airline airline = airlineBUS.getObjectbyID(plane.getAirlineID());            
+            for (Airline a : airlines) {
+                String aID = a.getAirlineID();
+                String aName = a.getAirlineName();
+                cbAirline.addItem(aName);
+                if (aID.equals(airline.getAirlineID())) {
+                    cbAirline.setSelectedItem(aName);
+                }
+            }
+            Flight flight = flightBUS.getObjectbyID(ticket.getFlightID());            
+            String flyingFrom = airportBUS.getObjectbyID(flight.getFlyingFrom()).getAirportName();
+            String flyingTo = airportBUS.getObjectbyID(flight.getFlyingTo()).getAirportName();
+            for(Airport airport : airports){
+                if(airport.getAirportName().equals(flyingFrom))
+                    cbFlightFrom.setSelectedItem(airport.getProvince());
+                if(airport.getAirportName().equals(flyingTo))
+                    cbFlightTo.setSelectedItem(airport.getProvince());
+            } 
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+            txtDepartureFlight.setText(flight.getDepartureFlight().format(formatter));
+            txtPlane.setText(plane.getPlaneID());
+        }
+        else{
+            btDelete.setEnabled(false);
+        }
     }
     public void style(){
         this.getContentPane().setBackground(Styles.WHITE);
         Styles.FormLabel(lbAirline);
-        
         Styles.FormLabel(lbFlyingFrom);
-        
         Styles.FormLabel(lbFlyingTo);
-
-        
         Styles.FormLabel(lbDepartureFlight);
         Styles.FormTextFeild(txtDepartureFlight);
         
@@ -53,7 +161,16 @@ public class puTicketAD extends javax.swing.JFrame {
         Styles.FormTextFeild(txtResellPrice);
         
         Styles.ButtonDanger(btDelete);
-        Styles.ButtonSecondary(btUpdate);  
+        Styles.ButtonSecondary(btUpdate); 
+        for (Airline entry : airlines) {
+            String roleID = entry.getAirlineID();
+            String roleName = entry.getAirlineName();
+            cbAirline.addItem(roleName);
+        }
+        for(Airport airport : airports){
+            cbFlightFrom.addItem(airport.getProvince());            
+            cbFlightTo.addItem(airport.getProvince());
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -84,7 +201,7 @@ public class puTicketAD extends javax.swing.JFrame {
         lbResellPrice = new javax.swing.JLabel();
         btDelete = new javax.swing.JButton();
         btUpdate = new javax.swing.JButton();
-        cdFlightFrom = new javax.swing.JComboBox<>();
+        cbFlightFrom = new javax.swing.JComboBox<>();
         cbFlightTo = new javax.swing.JComboBox<>();
         cbAirline = new javax.swing.JComboBox<>();
 
@@ -140,11 +257,7 @@ public class puTicketAD extends javax.swing.JFrame {
         btUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-refresh-pri18.png"))); // NOI18N
         btUpdate.setText("Cập nhật");
 
-        cdFlightFrom.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cbFlightTo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cbAirline.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbAirline.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
         cbAirline.setMinimumSize(new java.awt.Dimension(150, 22));
         cbAirline.setPreferredSize(new java.awt.Dimension(150, 22));
 
@@ -162,7 +275,7 @@ public class puTicketAD extends javax.swing.JFrame {
                                 .addComponent(lbFlyingFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(pnDetailLayout.createSequentialGroup()
-                                .addComponent(cdFlightFrom, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cbFlightFrom, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(99, 99, 99)))
                         .addGroup(pnDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cbFlightTo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -213,7 +326,7 @@ public class puTicketAD extends javax.swing.JFrame {
                     .addComponent(lbFlyingTo))
                 .addGap(10, 10, 10)
                 .addGroup(pnDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cdFlightFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbFlightFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbFlightTo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addGroup(pnDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -277,8 +390,8 @@ public class puTicketAD extends javax.swing.JFrame {
     private javax.swing.JButton btDelete;
     private javax.swing.JButton btUpdate;
     private javax.swing.JComboBox<String> cbAirline;
+    private javax.swing.JComboBox<String> cbFlightFrom;
     private javax.swing.JComboBox<String> cbFlightTo;
-    private javax.swing.JComboBox<String> cdFlightFrom;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lbAirline;
     private javax.swing.JLabel lbAirportGate;
