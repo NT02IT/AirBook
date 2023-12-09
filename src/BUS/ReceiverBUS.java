@@ -7,7 +7,6 @@ package BUS;
 import DAO.ReceiverDAO;
 import DTO.entities.Person;
 import DTO.entities.Receiver;
-import static DTO.entities.Receiver.generateID;
 import DTO.entities.User;
 import java.io.IOException;
 import java.sql.SQLException;

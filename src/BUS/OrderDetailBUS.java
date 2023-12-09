@@ -6,6 +6,7 @@ package BUS;
 
 import DAO.OrderDetailDAO;
 import DTO.entities.OrderDetail;
+import DTO.entities.User;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -56,5 +57,12 @@ public class OrderDetailBUS {
         }
         return true;
     }
-        
+    
+    public ArrayList<OrderDetail> update(OrderDetail orderDetail) throws SQLException, IOException, ClassNotFoundException{
+        return orderDetailDAO.update(orderDetail);
+    }
+       
+    public int getQuantityTicketPaidOf(User user) throws SQLException{
+        return orderDetailDAO.getQuantityTicketPaidOf(user);
+    }
 }

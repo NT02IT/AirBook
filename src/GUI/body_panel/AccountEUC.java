@@ -4,7 +4,10 @@
  */
 package GUI.body_panel;
 
+import BUS.OrderDetailBUS;
+import BUS.TicketBUS;
 import BUS.UserBUS;
+import DTO.entities.OrderDetail;
 import DTO.entities.User;
 import GUI.SigninGUI;
 import assets.DateTime;
@@ -14,8 +17,6 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -28,18 +29,28 @@ public class AccountEUC extends javax.swing.JPanel {
     private User user;
     private UserBUS userBUS;
     private DateTime date = new DateTime();
+    private OrderDetailBUS orderDetailBUS;
+    private TicketBUS ticketBUS;
     /**
      * Creates new form AccountEUC
      */
     public AccountEUC() {
         initComponents();
         style();
-        initAccountInfo();
+        try {
+            initAccountInfo();
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountEUC.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public AccountEUC(User user) {
+        initComponents();
+        style(); 
         try {
             userBUS = new UserBUS();
+            orderDetailBUS = new OrderDetailBUS();
+            ticketBUS = new TicketBUS();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(AccountEUC.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -48,9 +59,11 @@ public class AccountEUC extends javax.swing.JPanel {
             Logger.getLogger(AccountEUC.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.user = user;
-        initComponents();
-        style(); 
-        initAccountInfo();
+        try {
+            initAccountInfo();
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountEUC.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void style(){
@@ -103,7 +116,7 @@ public class AccountEUC extends javax.swing.JPanel {
         pnAccountInfo.setBorder(borderPnAcc);
     }
 
-    private void initAccountInfo(){
+    private void initAccountInfo() throws SQLException{
         txtName.setText(user.getName());
         txtGender.getModel().setSelectedItem(user.getGender());
         String doB;
@@ -120,6 +133,9 @@ public class AccountEUC extends javax.swing.JPanel {
         txtUsername.setText(user.getUsername());
         txtEmail.setText(user.getEmail());
         txtPwd.setText("SamplePwd");
+        lbTicketBoughtNum.setText(orderDetailBUS.getQuantityTicketPaidOf(user) + "");
+        lbFlightUpcomingNum.setText(ticketBUS.getAllUpcomingTickets(user).size() + "");
+        lbTotalNum.setText(ticketBUS.getTotalSpending(user) + "đ");
     }
     /**
      * This method is called from within the constructor to initialize the form.

@@ -5,6 +5,7 @@
 package DAO;
 
 import DTO.entities.OrderDetail;
+import DTO.entities.User;
 import connection.ConnectDB;
 import java.io.IOException;
 import java.sql.PreparedStatement;
@@ -88,5 +89,50 @@ public class OrderDetailDAO {
         }
         connectDB.disconnect(context);
         return false;
+    }
+    
+    public ArrayList<OrderDetail> update(OrderDetail orderDetail) throws SQLException, IOException, ClassNotFoundException{
+        String context = this.getClass().getName();
+        connectDB.connect(context);
+        try {
+            String sql = "UPDATE dbo.order_details "
+                    + "SET Order_ID = ?, More_luggage_ID = ?, Receiver_ID = ?, Ticket_ID = ?, Promo_ID = ?, NotPaid = ?, IsDelete = ? "
+                    + "WHERE  Order_detail_ID = ?";
+            PreparedStatement pstmt = connectDB.conn.prepareStatement(sql);
+            pstmt.setString(8, orderDetail.getOrderDetailID());
+            pstmt.setString(1, orderDetail.getOrderID());
+            pstmt.setString(2, orderDetail.getMoreLuggageID());
+            pstmt.setString(3, orderDetail.getReceiverID());
+            pstmt.setString(4, orderDetail.getTicketID());              
+            pstmt.setString(5, orderDetail.getPromoID());            
+            pstmt.setInt(6, orderDetail.getNotPaid());
+            pstmt.setInt(7, orderDetail.getIsDelete());
+            pstmt.executeUpdate();
+            return read();
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDetailDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        connectDB.disconnect(context);
+        return null;
+    }
+    
+    public int getQuantityTicketPaidOf(User user) throws SQLException{
+        int quantity = -1;
+        String context = this.getClass().getName();
+        connectDB.connect(context);
+        try {
+            String sql = "SELECT COUNT(od.Order_detail_ID) AS NumberOfRows FROM order_details od "
+                    + "JOIN orders o ON od.Order_ID = o.Order_ID "
+                    + "WHERE od.NotPaid = 0 AND o.User_ID = '" + user.getID() + "';";
+            Statement stmt = connectDB.conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                quantity = rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDetailDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        connectDB.disconnect(context);
+        return quantity;
     }
 }

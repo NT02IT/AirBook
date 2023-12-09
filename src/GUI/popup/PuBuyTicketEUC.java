@@ -623,7 +623,6 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
                             .addComponent(lbGrpFlightInfo, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(chkRoundTrip, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbGrpTurnBonus, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbTurnMoreLuggage, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbGrpReturnTicket, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbGrpReturnBonus, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbReturnMoreLuggage, javax.swing.GroupLayout.Alignment.LEADING)
@@ -644,7 +643,8 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
                                     .addComponent(lbReturnPrice, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(cbReturnTicketClass, 0, 186, Short.MAX_VALUE)
                                     .addComponent(cbReturnSeat, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cbReturnDeparture, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addComponent(cbReturnDeparture, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(lbTurnMoreLuggage, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(24, 24, 24))))
         );
         pnTicketInfoLayout.setVerticalGroup(
@@ -846,12 +846,12 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
                         .addComponent(lbDoB, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jSeparator8, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jSeparator9)))
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
         pnReceiverInfoLayout.setVerticalGroup(
             pnReceiverInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnReceiverInfoLayout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addGap(24, 24, 24)
                 .addGroup(pnReceiverInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbReceiver)
                     .addComponent(cbReceiver, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -908,7 +908,7 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lbTotalValue))
                     .addComponent(btAddTicket, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -917,7 +917,7 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(popupHeader1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(pnTicketInfoCont)
+                .addComponent(pnTicketInfoCont, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
                 .addComponent(pnReceiverInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -1148,44 +1148,66 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
             
             if(chkNewReceiver == EnumCheck.ValidStatus.VALID){
                 try {
-                    receiver = new Receiver(userCreateID, name, gender, date.strtoDate(doB), address, nation, phoneNumber, CCCD, email, userCreateID);
+                    receiver = new Receiver(Receiver.generateID(), name, gender, date.strtoDate(doB), address, nation, phoneNumber, CCCD, email, userCreateID);
                     receiverBUS.create(receiver);
                 } catch (ParseException ex) {
                     Logger.getLogger(PuBuyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(this,"Không thể tạo hành khách", "Mua vé không thành công", JOptionPane.INFORMATION_MESSAGE);
                 }
             } else {
                 JOptionPane.showMessageDialog(this,strNoti, "Mua vé không thành công", JOptionPane.INFORMATION_MESSAGE);
             }
         }
-        else{
-            String orderID = Order.generateID();
-            Order order = new Order(orderID, user.getID(), LocalDateTime.now());            
-            orderBUS.create(order);
-            
-            String promoID = cbPromoCode.getSelectedItem().toString().trim();
-            if(promoID.equals("-")){
-                promoID=null;
+        String orderID = Order.generateID();
+        Order order = new Order(orderID, user.getID(), LocalDateTime.now());            
+        orderBUS.create(order);
+
+        String promoID = cbPromoCode.getSelectedItem().toString().trim();
+        if(promoID.equals("-")){
+            promoID=null;
+        }
+
+        MoreLuggage moreLuggage;
+        String weightLuggage;       
+        //Vé đi
+        String turnMoreLuggageID = null;    
+        weightLuggage = cbTurnMoreLuggage.getSelectedItem().toString();     
+        weightLuggage = weightLuggage.replaceAll("[^0-9]", "");
+        moreLuggage = moreLuggageBUS.getObjectbyWeight(Integer.parseInt(weightLuggage));
+        turnMoreLuggageID = moreLuggage.getMoreLuggageID(); 
+        String orderDetailID = OrderDetail.generateID();
+        int seatTurnIndex = cbTurnSeat.getSelectedIndex();
+        String ticketTurnID = null;
+        for(Ticket tk : tickets){
+            if(tk.getSeatID().equals(seatTurnIDs.get(seatTurnIndex))){
+                ticketTurnID = tk.getTicketID();
+                try {
+                    ticketBUS.setSoldout(ticketTurnID);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(PuBuyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(PuBuyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(PuBuyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-            
-            MoreLuggage moreLuggage;
-            String weightLuggage;       
-            //Vé đi
-            String turnMoreLuggageID = null;                 
-            try {
-                weightLuggage = cbTurnMoreLuggage.getSelectedItem().toString();     
-                weightLuggage = weightLuggage.replaceAll("[^0-9]", "");
-                moreLuggage = moreLuggageBUS.getObjectbyWeight(Integer.parseInt(weightLuggage));
-                turnMoreLuggageID = moreLuggage.getMoreLuggageID();
-            } catch (Exception e) {
-            }    
-            String orderDetailID = OrderDetail.generateID();
-            int seatTurnIndex = cbTurnSeat.getSelectedIndex();
-            String ticketTurnID = null;
-            for(Ticket tk : tickets){
-                if(tk.getSeatID().equals(seatTurnIDs.get(seatTurnIndex))){
-                    ticketTurnID = tk.getTicketID();
+        }
+        OrderDetail orderDetailTurn = new OrderDetail(orderDetailID, orderID, turnMoreLuggageID, receiver.getID(), ticketTurnID, promoID, 1, 0);
+        orderDetailBUS.create(orderDetailTurn);
+        //Vé về
+        if(chkRoundTrip.isSelected()){
+            String returnMoreLuggageID = null;               
+            weightLuggage = cbReturnMoreLuggage.getSelectedItem().toString();     
+            weightLuggage = weightLuggage.replaceAll("[^0-9]", "");
+            moreLuggage = moreLuggageBUS.getObjectbyWeight(Integer.parseInt(weightLuggage));
+            returnMoreLuggageID = moreLuggage.getMoreLuggageID(); 
+            int seatReturnIndex = cbReturnSeat.getSelectedIndex();
+            String ticketReturnID = null;
+            for(Ticket tk : returnTickets){
+                if(tk.getSeatID().equals(seatReturnIDs.get(seatReturnIndex))){
+                    ticketReturnID = tk.getTicketID();
                     try {
-                        ticketBUS.setSoldout(ticketTurnID);
+                        ticketBUS.setSoldout(ticketReturnID);
                     } catch (ClassNotFoundException ex) {
                         Logger.getLogger(PuBuyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
                     } catch (SQLException ex) {
@@ -1195,38 +1217,10 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
                     }
                 }
             }
-            OrderDetail orderDetailTurn = new OrderDetail(orderDetailID, orderID, turnMoreLuggageID, receiver.getID(), ticketTurnID, promoID, 1, 0);
-            orderDetailBUS.create(orderDetailTurn);
-            //Vé về
-            if(chkRoundTrip.isSelected()){
-                String returnMoreLuggageID = null;               
-                try {
-                    weightLuggage = cbReturnMoreLuggage.getSelectedItem().toString();     
-                    weightLuggage = weightLuggage.replaceAll("[^0-9]", "");
-                    moreLuggage = moreLuggageBUS.getObjectbyWeight(Integer.parseInt(weightLuggage));
-                    returnMoreLuggageID = moreLuggage.getMoreLuggageID();
-                } catch (Exception e) {
-                } 
-                int seatReturnIndex = cbReturnSeat.getSelectedIndex();
-                String ticketReturnID = null;
-                for(Ticket tk : returnTickets){
-                    if(tk.getSeatID().equals(seatReturnIDs.get(seatReturnIndex))){
-                        ticketReturnID = tk.getTicketID();
-                        try {
-                            ticketBUS.setSoldout(ticketReturnID);
-                        } catch (ClassNotFoundException ex) {
-                            Logger.getLogger(PuBuyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
-                        } catch (SQLException ex) {
-                            Logger.getLogger(PuBuyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
-                        } catch (IOException ex) {
-                            Logger.getLogger(PuBuyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                    }
-                }
-                OrderDetail orderDetailReturn = new OrderDetail(orderDetailID, orderID, returnMoreLuggageID, receiver.getID(), ticketReturnID, promoID, 1, 0);            
-                orderDetailBUS.create(orderDetailReturn);
-            }            
-        }
+            OrderDetail orderDetailReturn = new OrderDetail(orderDetailID, orderID, returnMoreLuggageID, receiver.getID(), ticketReturnID, promoID, 1, 0);            
+            orderDetailBUS.create(orderDetailReturn);
+        }  
+        JOptionPane.showMessageDialog(this,"Mua vé thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
         this.dispose();
     }//GEN-LAST:event_btAddTicketActionPerformed
 

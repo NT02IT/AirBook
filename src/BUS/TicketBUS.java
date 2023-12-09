@@ -6,6 +6,7 @@ package BUS;
 
 import DAO.TicketDAO;
 import DTO.entities.Ticket;
+import DTO.entities.User;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -48,5 +49,17 @@ public class TicketBUS {
     
     public ArrayList<Ticket> setSoldout(String ID) throws ClassNotFoundException, SQLException, IOException {
         return ticketDAO.setSoldout(ID);
+    }
+    
+    public ArrayList<Ticket> getAllUpcomingTickets(User user) throws SQLException{
+        return ticketDAO.getAllUpcomingTickets(user);
+    }
+    
+    public int getTotalSpending(User user) throws SQLException{
+        return ticketDAO.getTotalSpending(user);
+    }
+    
+    public ArrayList<Ticket> update(Ticket ticket) throws SQLException, IOException, ClassNotFoundException{
+        return ticketDAO.update(ticket);
     }
 }

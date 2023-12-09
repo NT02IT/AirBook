@@ -29,7 +29,7 @@ public class Ticket {
         this.importPrice = importPrice;
         this.sellingPrice = sellingPrice;
     }
-
+    
     public String getTicketID() {
         return ticketID;
     }
@@ -96,5 +96,16 @@ public class Ticket {
     
     public String getFlightIDGateID(){
         return this.flightID + this.gateID;
+    }
+    
+    public void copyFrom(Ticket ticket){
+        this.ticketID = ticket.getTicketID();
+        this.flightID = ticket.getFlightID();
+        this.gateID = ticket.getGateID();
+        this.seatID = ticket.getSeatID();
+        this.importPrice = ticket.getImportPrice();
+        this.sellingPrice = ticket.getSellingPrice();
+        this.soldout = ticket.getSoldout();
+        this.isDelete = ticket.getIsDelete();
     }
 }

@@ -30,7 +30,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="popupHeader1" max="32767" attributes="0"/>
           <Group type="102" alignment="0" attributes="0">
-              <Component id="pnTicketInfoCont" max="32767" attributes="0"/>
+              <Component id="pnTicketInfoCont" pref="403" max="32767" attributes="0"/>
               <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
               <Component id="pnReceiverInfo" max="32767" attributes="0"/>
           </Group>
@@ -120,7 +120,6 @@
                                   <Component id="lbGrpFlightInfo" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="chkRoundTrip" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="lbGrpTurnBonus" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lbTurnMoreLuggage" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="lbGrpReturnTicket" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="lbGrpReturnBonus" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="lbReturnMoreLuggage" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -146,6 +145,7 @@
                                           <Component id="cbReturnDeparture" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
+                                  <Component id="lbTurnMoreLuggage" alignment="0" min="-2" pref="135" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                           </Group>
@@ -677,14 +677,14 @@
                           <Component id="jSeparator9" alignment="1" max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="46" max="32767" attributes="0"/>
+                  <EmptySpace pref="44" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lbReceiver" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="cbReceiver" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
@@ -753,7 +753,7 @@
                       </Group>
                       <Component id="btAddTicket" min="-2" pref="38" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="31" max="32767" attributes="0"/>
+                  <EmptySpace pref="32" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>

@@ -19,14 +19,17 @@ import DTO.entities.Seat;
 import DTO.entities.Ticket;
 import DTO.entities.TicketClass;
 import DTO.entities.User;
+import GUI.popup.PuTicketDetailEUC;
 import assets.Styles;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 import javax.swing.table.DefaultTableModel;
 
@@ -46,7 +49,13 @@ public class MyTicketEUC extends javax.swing.JPanel {
     private OrderDetailBUS orderDetailBUS;
     private ArrayList<OrderDetail> listOrderDetail;
     private ArrayList<Ticket> listTicket;
-    private DefaultTableModel ticketsModel;
+    private ArrayList<OrderDetail> listUserOrderDetailUnpaid;
+    private DefaultTableModel ticketsUnpaidModel;
+    private DefaultTableModel historyModel;    
+    private DefaultTableModel flightUpcomingModel;
+    private Map<String,OrderDetail> mapUnpaidRowTicket;
+    private Map<String,OrderDetail> mapHistoryRowTicket;
+    private Map<String,Ticket> mapUpcomingRowTicket;
     /**
      * Creates new form MyTicketEUC
      */
@@ -70,7 +79,13 @@ public class MyTicketEUC extends javax.swing.JPanel {
             flightBUS = new FlightBUS();
             ticketBUS = new TicketBUS();
             listTicket = ticketBUS.getList();
-            ticketsModel = (DefaultTableModel) tbUnpaid.getModel();
+            listUserOrderDetailUnpaid = new ArrayList<>();
+            ticketsUnpaidModel = (DefaultTableModel) tbUnpaid.getModel();
+            historyModel = (DefaultTableModel) tbHistory.getModel();
+            flightUpcomingModel = (DefaultTableModel) tbFlightUpcoming.getModel();
+            mapUnpaidRowTicket = new HashMap<String, OrderDetail>();
+            mapHistoryRowTicket = new HashMap<String, OrderDetail>();
+            mapUpcomingRowTicket = new HashMap<String, Ticket>();
             initTickets();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(MyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
@@ -86,7 +101,6 @@ public class MyTicketEUC extends javax.swing.JPanel {
         Styles.Table(tbFlightUpcoming, pnFlightUpcoming);
         Styles.Table(tbHistory, pnHistory);
         Styles.ButtonPrimary(btPayment);
-//        Styles.FormTextFeild(txtPromoCode);
         pnMainBody.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
             protected void configureScrollBarColors() {
                 this.thumbColor = Styles.GRAY_200;
@@ -97,8 +111,6 @@ public class MyTicketEUC extends javax.swing.JPanel {
         
         lbTitleUnpaid.setFont(Styles.H2);
         lbTitleUnpaid.setForeground(Styles.GRAY_600);
-//        lbPromoCode.setFont(Styles.Label);
-//        lbPromoCode.setForeground(Styles.GRAY_600);
         lbFlightUpcoming.setFont(Styles.H2);
         lbFlightUpcoming.setForeground(Styles.GRAY_600);
         lbHistory.setFont(Styles.H2);
@@ -125,52 +137,113 @@ public class MyTicketEUC extends javax.swing.JPanel {
         lbHistoryTotalTail.setFont(Styles.Body);
         lbHistoryTotalTail.setForeground(Styles.GRAY_600);
         
-        lbTempPrice.setFont(Styles.Micro);
-        lbTempPrice.setForeground(Styles.GRAY_600);
-        lbDiscount.setFont(Styles.Micro);
-        lbDiscount.setForeground(Styles.GRAY_600);
         lbTotal.setFont(Styles.Micro);
         lbTotal.setForeground(Styles.GRAY_600);
-        
-        lbTempPriceNum.setFont(Styles.Label);
-        lbTempPriceNum.setForeground(Styles.GRAY_600);
-        lbDiscountNum.setFont(Styles.Label);
-        lbDiscountNum.setForeground(Styles.FUNC_DANGER);
         lbTotalNum.setFont(Styles.H1);
         lbTotalNum.setForeground(Styles.PRI_NORMAL);
     }
 
-    public void initTickets() throws ClassNotFoundException, SQLException, IOException{       
+    public void initTickets() throws ClassNotFoundException, SQLException, IOException{
+        initTicketsUnpaid();
+        initFlightUpcoming();
+        initHistoryTable();
+    }
+    
+    private void initTicketsUnpaid(){      
         int stt = 1;
-        String airline, flyingFrom, flyingTo, remain;
-        String departureFlight;
-        String hoursFly;
-        Flight flight;
-        Ticket ticket;
-        int totalTicketUnpaid = 0;
-        System.out.println("listOrderDetail" + listOrderDetail);
+        int totalPrice = 0;
+        int quantityTicket = 0;
         for(OrderDetail od : listOrderDetail){
-            System.out.println("HELLO");
-            if(user.hasReceiver(od.getReceiverID()) != null){
-                System.out.println(user.hasReceiver(od.getReceiverID()).getID());
-                ticket = ticketBUS.getObjectbyID(od.getTicketID());
-                flight = flightBUS.getObjectbyID(ticket.getFlightID());
-            
+            if(od.getIsDelete() == 0){
+                String airline, flyingFrom, flyingTo;
+                String departureFlight;
+                Ticket ticket;
+                Flight flight;
+                if(user.hasReceiver(od.getReceiverID()) != null && od.getNotPaid() == 1){
+                    listUserOrderDetailUnpaid.add(od);
+                    ticket = ticketBUS.getObjectbyID(od.getTicketID());
+                    flight = flightBUS.getObjectbyID(ticket.getFlightID());
+
+                    flyingFrom = airportBUS.getObjectbyID(flight.getFlyingFrom()).getAirportName();
+                    flyingTo = airportBUS.getObjectbyID(flight.getFlyingTo()).getAirportName();
+
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+                    departureFlight = flight.getDepartureFlight().format(formatter);
+
+                    Seat seat = seatBUS.getObjectbyID(ticket.getSeatID());
+                    TicketClass ticketClass = ticketClassBUS.getObjectbyID(seat.getTicketClassID());
+                    Plane plane = planeBUS.getObjectbyID(ticketClass.getPlaneID());
+                    airline = airlineBUS.getObjectbyID(plane.getAirlineID()).getAirlineName();     
+                    ticketsUnpaidModel.addRow(new Object[]{stt++, airline, flyingFrom, flyingTo, departureFlight, ticket.getSellingPrice() + "đ"});      
+                    quantityTicket++;
+                    totalPrice += ticket.getSellingPrice();
+                    String key = airline + flyingFrom + flyingTo + departureFlight;            
+                    mapUnpaidRowTicket.put(key.trim(), od);
+                }
+                lbUnpaidTotal.setText(quantityTicket + ""); 
+                lbTotalNum.setText(totalPrice + "đ");
+            }
+        }
+    }
+    private void initFlightUpcoming(){
+        try {
+            int stt = 1;
+            int quantityTicket = 0;
+            for(Ticket tk : ticketBUS.getAllUpcomingTickets(user)){
+                String airline, flyingFrom, flyingTo;
+                String departureFlight;
+                Flight flight;
+
+                flight = flightBUS.getObjectbyID(tk.getFlightID());
                 flyingFrom = airportBUS.getObjectbyID(flight.getFlyingFrom()).getAirportName();
                 flyingTo = airportBUS.getObjectbyID(flight.getFlyingTo()).getAirportName();
 
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
                 departureFlight = flight.getDepartureFlight().format(formatter);
-                
-                Seat seat = seatBUS.getObjectbyID(ticket.getSeatID());
+
+                Seat seat = seatBUS.getObjectbyID(tk.getSeatID());
                 TicketClass ticketClass = ticketClassBUS.getObjectbyID(seat.getTicketClassID());
                 Plane plane = planeBUS.getObjectbyID(ticketClass.getPlaneID());
-                airline = airlineBUS.getObjectbyID(plane.getAirlineID()).getAirlineName();     
-                ticketsModel.addRow(new Object[]{stt++, airline, flyingFrom, flyingTo, departureFlight, ticket.getSellingPrice() + "đ"});      
-                totalTicketUnpaid++;
-            }            
-        }        
-        lbUnpaidTotal.setText(totalTicketUnpaid + "");
+                airline = airlineBUS.getObjectbyID(plane.getAirlineID()).getAirlineName();
+                flightUpcomingModel.addRow(new Object[]{stt++, airline, flyingFrom, flyingTo, departureFlight, tk.getSellingPrice() + "đ"});
+                quantityTicket++;
+                String key = airline + flyingFrom + flyingTo + departureFlight;            
+                mapUpcomingRowTicket.put(key.trim(), tk);
+            }
+            lbFlightUpcomingTotal.setText(quantityTicket + "");
+        } catch (SQLException ex) { 
+            Logger.getLogger(MyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    private void initHistoryTable(){      
+        int stt = 1;
+        int quantityTicket = 0;
+        for(OrderDetail od : listOrderDetail){
+            String airline, flyingFrom, flyingTo;
+            String departureFlight;
+            Ticket ticket;
+            Flight flight;
+            if(user.hasReceiver(od.getReceiverID()) != null && od.getNotPaid() == 0){
+                    ticket = ticketBUS.getObjectbyID(od.getTicketID());
+                    flight = flightBUS.getObjectbyID(ticket.getFlightID());
+
+                    flyingFrom = airportBUS.getObjectbyID(flight.getFlyingFrom()).getAirportName();
+                    flyingTo = airportBUS.getObjectbyID(flight.getFlyingTo()).getAirportName();
+
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+                    departureFlight = flight.getDepartureFlight().format(formatter);
+
+                    Seat seat = seatBUS.getObjectbyID(ticket.getSeatID());
+                    TicketClass ticketClass = ticketClassBUS.getObjectbyID(seat.getTicketClassID());
+                    Plane plane = planeBUS.getObjectbyID(ticketClass.getPlaneID());
+                    airline = airlineBUS.getObjectbyID(plane.getAirlineID()).getAirlineName();     
+                    historyModel.addRow(new Object[]{stt++, airline, flyingFrom, flyingTo, departureFlight, ticket.getSellingPrice() + "đ"});      
+                    quantityTicket++;
+                    String key = airline + flyingFrom + flyingTo + departureFlight;    
+                    mapHistoryRowTicket.put(key.trim(), od);
+            }
+            lbHistoryTotal.setText(quantityTicket + ""); 
+        }
     }
     
     /**
@@ -194,11 +267,6 @@ public class MyTicketEUC extends javax.swing.JPanel {
         lbTotal = new javax.swing.JLabel();
         lbTotalNum = new javax.swing.JLabel();
         btPayment = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
-        lbTempPrice = new javax.swing.JLabel();
-        lbTempPriceNum = new javax.swing.JLabel();
-        lbDiscount = new javax.swing.JLabel();
-        lbDiscountNum = new javax.swing.JLabel();
         lbFlightUpcoming = new javax.swing.JLabel();
         pnFlightUpcoming = new javax.swing.JScrollPane();
         tbFlightUpcoming = new javax.swing.JTable();
@@ -245,6 +313,11 @@ public class MyTicketEUC extends javax.swing.JPanel {
             }
         });
         tbUnpaid.getTableHeader().setReorderingAllowed(false);
+        tbUnpaid.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbUnpaidMouseClicked(evt);
+            }
+        });
         pnUnpaid.setViewportView(tbUnpaid);
         if (tbUnpaid.getColumnModel().getColumnCount() > 0) {
             tbUnpaid.getColumnModel().getColumn(0).setMinWidth(46);
@@ -281,64 +354,34 @@ public class MyTicketEUC extends javax.swing.JPanel {
                 btPaymentMouseExited(evt);
             }
         });
-
-        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
-
-        lbTempPrice.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        lbTempPrice.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbTempPrice.setText("Tạm tính");
-
-        lbTempPriceNum.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lbTempPriceNum.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbTempPriceNum.setText("20.000.000đ");
-
-        lbDiscount.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        lbDiscount.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbDiscount.setText("Giảm giá");
-
-        lbDiscountNum.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lbDiscountNum.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        lbDiscountNum.setText("20.000.000đ");
+        btPayment.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btPaymentActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(191, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lbTempPrice)
-                    .addComponent(lbTempPriceNum)
-                    .addComponent(lbDiscount)
-                    .addComponent(lbDiscountNum))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(64, 64, 64)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbTotal, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lbTotalNum, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btPayment, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addComponent(lbTotalNum, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lbTotal)
-                        .addGap(4, 4, 4)
-                        .addComponent(lbTotalNum)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btPayment, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(lbTempPrice)
-                        .addGap(4, 4, 4)
-                        .addComponent(lbTempPriceNum)
-                        .addGap(8, 8, 8)
-                        .addComponent(lbDiscount)
-                        .addGap(4, 4, 4)
-                        .addComponent(lbDiscountNum)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(lbTotal)
+                .addGap(0, 0, 0)
+                .addComponent(lbTotalNum)
+                .addGap(0, 6, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(btPayment, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         lbFlightUpcoming.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
@@ -368,6 +411,11 @@ public class MyTicketEUC extends javax.swing.JPanel {
             }
         });
         tbFlightUpcoming.getTableHeader().setReorderingAllowed(false);
+        tbFlightUpcoming.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbFlightUpcomingMouseClicked(evt);
+            }
+        });
         pnFlightUpcoming.setViewportView(tbFlightUpcoming);
         if (tbFlightUpcoming.getColumnModel().getColumnCount() > 0) {
             tbFlightUpcoming.getColumnModel().getColumn(0).setMinWidth(46);
@@ -409,6 +457,11 @@ public class MyTicketEUC extends javax.swing.JPanel {
             }
         });
         tbHistory.getTableHeader().setReorderingAllowed(false);
+        tbHistory.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbHistoryMouseClicked(evt);
+            }
+        });
         pnHistory.setViewportView(tbHistory);
         if (tbHistory.getColumnModel().getColumnCount() > 0) {
             tbHistory.getColumnModel().getColumn(0).setMinWidth(46);
@@ -439,7 +492,7 @@ public class MyTicketEUC extends javax.swing.JPanel {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(pnHistory, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pnHistory, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE)
                             .addComponent(pnFlightUpcoming, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(pnUnpaid, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
@@ -481,7 +534,7 @@ public class MyTicketEUC extends javax.swing.JPanel {
                     .addComponent(lbUnpaidTotal))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
+                .addGap(12, 12, 12)
                 .addComponent(lbFlightUpcoming)
                 .addGap(16, 16, 16)
                 .addComponent(pnFlightUpcoming, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -524,14 +577,83 @@ public class MyTicketEUC extends javax.swing.JPanel {
         btPayment.setBackground(Styles.PRI_NORMAL);
     }//GEN-LAST:event_btPaymentMouseExited
 
+    private void btPaymentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPaymentActionPerformed
+        // Chuyển OrderDetail NotPaid -> 0
+        // Ticket Soldout -> 1
+        Ticket ticket;
+        for(OrderDetail od : listUserOrderDetailUnpaid){
+            try {
+                od.setNotPaid(0);
+                orderDetailBUS.update(od);
+            } catch (SQLException ex) {
+                Logger.getLogger(MyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(MyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(MyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        JOptionPane.showMessageDialog(this,"Thanh toán thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+        // Refresh page to load result
+        try {
+            initTickets();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(MyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(MyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btPaymentActionPerformed
+
+    private void tbUnpaidMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbUnpaidMouseClicked
+        int rowPosition = this.tbUnpaid.getSelectedRow();
+        String rowKeyTicketTurn = ticketsUnpaidModel.getValueAt(rowPosition, 1).toString()
+                + ticketsUnpaidModel.getValueAt(rowPosition, 2).toString()
+                + ticketsUnpaidModel.getValueAt(rowPosition, 3).toString()
+                + ticketsUnpaidModel.getValueAt(rowPosition, 4).toString();        
+        OrderDetail orderDetail = mapUnpaidRowTicket.get(rowKeyTicketTurn.trim());
+        System.out.println(orderDetail);
+        
+        PuTicketDetailEUC puTicketDetailEUC= new PuTicketDetailEUC(orderDetail, user);
+        puTicketDetailEUC.setVisible(true);
+        puTicketDetailEUC.setLocationRelativeTo(null);
+    }//GEN-LAST:event_tbUnpaidMouseClicked
+
+    private void tbFlightUpcomingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbFlightUpcomingMouseClicked
+        int rowPosition = this.tbFlightUpcoming.getSelectedRow();
+        System.out.println(rowPosition + " helllooo");
+        String rowKeyTicketTurn = flightUpcomingModel.getValueAt(rowPosition, 1).toString()
+                + flightUpcomingModel.getValueAt(rowPosition, 2).toString()
+                + flightUpcomingModel.getValueAt(rowPosition, 3).toString()
+                + flightUpcomingModel.getValueAt(rowPosition, 4).toString();        
+        Ticket ticket = mapUpcomingRowTicket.get(rowKeyTicketTurn.trim());
+        System.out.println(ticket);
+        
+        PuTicketDetailEUC puTicketDetailEUC= new PuTicketDetailEUC(ticket, user, true);
+        puTicketDetailEUC.setVisible(true);
+        puTicketDetailEUC.setLocationRelativeTo(null);
+    }//GEN-LAST:event_tbFlightUpcomingMouseClicked
+
+    private void tbHistoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbHistoryMouseClicked
+        int rowPosition = this.tbHistory.getSelectedRow();
+        String rowKeyTicketTurn = historyModel.getValueAt(rowPosition, 1).toString()
+                + historyModel.getValueAt(rowPosition, 2).toString()
+                + historyModel.getValueAt(rowPosition, 3).toString()
+                + historyModel.getValueAt(rowPosition, 4).toString();        
+        OrderDetail orderDetail = mapHistoryRowTicket.get(rowKeyTicketTurn.trim());
+        System.out.println(orderDetail);
+        
+        PuTicketDetailEUC puTicketDetailEUC= new PuTicketDetailEUC(orderDetail, user, true);
+        puTicketDetailEUC.setVisible(true);
+        puTicketDetailEUC.setLocationRelativeTo(null);
+    }//GEN-LAST:event_tbHistoryMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btPayment;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JLabel lbDiscount;
-    private javax.swing.JLabel lbDiscountNum;
     private javax.swing.JLabel lbFlightUpcoming;
     private javax.swing.JLabel lbFlightUpcomingTotal;
     private javax.swing.JLabel lbFlightUpcomingTotalHead;
@@ -540,8 +662,6 @@ public class MyTicketEUC extends javax.swing.JPanel {
     private javax.swing.JLabel lbHistoryTotal;
     private javax.swing.JLabel lbHistoryTotalHead;
     private javax.swing.JLabel lbHistoryTotalTail;
-    private javax.swing.JLabel lbTempPrice;
-    private javax.swing.JLabel lbTempPriceNum;
     private javax.swing.JLabel lbTitleUnpaid;
     private javax.swing.JLabel lbTotal;
     private javax.swing.JLabel lbTotalNum;
