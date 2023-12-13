@@ -137,6 +137,7 @@ public class IndexAD extends javax.swing.JFrame implements iIndex{
                     this.setTitle("Airbook - Chi tiết hãng bay " + suffix);
                     ((AirlinePlaneAD) pnBody).setAirlineID(airlineID); // Truyền giá trị airlineID cho AirlinePlaneAD
                     ((AirlinePlaneAD) pnBody).initPlane();
+                    ((AirlinePlaneAD) pnBody).initMoreLuggage();
                     break;
                 
             case AIRPORT:

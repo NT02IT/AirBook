@@ -5,11 +5,13 @@
 package GUI.popup;
 
 import BUS.AirportBUS;
+import BUS.FlightBUS;
 import DAO.AirportDAO;
 import DAO.FlightDAO;
 import DTO.entities.Airport;
 import DTO.entities.DateTimeItem;
 import DTO.entities.Flight;
+import assets.Styles;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.List;
@@ -30,6 +32,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 
 /**
  *
@@ -37,13 +40,36 @@ import javax.swing.SpinnerDateModel;
  */
 public class PuFlight extends javax.swing.JFrame  {
     private AirportBUS airportBUS;
-
+    private FlightBUS flightBUS;
     /**
      * Creates new form PuFlight
      */
     public PuFlight() throws ClassNotFoundException, SQLException, IOException {
         initComponents();
         initPuFLight();
+        style();
+    }
+    
+    public void style(){
+        pnFlightiInfo.setBackground(Styles.GRAY_100);
+        Styles.ButtonPrimary(btSave);
+        Styles.FormLabel(lbFlyingFrom);
+        Styles.ComboBox(cbFlyingFrom);
+        Styles.ComboBox(cbFlyingTo);
+        lbFlightID.setFont(Styles.Micro);
+        lbFlightID.setForeground(Styles.GRAY_300);
+        Styles.FormTextFeild(txtFlightID);
+ 
+
+        Styles.FormTextFeild(txtFlightID);
+        Styles.FormLabel(lbFlyingFrom);;
+        Styles.FormLabel(lbFlyingTo);
+        Styles.FormTextFeild(txtHourFly);
+
+        
+        Styles.FormLabel(lbTurnDeparture);
+        Styles.FormTextFeild(txtDeparture);
+
     }
 
     /**
@@ -64,13 +90,14 @@ public class PuFlight extends javax.swing.JFrame  {
         cbFlyingTo = new javax.swing.JComboBox<>();
         cbFlyingFrom = new javax.swing.JComboBox<>();
         lbTurnDeparture = new javax.swing.JLabel();
-        lbTurnDeparture1 = new javax.swing.JLabel();
-        txtHours = new javax.swing.JTextField();
+        txtHourFly = new javax.swing.JTextField();
         txtDeparture = new javax.swing.JTextField();
         lbFlightID = new java.awt.Label();
         txtFlightID = new javax.swing.JTextField();
+        lbHours = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         pnFlightiInfo.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -139,19 +166,20 @@ public class PuFlight extends javax.swing.JFrame  {
         lbTurnDeparture.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/info-time-black20.png"))); // NOI18N
         lbTurnDeparture.setText("Khởi hành");
 
-        lbTurnDeparture1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lbTurnDeparture1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/info-time-black20.png"))); // NOI18N
-
-        txtHours.setBackground(new java.awt.Color(246, 246, 246));
-        txtHours.addActionListener(new java.awt.event.ActionListener() {
+        txtHourFly.setBackground(new java.awt.Color(246, 246, 246));
+        txtHourFly.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtHoursActionPerformed(evt);
+                txtHourFlyActionPerformed(evt);
             }
         });
 
         lbFlightID.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         lbFlightID.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         lbFlightID.setText("Mã Tuyến Bay");
+
+        lbHours.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbHours.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/info-time-black20.png"))); // NOI18N
+        lbHours.setText("Số Giờ bay");
 
         javax.swing.GroupLayout pnFlightiInfoLayout = new javax.swing.GroupLayout(pnFlightiInfo);
         pnFlightiInfo.setLayout(pnFlightiInfoLayout);
@@ -167,19 +195,19 @@ public class PuFlight extends javax.swing.JFrame  {
                             .addGroup(pnFlightiInfoLayout.createSequentialGroup()
                                 .addGap(10, 10, 10)
                                 .addGroup(pnFlightiInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cbFlyingFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lbTurnDeparture))
+                                    .addComponent(lbTurnDeparture)
+                                    .addComponent(lbHours)
+                                    .addComponent(cbFlyingFrom, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(6, 6, 6)
                                 .addGroup(pnFlightiInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnFlightiInfoLayout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(cbFlyingTo, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(pnFlightiInfoLayout.createSequentialGroup()
                                         .addGap(44, 44, 44)
                                         .addGroup(pnFlightiInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(pnFlightiInfoLayout.createSequentialGroup()
-                                                .addComponent(lbTurnDeparture1)
-                                                .addGap(0, 0, Short.MAX_VALUE))
-                                            .addComponent(txtDeparture)))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnFlightiInfoLayout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(cbFlyingTo, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                            .addComponent(txtHourFly, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(txtDeparture)))))))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnFlightiInfoLayout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addGroup(pnFlightiInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -193,10 +221,6 @@ public class PuFlight extends javax.swing.JFrame  {
                                 .addGap(33, 33, 33)
                                 .addComponent(txtFlightID)))))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnFlightiInfoLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(txtHours, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(149, 149, 149))
         );
         pnFlightiInfoLayout.setVerticalGroup(
             pnFlightiInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -206,14 +230,10 @@ public class PuFlight extends javax.swing.JFrame  {
                 .addGroup(pnFlightiInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lbFlightID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtFlightID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addComponent(txtHours, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(pnFlightiInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnFlightiInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lbFlyingTo)
-                        .addComponent(lbFlyingFrom))
-                    .addComponent(lbTurnDeparture1, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(59, 59, 59)
+                .addGroup(pnFlightiInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbFlyingTo)
+                    .addComponent(lbFlyingFrom))
                 .addGap(18, 18, 18)
                 .addGroup(pnFlightiInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbFlyingFrom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -222,9 +242,13 @@ public class PuFlight extends javax.swing.JFrame  {
                 .addGroup(pnFlightiInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbTurnDeparture)
                     .addComponent(txtDeparture, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 172, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(pnFlightiInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtHourFly, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbHours))
+                .addGap(34, 34, 34)
                 .addComponent(btSave, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(81, Short.MAX_VALUE))
         );
 
         PopupHeader.getAccessibleContext().setAccessibleParent(PopupHeader);
@@ -237,7 +261,9 @@ public class PuFlight extends javax.swing.JFrame  {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnFlightiInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(pnFlightiInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -261,7 +287,7 @@ public class PuFlight extends javax.swing.JFrame  {
     }
     private void btSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSaveActionPerformed
         String fligthId = txtFlightID.getText().trim();            
-        String hoursText = txtHours.getText().trim();
+        String hoursText = txtHourFly.getText().trim();
         int hours;
         try {
             hours = Integer.parseInt(hoursText);
@@ -286,8 +312,8 @@ public class PuFlight extends javax.swing.JFrame  {
         return;
     }
         try {
-            FlightDAO flightDAO = new FlightDAO();
-            if (flightDAO.existsFlightID(fligthId)) {
+           flightBUS = new FlightBUS();
+            if (flightBUS.existsFlightID(fligthId)) {
                 JOptionPane.showMessageDialog(null, "ID sân bay đã tồn tại. Vui lòng chọn ID khác.", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -300,7 +326,7 @@ public class PuFlight extends javax.swing.JFrame  {
             flight.setDepartureFlight(departure);
             flight.setIsDelete(0);
 
-            boolean success = flightDAO.create(flight);
+            boolean success = flightBUS.create(flight);
 
             if (success) {
                 JOptionPane.showMessageDialog(null, "Thêm tuyến bay thành công: ");
@@ -318,9 +344,9 @@ public class PuFlight extends javax.swing.JFrame  {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbFlyingToActionPerformed
 
-    private void txtHoursActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHoursActionPerformed
+    private void txtHourFlyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHourFlyActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtHoursActionPerformed
+    }//GEN-LAST:event_txtHourFlyActionPerformed
     private void initPuFLight() throws ClassNotFoundException, SQLException, IOException {
         String selectedOptionFrom = (String) cbFlyingFrom.getSelectedItem();
         String selectedOptionTo = (String) cbFlyingTo.getSelectedItem();
@@ -428,12 +454,12 @@ public class PuFlight extends javax.swing.JFrame  {
     private javax.swing.JLabel lbFlyingFrom;
     private javax.swing.JLabel lbFlyingTo;
     private javax.swing.JLabel lbHeader;
+    private javax.swing.JLabel lbHours;
     private javax.swing.JLabel lbTurnDeparture;
-    private javax.swing.JLabel lbTurnDeparture1;
     private javax.swing.JPanel pnFlightiInfo;
     private javax.swing.JTextField txtDeparture;
     private javax.swing.JTextField txtFlightID;
-    private javax.swing.JTextField txtHours;
+    private javax.swing.JTextField txtHourFly;
     // End of variables declaration//GEN-END:variables
 
 

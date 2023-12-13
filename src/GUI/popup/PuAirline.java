@@ -4,6 +4,7 @@
  */
 package GUI.popup;
 
+import BUS.AirlineBUS;
 import DAO.AirlineDAO;
 import DTO.entities.Airline;
 import java.io.IOException;
@@ -17,7 +18,7 @@ import javax.swing.JOptionPane;
  * @author Admin
  */
 public class PuAirline extends javax.swing.JFrame {
-
+    private AirlineBUS airlineBUS;
     /**
      * Creates new form PuAirplane
      */
@@ -147,10 +148,9 @@ public class PuAirline extends javax.swing.JFrame {
         airline.setAirlineID(airlineID);
         airline.setAirlineName(modifiedAirlineName);
         airline.setIsDelete(0); 
-        AirlineDAO airlineDAO;
         try {
-            airlineDAO = new AirlineDAO();
-            boolean success = airlineDAO.create(airline);
+            airlineBUS = new AirlineBUS();
+            boolean success = airlineBUS.create(airline);
             if (success) {
                 JOptionPane.showMessageDialog(this, "Thêm hãng bay thành công");
                 setVisible(false);            
