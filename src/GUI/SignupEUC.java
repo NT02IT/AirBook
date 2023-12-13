@@ -34,7 +34,7 @@ public class SignupEUC extends javax.swing.JFrame {
     /**
      * Creates new form AuthGUI
      */
-    private String roleID = "ROLE3", username, pwd, pwdConfirm, ID, name, gender, doB, address, nation, phoneNumber, CCCD, email;
+    private String roleID = "ROLE1", username, pwd, pwdConfirm, ID, name, gender, doB, address, nation, phoneNumber, CCCD, email;
     private DateTime date= new DateTime();
     private User newAccount;
     private UserBUS userBUS;

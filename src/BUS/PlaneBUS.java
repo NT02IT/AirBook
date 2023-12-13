@@ -43,4 +43,16 @@ public class PlaneBUS {
         }
         return null;
     }
+    
+    public boolean delete(Plane plane) throws ClassNotFoundException, SQLException{
+        return planeDAO.deletePlane(plane);
+    }
+
+    public boolean create(Plane plane) throws ClassNotFoundException, SQLException{
+        return planeDAO.create(plane);
+    }
+
+    public boolean update(Plane plane) throws ClassNotFoundException, SQLException{
+        return planeDAO.updatePlane(plane);
+    }    
 }

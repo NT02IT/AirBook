@@ -425,10 +425,10 @@ public class AirportAD extends javax.swing.JPanel {
             // Xóa dữ liệu trong cơ sở dữ liệu
             try {
                 // Tạo đối tượng AirportDAO
-                AirportDAO airportDAO = new AirportDAO();
+                airportBUS = new AirportBUS();
 
                 // Gọi phương thức xóa sân bay từ đối tượng AirportDAO
-                boolean deleteSuccess = airportDAO.deleteAirport(airport);
+                boolean deleteSuccess = airportBUS.delete(airport);
 
                 if (deleteSuccess) {
                     // Xóa hàng trong bảng
@@ -490,8 +490,8 @@ public class AirportAD extends javax.swing.JPanel {
         airport.setProvince(province);
         
         try {
-            AirportDAO airportDAO = new AirportDAO();
-            boolean success = airportDAO.updateAirport(airport);
+            airportBUS = new AirportBUS();
+            boolean success = airportBUS.update(airport);
             if (success) {
                 JOptionPane.showMessageDialog(this, "Sửa đổi thông tin sân bay thành công.");
 

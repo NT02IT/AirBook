@@ -145,25 +145,25 @@ public class PlaneDAO {
         return planeList;
     }
     private String generateNewPlaneID(String maxPlaneID) {
-    if (maxPlaneID == null) {
+        if (maxPlaneID == null) {
         // Không có mã máy bay trong cùng hãng
-        return "01"; // Hoặc giá trị khởi tạo tùy chọn khác
+            return "01"; // Hoặc giá trị khởi tạo tùy chọn khác
+        }
+
+        // Tách các phần của mã máy bay hiện tại
+        String[] parts = maxPlaneID.split("-");
+        String airlineCode = parts[0];
+        String airlineID = parts[1];
+        String currentNumber = parts[2];
+
+        // Tăng giá trị số cuối cùng lên một đơn vị
+        int newNumber = Integer.parseInt(currentNumber) + 1;
+
+        // Tạo mã máy bay mới
+        String newPlaneID = airlineCode + "-" + airlineID + "-" + String.format("%02d", newNumber);
+
+        return newPlaneID;
     }
-
-    // Tách các phần của mã máy bay hiện tại
-    String[] parts = maxPlaneID.split("-");
-    String airlineCode = parts[0];
-    String airlineID = parts[1];
-    String currentNumber = parts[2];
-
-    // Tăng giá trị số cuối cùng lên một đơn vị
-    int newNumber = Integer.parseInt(currentNumber) + 1;
-
-    // Tạo mã máy bay mới
-    String newPlaneID = airlineCode + "-" + airlineID + "-" + String.format("%02d", newNumber);
-
-    return newPlaneID;
-}
 
     public boolean deletePlane(Plane plane) throws ClassNotFoundException, SQLException {
         String context = this.getClass().getName();
