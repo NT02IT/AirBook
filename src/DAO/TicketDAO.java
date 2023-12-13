@@ -222,4 +222,15 @@ public class TicketDAO {
         connectDB.disconnect(context);
         return null;
     }
+    
+    public int getTicketSellingPrice(String ticketID) {
+        int sellingPrice = 0;    
+        for (Ticket ticket : list) {
+            if (ticket.getTicketID().equals(ticketID)) {
+                sellingPrice = ticket.getSellingPrice();
+                break;
+            }
+        }    
+        return sellingPrice;
+    }
 }

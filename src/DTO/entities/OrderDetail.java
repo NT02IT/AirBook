@@ -17,6 +17,7 @@ public class OrderDetail {
     protected String promoID;
     protected int notPaid;
     protected int isDelete;
+    private Ticket ticket;    
 
     public OrderDetail() {
     }
@@ -117,4 +118,5 @@ public class OrderDetail {
         String id = "ODD" + time.substring(time.length()-8);
         return id;
     }
+
 }

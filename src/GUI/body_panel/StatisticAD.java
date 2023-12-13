@@ -4,6 +4,8 @@
  */
 package GUI.body_panel;
 
+import BUS.OrderDetailBUS;
+import DAO.OrderDetailDAO;
 import DTO.entities.User;
 import GUI.popup.PuFlight;
 import GUI.popup.PuPromoAD;
@@ -23,22 +25,32 @@ import javax.swing.border.AbstractBorder;
  */
 public class StatisticAD extends javax.swing.JPanel {
     private User user;
+    OrderDetailBUS orderDetailBUS;
     /**
      * Creates new form StatisticAD
      */
-    public StatisticAD() {
+    public StatisticAD() throws ClassNotFoundException, SQLException, IOException {
         initComponents();
         style();
+        initStatistic();
     }
     
-    public StatisticAD(User user) {
+    public StatisticAD(User user) throws ClassNotFoundException, SQLException, IOException {
         this.user = user;
         initComponents();
         style();
+        initStatistic();
     }
     
-    public void initStatistic(){
-        
+    public void initStatistic() throws ClassNotFoundException, SQLException, IOException{
+        OrderDetailBUS orderDetailBUS = new OrderDetailBUS();
+        int count = orderDetailBUS.getNumberOfOrders();
+        int RevenueValue = orderDetailBUS.getTotalSelling();
+        String TicketCountValue = String.valueOf(count);
+        String revenueValue = String.valueOf(RevenueValue);        
+        lbTicketCountValue.setText(TicketCountValue);
+        lbRevenueValue.setText(revenueValue);
+        lbProfitValue.setText(revenueValue);
     }
     
     public void style(){

@@ -42,7 +42,7 @@ public class IndexAD extends javax.swing.JFrame implements iIndex{
     /**
      * Creates new form IndexAD
      */
-    public IndexAD() {
+    public IndexAD() throws ClassNotFoundException, SQLException, IOException {
         init();
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -205,7 +205,7 @@ public class IndexAD extends javax.swing.JFrame implements iIndex{
         );
     }
     
-    private void init(){
+    private void init() throws ClassNotFoundException, SQLException, IOException{
         topbarAD = new GUI.components.TopbarAD(this);
         sidebarAD = new GUI.components.SidebarAD(this);        
         pnBody = new StatisticAD(user);

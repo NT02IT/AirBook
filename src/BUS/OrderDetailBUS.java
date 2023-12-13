@@ -65,4 +65,13 @@ public class OrderDetailBUS {
     public int getQuantityTicketPaidOf(User user) throws SQLException{
         return orderDetailDAO.getQuantityTicketPaidOf(user);
     }
+    
+    public int getNumberOfOrders() throws SQLException {
+        return orderDetailDAO.countOrders();
+    }
+    
+    public int getTotalSelling() throws SQLException{
+        return orderDetailDAO.calculateTotalSellingPrice();
+    }
+    
 }
