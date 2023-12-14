@@ -24,6 +24,7 @@ public class DateTime{
     private static String pattern = "\\d{1,2}/\\d{1,2}/\\d{4}";
     private static Date dateDate;
     private static SimpleDateFormat ddMMyyyy  = new SimpleDateFormat("dd/MM/yyyy");
+    private static SimpleDateFormat ddMMyyyyHHmm  = new SimpleDateFormat("dd/MM/yyyy HH:mm");    
     
     public DateTime(){}
     
@@ -56,6 +57,11 @@ public class DateTime{
         dateDate = ddMMyyyy.parse(strDate);
         return dateDate;
     }
+    
+    public static Date strtoDateTime(String strDateTime) throws ParseException{
+        return ddMMyyyyHHmm.parse(strDateTime);
+    }
+    
     public Date strtoDate() throws ParseException{
         dateDate = ddMMyyyy.parse(strDate);
         return dateDate;

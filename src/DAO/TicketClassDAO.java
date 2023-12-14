@@ -79,7 +79,24 @@ public class TicketClassDAO {
         connectDB.disconnect(context);
         return false;
     }
-    
+    public ArrayList<String> getAllClassNameClasses() throws SQLException{
+        String context = this.getClass().getName();
+        ArrayList<String> result = new ArrayList<>();
+        connectDB.connect(context);
+        try {
+            String sql =  "SELECT DISTINCT Class_name FROM ticket_classes;";
+            Statement stmt = connectDB.conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                String class_name = rs.getString(1);
+                result.add(class_name);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TicketClassDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        connectDB.disconnect(context);
+        return result;
+    }
     public ArrayList<TicketClass> getAllClassNameByAirlineIDFlightID(String Airline_ID, String Flight_ID) throws SQLException{
         String context = this.getClass().getName();
         ArrayList<TicketClass> result = new ArrayList<>();
@@ -139,5 +156,29 @@ public class TicketClassDAO {
         }
         connectDB.disconnect(context);
         return ticketClass;
+    }
+    public ArrayList<TicketClass> getAllByPlaneID(String PlaneID) throws SQLException{
+        String context = this.getClass().getName();
+        connectDB.connect(context);
+        ArrayList<TicketClass> result = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM ticket_classes "
+                    + "WHERE ticket_classes.Plane_ID='" + PlaneID + "' ";
+            Statement stmt = connectDB.conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                TicketClass ticketClass = new TicketClass();
+                ticketClass.setTicketClassID(rs.getString(1));
+                ticketClass.setPlaneID(rs.getString(2));
+                ticketClass.setClassName(rs.getString(3));
+                ticketClass.setSeatsQuantity(rs.getInt(4));
+                ticketClass.setIsDelete(rs.getInt(5));
+                result.add(ticketClass);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TicketClassDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        connectDB.disconnect(context);
+        return result;
     }
 }

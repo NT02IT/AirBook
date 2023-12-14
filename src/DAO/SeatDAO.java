@@ -5,6 +5,7 @@
 package DAO;
 
 import DTO.entities.Seat;
+import DTO.entities.TicketClass;
 import connection.ConnectDB;
 import java.io.IOException;
 import java.sql.PreparedStatement;
@@ -14,6 +15,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.eclipse.persistence.internal.queries.ArrayListContainerPolicy;
 
 /**
  *
@@ -132,5 +134,30 @@ public class SeatDAO {
         }
         connectDB.disconnect(context);
         return seat;
+    }
+    
+    public ArrayList<Seat> getSeatFromClass (TicketClass tkClass) throws SQLException{
+        ArrayList<Seat> result = new ArrayList();
+        String context = this.getClass().getName();
+        connectDB.connect(context);
+        try {
+            String sql = "Select s.* FROM seats s, ticket_classes tkC "
+                    + "Where s.Ticket_class_ID=tkC.Ticket_class_ID "
+                    + "And tkC.Ticket_class_ID='" + tkClass.getTicketClassID() + "'";
+            Statement stmt = connectDB.conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                Seat seat = new Seat();
+                seat.setSeatID(rs.getString(1));
+                seat.setTicketClassID(rs.getString(2));
+                seat.setSeatName(rs.getString(3));
+                seat.setIsDelete(rs.getInt(4));
+                result.add(seat);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SeatDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        connectDB.disconnect(context);
+        return result;
     }
 }
