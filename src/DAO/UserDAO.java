@@ -344,5 +344,21 @@ public class UserDAO {
         return index;
     }
 
+    public int countAccountsCreatedAfterDate() throws SQLException {
+        int count = 0;
+        String context = this.getClass().getName();
+        connectDB.connect(context);
+        try {
+            String sql = "SELECT COUNT(*) FROM users WHERE Date_create > '2023-10-05 10:00:00' AND ROLE_ID = 'ROLE3'";
+            PreparedStatement pstmt = connectDB.conn.prepareStatement(sql);
+            ResultSet resultSet = pstmt.executeQuery();
+            if (resultSet.next()) {
+                count = resultSet.getInt(1);
+            }
+        } finally {
+            connectDB.disconnect(context);
+        }
+        return count;
+    }
     
 }

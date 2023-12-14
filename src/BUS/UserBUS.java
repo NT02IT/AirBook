@@ -93,6 +93,7 @@ public class UserBUS {
         }        
         return userDAO.update(user);
     }
+
     public ArrayList<Person> search(String email, String name, String roleName) throws ClassNotFoundException, SQLException, IOException{
         if(!roleName.isEmpty()){
             roleDAO = new RoleDAO();
@@ -105,4 +106,10 @@ public class UserBUS {
         }
         return userDAO.search(email, name, roleName);
     } 
+
+    
+    public int countAccountsCreated() throws SQLException{
+        return userDAO.countAccountsCreatedAfterDate();
+    }
+
 }

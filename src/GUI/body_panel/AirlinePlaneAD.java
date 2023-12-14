@@ -8,8 +8,14 @@ import DAO.PlaneDAO;
 import DTO.entities.Plane;
 import  assets.Styles;
 import DTO.entities.User;
+import DTO.views.MoreLuggageViews;
+import DTO.views.MoreLuggageViews.MoreLuggageView;
+import DTO.entities.MoreLuggage;
+import BUS.MoreLuggageBUS;
+import DAO.MoreLuggageDAO;
 import DTO.views.PlaneViews;
 import DTO.views.PlaneViews.PlaneView;
+import GUI.popup.PuMoreLuggage;
 import GUI.popup.PuPlaneAD;
 import static assets.Styles.GRAY_100;
 import static assets.Styles.GRAY_200;
@@ -34,9 +40,13 @@ public class AirlinePlaneAD extends javax.swing.JPanel {
 
     private User user;
     private ArrayList<Plane> listPlane;
+    private ArrayList<MoreLuggage> listMoreLuggage;
     private ArrayList<PlaneView> listPlaneView;
+    private ArrayList<MoreLuggageView> listMoreLuggageView;    
     private PlaneBUS planeBUS;
+    private MoreLuggageBUS moreLuggageBUS;
     private DefaultTableModel planesModel;
+    private DefaultTableModel moreLuggageModel;    
     private static String planeID;
     private String airlineID;
     public AirlinePlaneAD() throws ClassNotFoundException, SQLException, IOException {
@@ -73,6 +83,25 @@ public class AirlinePlaneAD extends javax.swing.JPanel {
         }
     
         lbTotalPlane.setText(--stt + "");
+    }
+    
+        public void initMoreLuggage() throws ClassNotFoundException, SQLException, IOException {
+        moreLuggageBUS = new MoreLuggageBUS();
+        listMoreLuggage = moreLuggageBUS.getList();
+        MoreLuggageViews moreLuggageViews = new MoreLuggageViews(listMoreLuggage);
+        listMoreLuggageView = moreLuggageViews.getList();
+        moreLuggageModel = (DefaultTableModel) tbAllLugage.getModel();
+        moreLuggageModel.setRowCount(0);
+        int stt = 1;
+        System.out.println(airlineID);
+        for (MoreLuggageView moreLuggageView : listMoreLuggageView) {
+            if(moreLuggageView.getAirlineID().equals(airlineID)){
+                //System.out.println(AirlineID);
+                moreLuggageModel.addRow(new Object[]{stt++, moreLuggageView.getLuggageWeight(), moreLuggageView.getPrice()});
+                //System.out.println(planeView.TenMayBay);
+            }
+        }    
+        //lbTotalPlane.setText(--stt + "");
     }
 
 
@@ -498,6 +527,11 @@ public void displayPlaneTableByAirlineID(String airlineID) throws ClassNotFoundE
                 btAddLuggageMouseExited(evt);
             }
         });
+        btAddLuggage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btAddLuggageActionPerformed(evt);
+            }
+        });
 
         tbAllLugage.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -625,6 +659,12 @@ public void displayPlaneTableByAirlineID(String airlineID) throws ClassNotFoundE
         planesModel.setRowCount(0); // Xóa các hàng hiện tại trong bảng   
         initPlane();
     }
+    
+    public void refreshMoreLuggageList() throws IOException, ClassNotFoundException, SQLException {
+        moreLuggageModel.setRowCount(0); // Xóa các hàng hiện tại trong bảng   
+        initMoreLuggage();
+    }
+    
     private void btCancelEditPlaneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelEditPlaneActionPerformed
         try {
             refreshPlaneList();
@@ -713,8 +753,8 @@ public void displayPlaneTableByAirlineID(String airlineID) throws ClassNotFoundE
             Plane plane = new Plane();
             plane.setPlaneID(planeID);
             try {
-                PlaneDAO planeDAO = new PlaneDAO();
-                boolean deleteSuccess = planeDAO.deletePlane(plane);
+                planeBUS = new PlaneBUS();
+                boolean deleteSuccess = planeBUS.delete(plane);
                 if (deleteSuccess) {
                     model.removeRow(selectedRow);
                     JOptionPane.showMessageDialog(this, "Đã xóa máy bay thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
@@ -757,8 +797,8 @@ public void displayPlaneTableByAirlineID(String airlineID) throws ClassNotFoundE
         plane.setSeats(seats);
         
         try {
-            PlaneDAO planeDAO = new PlaneDAO();
-            boolean success = planeDAO.updatePlane(plane);
+            planeBUS = new PlaneBUS();
+            boolean success = planeBUS.update(plane);
             if (success) {
                 JOptionPane.showMessageDialog(this, "Sửa đổi thông tin sân bay thành công.");
                 // Cập nhật lại dữ liệu trên bảng
@@ -785,6 +825,7 @@ public void displayPlaneTableByAirlineID(String airlineID) throws ClassNotFoundE
     private void btRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btRefreshActionPerformed
         try {
             refreshPlaneList();
+            refreshMoreLuggageList();
         } catch (IOException ex) {
             Logger.getLogger(AirlinePlaneAD.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
@@ -793,6 +834,13 @@ public void displayPlaneTableByAirlineID(String airlineID) throws ClassNotFoundE
             Logger.getLogger(AirlinePlaneAD.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btRefreshActionPerformed
+
+    private void btAddLuggageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddLuggageActionPerformed
+        PuMoreLuggage puMoreLuggage = new PuMoreLuggage();
+        puMoreLuggage.setAirPlaneID(airlineID);
+        puMoreLuggage.setVisible(true);
+        puMoreLuggage.setLocationRelativeTo(null);
+    }//GEN-LAST:event_btAddLuggageActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -41,4 +41,8 @@ public class AirlineBUS {
         }
         return null;
     }
+    
+    public boolean create(Airline airline) throws ClassNotFoundException, SQLException{
+        return airlineDAO.create(airline);
+    }
 }
