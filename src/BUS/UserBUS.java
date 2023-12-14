@@ -89,4 +89,8 @@ public class UserBUS {
         }        
         return userDAO.update(user);
     }
+    
+    public int countAccountsCreated() throws SQLException{
+        return userDAO.countAccountsCreatedAfterDate();
+    }
 }
