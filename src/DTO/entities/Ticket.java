@@ -108,4 +108,11 @@ public class Ticket {
         this.soldout = ticket.getSoldout();
         this.isDelete = ticket.getIsDelete();
     }
+    
+    public static String generateID(){
+        long millis = System.currentTimeMillis();
+        String time = String.valueOf(millis);
+        String id = "TK" + time.substring(time.length()-8);
+        return id;
+    }
 }

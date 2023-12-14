@@ -5,7 +5,10 @@
 package BUS;
 
 import DAO.TicketDAO;
+import DTO.entities.Plane;
+import DTO.entities.Seat;
 import DTO.entities.Ticket;
+import DTO.entities.TicketClass;
 import DTO.entities.User;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -61,5 +64,18 @@ public class TicketBUS {
     
     public ArrayList<Ticket> update(Ticket ticket) throws SQLException, IOException, ClassNotFoundException{
         return ticketDAO.update(ticket);
+    }
+    public boolean create(Ticket ticket, Plane plane, TicketClass ticketClass ) throws SQLException, IOException, ClassNotFoundException{
+        SeatBUS seatBUS = new SeatBUS();
+        ArrayList<Seat> seatList =  seatBUS.getSeatFromClass(ticketClass);
+        
+        for(Seat s : seatList){
+            String ticketID = Ticket.generateID();
+            ticket.setTicketID(ticketID);
+            ticket.setSeatID(s.getSeatID());
+            ticketDAO.create(ticket);
+        }
+        
+        return true;
     }
 }

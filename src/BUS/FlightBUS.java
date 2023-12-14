@@ -59,6 +59,8 @@ public class FlightBUS {
         }
         return result;
     }
-    
+    public ArrayList<Flight> getAllFlightOfAirline(Airline airline) throws SQLException{
+        return flightDAO.getAllFlightOfAirline(airline);
+    }
     
 }

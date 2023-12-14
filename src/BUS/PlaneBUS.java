@@ -43,4 +43,7 @@ public class PlaneBUS {
         }
         return null;
     }
+    public ArrayList<Plane> getAllPlaneByAirline(String airlineID ) throws ClassNotFoundException, SQLException{
+        return planeDAO.getPlaneListByAirlineID(airlineID);
+    }
 }
