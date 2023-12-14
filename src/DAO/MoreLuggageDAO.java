@@ -65,9 +65,11 @@ public class MoreLuggageDAO {
             String sql = "INSERT INTO more_luggage(More_luggage_ID, Airline_ID, Luggage_weight, Price, IsDelete) "
                     + "VALUES (?, ?, ?, ?, ?)";
             PreparedStatement pstmt = connectDB.conn.prepareStatement(sql);
-            pstmt.setString(1, moreLuggage.getMoreLuggageID());
+            String lastID = getLastMoreLuggageID(); // Lấy ID cuối cùng từ CSDL
+            String newID = generateNextMoreLuggageID(lastID); // Tạo ID mới dựa trên ID cuối cùng
+            pstmt.setString(1, newID);
             pstmt.setString(2, moreLuggage.getAirlineID());
-            pstmt.setString(3, moreLuggage.getMoreLuggageID());
+            pstmt.setInt(3, moreLuggage.getLuggageWeight());
             pstmt.setInt(4, moreLuggage.getPrice());
             pstmt.setInt(5, moreLuggage.getIsDelete());
             pstmt.executeUpdate();
@@ -78,5 +80,28 @@ public class MoreLuggageDAO {
         }
         connectDB.disconnect(context);
         return false;
+    }
+    public String getLastMoreLuggageID() throws SQLException {
+        String sql = "SELECT TOP 1 More_luggage_ID FROM more_luggage ORDER BY More_luggage_ID DESC";
+        Statement stmt = connectDB.conn.createStatement();
+        ResultSet rs = stmt.executeQuery(sql);
+        if (rs.next()) {
+            return rs.getString("More_luggage_ID");
+        }
+        return "MLG0000"; // Trả về ID mặc định nếu không có ID nào trong CSDL
+    }
+
+// Hàm tạo ID mới dựa trên ID cuối cùng
+    public String generateNextMoreLuggageID(String lastID) {
+        int number = Integer.parseInt(lastID.substring(5)); // Lấy phần số từ ID cuối cùng
+        number++; // Tăng số lên 1
+        String nextNumber = String.format("%04d", number); // Định dạng số thành chuỗi với độ dài 4 ký tự
+        return "MLG" + nextNumber;
+    }
+
+    public String generateNewMoreLuggageID() throws SQLException {
+        String lastID = getLastMoreLuggageID(); // Lấy ID cuối cùng từ CSDL
+        String newID = generateNextMoreLuggageID(lastID); // Tạo ID mới dựa trên ID cuối cùng
+        return newID;
     }
 }

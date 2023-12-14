@@ -5,6 +5,7 @@
 package DAO;
 
 import DTO.entities.OrderDetail;
+import DTO.entities.Ticket;
 import DTO.entities.User;
 import connection.ConnectDB;
 import java.io.IOException;
@@ -24,6 +25,7 @@ public class OrderDetailDAO {
     protected ArrayList<OrderDetail> list;
     protected OrderDetail orderDetail;
     private ConnectDB connectDB;
+    private Ticket ticket;
 
     public OrderDetailDAO() throws ClassNotFoundException, SQLException, IOException {
         connectDB = new ConnectDB();
@@ -135,4 +137,48 @@ public class OrderDetailDAO {
         connectDB.disconnect(context);
         return quantity;
     }
+    
+    public int countOrders() throws SQLException {
+        int count = 0;
+        String context = this.getClass().getName();
+        connectDB.connect(context);
+        try {
+            String sql = "SELECT COUNT(*) AS NumberOfOrders FROM order_details WHERE IsDelete = 0";
+            Statement stmt = connectDB.conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                count = rs.getInt("NumberOfOrders");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDetailDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        connectDB.disconnect(context);
+        return count;
+    }
+    
+    public int calculateTotalSellingPrice() throws SQLException {
+        int totalSellingPrice = 0;
+        String context = this.getClass().getName();
+        connectDB.connect(context);
+        try {
+            String sql = "SELECT od.Ticket_ID, od.NotPaid, t.Selling_price " +
+                        "FROM order_details od " +
+                        "JOIN tickets t ON od.Ticket_ID = t.Ticket_ID " +
+                        "WHERE od.IsDelete = 0";
+            Statement stmt = connectDB.conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                int notPaid = rs.getInt("NotPaid");
+                int sellingPrice = rs.getInt("Selling_price");
+                if (notPaid == 0) {
+                    totalSellingPrice += sellingPrice;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDetailDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        connectDB.disconnect(context);
+        return totalSellingPrice;
+    }
+
 }
