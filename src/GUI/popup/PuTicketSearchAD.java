@@ -4,25 +4,46 @@
  */
 package GUI.popup;
 
+import BUS.AirlineBUS;
+import BUS.AirportBUS;
+import BUS.TicketClassBUS;
+import DTO.entities.Airline;
+import DTO.entities.Airport;
+import DTO.entities.TicketClass;
 import java.awt.Toolkit;
 import javax.swing.WindowConstants;
 import assets.Styles;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author WIN 10
  */
 public class PuTicketSearchAD extends javax.swing.JFrame {
-
+    private ArrayList<Airline> airlines;
+    private ArrayList<Airport> airports;
+    private ArrayList<String> ticketClasses;
+    private AirlineBUS airlineBUS;
+    private AirportBUS airportBUS;
+    private TicketClassBUS ticketClassBUS;
+    
     /**
      * Creates new form PuTicketSearchAD
      */
-    public PuTicketSearchAD() {
+    public PuTicketSearchAD() throws ClassNotFoundException, SQLException, IOException {
         initComponents();
         this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/assets/image/app-favicon.png")));
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setTitle("Chuyến bay");
+        this.airlineBUS = new AirlineBUS();
+        this.airportBUS = new AirportBUS();
+        this.ticketClassBUS = new TicketClassBUS();
         style();
+        init();
     }
     public void style(){
         Styles.FormLabel(lbAirline);        
@@ -32,8 +53,25 @@ public class PuTicketSearchAD extends javax.swing.JFrame {
         Styles.FormLabel(lbImportPrice);
         Styles.FormLabel(lbTicketClass);
         Styles.ButtonPrimary(btnSearchTicket);
-
+        Styles.FormTextFeild(txtDepartureFlight);        
+        Styles.FormTextFeild(txtImportPrice);
     }
+    public void init() throws SQLException{
+        airlines = airlineBUS.getList();
+        airports = airportBUS.getList();
+        ticketClasses = ticketClassBUS.getAllClassName();
+        for (Airline entry : airlines) {
+            cbAirline.addItem(entry.getAirlineName());
+        }
+        for(Airport airport : airports){
+            cbFlightFrom.addItem(airport.getProvince());            
+            cbFlightTo.addItem(airport.getProvince());
+        }
+        for(String tc : ticketClasses){
+            cbTicketClass.addItem(tc);
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -57,7 +95,7 @@ public class PuTicketSearchAD extends javax.swing.JFrame {
         cbFlightFrom = new javax.swing.JComboBox<>();
         cbFlightTo = new javax.swing.JComboBox<>();
         cbTicketClass = new javax.swing.JComboBox<>();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cbAirline = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -98,14 +136,7 @@ public class PuTicketSearchAD extends javax.swing.JFrame {
         btnSearchTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-search-white18.png"))); // NOI18N
         btnSearchTicket.setText("Tìm kiếm chuyến bay");
 
-        cbFlightFrom.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cbFlightTo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        cbTicketClass.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cbTicketClass.setMinimumSize(new java.awt.Dimension(2000, 22));
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout pnDetailLayout = new javax.swing.GroupLayout(pnDetail);
         pnDetail.setLayout(pnDetailLayout);
@@ -120,7 +151,7 @@ public class PuTicketSearchAD extends javax.swing.JFrame {
                             .addComponent(lbAirline, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(8, 8, 8)
                         .addGroup(pnDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbAirline, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtDepartureFlight, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(pnDetailLayout.createSequentialGroup()
                         .addComponent(cbFlightFrom, 0, 121, Short.MAX_VALUE)
@@ -134,10 +165,10 @@ public class PuTicketSearchAD extends javax.swing.JFrame {
                         .addGroup(pnDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbImportPrice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(lbTicketClass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(8, 8, 8)
+                        .addGap(11, 11, 11)
                         .addGroup(pnDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtImportPrice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cbTicketClass, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(cbTicketClass, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtImportPrice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(btnSearchTicket, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(24, 24, 24))
         );
@@ -159,7 +190,7 @@ public class PuTicketSearchAD extends javax.swing.JFrame {
                 .addGap(10, 10, 10)
                 .addGroup(pnDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbAirline)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbAirline, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
                 .addGroup(pnDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbTicketClass)
@@ -226,17 +257,25 @@ public class PuTicketSearchAD extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PuTicketSearchAD().setVisible(true);
+                try {
+                    new PuTicketSearchAD().setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(PuTicketSearchAD.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(PuTicketSearchAD.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(PuTicketSearchAD.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSearchTicket;
+    private javax.swing.JComboBox<String> cbAirline;
     private javax.swing.JComboBox<String> cbFlightFrom;
     private javax.swing.JComboBox<String> cbFlightTo;
     private javax.swing.JComboBox<String> cbTicketClass;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel lbAirline;
     private javax.swing.JLabel lbDepartureFlight;
     private javax.swing.JLabel lbFlyingFrom1;

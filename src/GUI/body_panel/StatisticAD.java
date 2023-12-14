@@ -4,9 +4,20 @@
  */
 package GUI.body_panel;
 
+import BUS.OrderDetailBUS;
+import BUS.UserBUS;
+import DAO.OrderDetailDAO;
 import DTO.entities.User;
+import GUI.popup.PuFlight;
+import GUI.popup.PuPromoAD;
+import GUI.popup.puTicketAD;
 import assets.Styles;
 import assets.TextBubbleBorder;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.border.AbstractBorder;
 
 /**
@@ -15,18 +26,36 @@ import javax.swing.border.AbstractBorder;
  */
 public class StatisticAD extends javax.swing.JPanel {
     private User user;
+    OrderDetailBUS orderDetailBUS;
     /**
      * Creates new form StatisticAD
      */
-    public StatisticAD() {
+    public StatisticAD() throws ClassNotFoundException, SQLException, IOException {
         initComponents();
         style();
+        initStatistic();
     }
     
-    public StatisticAD(User user) {
+    public StatisticAD(User user) throws ClassNotFoundException, SQLException, IOException {
         this.user = user;
         initComponents();
         style();
+        initStatistic();
+    }
+    
+    public void initStatistic() throws ClassNotFoundException, SQLException, IOException{
+        OrderDetailBUS orderDetailBUS = new OrderDetailBUS();
+        UserBUS userBUS = new UserBUS();
+        int countTickets = orderDetailBUS.getNumberOfOrders();
+        String TicketCountValue = String.valueOf(countTickets);
+        lbTicketCountValue.setText(TicketCountValue);        
+        int RevenueValue = orderDetailBUS.getTotalSelling();
+        String revenueValue = String.valueOf(RevenueValue);
+        lbRevenueValue.setText(revenueValue);
+        lbProfitValue.setText(revenueValue);
+        int countAccountsCreated = userBUS.countAccountsCreated();
+        String countAccounts = String.valueOf(countAccountsCreated);         
+        lbNewEUCValue.setText(countAccounts);
     }
     
     public void style(){
@@ -247,6 +276,11 @@ public class StatisticAD extends javax.swing.JPanel {
                 btCreateTicketMouseExited(evt);
             }
         });
+        btCreateTicket.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCreateTicketActionPerformed(evt);
+            }
+        });
 
         btCreatePromo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/info-promotion-pri18.png"))); // NOI18N
         btCreatePromo.setText("Tạo chương trình KM");
@@ -258,6 +292,11 @@ public class StatisticAD extends javax.swing.JPanel {
                 btCreatePromoMouseExited(evt);
             }
         });
+        btCreatePromo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCreatePromoActionPerformed(evt);
+            }
+        });
 
         btCreateFlight.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/info-flight-pri18.png"))); // NOI18N
         btCreateFlight.setText("Thêm chuyến bay mới");
@@ -267,6 +306,11 @@ public class StatisticAD extends javax.swing.JPanel {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btCreateFlightMouseExited(evt);
+            }
+        });
+        btCreateFlight.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCreateFlightActionPerformed(evt);
             }
         });
 
@@ -401,6 +445,39 @@ public class StatisticAD extends javax.swing.JPanel {
         btCreateFlight.setForeground(Styles.PRI_NORMAL);
         btCreateFlight.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/info-flight-pri18.png")));
     }//GEN-LAST:event_btCreateFlightMouseExited
+
+    private void btCreateTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCreateTicketActionPerformed
+        try {
+            puTicketAD pTicketAD = new puTicketAD(this.user, null);
+            pTicketAD.setVisible(true);
+        } catch (ParseException ex) {
+            Logger.getLogger(TicketAD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btCreateTicketActionPerformed
+
+    private void btCreatePromoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCreatePromoActionPerformed
+        try {
+            PuPromoAD puPromoAD = new PuPromoAD((User)this.user, null);
+            puPromoAD.setVisible(true);
+        } catch (ParseException ex) {
+            Logger.getLogger(PromoAD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btCreatePromoActionPerformed
+
+    private void btCreateFlightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCreateFlightActionPerformed
+        PuFlight puFlight;
+        try {
+            puFlight = new PuFlight();
+            puFlight.setVisible(true);
+            puFlight.setLocationRelativeTo(null);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(FlightAD.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FlightAD.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(FlightAD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btCreateFlightActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

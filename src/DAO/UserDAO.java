@@ -21,13 +21,16 @@ import java.util.logging.Logger;
  * @author agond
  */
 public class UserDAO {
-    protected ArrayList<Person> list;
+    protected ArrayList<Person> list;    
+    protected ArrayList<Person> searchList;
+
     protected Person user;
     private ConnectDB connectDB;
 
     public UserDAO() throws ClassNotFoundException, SQLException, IOException {
         connectDB = new ConnectDB();
         list = new ArrayList<>();
+        
         user = new User();
         read();
     }
@@ -179,7 +182,58 @@ public class UserDAO {
         return false;
     }
 
-    
+    public ArrayList<Person> search(String email,String name, String roleID ) throws IOException, ClassNotFoundException, SQLException{
+        String context = this.getClass().getName();
+        connectDB.connect(context);
+        searchList = new ArrayList<>();
+        try {
+            String sql = "Select * from users ";
+            boolean whereAdded = false; // Flag to track if "WHERE" clause is added
+            if (!email.isEmpty()) {
+                sql += " WHERE Email LIKE '%" + email + "%'";
+                whereAdded = true;
+            }
+            if (!name.isEmpty()) {
+                if (whereAdded) {
+                    sql += " AND Real_name LIKE '%" + name + "%'";
+                } else {
+                    sql += " WHERE Real_name LIKE '%" + name + "%'";
+                    whereAdded = true;
+                }
+            }
+            if (!roleID.isEmpty()) {
+                if (whereAdded) {
+                    sql += " AND Role_ID  = '" + roleID + "'";
+                } else {
+                    sql += " WHERE Role_ID = '" + roleID + "'";
+                }
+            }
+            Statement stmt = connectDB.conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            while(rs.next()){
+                User user = new User();
+                user.setID(rs.getString(1));
+                user.setRoleID(rs.getString(2));
+                user.setUsername(rs.getString(3));
+                user.setPwd(rs.getString(4));
+                user.setName(rs.getString(5));
+                user.setDoB(rs.getDate(6));
+                user.setGender(rs.getString(7));
+                user.setNation(rs.getString(8));
+                user.setAddress(rs.getString(9));
+                user.setPhoneNumber(rs.getString(10));
+                user.setCCCD(rs.getString(11));
+                user.setEmail(rs.getString(12));
+                user.setDateCreate(rs.getDate(13));
+                user.setIsDelete(rs.getInt(14));
+                searchList.add(user);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        connectDB.disconnect(context);
+        return searchList;
+    }
     public User getObjectbyID(String ID){
         for(Person u : list){
             if(ID.equals(u.getID())) return (User)u;
@@ -290,5 +344,21 @@ public class UserDAO {
         return index;
     }
 
+    public int countAccountsCreatedAfterDate() throws SQLException {
+        int count = 0;
+        String context = this.getClass().getName();
+        connectDB.connect(context);
+        try {
+            String sql = "SELECT COUNT(*) FROM users WHERE Date_create > '2023-10-05 10:00:00' AND ROLE_ID = 'ROLE3'";
+            PreparedStatement pstmt = connectDB.conn.prepareStatement(sql);
+            ResultSet resultSet = pstmt.executeQuery();
+            if (resultSet.next()) {
+                count = resultSet.getInt(1);
+            }
+        } finally {
+            connectDB.disconnect(context);
+        }
+        return count;
+    }
     
 }

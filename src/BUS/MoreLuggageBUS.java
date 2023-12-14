@@ -59,4 +59,21 @@ public class MoreLuggageBUS {
         }
         return null;
     }
+    
+    public boolean create (MoreLuggage moreLuggage) throws ClassNotFoundException, SQLException{
+        return moreLuggageDAO.create(moreLuggage);
+    }
+    
+    public String getLastMoreLuggageID() throws SQLException{
+        return moreLuggageDAO.getLastMoreLuggageID();
+    }
+    
+    public String generateNextMoreLuggageID(String lastID) throws SQLException{
+        return moreLuggageDAO.generateNextMoreLuggageID(lastID);
+    }
+    
+    public String generateNewMoreLuggageID() throws SQLException{
+        return moreLuggageDAO.generateNewMoreLuggageID();
+    }
+    
 }

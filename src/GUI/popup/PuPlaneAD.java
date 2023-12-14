@@ -75,6 +75,7 @@ public class PuPlaneAD extends javax.swing.JFrame {
     private User user;
     AirlineAD airlinePlaneAD;
     private String airlineID;
+    private PlaneBUS planeBUS;
 
     /**
      * Creates new form PuPlaneAD
@@ -105,7 +106,8 @@ public class PuPlaneAD extends javax.swing.JFrame {
         txtPlaneName = new javax.swing.JTextField();
         txtSeats = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         pnPlaneInfo.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -217,7 +219,7 @@ public class PuPlaneAD extends javax.swing.JFrame {
 
     try {
         int seats = Integer.parseInt(seatsText);
-        PlaneDAO planeDAO = new PlaneDAO();
+        planeBUS = new PlaneBUS();
         // Tạo đối tượng Plane
         Plane plane = new Plane();
         plane.setAirlineID(airlineID);
@@ -226,7 +228,7 @@ public class PuPlaneAD extends javax.swing.JFrame {
         plane.setPlaneDesc(planeDesc);
         plane.setIsDelete(0);
         // Gọi hàm create để thêm máy bay vào cơ sở dữ liệu
-        boolean success = planeDAO.create(plane);
+        boolean success = planeBUS.create(plane);
 
         if (success) {
             JOptionPane.showMessageDialog(this, "Thêm máy bay thành công");

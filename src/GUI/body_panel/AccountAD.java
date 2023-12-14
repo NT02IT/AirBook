@@ -17,6 +17,8 @@ import GUI.popup.PuAccountAuthAD;
 import GUI.popup.PuAccountSearchAD;
 import GUI.popup.puAccountAD;
 import assets.Styles;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
@@ -42,7 +44,8 @@ public class AccountAD extends javax.swing.JPanel {
     private PermissionBUS permissionBUS;
     private ActionBUS actionBUS;
     
-    private ArrayList<Person> userList;    
+    private ArrayList<Person> userList;
+    private ArrayList<Person> searchUserList;    
     private ArrayList<Permission> permissionList;  
     private ArrayList<Action> actionList;    
     private ArrayList<Permission> permissionOfRoleID;
@@ -93,7 +96,6 @@ public class AccountAD extends javax.swing.JPanel {
         
     }
     public void initTableAccount(ArrayList<Person> userList) throws ClassNotFoundException, SQLException, IOException{
-        
         usersModel = (DefaultTableModel) tableAllAccounts.getModel();
         usersModel.setRowCount(0);
         int stt = 1;
@@ -255,6 +257,9 @@ public class AccountAD extends javax.swing.JPanel {
         btSearchAccount.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-search-pri18.png"))); // NOI18N
         btSearchAccount.setText("Tìm kiếm");
         btSearchAccount.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btSearchAccountMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btSearchAccountMouseEntered(evt);
             }
@@ -599,8 +604,7 @@ public class AccountAD extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btSearchAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSearchAccountActionPerformed
-       PuAccountSearchAD puSearch = new PuAccountSearchAD();
-       puSearch.setVisible(true);
+
     }//GEN-LAST:event_btSearchAccountActionPerformed
 
     private void btDeletePermissionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeletePermissionActionPerformed
@@ -828,6 +832,35 @@ public class AccountAD extends javax.swing.JPanel {
         }
         
     }//GEN-LAST:event_btUpdatePermissionActionPerformed
+
+    private void btSearchAccountMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btSearchAccountMouseClicked
+        PuAccountSearchAD puSearch;
+        try {
+            puSearch = new PuAccountSearchAD((User) this.user);
+            puSearch.setVisible(true);
+            puSearch.getBtnSearchAccount().addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        searchUserList = userBUS.search(puSearch.getEmail(), puSearch.getName(), puSearch.getRoleName());
+                        initTableAccount(searchUserList);
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btSearchAccountMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

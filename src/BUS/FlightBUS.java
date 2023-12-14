@@ -59,6 +59,26 @@ public class FlightBUS {
         }
         return result;
     }
+
+    public ArrayList<Flight> getAllFlightOfAirline(Airline airline) throws SQLException{
+        return flightDAO.getAllFlightOfAirline(airline);
+    }
+
+
+    public boolean delete(Flight flight) throws ClassNotFoundException, SQLException{
+        return flightDAO.deleteFlight(flight);
+    }
     
-    
+    public boolean create(Flight flight) throws ClassNotFoundException, SQLException{
+        return flightDAO.create(flight);
+    }    
+
+    public boolean update(Flight flight) throws ClassNotFoundException, SQLException{
+        return flightDAO.updateFlight(flight);
+    }
+
+    public boolean existsFlightID(String flightID) throws ClassNotFoundException, SQLException{
+        return flightDAO.existsFlightID(flightID);
+    }    
+
 }

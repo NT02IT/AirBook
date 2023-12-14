@@ -47,4 +47,19 @@ public class AirportBUS {
         return null;
     } 
 
+        public boolean create(Airport airport) throws ClassNotFoundException, SQLException{
+            return airportDAO.create(airport);
+    }
+
+        public boolean delete(Airport airport) throws ClassNotFoundException, SQLException{
+            return airportDAO.deleteAirport(airport);
+    }
+
+        public boolean update(Airport airport) throws ClassNotFoundException, SQLException{
+            return airportDAO.updateAirport(airport);
+    }
+
+        public boolean existsAirportID(String airportID){
+            return airportDAO.existsAirportID(airportID);
+        }
 }

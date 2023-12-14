@@ -70,7 +70,8 @@ public class PuAirportAD extends javax.swing.JFrame {
         txtAirportName = new javax.swing.JTextField();
         txtAirportID = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         pnAirportInfo.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -191,7 +192,6 @@ public class PuAirportAD extends javax.swing.JFrame {
         );
 
         pnAirportInfo.getAccessibleContext().setAccessibleDescription("");
-        pnAirportInfo.getAccessibleContext().setAccessibleParent(null);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -221,8 +221,8 @@ public class PuAirportAD extends javax.swing.JFrame {
     }
 
         try {
-            AirportDAO airportDAO = new AirportDAO();
-            if (airportDAO.existsAirportID(airportID)) {
+            airportBUS = new AirportBUS();
+            if (airportBUS.existsAirportID(airportID)) {
                 JOptionPane.showMessageDialog(null, "ID sân bay đã tồn tại. Vui lòng chọn ID khác.", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -233,7 +233,7 @@ public class PuAirportAD extends javax.swing.JFrame {
             airport.setProvince(province);
             airport.setIsDelete(0);
 
-            boolean success = airportDAO.create(airport);
+            boolean success = airportBUS.create(airport);
 
             if (success) {
                 JOptionPane.showMessageDialog(null, "Thêm sân bay thành công: " + airportID);

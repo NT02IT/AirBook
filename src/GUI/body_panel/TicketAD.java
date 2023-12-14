@@ -400,8 +400,18 @@ public class TicketAD extends javax.swing.JPanel {
     }//GEN-LAST:event_btExportTicketMouseExited
 
     private void btSearchTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSearchTicketActionPerformed
-        PuTicketSearchAD puTicketSearchAD = new PuTicketSearchAD();
-        puTicketSearchAD.setVisible(true);
+        PuTicketSearchAD puTicketSearchAD;
+        try {
+            puTicketSearchAD = new PuTicketSearchAD();
+            puTicketSearchAD.setVisible(true);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(TicketAD.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(TicketAD.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(TicketAD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_btSearchTicketActionPerformed
 
     private void btAddTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddTicketActionPerformed

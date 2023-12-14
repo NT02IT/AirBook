@@ -4,8 +4,10 @@
  */
 package BUS;
 
+import DAO.RoleDAO;
 import DAO.UserDAO;
 import DTO.entities.Person;
+import DTO.entities.Role;
 import java.util.ArrayList;
 import DTO.entities.User;
 import java.io.IOException;
@@ -17,8 +19,10 @@ import java.sql.SQLException;
  * @author agond
  */
 public class UserBUS {
-    protected static ArrayList<Person> list;
-    protected static UserDAO userDAO;    
+    protected static ArrayList<Person> list;    
+    protected static ArrayList<Role> roleList;
+    protected static UserDAO userDAO; 
+    protected static RoleDAO roleDAO;
     private static int quantity = 0;
 
     public UserBUS() throws ClassNotFoundException, SQLException, IOException {
@@ -89,4 +93,23 @@ public class UserBUS {
         }        
         return userDAO.update(user);
     }
+
+    public ArrayList<Person> search(String email, String name, String roleName) throws ClassNotFoundException, SQLException, IOException{
+        if(!roleName.isEmpty()){
+            roleDAO = new RoleDAO();
+            roleList = roleDAO.getList();
+            for(Role role : roleList){
+                if(role.getRoleName().equals(roleName)){
+                    roleName = role.getRoleID();
+                }
+            }
+        }
+        return userDAO.search(email, name, roleName);
+    } 
+
+    
+    public int countAccountsCreated() throws SQLException{
+        return userDAO.countAccountsCreatedAfterDate();
+    }
+
 }

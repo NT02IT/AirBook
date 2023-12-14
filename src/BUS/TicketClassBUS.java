@@ -49,4 +49,10 @@ public class TicketClassBUS {
     public TicketClass getObjectByPlaneIDClassName(String PlaneID, String ClassName) throws SQLException{
         return ticketClassDAO.getObjectByPlaneIDClassName(PlaneID, ClassName);
     }
+    public ArrayList<String> getAllClassName() throws SQLException{
+        return ticketClassDAO.getAllClassNameClasses();
+    }
+    public ArrayList<TicketClass> getAllByPlaneID(String planeID) throws SQLException{
+        return ticketClassDAO.getAllByPlaneID(planeID);
+    }
 }
