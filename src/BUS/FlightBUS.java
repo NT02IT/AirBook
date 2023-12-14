@@ -80,5 +80,4 @@ public class FlightBUS {
     public boolean existsFlightID(String flightID) throws ClassNotFoundException, SQLException{
         return flightDAO.existsFlightID(flightID);
     }    
-
 }
