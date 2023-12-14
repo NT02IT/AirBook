@@ -5,6 +5,7 @@
 package GUI.body_panel;
 
 import BUS.OrderDetailBUS;
+import BUS.UserBUS;
 import DAO.OrderDetailDAO;
 import DTO.entities.User;
 import GUI.popup.PuFlight;
@@ -44,13 +45,17 @@ public class StatisticAD extends javax.swing.JPanel {
     
     public void initStatistic() throws ClassNotFoundException, SQLException, IOException{
         OrderDetailBUS orderDetailBUS = new OrderDetailBUS();
-        int count = orderDetailBUS.getNumberOfOrders();
+        UserBUS userBUS = new UserBUS();
+        int countTickets = orderDetailBUS.getNumberOfOrders();
+        String TicketCountValue = String.valueOf(countTickets);
+        lbTicketCountValue.setText(TicketCountValue);        
         int RevenueValue = orderDetailBUS.getTotalSelling();
-        String TicketCountValue = String.valueOf(count);
-        String revenueValue = String.valueOf(RevenueValue);        
-        lbTicketCountValue.setText(TicketCountValue);
+        String revenueValue = String.valueOf(RevenueValue);
         lbRevenueValue.setText(revenueValue);
         lbProfitValue.setText(revenueValue);
+        int countAccountsCreated = userBUS.countAccountsCreated();
+        String countAccounts = String.valueOf(countAccountsCreated);         
+        lbNewEUCValue.setText(countAccounts);
     }
     
     public void style(){
