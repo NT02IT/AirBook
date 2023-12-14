@@ -281,6 +281,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Hi&#x1ec3;n th&#x1ecb; t&#x1ea5;t c&#x1ea3; v&#xe9;"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rdoAllTicketActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="lbTitle">
               <Properties>

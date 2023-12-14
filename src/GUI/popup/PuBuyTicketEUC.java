@@ -1170,11 +1170,15 @@ public class PuBuyTicketEUC extends javax.swing.JFrame {
         MoreLuggage moreLuggage;
         String weightLuggage;       
         //Vé đi
-        String turnMoreLuggageID = null;    
-        weightLuggage = cbTurnMoreLuggage.getSelectedItem().toString();     
-        weightLuggage = weightLuggage.replaceAll("[^0-9]", "");
-        moreLuggage = moreLuggageBUS.getObjectbyWeight(Integer.parseInt(weightLuggage));
-        turnMoreLuggageID = moreLuggage.getMoreLuggageID(); 
+        String turnMoreLuggageID = null; 
+        try {               
+            weightLuggage = cbTurnMoreLuggage.getSelectedItem().toString();     
+            weightLuggage = weightLuggage.replaceAll("[^0-9]", "");
+            moreLuggage = moreLuggageBUS.getObjectbyWeight(Integer.parseInt(weightLuggage));
+            turnMoreLuggageID = moreLuggage.getMoreLuggageID();             
+        } catch (Exception e) {
+        }
+        
         String orderDetailID = OrderDetail.generateID();
         int seatTurnIndex = cbTurnSeat.getSelectedIndex();
         String ticketTurnID = null;
