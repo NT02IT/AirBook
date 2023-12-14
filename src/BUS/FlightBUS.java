@@ -60,5 +60,4 @@ public class FlightBUS {
         return result;
     }
     
-    
 }

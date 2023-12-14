@@ -301,22 +301,25 @@ public class PuTicketDetailEUC extends javax.swing.JFrame {
         airline = airlineBUS.getObjectbyID(plane.getAirlineID());
         txtAirline.setText(airline.getAirlineName());
         promoID =  orderDetail.getPromoID();
-        txtPromoCode.setText(promoID);
+        if(promoID != null) txtPromoCode.setText(promoID);
+        else txtPromoCode.setText("-");
         int total = ticket.getSellingPrice();
         try {
             PromoBUS promoBUS = new PromoBUS();
-            Promotion promotion = promoBUS.getObjectbyID(promoID);
-            if(promotion instanceof PercentDiscount){
-                PercentDiscount pd = (PercentDiscount) promotion;
-                lbPromoDiscount.setText(pd.getDecreased() + "%");
-                total -= (ticket.getSellingPrice() * pd.getDecreased())/100;
+            if(promoID != null){ 
+                Promotion promotion = promoBUS.getObjectbyID(promoID);
+                if(promotion instanceof PercentDiscount){
+                    PercentDiscount pd = (PercentDiscount) promotion;
+                    lbPromoDiscount.setText(pd.getDecreased() + "%");
+                    total -= (ticket.getSellingPrice() * pd.getDecreased())/100;
+                }
+                else if(promotion instanceof FlatDiscount){
+                    FlatDiscount fd = (FlatDiscount) promotion;
+                    lbPromoDiscount.setText(fd.getDecreased() + "đ");
+                    total -= fd.getDecreased();
+                }
+                else lbPromoDiscount.setText("-");  
             }
-            else if(promotion instanceof FlatDiscount){
-                FlatDiscount fd = (FlatDiscount) promotion;
-                lbPromoDiscount.setText(fd.getDecreased() + "đ");
-                total -= fd.getDecreased();
-            }
-            else lbPromoDiscount.setText("-");            
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(PuTicketDetailEUC.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {

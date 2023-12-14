@@ -20,15 +20,23 @@ import DTO.entities.TicketClass;
 import DTO.entities.User;
 import DTO.views.TicketView;
 import GUI.popup.PuBuyTicketEUC;
+import assets.DateTime;
 import assets.Styles;
 import assets.TextBubbleBorder;
 import java.awt.Color;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 import javax.swing.table.DefaultTableModel;
 
@@ -132,7 +140,11 @@ public class BuyTicketEUC extends javax.swing.JPanel {
         });
     }
     
-    public void initTickets() throws ClassNotFoundException, SQLException, IOException{       
+    public void initTickets() throws ClassNotFoundException, SQLException, IOException{  
+        ticketsModel.setRowCount(0);
+        rdoAllTicket.setSelected(true);
+        mapRowTicket = new HashMap<String, ArrayList<Ticket>>();
+        mapRowReturnTicket = new HashMap<String, ArrayList<Ticket>>();
         int stt = 1;
         String airline, flyingFrom, flyingTo, remain;
         String departureFlight;
@@ -179,6 +191,62 @@ public class BuyTicketEUC extends javax.swing.JPanel {
             
         }
         
+        lbToltalTicket.setText(totalTicketRemain + "");
+    }
+    public void initTickets(String flyFromID, String flyToID, String dateFly) throws ClassNotFoundException, SQLException, IOException{
+        ticketsModel.setRowCount(0);
+        rdoAllTicket.setSelected(false);
+        mapRowTicket = new HashMap<String, ArrayList<Ticket>>();
+        mapRowReturnTicket = new HashMap<String, ArrayList<Ticket>>();
+        String airportFromName = airportBUS.getObjectbyID(flyFromID).getAirportName();
+        String airportToName = airportBUS.getObjectbyID(flyToID).getAirportName();
+        
+        int stt = 1;
+        String airline, flyingFrom, flyingTo, remain;
+        String departureFlight;
+        String hoursFly;
+        Flight flight;
+        Ticket ticket;
+        int totalTicketRemain = 0;
+        for(Map.Entry<String, ArrayList<Ticket>> entry : listTicketView.entrySet()){
+            ticket = entry.getValue().get(0);
+            flight = flightBUS.getObjectbyID(ticket.getFlightID());
+            
+            flyingFrom = airportBUS.getObjectbyID(flight.getFlyingFrom()).getAirportName();
+            flyingTo = airportBUS.getObjectbyID(flight.getFlyingTo()).getAirportName();
+            hoursFly = flight.getHoursFly() + " giờ";
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+            departureFlight = flight.getDepartureFlight().format(formatter);
+            
+            int remainTicket = 0;
+            int totalTicket = 0;
+            for(Ticket tk : entry.getValue()){
+                totalTicket++;
+                if(tk.getSoldout() == 0) remainTicket++;
+            }
+            totalTicketRemain += remainTicket;
+            remain = remainTicket + "/" + totalTicket;
+            
+            Seat seat = seatBUS.getObjectbyID(ticket.getSeatID());
+            TicketClass ticketClass = ticketClassBUS.getObjectbyID(seat.getTicketClassID());
+            Plane plane = planeBUS.getObjectbyID(ticketClass.getPlaneID());
+            airline = airlineBUS.getObjectbyID(plane.getAirlineID()).getAirlineName();            
+            
+            if(flyingFrom.equals(airportFromName) && flyingTo.equals(airportToName)){
+                ticketsModel.addRow(new Object[]{stt++, airline, flyingFrom, flyingTo, departureFlight, hoursFly, remain});
+                String key = airline + flyingFrom + flyingTo + departureFlight;            
+                mapRowTicket.put(key.trim(), entry.getValue());
+            }
+            
+            String keyReturnTicket = airline + flyingFrom + flyingTo;
+            if(mapRowReturnTicket.get(keyReturnTicket) == null){
+                mapRowReturnTicket.put(keyReturnTicket.trim(), entry.getValue());
+            } else{
+                for(Ticket tk : entry.getValue()){
+                    mapRowReturnTicket.get(keyReturnTicket).add(tk);
+                }                
+            }            
+        }        
         lbToltalTicket.setText(totalTicketRemain + "");
     }
     
@@ -315,6 +383,11 @@ public class BuyTicketEUC extends javax.swing.JPanel {
         );
 
         rdoAllTicket.setText("Hiển thị tất cả vé");
+        rdoAllTicket.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdoAllTicketActionPerformed(evt);
+            }
+        });
 
         lbTitle.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         lbTitle.setText("Danh sách vé");
@@ -432,6 +505,53 @@ public class BuyTicketEUC extends javax.swing.JPanel {
 
     private void btSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSearchActionPerformed
         // TODO add your handling code here:
+        //Lấy giá trị 3 ô input
+        boolean validate = true;
+        String flyFrom = cbFlyingFrom.getSelectedItem().toString();
+        String flyTo = cbFlyingTo.getSelectedItem().toString();
+        String flyFromID = null, flyToID = null;
+        
+        String dayFly = txtDepartureFlight.getText();
+        Date departureFlight = null;
+        try {
+            departureFlight = DateTime.strtoDate(dayFly);
+        } catch (ParseException ex) {
+            Logger.getLogger(BuyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+            validate = false;
+            JOptionPane.showMessageDialog(this,"Ngày bay sai định dạng", "Thất bại", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        //Lấy mã sân bay
+        String regex = "\\(([^)]+)\\)";        
+        Pattern pattern = Pattern.compile(regex);
+        
+        Matcher matcherFlyFrom = pattern.matcher(flyFrom);
+        if (matcherFlyFrom.find()) {
+            flyFromID = matcherFlyFrom.group(1);
+        } else {
+            System.out.println("Khong the lay ma san bay di");
+            validate = false;
+        }
+        Matcher matcherFlyTo = pattern.matcher(flyTo);
+        if (matcherFlyTo.find()) {
+            flyToID = matcherFlyTo.group(1);
+        } else {
+            System.out.println("Khong the lay ma san bay den");
+            validate = false;
+        }     
+        
+        if(validate){
+            try {
+                initTickets(flyFromID, flyToID, dayFly);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(BuyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(BuyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(BuyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_btSearchActionPerformed
 
     private void btSearchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btSearchMouseEntered
@@ -467,6 +587,18 @@ public class BuyTicketEUC extends javax.swing.JPanel {
         puBuyTicketEUC.setVisible(true);
         puBuyTicketEUC.setLocationRelativeTo(null);
     }//GEN-LAST:event_tbTiketsMouseClicked
+
+    private void rdoAllTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoAllTicketActionPerformed
+        try {
+            initTickets();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(BuyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(BuyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(BuyTicketEUC.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_rdoAllTicketActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

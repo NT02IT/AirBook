@@ -16,7 +16,9 @@ import assets.TextBubbleBorder;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -120,12 +122,10 @@ public class AccountEUC extends javax.swing.JPanel {
         txtName.setText(user.getName());
         txtGender.getModel().setSelectedItem(user.getGender());
         String doB;
-        try {
-            doB = assets.DateTime.convertFormat(user.getDoB().toString(), "yyyy-MM-dd", "dd/MM/yyyy");
-            txtDoB.setText(doB);
-        } catch (ParseException ex) {
-            Logger.getLogger(AccountEUC.class.getName()).log(Level.SEVERE, null, ex);
-        }        
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        doB = dateFormat.format(user.getDoB());
+        txtDoB.setText(doB);   
+        
         txtAddress.setText(user.getAddress());
         txtNation.setText(user.getNation());
         txtPhoneNum.setText(user.getPhoneNumber());
