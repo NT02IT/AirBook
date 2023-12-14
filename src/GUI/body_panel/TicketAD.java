@@ -22,6 +22,8 @@ import DTO.entities.User;
 import DTO.views.TicketView;
 import GUI.popup.PuTicketSearchAD;
 import GUI.popup.puTicketAD;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -60,7 +62,7 @@ public class TicketAD extends javax.swing.JPanel {
     private ArrayList<Ticket> listTicket;
     private Map<String,ArrayList<Ticket>> listTicketView;
     private Map<String, ArrayList<Ticket>> mapRowTicket;
-
+    private ArrayList<Ticket> resetList;
     /**
      * Creates new form TicketAD
      */
@@ -121,32 +123,35 @@ public class TicketAD extends javax.swing.JPanel {
         
         int totalTicketRemain = 0;
         for(Map.Entry<String, ArrayList<Ticket>> entry : listTicketView.entrySet()){
+            
             ticket = entry.getValue().get(0);
-            flight = flightBUS.getObjectbyID(ticket.getFlightID());
-            
-            flyingFrom = airportBUS.getObjectbyID(flight.getFlyingFrom()).getAirportName();
-            flyingTo = airportBUS.getObjectbyID(flight.getFlyingTo()).getAirportName();
-            hoursFly = flight.getHoursFly() + " giờ";
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-            departureFlight = flight.getDepartureFlight().format(formatter);
-            
-            int remainTicket = 0;
-            int totalTicket = 0;
-            for(Ticket tk : entry.getValue()){
-                totalTicket++;
-                if(tk.getSoldout() == 0) remainTicket++;
+            if(ticket.getIsDelete() == 0){
+                flight = flightBUS.getObjectbyID(ticket.getFlightID());
+
+                flyingFrom = airportBUS.getObjectbyID(flight.getFlyingFrom()).getAirportName();
+                flyingTo = airportBUS.getObjectbyID(flight.getFlyingTo()).getAirportName();
+                hoursFly = flight.getHoursFly() + " giờ";
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+                departureFlight = flight.getDepartureFlight().format(formatter);
+
+                int remainTicket = 0;
+                int totalTicket = 0;
+                for(Ticket tk : entry.getValue()){
+                    totalTicket++;
+                    if(tk.getSoldout() == 0) remainTicket++;
+                }
+                totalTicketRemain += remainTicket;
+                remain = remainTicket + "/" + totalTicket;
+
+                Seat seat = seatBUS.getObjectbyID(ticket.getSeatID());
+                TicketClass ticketClass = ticketClassBUS.getObjectbyID(seat.getTicketClassID());
+                Plane plane = planeBUS.getObjectbyID(ticketClass.getPlaneID());
+                airline = airlineBUS.getObjectbyID(plane.getAirlineID()).getAirlineName();            
+
+                ticketModel.addRow(new Object[]{stt++, airline, flyingFrom, flyingTo, departureFlight, hoursFly, remain});
+                String key = airline + flyingFrom + flyingTo + departureFlight;            
+                mapRowTicket.put(key, entry.getValue());
             }
-            totalTicketRemain += remainTicket;
-            remain = remainTicket + "/" + totalTicket;
-            
-            Seat seat = seatBUS.getObjectbyID(ticket.getSeatID());
-            TicketClass ticketClass = ticketClassBUS.getObjectbyID(seat.getTicketClassID());
-            Plane plane = planeBUS.getObjectbyID(ticketClass.getPlaneID());
-            airline = airlineBUS.getObjectbyID(plane.getAirlineID()).getAirlineName();            
-            
-            ticketModel.addRow(new Object[]{stt++, airline, flyingFrom, flyingTo, departureFlight, hoursFly, remain});
-            String key = airline + flyingFrom + flyingTo + departureFlight;            
-            mapRowTicket.put(key, entry.getValue());
         }
         
 //        for (TicketView ticketView : listTicketView){
@@ -404,6 +409,7 @@ public class TicketAD extends javax.swing.JPanel {
         try {
             puTicketSearchAD = new PuTicketSearchAD();
             puTicketSearchAD.setVisible(true);
+            
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(TicketAD.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -418,6 +424,23 @@ public class TicketAD extends javax.swing.JPanel {
         try {
             puTicketAD pTicketAD = new puTicketAD(this.user, null,"add");
             pTicketAD.setVisible(true);
+            pTicketAD.getBtnUpdate().addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        TicketBUS reList = new TicketBUS();
+                        listTicket.clear();
+                        listTicket = reList.getList();
+                        initTickets();
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException ex) {
+                        Logger.getLogger(AccountAD.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
         } catch (ParseException ex) {
             Logger.getLogger(TicketAD.class.getName()).log(Level.SEVERE, null, ex);
         }

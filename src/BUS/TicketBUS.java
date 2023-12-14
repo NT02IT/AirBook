@@ -65,6 +65,9 @@ public class TicketBUS {
     public ArrayList<Ticket> update(Ticket ticket) throws SQLException, IOException, ClassNotFoundException{
         return ticketDAO.update(ticket);
     }
+    public boolean delete(Ticket ticket) throws SQLException, IOException, ClassNotFoundException{
+        return ticketDAO.delete(ticket);
+    }
     public boolean create(Ticket ticket, Plane plane, TicketClass ticketClass ) throws SQLException, IOException, ClassNotFoundException{
         SeatBUS seatBUS = new SeatBUS();
         ArrayList<Seat> seatList =  seatBUS.getSeatFromClass(ticketClass);

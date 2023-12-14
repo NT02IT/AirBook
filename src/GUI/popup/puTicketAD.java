@@ -50,6 +50,7 @@ public class puTicketAD extends javax.swing.JFrame {
     private TicketClass ticketClassSelected = new TicketClass();
     private Flight flight = new Flight();
     private ArrayList<Ticket> tickets;    
+    public ArrayList<Ticket> resetList;
     
     private ArrayList<AirportGate> airportGates;
     private ArrayList<Airline> airlines;
@@ -65,6 +66,7 @@ public class puTicketAD extends javax.swing.JFrame {
     private TicketClassBUS ticketClassBUS;
     private PlaneBUS planeBUS;
     private FlightBUS flightBUS;
+    private TicketBUS ticketBUS;
     private AirportGateBUS airportGateBUS;
     private boolean isImportPriceFieldEmpty = true;    
     private boolean isSellPriceFieldEmpty = true;
@@ -88,6 +90,7 @@ public class puTicketAD extends javax.swing.JFrame {
             this.ticketClassBUS = new TicketClassBUS();
             this.planeBUS = new PlaneBUS();
             this.flightBUS = new FlightBUS();
+            this.ticketBUS = new TicketBUS();
             this.airports = airportBUS.getList();
             this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/assets/image/app-favicon.png")));
             this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -122,7 +125,7 @@ public class puTicketAD extends javax.swing.JFrame {
     public void initFormTextField() throws ParseException, ClassNotFoundException, SQLException, IOException{
         if(this.tickets != null) {
             Ticket ticket = tickets.get(0);
-            btUpdate.setText("Thêm mới vé bay");
+            btUpdate.setText("Cập nhật vé bay");
             cbAirline.setEnabled(false);
             cbFlightFrom.setEnabled(false);
             cbFlightTo.setEnabled(false);
@@ -161,6 +164,7 @@ public class puTicketAD extends javax.swing.JFrame {
         }
         else{
             btDelete.setEnabled(false);
+            btUpdate.setText("Thêm mới vé bay");
         }
     }
     public void style(){
@@ -294,6 +298,11 @@ public class puTicketAD extends javax.swing.JFrame {
 
         btDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-delete-red18.png"))); // NOI18N
         btDelete.setText("Xóa");
+        btDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btDeleteActionPerformed(evt);
+            }
+        });
 
         btUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/icon/action-refresh-pri18.png"))); // NOI18N
         btUpdate.setText("Cập nhật");
@@ -657,11 +666,12 @@ public class puTicketAD extends javax.swing.JFrame {
                 newTicket.setImportPrice(importPrice);
                 newTicket.setSellingPrice(sellPrice);
                 newTicket.setFlightID(this.flight.getFlightID());
-                TicketBUS ticketBUS;
                 try {
-                    ticketBUS = new TicketBUS();
+                    
                     boolean checkCreateSuccessFully = ticketBUS.create(newTicket,this.planeSeleted,this.ticketClassSelected);
                     if(checkCreateSuccessFully){
+                        TicketBUS newTicketBUS = new TicketBUS();
+                        resetList = newTicketBUS.getList(); 
                         dispose();
                     }
                 } catch (ClassNotFoundException ex) {
@@ -675,7 +685,6 @@ public class puTicketAD extends javax.swing.JFrame {
             else if(this.action == "update"){
                 Ticket ticket = tickets.get(0);
                 Ticket newTicket = new Ticket();
-                ArrayList<Ticket> ticketList = new ArrayList<>();
                 newTicket.setImportPrice(importPrice);
                 newTicket.setGateID(gate);
                 newTicket.setIsDelete(ticket.getIsDelete());
@@ -684,12 +693,11 @@ public class puTicketAD extends javax.swing.JFrame {
                 newTicket.setFlightID(ticket.getFlightID());
                 newTicket.setSellingPrice(sellPrice);
                 newTicket.setTicketID(this.tickets.get(0).getTicketID());
-                TicketBUS ticketBUS;
                 try {
-                    ticketBUS = new TicketBUS();
-                    ticketList = ticketBUS.update(newTicket);
+
+                    this.resetList = ticketBUS.update(newTicket);
                     JOptionPane.showMessageDialog(this, "Cập nhật thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                    getNewList(tickets);
+                    
                     dispose();
                 } catch (ClassNotFoundException ex) {
                     Logger.getLogger(puTicketAD.class.getName()).log(Level.SEVERE, null, ex);
@@ -739,6 +747,36 @@ public class puTicketAD extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtResellPriceFocusLost
 
+    private void btDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeleteActionPerformed
+        Ticket ticket = tickets.get(0);
+    
+        // Show a confirmation dialog
+        int confirmResult = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa?", "Xác nhận xóa", JOptionPane.YES_NO_OPTION);
+
+        if (confirmResult == JOptionPane.YES_OPTION) {
+            try {
+                boolean deletionSuccessful = ticketBUS.delete(ticket);
+
+                if (deletionSuccessful) {
+                    // Display a success message dialog
+                    JOptionPane.showMessageDialog(this, "Xóa thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    // Display a failure message dialog
+                    JOptionPane.showMessageDialog(this, "Xóa không thành công", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(puTicketAD.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(puTicketAD.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(puTicketAD.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btDeleteActionPerformed
+    public javax.swing.JButton getBtnUpdate() {
+        return btUpdate;
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

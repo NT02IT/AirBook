@@ -233,4 +233,19 @@ public class TicketDAO {
         }    
         return sellingPrice;
     }
+    public boolean delete(Ticket ticket) throws SQLException{
+        String context = this.getClass().getName();
+        connectDB.connect(context);
+        try {
+            String sql = "UPDATE tickets SET IsDelete = 1 WHERE Ticket_ID = ?";
+            PreparedStatement pstmt = ConnectDB.conn.prepareStatement(sql);
+            pstmt.setString(1, ticket.getTicketID());
+            pstmt.executeUpdate();        
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(RoleDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+
+    }
 }
