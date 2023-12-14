@@ -448,7 +448,7 @@ public class StatisticAD extends javax.swing.JPanel {
 
     private void btCreateTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCreateTicketActionPerformed
         try {
-            puTicketAD pTicketAD = new puTicketAD(this.user, null);
+            puTicketAD pTicketAD = new puTicketAD(this.user, null,"add");
             pTicketAD.setVisible(true);
         } catch (ParseException ex) {
             Logger.getLogger(TicketAD.class.getName()).log(Level.SEVERE, null, ex);

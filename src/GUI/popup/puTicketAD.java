@@ -43,6 +43,7 @@ import javax.swing.WindowConstants;
  */
 public class puTicketAD extends javax.swing.JFrame {
     private User user;
+    private String action;
     private Airline a = new Airline();
     private AirportGate gate = new AirportGate();
     private Plane planeSeleted = new Plane();
@@ -73,10 +74,11 @@ public class puTicketAD extends javax.swing.JFrame {
     /**
      * Creates new form puTicketAD
      */
-    public puTicketAD(User user,ArrayList<Ticket> tickets) throws ParseException {
+    public puTicketAD(User user,ArrayList<Ticket> tickets, String action) throws ParseException {
         try {
             initComponents();
             this.user = user;
+            this.action = action;
             this.tickets = tickets;
             this.airlineBUS = new AirlineBUS();
             this.airlines = airlineBUS.getList();
@@ -125,11 +127,19 @@ public class puTicketAD extends javax.swing.JFrame {
             cbFlightFrom.setEnabled(false);
             cbFlightTo.setEnabled(false);
             cbPlane.setEnabled(false);
-            
+            cbTicketClass.setEnabled(false);
+            cbGate.setEnabled(true);
+            txtImportPrice.setText(String.valueOf(ticket.getImportPrice()));
+            txtResellPrice.setText(String.valueOf(ticket.getSellingPrice()));
             txtDepartureFlight.setEnabled(false);
+            cbGate.removeAllItems();
+            cbGate.addItem(ticket.getGateID());
             Seat seat = seatBUS.getObjectbyID(ticket.getSeatID());
+            
             TicketClass ticketClass = ticketClassBUS.getObjectbyID(seat.getTicketClassID());
+            cbTicketClass.addItem(ticketClass.getClassName());
             Plane plane = planeBUS.getObjectbyID(ticketClass.getPlaneID());
+            cbPlane.addItem(plane.getPlaneName());
             Airline airline = airlineBUS.getObjectbyID(plane.getAirlineID());            
             for (Airline a : airlines) {
                 String aID = a.getAirlineID();
@@ -139,14 +149,12 @@ public class puTicketAD extends javax.swing.JFrame {
                     cbAirline.setSelectedItem(aName);
                 }
             }
-            Flight flight = flightBUS.getObjectbyID(ticket.getFlightID());            
-            String flyingFrom = airportBUS.getObjectbyID(flight.getFlyingFrom()).getAirportName();
-            String flyingTo = airportBUS.getObjectbyID(flight.getFlyingTo()).getAirportName();
+            Flight flight = flightBUS.getObjectbyID(ticket.getFlightID());
             for(Airport airport : airports){
-                if(airport.getAirportName().equals(flyingFrom))
-                    cbFlightFrom.setSelectedItem(airport.getProvince());
-                if(airport.getAirportName().equals(flyingTo))
-                    cbFlightTo.setSelectedItem(airport.getProvince());
+                if(airport.getAirportID().equals(flight.getFlyingFrom()))
+                    cbFlightFrom.addItem(airport.getProvince());
+                if(airport.getAirportID().equals(flight.getFlyingTo()))
+                    cbFlightTo.addItem(airport.getProvince());
             } 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
             txtDepartureFlight.setText(flight.getDepartureFlight().format(formatter));
@@ -443,7 +451,7 @@ public class puTicketAD extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cbAirlineItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbAirlineItemStateChanged
-        if (evt.getStateChange() == ItemEvent.SELECTED) {
+        if (evt.getStateChange() == ItemEvent.SELECTED && this.action.equals("add")) {
             // Lấy giá trị đã chọn trong cbAirline
             String selectedAirline = (String) cbAirline.getSelectedItem();
             for(Airline airline : airlines){
@@ -475,7 +483,7 @@ public class puTicketAD extends javax.swing.JFrame {
     }//GEN-LAST:event_cbAirlineItemStateChanged
 
     private void cbFlightFromItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbFlightFromItemStateChanged
-       if (evt.getStateChange() == ItemEvent.SELECTED) {
+       if (evt.getStateChange() == ItemEvent.SELECTED && this.action.equals("add")) {
             // Lấy giá trị đã chọn trong cbAirline
             String selected = (String) cbFlightFrom.getSelectedItem();
             for(Airport airport : airports){
@@ -518,7 +526,7 @@ public class puTicketAD extends javax.swing.JFrame {
     }//GEN-LAST:event_cbFlightFromItemStateChanged
 
     private void cbPlaneItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbPlaneItemStateChanged
-        if (evt.getStateChange() == ItemEvent.SELECTED) {
+        if (evt.getStateChange() == ItemEvent.SELECTED && this.action.equals("add")) {
             // Lấy giá trị đã chọn trong cbAirline
             String selected = (String) cbPlane.getSelectedItem();
             for(Plane plane : planes){
@@ -539,7 +547,7 @@ public class puTicketAD extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_cbPlaneItemStateChanged
-
+    
     private void btUpdateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btUpdateMouseClicked
         if(evt.getClickCount() == 1 || evt.getClickCount() == 2){
             String flightTo = cbFlightTo.getSelectedItem().toString();
@@ -627,47 +635,81 @@ public class puTicketAD extends javax.swing.JFrame {
                     return;
                 }
             }
-            for(AirportGate airportGate : airportGates){
-                if(airportGate.getGateName().equals(gate)){
-                    this.gate = airportGate;
-                }
-            }
-            for(Plane p : planes){
-                if(p.getPlaneName().equals(plane)){
-                    this.planeSeleted = p;
-                }
-            }
-            for(TicketClass tc : ticketClasses){
-                if(tc.getClassName().equals(tc)){
-                    this.ticketClassSelected = tc;
-                }
-            }
-            Ticket newTicket = new Ticket();
-            newTicket.setGateID(this.gate.getGateID());
-            newTicket.setImportPrice(importPrice);
-            newTicket.setSellingPrice(sellPrice);
-            newTicket.setFlightID(this.flight.getFlightID());
-            TicketBUS ticketBUS;
-            try {
-                ticketBUS = new TicketBUS();
-                boolean checkCreateSuccessFully = ticketBUS.create(newTicket,this.planeSeleted,this.ticketClassSelected);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(puTicketAD.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                Logger.getLogger(puTicketAD.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(puTicketAD.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            if(this.action == "add"){
             
+                for(AirportGate airportGate : airportGates){
+                    if(airportGate.getGateName().equals(gate)){
+                        this.gate = airportGate;
+                    }
+                }
+                for(Plane p : planes){
+                    if(p.getPlaneName().equals(plane)){
+                        this.planeSeleted = p;
+                    }
+                }
+                for(TicketClass tc : ticketClasses){
+                    if(tc.getClassName().equals(tc)){
+                        this.ticketClassSelected = tc;
+                    }
+                }
+                Ticket newTicket = new Ticket();
+                newTicket.setGateID(this.gate.getGateID());
+                newTicket.setImportPrice(importPrice);
+                newTicket.setSellingPrice(sellPrice);
+                newTicket.setFlightID(this.flight.getFlightID());
+                TicketBUS ticketBUS;
+                try {
+                    ticketBUS = new TicketBUS();
+                    boolean checkCreateSuccessFully = ticketBUS.create(newTicket,this.planeSeleted,this.ticketClassSelected);
+                    if(checkCreateSuccessFully){
+                        dispose();
+                    }
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(puTicketAD.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(puTicketAD.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(puTicketAD.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            else if(this.action == "update"){
+                Ticket ticket = tickets.get(0);
+                Ticket newTicket = new Ticket();
+                ArrayList<Ticket> ticketList = new ArrayList<>();
+                newTicket.setImportPrice(importPrice);
+                newTicket.setGateID(gate);
+                newTicket.setIsDelete(ticket.getIsDelete());
+                newTicket.setSeatID(ticket.getSeatID());
+                newTicket.setSoldout(ticket.getSoldout());
+                newTicket.setFlightID(ticket.getFlightID());
+                newTicket.setSellingPrice(sellPrice);
+                newTicket.setTicketID(this.tickets.get(0).getTicketID());
+                TicketBUS ticketBUS;
+                try {
+                    ticketBUS = new TicketBUS();
+                    ticketList = ticketBUS.update(newTicket);
+                    JOptionPane.showMessageDialog(this, "Cập nhật thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    getNewList(tickets);
+                    dispose();
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(puTicketAD.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(puTicketAD.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(puTicketAD.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }//GEN-LAST:event_btUpdateMouseClicked
-
+    private ArrayList<Ticket> getNewList(ArrayList<Ticket> tickets){
+        return tickets;
+    }
     private void txtImportPriceKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtImportPriceKeyPressed
         
     }//GEN-LAST:event_txtImportPriceKeyPressed
 
     private void txtImportPriceFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtImportPriceFocusGained
-         if (isImportPriceFieldEmpty) {
+         if (isImportPriceFieldEmpty && this.action.equals("add")) {
                 txtImportPrice.setText("");
             }
     }//GEN-LAST:event_txtImportPriceFocusGained
@@ -682,7 +724,7 @@ public class puTicketAD extends javax.swing.JFrame {
     }//GEN-LAST:event_txtImportPriceFocusLost
 
     private void txtResellPriceFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtResellPriceFocusGained
-        if (isSellPriceFieldEmpty) {
+        if (isSellPriceFieldEmpty && this.action.equals("add")) {
             txtResellPrice.setText("");
         }
 

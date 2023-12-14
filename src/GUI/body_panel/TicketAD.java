@@ -416,7 +416,7 @@ public class TicketAD extends javax.swing.JPanel {
 
     private void btAddTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAddTicketActionPerformed
         try {
-            puTicketAD pTicketAD = new puTicketAD(this.user, null);
+            puTicketAD pTicketAD = new puTicketAD(this.user, null,"add");
             pTicketAD.setVisible(true);
         } catch (ParseException ex) {
             Logger.getLogger(TicketAD.class.getName()).log(Level.SEVERE, null, ex);
@@ -435,7 +435,7 @@ public class TicketAD extends javax.swing.JPanel {
 
             puTicketAD pAD;
             try {
-                pAD = new puTicketAD((User) this.user, tickets);
+                pAD = new puTicketAD((User) this.user, tickets,"update");
                 pAD.setVisible(true);
                 pAD.setLocationRelativeTo(null);
             } catch (ParseException ex) {

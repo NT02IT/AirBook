@@ -68,8 +68,8 @@ public class TicketBUS {
     public boolean create(Ticket ticket, Plane plane, TicketClass ticketClass ) throws SQLException, IOException, ClassNotFoundException{
         SeatBUS seatBUS = new SeatBUS();
         ArrayList<Seat> seatList =  seatBUS.getSeatFromClass(ticketClass);
-        
         for(Seat s : seatList){
+            System.out.println(s.getSeatID());
             String ticketID = Ticket.generateID();
             ticket.setTicketID(ticketID);
             ticket.setSeatID(s.getSeatID());
@@ -78,4 +78,8 @@ public class TicketBUS {
         
         return true;
     }
+
+        
+        
+    
 }
